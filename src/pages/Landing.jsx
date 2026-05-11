@@ -3,7 +3,7 @@ import SobreSection from "@/components/landing/SobreSection";
 import { useNavigate, Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 
@@ -32,7 +32,7 @@ export default function Landing() {
 
     // Não redirecionar mais automaticamente
     // Deixar usuário escolher plano primeiro
-  }, []);useEffect(() => {base44.entities.LandingContent.list().then((records) => {if (records.length > 0) setContent(records[0]);});}, []);const slides = (content?.slides || []).map((s) => ({ imagem: s.imagem_url, titulo: s.titulo, subtitulo: s.subtitulo }));
+  }, []);useEffect(() => {api.entities.LandingContent.list().then((records) => {if (records.length > 0) setContent(records[0]);});}, []);const slides = (content?.slides || []).map((s) => ({ imagem: s.imagem_url, titulo: s.titulo, subtitulo: s.subtitulo }));
 
   useEffect(() => {
     if (slides.length <= 1) return;
@@ -44,7 +44,7 @@ export default function Landing() {
 
   const logoTopo = content?.logo_topo_url;
 
-  const handleLogin = () => base44.auth.redirectToLogin('/dashboard');
+  const handleLogin = () => auth.redirectToLogin('/dashboard');
 
   // Keyboard navigation for lightbox
   useEffect(() => {

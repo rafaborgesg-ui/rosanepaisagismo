@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -46,14 +46,14 @@ export default function CaixaEntrada() {
 
   const { data: items = [] } = useQuery({
     queryKey: ["caixa-entrada", officeOwner],
-    queryFn: () => base44.entities.CaixaEntrada.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.CaixaEntrada.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner && !ownerLoading,
   });
 
   const closeForm = () => { setShowForm(false); setEditing(null); };
-  const createM = useMutation({ mutationFn: d => base44.entities.CaixaEntrada.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-entrada"] }); closeForm(); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.CaixaEntrada.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-entrada"] }); closeForm(); } });
-  const deleteM = useMutation({ mutationFn: id => base44.entities.CaixaEntrada.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["caixa-entrada"] }) });
+  const createM = useMutation({ mutationFn: d => api.entities.CaixaEntrada.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-entrada"] }); closeForm(); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.CaixaEntrada.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-entrada"] }); closeForm(); } });
+  const deleteM = useMutation({ mutationFn: id => api.entities.CaixaEntrada.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["caixa-entrada"] }) });
 
   const handleSave = async (d) => {
     if (editing) {
@@ -65,7 +65,7 @@ export default function CaixaEntrada() {
 
   const handleSaveMulti = async (records) => {
     const recordsWithOwner = records.map(r => ({ ...r, office_owner: officeOwner }));
-    await base44.entities.CaixaEntrada.bulkCreate(recordsWithOwner);
+    await api.entities.CaixaEntrada.bulkCreate(recordsWithOwner);
     qc.invalidateQueries({ queryKey: ["caixa-entrada"] });
     closeForm();
   };

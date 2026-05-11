@@ -50,7 +50,7 @@ serve(async (req) => {
       }
 
       // Atualizar ou criar subscription com status active
-      const subscriptions = await base44.asServiceRole.entities.Subscription.filter({
+      const subscriptions = await api.entities.Subscription.filter({
         user_email: userEmail
       });
 
@@ -86,12 +86,12 @@ serve(async (req) => {
       };
 
       if (subscriptions.length > 0) {
-        await base44.asServiceRole.entities.Subscription.update(
+        await api.entities.Subscription.update(
           subscriptions[0].id,
           subscriptionData
         );
       } else {
-        await base44.asServiceRole.entities.Subscription.create(subscriptionData);
+        await api.entities.Subscription.create(subscriptionData);
       }
 
       return Response.json({ success: true, message: 'Pagamento processado' });
@@ -99,12 +99,12 @@ serve(async (req) => {
 
     // Refund/Chargeback - cancelar subscription
     if ((event === 'refund' || event === 'chargeback') && data?.email) {
-      const subscriptions = await base44.asServiceRole.entities.Subscription.filter({
+      const subscriptions = await api.entities.Subscription.filter({
         user_email: data.email
       });
 
       if (subscriptions.length > 0) {
-        await base44.asServiceRole.entities.Subscription.update(
+        await api.entities.Subscription.update(
           subscriptions[0].id,
           { status: 'cancelled' }
         );

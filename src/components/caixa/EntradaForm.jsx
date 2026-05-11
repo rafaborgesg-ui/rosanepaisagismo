@@ -6,7 +6,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Trash2, FileUp, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
 import { MESES } from "../../lib/formatters";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useQuery } from "@tanstack/react-query";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import ClienteSmartInput from "@/components/clientes/ClienteSmartInput";
@@ -41,7 +41,7 @@ export default function EntradaForm({ open, onClose, onSave, onSaveMulti, initia
 
   const { data: clientes = [] } = useQuery({
     queryKey: ["clientes", officeOwner],
-    queryFn: () => base44.entities.Cliente.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Cliente.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner && open,
   });
 
@@ -86,7 +86,7 @@ export default function EntradaForm({ open, onClose, onSave, onSaveMulti, initia
 
     setUploading(true);
     try {
-      const response = await base44.integrations.Core.UploadFile({ file });
+      const response = await api.integrations.Core.UploadFile({ file });
       update({ arquivo_url: response.file_url, arquivo_nome: file.name });
     } catch (error) {
       alert('Erro ao fazer upload do arquivo');

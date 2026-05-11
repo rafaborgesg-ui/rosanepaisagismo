@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useSubscription } from "@/hooks/useSubscription";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -27,14 +27,14 @@ export default function Equipe() {
   // Busca apenas os convites feitos pelo proprietário do escritório
   const { data: invites = [] } = useQuery({
     queryKey: ["team-invites", officeOwner],
-    queryFn: () => base44.entities.TeamInvite.filter({ owner_email: officeOwner }),
+    queryFn: () => api.entities.TeamInvite.filter({ owner_email: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const removeInvite = useMutation({
     mutationFn: async (memberEmail) => {
       // Use the backend function for better control
-      const res = await base44.functions.invoke('removeTeamMember', { memberEmail });
+      const res = await api.functions.invoke('removeTeamMember', { memberEmail });
       return res.data;
     },
     onSuccess: () => qc.invalidateQueries({ queryKey: ["team-invites"] }),
@@ -68,7 +68,7 @@ export default function Equipe() {
     setMessage(null);
     try {
       // Criar o convite
-      const invite = await base44.entities.TeamInvite.create({
+      const invite = await api.entities.TeamInvite.create({
         owner_email: officeOwner,
         invited_email: data.email,
         invited_name: data.name,
@@ -78,7 +78,7 @@ export default function Equipe() {
       
       // Tentar enviar email - se falhar, gerar link para compartilhar
       try {
-        await base44.functions.invoke('sendTeamInviteEmail', {
+        await api.functions.invoke('sendTeamInviteEmail', {
           invitedEmail: data.email,
           invitedName: data.name || data.email,
           ownerName: user.full_name || "FinanceVerde",

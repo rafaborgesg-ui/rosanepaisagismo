@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { FileSpreadsheet, TrendingUp, TrendingDown, DollarSign, BarChart3, Download, Clock, Wallet } from "lucide-react";
@@ -34,9 +34,9 @@ export default function Relatorios() {
   const { officeOwner } = useOfficeOwner();
   const [mes, setMes] = useState(MESES[new Date().getMonth()]);
 
-  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => base44.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: saidas = [] } = useQuery({ queryKey: ["caixa-saida", officeOwner], queryFn: () => base44.entities.CaixaSaida.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: comercial = [] } = useQuery({ queryKey: ["comercial", officeOwner], queryFn: () => base44.entities.Commercial.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => api.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: saidas = [] } = useQuery({ queryKey: ["caixa-saida", officeOwner], queryFn: () => api.entities.CaixaSaida.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: comercial = [] } = useQuery({ queryKey: ["comercial", officeOwner], queryFn: () => api.entities.Commercial.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
 
   const isTodos = mes === "Todos";
   const entradasMes = entradas.filter(e => isTodos || e.competencia === mes);

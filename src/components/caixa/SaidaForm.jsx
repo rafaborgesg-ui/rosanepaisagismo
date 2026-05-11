@@ -14,7 +14,7 @@ const vencimentoToCompetencia = (dateStr) => {
   const [, month] = dateStr.split("-");
   return MESES[parseInt(month, 10) - 1] || "";
 };
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 
 const CATEGORIAS = ["Aluguel", "Salários", "Material", "Transporte", "Marketing", "Software", "Impostos", "Fornecedores", "Água/Luz", "Internet/Telefone", "Contador", "Outro"];
 
@@ -51,7 +51,7 @@ export default function SaidaForm({ open, onClose, onSave, initialData, saving }
     }
     setUploading(true);
     try {
-      const response = await base44.integrations.Core.UploadFile({ file });
+      const response = await api.integrations.Core.UploadFile({ file });
       update("arquivo_url", response.file_url);
       update("arquivo_nome", file.name);
     } catch (error) {

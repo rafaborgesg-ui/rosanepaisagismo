@@ -1,6 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
@@ -42,13 +42,13 @@ export default function Contato() {
 
       // Upload arquivo se existir
       if (arquivo) {
-        const uploadRes = await base44.integrations.Core.UploadFile({ file: arquivo });
+        const uploadRes = await api.integrations.Core.UploadFile({ file: arquivo });
         arquivo_url = uploadRes.file_url;
         arquivo_nome = arquivo.name;
       }
 
       // Enviar email
-      const res = await base44.functions.invoke('sendContactFormEmail', {
+      const res = await api.functions.invoke('sendContactFormEmail', {
         nome: form.nome,
         email: form.email,
         whatsapp: form.whatsapp,

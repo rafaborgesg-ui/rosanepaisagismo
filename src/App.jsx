@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { auth } from '@/api/authService';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
@@ -35,16 +35,7 @@ import Agradecimento from './pages/Agradecimento';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermosDeServico from './pages/TermosDeServico';
 import CatalogoBotanico from './pages/CatalogoBotanico';
-
-const LoginPage = () => {
-  const { isAuthenticated } = useAuth();
-  useEffect(() => {
-    if (!isAuthenticated) {
-      base44.auth.redirectToLogin('/dashboard');
-    }
-  }, [isAuthenticated]);
-  return null;
-};
+import Login from './pages/Login';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isAuthenticated } = useAuth();
@@ -71,7 +62,7 @@ const AuthenticatedApp = () => {
       <Route path="/privacidade" element={<PrivacyPolicy />} />
       <Route path="/termos" element={<TermosDeServico />} />
       <Route path="/catalogo" element={<CatalogoBotanico />} />
-      <Route path="/login" element={<LoginPage />} />
+      <Route path="/login" element={<Login />} />
       <Route path="/admin" element={<AdminLanding />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/payment/cancel" element={<PaymentCancel />} />

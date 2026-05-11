@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { Save, Upload, ExternalLink, LogIn, Plus, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -44,7 +44,7 @@ function LogoUploadField({ label, value, onChange }) {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const res = await base44.integrations.Core.UploadFile({ file });
+    const res = await api.integrations.Core.UploadFile({ file });
     onChange(res.file_url);
     setUploading(false);
   };
@@ -81,7 +81,7 @@ function ImageUploadField({ label, value, onChange }) {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
-    const res = await base44.integrations.Core.UploadFile({ file });
+    const res = await api.integrations.Core.UploadFile({ file });
     onChange(res.file_url);
     setUploading(false);
   };
@@ -128,7 +128,7 @@ function AccessGate() {
           </p>
         </div>
         <Button
-          onClick={() => base44.auth.redirectToLogin()}
+          onClick={() => auth.redirectToLogin()}
           className="w-full bg-[#1a3d2b] hover:bg-[#276a4d] text-white rounded-full py-3 font-bold"
         >
           Fazer Login
@@ -152,7 +152,7 @@ export default function AdminLanding() {
   useEffect(() => {
     if (isLoadingAuth) return;
     if (!isAllowed) { setLoading(false); return; }
-    base44.entities.LandingContent.list().then((records) => {
+    api.entities.LandingContent.list().then((records) => {
       if (records.length > 0) {
         setForm({ ...DEFAULT, ...records[0] });
         setRecordId(records[0].id);
@@ -166,9 +166,9 @@ export default function AdminLanding() {
   const handleSave = async () => {
     setSaving(true);
     if (recordId) {
-      await base44.entities.LandingContent.update(recordId, form);
+      await api.entities.LandingContent.update(recordId, form);
     } else {
-      const rec = await base44.entities.LandingContent.create(form);
+      const rec = await api.entities.LandingContent.create(form);
       setRecordId(rec.id);
     }
     setSaving(false);
@@ -353,7 +353,7 @@ export default function AdminLanding() {
                   <input type="file" accept="image/*" className="hidden" onChange={async (e) => {
                     const file = e.target.files?.[0];
                     if (!file) return;
-                    const res = await base44.integrations.Core.UploadFile({ file });
+                    const res = await api.integrations.Core.UploadFile({ file });
                     handleUpdatePortfolioItem(idx, "imagem_url", res.file_url);
                   }} />
                 </label>

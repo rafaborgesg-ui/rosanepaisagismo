@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { Calendar, MapPin, CheckCircle, Clock } from "lucide-react";
@@ -27,7 +27,7 @@ export default function AgendaExecucao() {
 
   const { data: projetos = [] } = useQuery({
     queryKey: ["projetos-execucao", officeOwner],
-    queryFn: () => base44.entities.ProjetoExecucao.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.ProjetoExecucao.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
@@ -35,7 +35,7 @@ export default function AgendaExecucao() {
     queryKey: ["cronogramas-execucao", officeOwner],
     queryFn: async () => {
       const projectIds = projetos.map(p => p.id);
-      const all = await base44.entities.CronogramaExecucao.list();
+      const all = await api.entities.CronogramaExecucao.list();
       return all.filter(c => projectIds.includes(c.projeto_id));
     },
     enabled: !!officeOwner && projetos.length > 0,

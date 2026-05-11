@@ -1,5 +1,5 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { base44 } from '@/api/base44Client';
+import { auth } from '@/api/authService';
 
 const AuthContext = createContext();
 
@@ -28,10 +28,10 @@ export const AuthProvider = ({ children }) => {
   const checkUserAuth = async () => {
     try {
       setIsLoadingAuth(true);
-      const isAuth = await base44.auth.isAuthenticated();
+      const isAuth = await auth.isAuthenticated();
       
       if (isAuth) {
-        const currentUser = await base44.auth.me();
+        const currentUser = await auth.me();
         if (currentUser && currentUser.email) {
           setUser(currentUser);
           setIsAuthenticated(true);
@@ -59,16 +59,16 @@ export const AuthProvider = ({ children }) => {
   const logout = (shouldRedirect = true) => {
     if (shouldRedirect) {
       // Redirect first to avoid flash of 404
-      base44.auth.logout(window.location.origin + '/');
+      auth.logout(window.location.origin + '/');
     } else {
       setUser(null);
       setIsAuthenticated(false);
-      base44.auth.logout();
+      auth.logout();
     }
   };
 
   const navigateToLogin = () => {
-    base44.auth.redirectToLogin('/dashboard');
+    auth.redirectToLogin('/dashboard');
   };
 
   return (

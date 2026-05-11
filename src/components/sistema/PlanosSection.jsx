@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useAuth } from "@/lib/AuthContext";
 import { useSubscription } from "@/hooks/useSubscription";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 // Links Kiwify para cada plano/período
 const KIWIFY_LINKS = {
   basico_anual: "https://pay.kiwify.com.br/kCzjx5s",

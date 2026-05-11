@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 
 export default function Agradecimento() {
   const { isAuthenticated } = useAuth();
@@ -9,7 +9,7 @@ export default function Agradecimento() {
     if (isAuthenticated) {
       window.location.href = "/dashboard";
     } else {
-      base44.auth.redirectToLogin("/dashboard");
+      auth.redirectToLogin("/dashboard");
     }
   };
 

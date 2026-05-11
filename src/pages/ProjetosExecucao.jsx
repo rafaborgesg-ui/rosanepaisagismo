@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -35,23 +35,23 @@ export default function ProjetosExecucao() {
 
   const { data: items = [] } = useQuery({
     queryKey: ["projetos-execucao", officeOwner],
-    queryFn: () => base44.entities.ProjetoExecucao.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.ProjetoExecucao.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const closeForm = () => { setShowForm(false); setEditing(null); };
   const createM = useMutation({
-    mutationFn: d => base44.entities.ProjetoExecucao.create(d),
+    mutationFn: d => api.entities.ProjetoExecucao.create(d),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["projetos-execucao"] }); closeForm(); },
   });
 
   const updateM = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.ProjetoExecucao.update(id, data),
+    mutationFn: ({ id, data }) => api.entities.ProjetoExecucao.update(id, data),
     onSuccess: () => { qc.invalidateQueries({ queryKey: ["projetos-execucao"] }); closeForm(); },
   });
 
   const deleteM = useMutation({
-    mutationFn: id => base44.entities.ProjetoExecucao.delete(id),
+    mutationFn: id => api.entities.ProjetoExecucao.delete(id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["projetos-execucao"] }),
   });
 

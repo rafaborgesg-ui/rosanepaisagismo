@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { Plus, Trash2, Edit2, ChevronLeft, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -35,28 +35,28 @@ export default function DetalheProjetoExecucao() {
 
   const { data: projeto } = useQuery({
     queryKey: ["projeto", id],
-    queryFn: () => base44.entities.ProjetoExecucao.get(id),
+    queryFn: () => api.entities.ProjetoExecucao.get(id),
     enabled: !!id,
   });
 
   const { data: cronogramas = [] } = useQuery({
     queryKey: ["cronogramas", id],
-    queryFn: () => base44.entities.CronogramaExecucao.filter({ projeto_id: id }),
+    queryFn: () => api.entities.CronogramaExecucao.filter({ projeto_id: id }),
     enabled: !!id,
   });
 
   const createCronM = useMutation({
-    mutationFn: d => base44.entities.CronogramaExecucao.create({ ...d, projeto_id: id }),
+    mutationFn: d => api.entities.CronogramaExecucao.create({ ...d, projeto_id: id }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["cronogramas"] }),
   });
 
   const updateCronM = useMutation({
-    mutationFn: ({ id: cronId, data }) => base44.entities.CronogramaExecucao.update(cronId, data),
+    mutationFn: ({ id: cronId, data }) => api.entities.CronogramaExecucao.update(cronId, data),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["cronogramas"] }),
   });
 
   const deleteCronM = useMutation({
-    mutationFn: cronId => base44.entities.CronogramaExecucao.delete(cronId),
+    mutationFn: cronId => api.entities.CronogramaExecucao.delete(cronId),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["cronogramas"] }),
   });
 

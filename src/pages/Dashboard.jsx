@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { DollarSign, TrendingDown, TrendingUp, Users, Target, ArrowUpRight, ArrowDownRight } from "lucide-react";
@@ -59,10 +59,10 @@ const KpiCard = ({ title, value, subtitle, icon: Icon, colorClass, trend, trendP
 export default function Dashboard() {
   const { user } = useAuth();
   const { officeOwner } = useOfficeOwner();
-  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => base44.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: saidas = [] } = useQuery({ queryKey: ["caixa-saida", officeOwner], queryFn: () => base44.entities.CaixaSaida.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: comercial = [] } = useQuery({ queryKey: ["comercial", officeOwner], queryFn: () => base44.entities.Commercial.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: metas = [] } = useQuery({ queryKey: ["metas", officeOwner], queryFn: () => base44.entities.MetaAnual.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => api.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: saidas = [] } = useQuery({ queryKey: ["caixa-saida", officeOwner], queryFn: () => api.entities.CaixaSaida.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: comercial = [] } = useQuery({ queryKey: ["comercial", officeOwner], queryFn: () => api.entities.Commercial.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: metas = [] } = useQuery({ queryKey: ["metas", officeOwner], queryFn: () => api.entities.MetaAnual.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
 
   const mesAtual = MESES[new Date().getMonth()];
   const mesAnterior = MESES[new Date().getMonth() > 0 ? new Date().getMonth() - 1 : 11];

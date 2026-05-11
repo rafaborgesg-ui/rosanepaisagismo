@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -26,14 +26,14 @@ export default function Fornecedores() {
 
   const { data: items = [] } = useQuery({
     queryKey: ["fornecedores", officeOwner],
-    queryFn: () => base44.entities.Fornecedor.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Fornecedor.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const closeForm = () => { setShowForm(false); setEditing(null); };
-  const createM = useMutation({ mutationFn: d => base44.entities.Fornecedor.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["fornecedores"] }); closeForm(); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.Fornecedor.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["fornecedores"] }); closeForm(); } });
-  const deleteM = useMutation({ mutationFn: id => base44.entities.Fornecedor.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["fornecedores"] }) });
+  const createM = useMutation({ mutationFn: d => api.entities.Fornecedor.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["fornecedores"] }); closeForm(); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.Fornecedor.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["fornecedores"] }); closeForm(); } });
+  const deleteM = useMutation({ mutationFn: id => api.entities.Fornecedor.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["fornecedores"] }) });
 
   const handleSave = (d) => {
     if (editing) updateM.mutate({ id: editing.id, data: d });

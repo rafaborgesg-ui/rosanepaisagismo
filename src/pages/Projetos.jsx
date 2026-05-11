@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { Plus, Search, Grid2X2, List, Trash2, Pencil } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -28,12 +28,12 @@ export default function Projetos() {
 
   const { data: projetos = [] } = useQuery({
     queryKey: ["projetos", officeOwner],
-    queryFn: () => base44.entities.Projeto.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Projeto.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const createMutation = useMutation({
-    mutationFn: (data) => base44.entities.Projeto.create({ ...data, office_owner: officeOwner }),
+    mutationFn: (data) => api.entities.Projeto.create({ ...data, office_owner: officeOwner }),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["projetos", officeOwner] });
       closeForm();
@@ -41,7 +41,7 @@ export default function Projetos() {
   });
 
   const updateMutation = useMutation({
-    mutationFn: ({ id, data }) => base44.entities.Projeto.update(id, data),
+    mutationFn: ({ id, data }) => api.entities.Projeto.update(id, data),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["projetos", officeOwner] });
       closeForm();
@@ -49,7 +49,7 @@ export default function Projetos() {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: (id) => base44.entities.Projeto.delete(id),
+    mutationFn: (id) => api.entities.Projeto.delete(id),
     onSuccess: () => {
       qc.invalidateQueries({ queryKey: ["projetos", officeOwner] });
     },

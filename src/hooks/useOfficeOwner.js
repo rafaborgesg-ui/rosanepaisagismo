@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { api } from "@/api/apiService"; import { auth } from "@/api/authService";
 import { useAuth } from '@/lib/AuthContext';
 
 /**
@@ -19,7 +19,7 @@ export function useOfficeOwner() {
     queryFn: async () => {
       if (!user?.email) return null;
 
-      const invites = await base44.entities.TeamInvite.filter({
+      const invites = await api.entities.TeamInvite.filter({
         invited_email: user.email,
         status: 'Aceito'
       });

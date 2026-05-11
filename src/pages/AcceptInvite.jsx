@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useNavigate } from "react-router-dom";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { Button } from "@/components/ui/button";
 import { CheckCircle2, AlertCircle, Loader2 } from "lucide-react";
@@ -26,7 +26,7 @@ export default function AcceptInvite() {
       }
 
       try {
-        const invites = await base44.entities.TeamInvite.filter({ id: inviteId });
+        const invites = await api.entities.TeamInvite.filter({ id: inviteId });
         
         if (!invites || invites.length === 0) {
           setStatus("error");
@@ -55,7 +55,7 @@ export default function AcceptInvite() {
           setStatus("processing");
         } else {
           // Redireciona para login do Base44
-          await base44.auth.redirectToLogin(`/accept-invite?id=${inviteId}`);
+          await auth.redirectToLogin(`/accept-invite?id=${inviteId}`);
         }
       } catch (err) {
         setStatus("error");
@@ -75,7 +75,7 @@ export default function AcceptInvite() {
 
     setIsSubmitting(true);
     try {
-      await base44.entities.TeamInvite.update(inviteId, { status: "Aceito" });
+      await api.entities.TeamInvite.update(inviteId, { status: "Aceito" });
       setStatus("success");
       setMessage("Bem-vindo! Você faz parte da equipe.");
       setTimeout(() => navigate("/dashboard"), 1500);

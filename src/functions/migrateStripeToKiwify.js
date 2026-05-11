@@ -10,7 +10,7 @@ serve(async (req) => {
     }
 
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await auth.me();
 
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -22,7 +22,7 @@ serve(async (req) => {
     }
 
     // Get all subscriptions with Stripe data
-    const allSubscriptions = await base44.asServiceRole.entities.Subscription.list(undefined, 1000);
+    const allSubscriptions = await api.entities.Subscription.list(undefined, 1000);
     
     let migrated = 0;
     let failed = 0;
@@ -32,7 +32,7 @@ serve(async (req) => {
         // Only migrate Stripe subscriptions that exist
         if (sub.stripe_customer_id || sub.stripe_subscription_id) {
           // Update to Kiwify model
-          await base44.asServiceRole.entities.Subscription.update(sub.id, {
+          await api.entities.Subscription.update(sub.id, {
             plan: 'premium',
             status: 'active',
             billing_cycle: 'monthly',

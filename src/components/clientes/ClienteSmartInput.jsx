@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { Input } from "@/components/ui/input";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -47,7 +47,7 @@ export default function ClienteSmartInput({
     if (!search.trim()) return;
     setIsCreating(true);
     try {
-      await base44.entities.Cliente.create({
+      await api.entities.Cliente.create({
         office_owner: officeOwner,
         nome: search.trim(),
       });

@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { base44 } from '@/api/base44Client';
+import { api } from "@/api/apiService"; import { auth } from "@/api/authService";
 import { useOfficeOwner } from './useOfficeOwner';
 
 export function useSubscription() {
@@ -9,7 +9,7 @@ export function useSubscription() {
   const { data, isLoading, isFetching, error, refetch } = useQuery({
     queryKey: ['subscription', officeOwner],
     queryFn: async () => {
-      const response = await base44.functions.invoke('getUserSubscription', {
+      const response = await api.functions.invoke('getUserSubscription', {
         userEmail: officeOwner,
       });
       return { plan: response.data.plan || 'free', status: response.data.status || 'active' };
@@ -22,7 +22,7 @@ export function useSubscription() {
 
   const startCheckout = async (priceId) => {
     try {
-      const response = await base44.functions.invoke('createCheckoutSession', {
+      const response = await api.functions.invoke('createCheckoutSession', {
         priceId,
       });
       if (response.data?.url) {

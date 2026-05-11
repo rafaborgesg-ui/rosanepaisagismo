@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { Plus, Pencil, Trash2, Search, UserRound } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -19,14 +19,14 @@ export default function Clientes() {
 
   const { data: clientes = [] } = useQuery({
     queryKey: ["clientes", officeOwner],
-    queryFn: () => base44.entities.Cliente.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Cliente.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const closeForm = () => { setShowForm(false); setEditing(null); };
-  const createM = useMutation({ mutationFn: d => base44.entities.Cliente.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["clientes"] }); closeForm(); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.Cliente.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["clientes"] }); closeForm(); } });
-  const deleteM = useMutation({ mutationFn: id => base44.entities.Cliente.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["clientes"] }) });
+  const createM = useMutation({ mutationFn: d => api.entities.Cliente.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["clientes"] }); closeForm(); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.Cliente.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["clientes"] }); closeForm(); } });
+  const deleteM = useMutation({ mutationFn: id => api.entities.Cliente.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["clientes"] }) });
 
   const handleSave = (data) => {
     editing ? updateM.mutate({ id: editing.id, data }) : createM.mutate({ ...data, office_owner: officeOwner });

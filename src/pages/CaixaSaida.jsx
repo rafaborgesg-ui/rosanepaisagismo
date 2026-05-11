@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -46,13 +46,13 @@ export default function CaixaSaida() {
 
   const { data: items = [] } = useQuery({
     queryKey: ["caixa-saida", officeOwner],
-    queryFn: () => base44.entities.CaixaSaida.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.CaixaSaida.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner && !ownerLoading,
   });
   const closeForm = () => { setShowForm(false); setEditing(null); };
-  const createM = useMutation({ mutationFn: d => base44.entities.CaixaSaida.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-saida"] }); closeForm(); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.CaixaSaida.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-saida"] }); closeForm(); } });
-  const deleteM = useMutation({ mutationFn: id => base44.entities.CaixaSaida.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["caixa-saida"] }) });
+  const createM = useMutation({ mutationFn: d => api.entities.CaixaSaida.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-saida"] }); closeForm(); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.CaixaSaida.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["caixa-saida"] }); closeForm(); } });
+  const deleteM = useMutation({ mutationFn: id => api.entities.CaixaSaida.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["caixa-saida"] }) });
 
   const handleSave = async (d) => {
     if (editing) {
@@ -73,7 +73,7 @@ export default function CaixaSaida() {
         }
         return { ...d, competencia: mes, vencimento, office_owner: officeOwner };
       });
-      await base44.entities.CaixaSaida.bulkCreate(registros);
+      await api.entities.CaixaSaida.bulkCreate(registros);
       qc.invalidateQueries({ queryKey: ["caixa-saida"] });
       closeForm();
     } else {

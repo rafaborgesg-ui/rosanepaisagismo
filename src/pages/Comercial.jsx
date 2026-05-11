@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
@@ -49,15 +49,15 @@ export default function Comercial() {
 
   const { data: items = [] } = useQuery({
     queryKey: ["comercial", officeOwner],
-    queryFn: () => base44.entities.Commercial.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Commercial.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner,
   });
 
   const closeForm = () => { setShowForm(false); setEditing(null); };
   const changeStatus = (item, status) => updateM.mutate({ id: item.id, data: { ...item, status } });
-  const createM = useMutation({ mutationFn: d => base44.entities.Commercial.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["comercial"] }); closeForm(); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.Commercial.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["comercial"] }); closeForm(); } });
-  const deleteM = useMutation({ mutationFn: id => base44.entities.Commercial.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["comercial"] }) });
+  const createM = useMutation({ mutationFn: d => api.entities.Commercial.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["comercial"] }); closeForm(); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.Commercial.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["comercial"] }); closeForm(); } });
+  const deleteM = useMutation({ mutationFn: id => api.entities.Commercial.delete(id), onSuccess: () => qc.invalidateQueries({ queryKey: ["comercial"] }) });
 
   const nextNumero = items.length > 0 ? Math.max(...items.map(i => i.numero || 0)) + 1 : 1;
 

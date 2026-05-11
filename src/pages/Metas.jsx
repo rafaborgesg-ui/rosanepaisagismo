@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { Target, TrendingUp, Award, Edit2, Save, X } from "lucide-react";
@@ -20,16 +20,16 @@ export default function Metas() {
 
   const { user } = useAuth();
   const { officeOwner } = useOfficeOwner();
-  const { data: metas = [] } = useQuery({ queryKey: ["metas", officeOwner], queryFn: () => base44.entities.MetaAnual.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
-  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => base44.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: metas = [] } = useQuery({ queryKey: ["metas", officeOwner], queryFn: () => api.entities.MetaAnual.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
+  const { data: entradas = [] } = useQuery({ queryKey: ["caixa-entrada", officeOwner], queryFn: () => api.entities.CaixaEntrada.filter({ office_owner: officeOwner }), enabled: !!officeOwner });
 
   const metaAtual = metas.find(m => m.ano === anoAtual);
   useEffect(() => {
     if (metaAtual) setForm({ meta_ideal: metaAtual.meta_ideal || 600000, meta_realista: metaAtual.meta_realista || 400000, meta_pessimista: metaAtual.meta_pessimista || 250000 });
   }, [metaAtual]);
 
-  const createM = useMutation({ mutationFn: d => base44.entities.MetaAnual.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["metas"] }); setEditing(false); } });
-  const updateM = useMutation({ mutationFn: ({ id, data }) => base44.entities.MetaAnual.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["metas"] }); setEditing(false); } });
+  const createM = useMutation({ mutationFn: d => api.entities.MetaAnual.create(d), onSuccess: () => { qc.invalidateQueries({ queryKey: ["metas"] }); setEditing(false); } });
+  const updateM = useMutation({ mutationFn: ({ id, data }) => api.entities.MetaAnual.update(id, data), onSuccess: () => { qc.invalidateQueries({ queryKey: ["metas"] }); setEditing(false); } });
 
   const handleSave = () => {
     const data = { ano: anoAtual, meta_ideal: Number(form.meta_ideal), meta_realista: Number(form.meta_realista), meta_pessimista: Number(form.meta_pessimista) };

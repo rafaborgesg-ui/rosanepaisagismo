@@ -6,7 +6,7 @@ const serve = globalThis.Deno?.serve;
 serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await auth.me();
 
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -26,7 +26,7 @@ serve(async (req) => {
     }
 
     // Verificar se a subscription já foi criada com este saleId
-    const subscriptions = await base44.asServiceRole.entities.Subscription.filter({
+    const subscriptions = await api.entities.Subscription.filter({
       user_email: user.email
     });
 

@@ -8,7 +8,7 @@ import { MESES } from "../../lib/formatters";
 import ResponsiveFormDialog from "@/components/shared/ResponsiveFormDialog";
 const MESES_ORDER = ["Janeiro","Fevereiro","Março","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro"];
 import { FileUp, X } from "lucide-react";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useQuery } from "@tanstack/react-query";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import ClienteSearch from "@/components/clientes/ClienteSearch";
@@ -39,7 +39,7 @@ export default function ComercialForm({ open, onClose, onSave, initialData, next
 
   const { data: clientes = [] } = useQuery({
     queryKey: ["clientes", officeOwner],
-    queryFn: () => base44.entities.Cliente.filter({ office_owner: officeOwner }),
+    queryFn: () => api.entities.Cliente.filter({ office_owner: officeOwner }),
     enabled: !!officeOwner && open,
   });
 
@@ -90,7 +90,7 @@ export default function ComercialForm({ open, onClose, onSave, initialData, next
 
     setUploading(true);
     try {
-      const response = await base44.integrations.Core.UploadFile({ file });
+      const response = await api.integrations.Core.UploadFile({ file });
       update("arquivo_url", response.file_url);
       update("arquivo_nome", file.name);
     } catch (error) {

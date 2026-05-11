@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
-import { base44 } from "@/api/base44Client";
+import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import PlanosSection from "@/components/sistema/PlanosSection";
 
@@ -13,7 +13,7 @@ export default function Sistema() {
     if (isAuthenticated) {
       navigate('/dashboard');
     } else {
-      base44.auth.redirectToLogin('/dashboard');
+      auth.redirectToLogin('/dashboard');
     }
   };
 

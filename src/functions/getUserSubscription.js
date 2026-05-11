@@ -6,7 +6,7 @@ const serve = globalThis.Deno?.serve;
 serve(async (req) => {
   try {
     const base44 = createClientFromRequest(req);
-    const user = await base44.auth.me();
+    const user = await auth.me();
 
     if (!user) {
       return Response.json({ error: 'Unauthorized' }, { status: 401 });
@@ -15,7 +15,7 @@ serve(async (req) => {
     const userEmail = user.email;
 
     // Get subscription for the current user
-    const subscriptions = await base44.entities.Subscription.filter({
+    const subscriptions = await api.entities.Subscription.filter({
       user_email: userEmail
     });
 

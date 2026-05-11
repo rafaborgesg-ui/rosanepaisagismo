@@ -4,7 +4,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { base44 } from '@/api/base44Client';
+import { api } from "@/api/apiService"; import { auth } from "@/api/authService";
 
 export default function PaymentSuccess() {
   const navigate = useNavigate();
@@ -34,7 +34,7 @@ export default function PaymentSuccess() {
       }
 
       try {
-        const response = await base44.functions.invoke('verifyKiwifyPayment', {
+        const response = await api.functions.invoke('verifyKiwifyPayment', {
           saleId
         });
 
