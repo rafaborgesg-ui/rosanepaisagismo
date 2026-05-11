@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "@/lib/AuthContext";
 import { api } from "@/api/apiService";
+import { auth } from "@/api/authService";
 
 export default function Agradecimento() {
   const { isAuthenticated } = useAuth();

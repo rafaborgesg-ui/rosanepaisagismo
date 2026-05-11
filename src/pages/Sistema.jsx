@@ -3,6 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
+import { auth } from "@/api/authService";
 import PlanosSection from "@/components/sistema/PlanosSection";
 
 export default function Sistema() {
