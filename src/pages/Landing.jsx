@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
+import SEO from "@/components/seo/SEO";
 
 const HERO_IMAGES = [
   "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1920",
@@ -58,6 +59,17 @@ export default function Landing() {
 
   return (
     <div className="min-h-screen bg-[#fcfaf7] overflow-x-hidden">
+      <SEO 
+        title="Escritório de Paisagismo de Alto Padrão" 
+        description="Paisagismo autoral residencial e comercial. Projetos em São Paulo e Minas Gerais."
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          "name": "Rosane Paisagismo",
+          "description": "Escritório de Paisagismo de Alto Padrão em São Paulo e Minas Gerais",
+          "url": "https://rosanepaisagismo.com"
+        }}
+      />
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
         .font-serif-s { font-family: 'Playfair Display', serif; }
