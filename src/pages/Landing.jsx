@@ -6,8 +6,10 @@ import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
-import antesImg from "@/assets/images/antes.jpg";
-import depoisImg from "@/assets/images/depois.jpg";
+
+// Placeholders para o build passar - Substituir pelos seus arquivos em src/assets/images/
+const antesImg = "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1200";
+const depoisImg = "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1200";
 
 export default function Landing() {
   const navigate = useNavigate();
