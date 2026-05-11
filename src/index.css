@@ -9,31 +9,34 @@
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
 
-    --background: 220 20% 97%;
-    --foreground: 224 45% 10%;
+    --background: 40 33% 98%; /* Sand/Off-white #fcfaf7 */
+    --foreground: 160 40% 17%; /* Deep Green #1a3d2b */
+
     --card: 0 0% 100%;
-    --card-foreground: 224 45% 10%;
+    --card-foreground: 160 40% 17%;
+
     --popover: 0 0% 100%;
-    --popover-foreground: 224 45% 10%;
-    --primary: 152 48% 26%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 220 16% 94%;
-    --secondary-foreground: 224 45% 14%;
-    --muted: 220 14% 95%;
-    --muted-foreground: 218 14% 48%;
-    --accent: 38 92% 50%;
-    --accent-foreground: 38 92% 12%;
-    --destructive: 0 72% 51%;
+    --popover-foreground: 160 40% 17%;
+
+    --primary: 160 40% 17%; /* #1a3d2b */
+    --primary-foreground: 40 33% 98%;
+
+    --secondary: 43 67% 45%; /* Antique Gold #c09624 */
+    --secondary-foreground: 160 40% 17%;
+
+    --muted: 40 10% 90%;
+    --muted-foreground: 160 20% 30%;
+
+    --accent: 43 67% 45%; /* #c09624 */
+    --accent-foreground: 40 33% 98%;
+
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 218 18% 90%;
-    --input: 218 18% 90%;
-    --ring: 152 48% 26%;
-    --chart-1: 152 48% 26%;
-    --chart-2: 38 92% 50%;
-    --chart-3: 217 91% 60%;
-    --chart-4: 340 65% 55%;
-    --chart-5: 25 85% 58%;
-    --radius: 0.5rem;
+
+    --border: 160 10% 90%;
+    --input: 160 10% 90%;
+    --ring: 160 40% 17%;
+    --radius: 1rem; /* More organic rounded corners */
 
     --sidebar-background: 224 44% 8%;
     --sidebar-foreground: 216 18% 78%;
@@ -111,3 +114,34 @@
   transform: translateY(-4px);
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
+
+@keyframes ken-burns {
+  0% { transform: scale(1.05); }
+  100% { transform: scale(1.15); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(40px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fade-in-slow {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-out infinite alternate;
+}
+
+.animate-fade-up {
+  animation: fade-up 1s ease-out forwards;
+}
+
+.animate-fade-in-slow {
+  animation: fade-in-slow 1.5s ease-out forwards;
+}
+
+.delay-200 { animation-delay: 200ms; }
+.delay-400 { animation-delay: 400ms; }
+.delay-600 { animation-delay: 600ms; }

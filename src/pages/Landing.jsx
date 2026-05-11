@@ -1,345 +1,318 @@
-import { useEffect, useState, useRef } from "react";
-import SobreSection from "@/components/landing/SobreSection";
-import { useNavigate, Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
+import { Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import { api } from "@/api/apiService";
-import { useAuth } from "@/lib/AuthContext";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 
-// Placeholders para o build passar - Substituir pelos seus arquivos em src/assets/images/
-const antesImg = "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1200";
-const depoisImg = "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1200";
+const HERO_IMAGES = [
+  "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1920",
+  "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=1920",
+  "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1920",
+];
+
+const SERVICES = [
+  { icon: "architecture", category: "Residencial & Comercial", title: "Design de Exteriores Autoral", desc: "Concepção volumétrica e botânica que cria diálogos únicos entre arquitetura e natureza." },
+  { icon: "verified_user", category: "Execução Técnica", title: "Implantação e Gestão de Obra", desc: "Rigor técnico absoluto com seleção criteriosa de exemplares para uma execução impecável." },
+  { icon: "spa", category: "Corporativo & Wellness", title: "Consultoria em Biofilia", desc: "Soluções que integram o bem-estar natural em residências de alto padrão e ambientes corporativos." },
+];
+
+const TESTIMONIALS = [
+  { name: "Ana Paula Ferreira", role: "Proprietária — Alphaville, SP", text: "O escritório da Rosane transformou completamente a percepção do nosso imóvel. Valorizou mais de 30% após o projeto." },
+  { name: "Dr. Ricardo Mota", role: "Clínica Premium — BH, MG", text: "A consultoria foi cirúrgica. O jardim biofílico da nossa clínica criou uma experiência única para os pacientes." },
+  { name: "Construtora Ávila", role: "Condomínio de Luxo — SP", text: "Parceria de alto nível. Entrega dentro do prazo, com um resultado que superou todas as expectativas dos compradores." },
+];
 
 export default function Landing() {
-  const navigate = useNavigate();
-  const { isAuthenticated } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const [content, setContent] = useState(null);
   const [slideIndex, setSlideIndex] = useState(0);
-  const [lightbox, setLightbox] = useState(null);
-  const [lightboxIndex, setLightboxIndex] = useState(0);
+  const [quizStep, setQuizStep] = useState(0);
+  const [quizData, setQuizData] = useState({});
+  const [quizDone, setQuizDone] = useState(false);
   const slideTimer = useRef(null);
 
   useEffect(() => {
-
-
-
-
-
-
-
-
-    // Não redirecionar mais automaticamente
-    // Deixar usuário escolher plano primeiro
-  }, []);useEffect(() => {api.entities.LandingContent.list().then((records) => {if (records.length > 0) setContent(records[0]);});}, []);const slides = (content?.slides || []).map((s) => ({ imagem: s.imagem_url, titulo: s.titulo, subtitulo: s.subtitulo }));
-
-  useEffect(() => {
-    if (slides.length <= 1) return;
     slideTimer.current = setInterval(() => {
-      setSlideIndex((i) => (i + 1) % slides.length);
-    }, 5000);
+      setSlideIndex(i => (i + 1) % HERO_IMAGES.length);
+    }, 6000);
     return () => clearInterval(slideTimer.current);
-  }, [slides.length]);
+  }, []);
 
-  const logoTopo = content?.logo_topo_url;
+  const QUIZ_STEPS = [
+    { key: "estilo", question: "Qual estilo mais te inspira?", options: ["Tropical Sofisticado", "Minimalista Contemporâneo", "Jardim Inglês Clássico", "Resort & Piscina"] },
+    { key: "imovel", question: "Qual é o seu imóvel?", options: ["Casa residencial", "Cobertura / Apartamento", "Clínica / Consultório", "Empresa / Condomínio"] },
+    { key: "orcamento", question: "Qual é o seu investimento?", options: ["R$ 15k – R$ 30k", "R$ 30k – R$ 80k", "R$ 80k – R$ 200k", "Acima de R$ 200k"] },
+  ];
 
-  const handleLogin = () => auth.redirectToLogin('/dashboard');
+  const handleQuizSelect = (key, value) => {
+    const next = { ...quizData, [key]: value };
+    setQuizData(next);
+    if (quizStep < QUIZ_STEPS.length - 1) {
+      setQuizStep(quizStep + 1);
+    } else {
+      setQuizStep(quizStep + 1);
+    }
+  };
 
-  // Keyboard navigation for lightbox
-  useEffect(() => {
-    if (!lightbox) return;
-    const portfolioItems = content?.portfolio_items || [];
-    const handleKey = (e) => {
-      if (e.key === 'ArrowRight' && lightboxIndex < portfolioItems.length - 1) {
-        const next = portfolioItems[lightboxIndex + 1];
-        setLightboxIndex(lightboxIndex + 1);
-        setLightbox({ src: next.imagem_url, titulo: next.titulo });
-      } else if (e.key === 'ArrowLeft' && lightboxIndex > 0) {
-        const prev = portfolioItems[lightboxIndex - 1];
-        setLightboxIndex(lightboxIndex - 1);
-        setLightbox({ src: prev.imagem_url, titulo: prev.titulo });
-      } else if (e.key === 'Escape') {
-        setLightbox(null);
-      }
-    };
-    window.addEventListener('keydown', handleKey);
-    return () => window.removeEventListener('keydown', handleKey);
-  }, [lightbox, lightboxIndex, content]);
+  const ANTES = "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1200";
+  const DEPOIS = "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1200";
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9] font-sans overflow-x-hidden">
+    <div className="min-h-screen bg-[#fcfaf7] overflow-x-hidden">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Work+Sans:wght@300;400;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
+        .font-serif-s { font-family: 'Playfair Display', serif; }
+        .font-sans-s { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
-        .font-serif-custom { font-family: 'Noto Serif', serif; }
-        .font-sans-custom { font-family: 'Work Sans', sans-serif; }
-        .hide-scrollbar::-webkit-scrollbar { display: none; }
-        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .mask-asymmetric { clip-path: polygon(0 0, 100% 0, 100% 90%, 90% 100%, 0 100%); }
       `}</style>
 
-      {/* TopBar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-100 font-sans-custom">
-        <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="/" className="flex items-center" style={{ minHeight: "16px" }}>
-            {logoTopo &&
-            <img src={logoTopo} alt="Logo" className="object-contain" style={{ height: `${(content?.logo_topo_size || 100) * 0.4}px`, maxWidth: "200px" }} />
-            }
+      {/* ─── NAV ─────────────────────────────────────────── */}
+      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100/60 font-sans-s">
+        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+          <a href="/" className="font-serif-s text-2xl font-bold text-[#1a3d2b] tracking-tight">
+            Rosane<span className="text-[#c09624]">.</span>
           </a>
-          <div className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
-            <Link to="/" className="hover:text-[#276a4d] transition-colors">Início</Link>
-            <a href="#portfolio" className="hover:text-[#276a4d] transition-colors">Portfólio</a>
-            <a href="#sobre" className="hover:text-[#276a4d] transition-colors">Sobre</a>
-            <Link to="/catalogo" className="hover:text-[#276a4d] transition-colors">Catálogo</Link>
-            <Link to="/produtos" className="hover:text-[#276a4d] transition-colors">Produtos</Link>
-            <Link to="/contato" className="hover:text-[#276a4d] transition-colors">Contato</Link>
-            <Link to="/sistema" className="ml-4 px-5 py-2 bg-[#276a4d] text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#1a3d2b] transition-colors">
-              Acessar Sistema
+          <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-[0.18em] text-stone-500">
+            <a href="#projetos" className="hover:text-[#c09624] transition-colors">Projetos</a>
+            <a href="#servicos" className="hover:text-[#c09624] transition-colors">Serviços</a>
+            <a href="#sobre" className="hover:text-[#c09624] transition-colors">Sobre</a>
+            <Link to="/catalogo" className="hover:text-[#c09624] transition-colors">Espécies</Link>
+            <Link to="/contato" className="px-7 py-3 bg-[#1a3d2b] text-white rounded-full hover:bg-[#c09624] transition-all">
+              Agendar Reunião
             </Link>
+            <Link to="/sistema" className="text-[9px] opacity-30 hover:opacity-80 transition-opacity">Acesso Pro</Link>
           </div>
-          <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-            <span className="material-symbols-outlined text-[#276a4d]">menu</span>
+          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
+            <span className="material-symbols-outlined text-[#1a3d2b]">menu</span>
           </button>
         </div>
-        {menuOpen &&
-        <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 space-y-3 text-sm font-medium text-stone-700">
-            <a href="#portfolio" className="block py-2" onClick={() => setMenuOpen(false)}>Portfólio</a>
-            <a href="#sobre" className="block py-2" onClick={() => setMenuOpen(false)}>Sobre</a>
-            <Link to="/produtos" className="block py-2" onClick={() => setMenuOpen(false)}>Produtos</Link>
-            <Link to="/contato" className="block py-2" onClick={() => setMenuOpen(false)}>Contato</Link>
-            <Link to="/sistema" className="block w-full mt-2 px-5 py-2 bg-[#276a4d] text-white rounded-full text-xs font-bold uppercase tracking-wider text-center" onClick={() => setMenuOpen(false)}>
-              Acessar Sistema
-            </Link>
+        {menuOpen && (
+          <div className="md:hidden bg-white px-6 py-8 space-y-6 text-sm font-bold uppercase tracking-widest text-[#1a3d2b] border-t border-stone-100">
+            <a href="#projetos" className="block" onClick={() => setMenuOpen(false)}>Projetos</a>
+            <a href="#servicos" className="block" onClick={() => setMenuOpen(false)}>Serviços</a>
+            <Link to="/contato" className="block" onClick={() => setMenuOpen(false)}>Contato</Link>
+            <Link to="/sistema" className="block text-[10px] opacity-40" onClick={() => setMenuOpen(false)}>Acesso Profissional</Link>
           </div>
-        }
+        )}
       </nav>
 
-      <main className="pt-16">
-        {/* Hero / Featured Portfolio - Auto Slideshow */}
-        <section className="bg-[#f9f9f9] overflow-hidden pt-4 pb-0" id="portfolio">
-          {slides.length > 0 &&
-          <>
-              {/* Image crossfade area */}
-              <div className="relative aspect-[4/3] md:aspect-[21/9] overflow-hidden">
-                {slides.map((s, i) =>
-              <div
-                key={i}
-                className="absolute inset-0"
-                style={{
-                  opacity: i === slideIndex ? 1 : 0,
-                  transition: "opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)",
-                  zIndex: i === slideIndex ? 1 : 0
-                }}>
-                
-                    <img
-                  alt={s.titulo}
-                  className="w-full h-full object-cover"
-                  style={{
-                    transform: i === slideIndex ? "scale(1)" : "scale(1.04)",
-                    transition: "transform 6s cubic-bezier(0.4, 0, 0.2, 1), opacity 1.2s cubic-bezier(0.4, 0, 0.2, 1)"
-                  }}
-                  src={s.imagem} />
-                
-                  </div>
-              )}
-              </div>
-
-              {/* Caption — crossfade with key trick */}
-              <div className="px-6 mt-6 pb-2 min-h-[56px]">
-                {slides.map((s, i) =>
-              <div
-                key={i}
-                style={{
-                  opacity: i === slideIndex ? 1 : 0,
-                  transition: "opacity 0.8s ease",
-                  position: i === slideIndex ? "relative" : "absolute",
-                  pointerEvents: i === slideIndex ? "auto" : "none"
-                }}>
-                
-                    <p className="text-[10px] text-stone-400 uppercase tracking-widest mb-1 font-bold font-sans-custom">{s.subtitulo}</p>
-                    <h3 className="font-serif-custom text-2xl text-[#1a3d2b]">{s.titulo}</h3>
-                  </div>
-              )}
-              </div>
-
-              {/* Dots */}
-              <div className="flex items-center gap-4 px-6 mt-8">
-                <div className="flex-1 h-[1px] bg-stone-200"></div>
-                <div className="flex gap-2">
-                  {slides.map((_, i) =>
-                <button
-                  key={i}
-                  onClick={() => {setSlideIndex(i);clearInterval(slideTimer.current);}}
-                  className="rounded-full transition-all duration-500"
-                  style={{
-                    width: i === slideIndex ? "24px" : "8px",
-                    height: "8px",
-                    backgroundColor: i === slideIndex ? "#276a4d" : "#d6d3d1"
-                  }} />
-
-                )}
-                </div>
-                <div className="flex-1 h-[1px] bg-stone-200"></div>
-              </div>
-            </>
-          }
-        </section>
-
-        {/* About Dra. Rosane */}
-        <SobreSection content={content} />
-
-        {/* Services */}
-        <section className="px-6 py-20 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-16">
-              
-              <h2 className="font-serif-custom text-4xl text-[#1a3d2b] mt-2">Nossa Expertise</h2>
-              <p className="text-stone-500 mt-4 font-serif-custom italic text-lg">Soluções planejadas para proprietários que valorizam o detalhe.</p>
+      <main>
+        {/* ─── HERO CINEMATOGRÁFICO ─────────────────────── */}
+        <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-black">
+          {HERO_IMAGES.map((src, i) => (
+            <div key={i} className="absolute inset-0 transition-opacity duration-[1500ms] ease-in-out" style={{ opacity: i === slideIndex ? 1 : 0 }}>
+              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70 z-10" />
+              <img src={src} alt="Paisagismo de luxo" className="w-full h-full object-cover animate-ken-burns" />
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-12">
-              {[
-              { num: "01", icon: "landscape", title: content?.servico1_titulo || "Projeto de Paisagismo", desc: content?.servico1_desc || "Conceito completo em 3D, do estudo preliminar ao executivo.", interesse: content?.servico1_titulo || "Projeto de Paisagismo" },
-              { num: "02", icon: "menu_book", title: content?.servico2_titulo || "Consultoria Técnica", desc: content?.servico2_desc || "Escolha de espécies e melhorias pontuais no seu ambiente.", interesse: content?.servico2_titulo || "Consultoria Técnica" },
-              { num: "03", icon: "verified", title: content?.servico3_titulo || "Implantação de Paisagismo", desc: content?.servico3_desc || "Gestão total da execução, garantindo rigor e sofisticação.", interesse: content?.servico3_titulo || "Implantação e Obra" }].
-              map((s) =>
-              <div key={s.num} className="group">
-                  <div className="flex items-center gap-4 mb-6">
-                    <span className="font-serif-custom text-4xl text-stone-200 italic leading-none">{s.num}</span>
-                    <div className="w-10 h-10 bg-white flex items-center justify-center border border-stone-100 rounded-lg shadow-sm">
-                      <span className="material-symbols-outlined text-[#276a4d] text-xl">{s.icon}</span>
-                    </div>
-                  </div>
-                  <h3 className="font-serif-custom text-xl text-[#1a3d2b] mb-3">{s.title}</h3>
-                  <p className="text-stone-500 text-sm leading-relaxed font-sans-custom normal-case">{s.desc}</p>
-                  <Link to={`/contato?interesse=${encodeURIComponent(s.interesse)}`} className="inline-block mt-4 text-[10px] text-[#276a4d] uppercase tracking-[0.2em] border-b border-[#276a4d]/20 pb-1 hover:border-[#276a4d] transition-all font-bold font-sans-custom">
-                    VER DETALHES
-                  </Link>
-                </div>
-              )}
+          ))}
+
+          <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
+            <p className="font-sans-s text-[11px] font-bold uppercase tracking-[0.5em] text-[#c09624] mb-8 opacity-0 animate-fade-up" style={{animationFillMode:'forwards'}}>
+              Escritório de Paisagismo de Alto Padrão · São Paulo & Minas Gerais
+            </p>
+            <h1 className="font-serif-s text-5xl md:text-8xl text-white leading-[1.05] mb-8 opacity-0 animate-fade-up delay-200" style={{animationFillMode:'forwards'}}>
+              Projetos que transformam<br /> imóveis em <span className="italic text-[#c09624]">experiências</span>
+            </h1>
+            <p className="font-sans-s text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-14 leading-relaxed opacity-0 animate-fade-up delay-400" style={{animationFillMode:'forwards'}}>
+              Paisagismo autoral residencial e comercial. Cada projeto é único, pensado para valorizar sua arquitetura e elevar o padrão de vida.
+            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 opacity-0 animate-fade-up delay-600" style={{animationFillMode:'forwards'}}>
+              <Link to="/contato" className="px-10 py-5 bg-[#c09624] text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
+                Solicitar Orçamento
+              </Link>
+              <a href="#projetos" className="text-white font-bold text-[10px] uppercase tracking-widest border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
+                Ver Projetos ↓
+              </a>
             </div>
+          </div>
+
+          {/* Slide dots */}
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-2">
+            {HERO_IMAGES.map((_, i) => (
+              <button key={i} onClick={() => setSlideIndex(i)}
+                className="rounded-full transition-all duration-500"
+                style={{ width: i === slideIndex ? 28 : 8, height: 8, backgroundColor: i === slideIndex ? '#c09624' : 'rgba(255,255,255,0.4)' }} />
+            ))}
           </div>
         </section>
 
-        {/* Transformações Antes e Depois */}
-        <section className="py-24 bg-[#f3f4f1] px-6">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-              <div className="max-w-2xl">
-                <h2 className="font-serif-custom text-4xl text-[#1a3d2b]">Transformações</h2>
-                <div className="h-px w-24 bg-[#276a4d]/20 mt-4 mb-6"></div>
-                <p className="text-stone-600 font-sans-custom leading-relaxed">
-                  Veja a evolução de um projeto real. Nosso compromisso é transformar espaços comuns em santuários particulares, valorizando cada detalhe do terreno e as necessidades de nossos clientes.
-                </p>
+        {/* ─── NÚMEROS DE CREDIBILIDADE ─────────────────── */}
+        <section className="bg-[#1a3d2b] py-16">
+          <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+            {[
+              { n: "150+", l: "Projetos Entregues" },
+              { n: "20", l: "Anos de Experiência" },
+              { n: "98%", l: "Clientes Satisfeitos" },
+              { n: "2 Estados", l: "SP & MG" },
+            ].map(({ n, l }) => (
+              <div key={l}>
+                <p className="font-serif-s text-4xl font-bold text-[#c09624]">{n}</p>
+                <p className="font-sans-s text-[10px] uppercase tracking-widest text-white/50 mt-2">{l}</p>
               </div>
-              <Link to="/contato" className="text-[#276a4d] font-bold text-xs uppercase tracking-widest border-b-2 border-[#276a4d]/10 pb-1 hover:border-[#276a4d] transition-all">
-                SOLICITAR TRANSFORMAÇÃO
+            ))}
+          </div>
+        </section>
+
+        {/* ─── FILOSOFIA / NARRATIVA ────────────────────── */}
+        <section id="sobre" className="py-32 px-6 bg-[#fcfaf7]">
+          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
+            <div className="relative">
+              <div className="aspect-[4/5] overflow-hidden rounded-[40px] shadow-2xl">
+                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=900" alt="Jardim autoral" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
+              </div>
+              <div className="absolute -bottom-8 -right-8 bg-[#1a3d2b] text-white p-10 rounded-[28px] hidden md:block max-w-[240px] shadow-2xl">
+                <span className="material-symbols-outlined text-[#c09624] text-3xl block mb-3">eco</span>
+                <p className="font-serif-s text-lg leading-snug italic">"Cada projeto é um jardim secreto esperando para ser revelado."</p>
+              </div>
+            </div>
+            <div className="space-y-8">
+              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624]">Nossa Filosofia</p>
+              <h2 className="font-serif-s text-5xl text-[#1a3d2b] leading-tight">Criamos refúgios onde o luxo encontra a natureza.</h2>
+              <div className="h-px w-16 bg-[#c09624]" />
+              <p className="font-sans-s text-stone-600 text-lg leading-relaxed">
+                Cada terreno tem uma alma. Nossa missão é interpretá-la através de espécies selecionadas, iluminação cênica e design autoral que eleva o valor do imóvel e transforma a experiência de quem o vive.
+              </p>
+              <p className="font-sans-s text-stone-500 leading-relaxed">
+                Atendemos residências de alto padrão, clínicas premium, condomínios de luxo e escritórios corporativos em São Paulo, Minas Gerais e regiões adjacentes.
+              </p>
+              <Link to="/contato" className="inline-flex items-center gap-3 font-sans-s font-bold text-[11px] uppercase tracking-widest text-[#1a3d2b] border-b-2 border-[#c09624] pb-1 hover:text-[#c09624] transition-colors">
+                Conhecer o Escritório <span className="material-symbols-outlined text-sm">arrow_forward</span>
               </Link>
             </div>
-            
-            <BeforeAfterSlider 
-              before={antesImg} 
-              after={depoisImg} 
-              labelBefore="Estado Inicial" 
-              labelAfter="Projeto Finalizado"
-            />
           </div>
         </section>
 
-        {/* Portfolio Grid */}
-        <section className="py-24 bg-white px-6">
+        {/* ─── SERVIÇOS ─────────────────────────────────── */}
+        <section id="servicos" className="py-32 px-6 bg-white">
           <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-16">
-              <h2 className="font-serif-custom text-4xl text-[#1a3d2b]">Portifólio</h2>
-              <div className="h-px w-24 bg-[#276a4d]/20 mx-auto mt-4"></div>
+            <div className="text-center max-w-2xl mx-auto mb-20">
+              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Nossa Expertise</p>
+              <h2 className="font-serif-s text-5xl text-[#1a3d2b]">A exclusividade que sua arquitetura merece.</h2>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {(content?.portfolio_items || []).map((item, n) =>
-              <div key={n} className="relative group overflow-hidden cursor-pointer" onClick={() => {setLightboxIndex(n);setLightbox({ src: item.imagem_url, titulo: item.titulo });}}>
-                  <div className="aspect-square">
-                    <img alt={item.titulo} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" src={item.imagem_url} />
+            <div className="grid md:grid-cols-3 gap-12">
+              {SERVICES.map((s, i) => (
+                <div key={i} className="group p-10 rounded-3xl border border-stone-100 hover:border-[#1a3d2b] hover:shadow-2xl transition-all duration-500">
+                  <div className="w-14 h-14 bg-[#fcfaf7] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1a3d2b] transition-all duration-500">
+                    <span className="material-symbols-outlined text-[#1a3d2b] group-hover:text-[#c09624] text-3xl">{s.icon}</span>
                   </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex flex-col justify-end p-4">
-                    <h4 className="font-serif-custom text-white text-lg">{item.titulo}</h4>
+                  <p className="font-sans-s text-[9px] font-bold uppercase tracking-widest text-[#c09624] mb-3">{s.category}</p>
+                  <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">{s.title}</h3>
+                  <p className="font-sans-s text-stone-500 leading-relaxed mb-8">{s.desc}</p>
+                  <Link to="/contato" className="inline-flex items-center gap-2 font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b border-stone-200 pb-1 group-hover:border-[#c09624] group-hover:text-[#c09624] transition-all">
+                    Solicitar este serviço <span className="material-symbols-outlined text-xs">arrow_forward</span>
+                  </Link>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ─── ANTES E DEPOIS ───────────────────────────── */}
+        <section className="py-32 px-6 bg-[#fcfaf7]" id="projetos">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+              <div>
+                <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Transformações Reais</p>
+                <h2 className="font-serif-s text-5xl text-[#1a3d2b]">Antes & Depois</h2>
+                <p className="font-sans-s text-stone-500 mt-4 text-lg max-w-lg">Deslize para ver a transformação completa. Cada projeto começa com um terreno e termina com um legado.</p>
+              </div>
+              <Link to="/contato" className="font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b-2 border-[#c09624] pb-1 hover:text-[#c09624] transition-colors whitespace-nowrap">
+                Solicitar Transformação →
+              </Link>
+            </div>
+            <BeforeAfterSlider before={ANTES} after={DEPOIS} labelBefore="Estado Inicial" labelAfter="Projeto Finalizado" />
+          </div>
+        </section>
+
+        {/* ─── QUIZ DE QUALIFICAÇÃO ─────────────────────── */}
+        <section className="py-32 px-6 bg-[#1a3d2b]">
+          <div className="max-w-2xl mx-auto text-center">
+            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Qualificação Gratuita</p>
+            <h2 className="font-serif-s text-4xl md:text-5xl text-white mb-6">Descubra o paisagismo ideal para o seu imóvel</h2>
+            <p className="font-sans-s text-white/60 mb-14">Responda 3 perguntas rápidas e receba uma consultoria inicial personalizada via WhatsApp.</p>
+
+            {quizStep < QUIZ_STEPS.length ? (
+              <div>
+                <div className="flex justify-center gap-2 mb-10">
+                  {QUIZ_STEPS.map((_, i) => (
+                    <div key={i} className="h-1 rounded-full transition-all duration-500" style={{ width: i <= quizStep ? 48 : 24, backgroundColor: i <= quizStep ? '#c09624' : 'rgba(255,255,255,0.2)' }} />
+                  ))}
+                </div>
+                <p className="font-serif-s text-2xl text-white mb-8">{QUIZ_STEPS[quizStep].question}</p>
+                <div className="grid grid-cols-2 gap-4">
+                  {QUIZ_STEPS[quizStep].options.map(opt => (
+                    <button key={opt} onClick={() => handleQuizSelect(QUIZ_STEPS[quizStep].key, opt)}
+                      className="font-sans-s font-medium text-sm px-6 py-4 rounded-2xl border border-white/20 text-white hover:bg-[#c09624] hover:border-[#c09624] transition-all text-center">
+                      {opt}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            ) : !quizDone ? (
+              <form className="space-y-5 text-left" onSubmit={e => { e.preventDefault(); setQuizDone(true); const msg = `Olá! Tenho interesse em paisagismo.\n\nPerfil: Estilo: ${quizData.estilo}, Imóvel: ${quizData.imovel}, Investimento: ${quizData.orcamento}\n\nNome: ${e.target.nome.value}`; window.open(`https://wa.me/5538999999999?text=${encodeURIComponent(msg)}`,'_blank'); }}>
+                <p className="font-serif-s text-2xl text-white text-center mb-8">Quase lá! Para onde enviamos sua consultoria?</p>
+                <input name="nome" required placeholder="Seu nome completo" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
+                <input name="whatsapp" required placeholder="WhatsApp com DDD" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
+                <button type="submit" className="w-full py-5 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all">
+                  Receber Consultoria via WhatsApp →
+                </button>
+              </form>
+            ) : (
+              <div className="text-center">
+                <span className="material-symbols-outlined text-[#c09624] text-6xl mb-6 block">check_circle</span>
+                <h3 className="font-serif-s text-3xl text-white mb-4">Perfeito! Entraremos em contato em breve.</h3>
+                <p className="font-sans-s text-white/60">Nossa equipe já recebeu seu perfil e vai preparar uma proposta personalizada para você.</p>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* ─── DEPOIMENTOS ──────────────────────────────── */}
+        <section className="py-32 px-6 bg-white">
+          <div className="max-w-7xl mx-auto">
+            <div className="text-center mb-20">
+              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Prova Social</p>
+              <h2 className="font-serif-s text-5xl text-[#1a3d2b]">O que nossos clientes dizem</h2>
+            </div>
+            <div className="grid md:grid-cols-3 gap-8">
+              {TESTIMONIALS.map((t, i) => (
+                <div key={i} className="p-10 bg-[#fcfaf7] rounded-3xl border border-stone-100 hover:shadow-xl transition-all duration-300">
+                  <div className="flex mb-6">
+                    {[...Array(5)].map((_, j) => <span key={j} className="text-[#c09624] text-sm">★</span>)}
+                  </div>
+                  <p className="font-serif-s text-lg text-[#1a3d2b] italic leading-relaxed mb-8">"{t.text}"</p>
+                  <div>
+                    <p className="font-sans-s font-bold text-sm text-[#1a3d2b]">{t.name}</p>
+                    <p className="font-sans-s text-[11px] text-stone-400 uppercase tracking-wider">{t.role}</p>
                   </div>
                 </div>
-              )}
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Lightbox */}
-        {lightbox && (() => {
-          const portfolioItems = content?.portfolio_items || [];
-          const goTo = (idx) => {
-            const item = portfolioItems[idx];
-            if (item) {setLightboxIndex(idx);setLightbox({ src: item.imagem_url, titulo: item.titulo });}
-          };
-          return (
-            <div
-              className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-4"
-              onClick={() => setLightbox(null)}>
-              
-              {/* Close */}
-              <button
-                className="absolute top-4 right-4 text-white bg-black/50 hover:bg-black/80 rounded-full w-10 h-10 flex items-center justify-center transition-colors z-10"
-                onClick={() => setLightbox(null)}>
-                
-                <span className="material-symbols-outlined">close</span>
-              </button>
-
-              {/* Prev */}
-              {lightboxIndex > 0 &&
-              <button
-                className="absolute left-4 text-white bg-black/50 hover:bg-black/80 rounded-full w-12 h-12 flex items-center justify-center transition-colors z-10"
-                onClick={(e) => {e.stopPropagation();goTo(lightboxIndex - 1);}}>
-                
-                  <span className="material-symbols-outlined text-3xl">chevron_left</span>
-                </button>
-              }
-
-              {/* Next */}
-              {lightboxIndex < portfolioItems.length - 1 &&
-              <button
-                className="absolute right-4 text-white bg-black/50 hover:bg-black/80 rounded-full w-12 h-12 flex items-center justify-center transition-colors z-10"
-                onClick={(e) => {e.stopPropagation();goTo(lightboxIndex + 1);}}>
-                
-                  <span className="material-symbols-outlined text-3xl">chevron_right</span>
-                </button>
-              }
-
-              <div className="relative max-w-5xl max-h-full" onClick={(e) => e.stopPropagation()}>
-                <img
-                  src={lightbox.src}
-                  alt={lightbox.titulo}
-                  className="max-w-full max-h-[90vh] object-contain rounded-lg shadow-2xl" />
-                
-                {lightbox.titulo &&
-                <p className="text-white text-center mt-3 font-serif-custom text-lg">{lightbox.titulo}</p>
-                }
-              </div>
-            </div>);
-
-        })()}
-
-        {/* CTA */}
-        <section className="py-20 bg-[#1a3d2b] text-white px-6 text-center">
-          <h2 className="font-serif-custom text-4xl mb-4">Pronto para transformar seu espaço?</h2>
-          <p className="text-white/70 mb-8 max-w-xl mx-auto font-sans-custom">Entre em contato e vamos planejar juntos o seu projeto exclusivo.</p>
-          <Link
-            to="/contato"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-[#1a3d2b] rounded-full font-bold text-sm uppercase tracking-wider hover:bg-stone-100 transition-colors">
-            
-            Solicitar Orçamento
-            <span className="material-symbols-outlined text-[18px]">arrow_forward</span>
-          </Link>
+        {/* ─── CTA FINAL ────────────────────────────────── */}
+        <section className="py-40 bg-[#1a3d2b] relative overflow-hidden text-center px-6">
+          <div className="absolute inset-0 opacity-10">
+            <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover" alt="" />
+          </div>
+          <div className="relative z-10 max-w-3xl mx-auto">
+            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.4em] text-[#c09624] mb-6">Pronto para começar?</p>
+            <h2 className="font-serif-s text-5xl md:text-7xl text-white mb-8 leading-tight">Vamos criar o seu<br /><span className="italic">refúgio verde.</span></h2>
+            <p className="font-sans-s text-white/60 text-lg mb-14 max-w-xl mx-auto">Agende uma reunião de conceito gratuita e descubra o potencial do seu espaço.</p>
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
+              <Link to="/contato" className="px-12 py-6 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
+                Iniciar Meu Projeto
+              </Link>
+              <a href="https://wa.me/5538999999999" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-sans-s font-bold text-[11px] uppercase tracking-widest text-white border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
+                <span className="material-symbols-outlined text-base">chat</span> Falar no WhatsApp
+              </a>
+            </div>
+          </div>
         </section>
       </main>
 
       <SiteFooter />
-
       <WhatsAppFloat />
-    </div>);
-
+    </div>
+  );
 }
