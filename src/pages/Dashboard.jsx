@@ -109,26 +109,56 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="p-6 space-y-6 max-w-[1600px] mx-auto">
+    <div className="p-6 space-y-6 max-w-[1600px] mx-auto animate-fade-in">
+      
+      {/* Quick Actions */}
+      <div className="flex flex-wrap items-center gap-3 mb-2">
+        <h2 className="text-lg font-bold text-[#1a3d2b] mr-4">Painel de Gestão</h2>
+        {[
+          { label: "Novo Cliente", icon: Users, link: "/comercial" },
+          { label: "Registrar Obra", icon: Target, link: "/projetos-execucao" },
+          { label: "Caixa Entrada", icon: TrendingUp, link: "/caixa-entrada" },
+          { label: "Caixa Saída", icon: TrendingDown, link: "/caixa-saida" },
+        ].map(action => (
+          <a 
+            key={action.label}
+            href={action.link}
+            className="flex items-center gap-2 px-4 py-2 bg-white border border-stone-100 rounded-xl text-xs font-semibold text-stone-600 hover:text-[#276a4d] hover:border-[#276a4d]/20 transition-all shadow-sm hover:shadow-md"
+          >
+            <action.icon className="w-3.5 h-3.5" />
+            {action.label}
+          </a>
+        ))}
+      </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4">
-        <KpiCard title="Receita do Mês" value={formatCurrency(receitaMes)} icon={TrendingUp}
-          subtitle={`vs. ${mesAnterior}: ${receitaMesAnterior > 0 ? formatCurrency(receitaMesAnterior) : "—"}`}
-          trend={`${variacaoReceita >= 0 ? "+" : ""}${variacaoReceita.toFixed(1)}%`}
-          trendPositive={variacaoReceita >= 0} colorClass="bg-emerald-50 text-emerald-600" />
-        <KpiCard title="Despesas do Mês" value={formatCurrency(despesaMes)} icon={TrendingDown}
-          subtitle={`${saidas.filter(s => s.competencia === mesAtual && !s.pago).length} pendentes`}
-          colorClass="bg-red-50 text-red-500" />
-        <KpiCard title="Lucro Líquido" value={formatCurrency(lucroLiquido)} icon={DollarSign}
-          subtitle={`Margem: ${margemLucro.toFixed(1)}%`}
-          trendPositive={lucroLiquido >= 0} colorClass="bg-primary/10 text-primary" />
-        <KpiCard title="Conversão Comercial" value={`${taxaConversao.toFixed(0)}%`} icon={Users}
-          subtitle={`${clientesFechados} de ${comercial.length} propostas`}
-          colorClass="bg-blue-50 text-blue-600" />
-        <KpiCard title="Meta Ideal" value={`${Math.min((faturamentoAcumulado / metaIdeal) * 100, 100).toFixed(0)}%`} icon={Target}
-          subtitle={`${formatCurrency(faturamentoAcumulado)} de ${formatCurrency(metaIdeal)}`}
-          colorClass="bg-amber-50 text-amber-600" />
+        <div className="hover-lift">
+          <KpiCard title="Receita do Mês" value={formatCurrency(receitaMes)} icon={TrendingUp}
+            subtitle={`vs. ${mesAnterior}: ${receitaMesAnterior > 0 ? formatCurrency(receitaMesAnterior) : "—"}`}
+            trend={`${variacaoReceita >= 0 ? "+" : ""}${variacaoReceita.toFixed(1)}%`}
+            trendPositive={variacaoReceita >= 0} colorClass="bg-emerald-50 text-emerald-600" />
+        </div>
+        <div className="hover-lift">
+          <KpiCard title="Despesas do Mês" value={formatCurrency(despesaMes)} icon={TrendingDown}
+            subtitle={`${saidas.filter(s => s.competencia === mesAtual && !s.pago).length} pendentes`}
+            colorClass="bg-red-50 text-red-500" />
+        </div>
+        <div className="hover-lift">
+          <KpiCard title="Lucro Líquido" value={formatCurrency(lucroLiquido)} icon={DollarSign}
+            subtitle={`Margem: ${margemLucro.toFixed(1)}%`}
+            trendPositive={lucroLiquido >= 0} colorClass="bg-primary/10 text-primary" />
+        </div>
+        <div className="hover-lift">
+          <KpiCard title="Conversão Comercial" value={`${taxaConversao.toFixed(0)}%`} icon={Users}
+            subtitle={`${clientesFechados} de ${comercial.length} propostas`}
+            colorClass="bg-blue-50 text-blue-600" />
+        </div>
+        <div className="hover-lift">
+          <KpiCard title="Meta Ideal" value={`${Math.min((faturamentoAcumulado / metaIdeal) * 100, 100).toFixed(0)}%`} icon={Target}
+            subtitle={`${formatCurrency(faturamentoAcumulado)} de ${formatCurrency(metaIdeal)}`}
+            colorClass="bg-amber-50 text-amber-600" />
+        </div>
       </div>
 
       {/* Row 1: Cashflow + Pipeline */}

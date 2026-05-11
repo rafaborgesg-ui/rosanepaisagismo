@@ -5,6 +5,9 @@ import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import { base44 } from "@/api/base44Client";
 import { useAuth } from "@/lib/AuthContext";
+import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
+import antesImg from "@/assets/images/antes.jpg";
+import depoisImg from "@/assets/images/depois.jpg";
 
 export default function Landing() {
   const navigate = useNavigate();
@@ -87,6 +90,7 @@ export default function Landing() {
             <Link to="/" className="hover:text-[#276a4d] transition-colors">Início</Link>
             <a href="#portfolio" className="hover:text-[#276a4d] transition-colors">Portfólio</a>
             <a href="#sobre" className="hover:text-[#276a4d] transition-colors">Sobre</a>
+            <Link to="/catalogo" className="hover:text-[#276a4d] transition-colors">Catálogo</Link>
             <Link to="/produtos" className="hover:text-[#276a4d] transition-colors">Produtos</Link>
             <Link to="/contato" className="hover:text-[#276a4d] transition-colors">Contato</Link>
             <Link to="/sistema" className="ml-4 px-5 py-2 bg-[#276a4d] text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#1a3d2b] transition-colors">
@@ -213,6 +217,31 @@ export default function Landing() {
                 </div>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* Transformações Antes e Depois */}
+        <section className="py-24 bg-[#f3f4f1] px-6">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+              <div className="max-w-2xl">
+                <h2 className="font-serif-custom text-4xl text-[#1a3d2b]">Transformações</h2>
+                <div className="h-px w-24 bg-[#276a4d]/20 mt-4 mb-6"></div>
+                <p className="text-stone-600 font-sans-custom leading-relaxed">
+                  Veja a evolução de um projeto real. Nosso compromisso é transformar espaços comuns em santuários particulares, valorizando cada detalhe do terreno e as necessidades de nossos clientes.
+                </p>
+              </div>
+              <Link to="/contato" className="text-[#276a4d] font-bold text-xs uppercase tracking-widest border-b-2 border-[#276a4d]/10 pb-1 hover:border-[#276a4d] transition-all">
+                SOLICITAR TRANSFORMAÇÃO
+              </Link>
+            </div>
+            
+            <BeforeAfterSlider 
+              before={antesImg} 
+              after={depoisImg} 
+              labelBefore="Estado Inicial" 
+              labelAfter="Projeto Finalizado"
+            />
           </div>
         </section>
 

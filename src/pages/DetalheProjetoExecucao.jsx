@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { base44 } from "@/api/base44Client";
-import { Plus, Trash2, Edit2, ChevronLeft } from "lucide-react";
+import { Plus, Trash2, Edit2, ChevronLeft, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import PageHeader from "../components/shared/PageHeader";
 import CronogramaForm from "../components/projetos/CronogramaForm";
+import GuiaManutencaoModal from "../components/projetos/GuiaManutencaoModal";
 import { format, parseISO } from "date-fns";
 
 const ATIVIDADE_CORES = {
@@ -29,6 +30,7 @@ export default function DetalheProjetoExecucao() {
   const navigate = useNavigate();
   const qc = useQueryClient();
   const [showCronForm, setShowCronForm] = useState(false);
+  const [showGuia, setShowGuia] = useState(false);
   const [editingCron, setEditingCron] = useState(null);
 
   const { data: projeto } = useQuery({
@@ -86,6 +88,17 @@ export default function DetalheProjetoExecucao() {
         <PageHeader
           title={projeto.nome_projeto}
           subtitle={`${projeto.cliente} • ${projeto.endereco}`}
+          actions={
+            <Button
+              variant="outline"
+              size="sm"
+              className="gap-2 text-[#276a4d] border-[#276a4d] hover:bg-[#276a4d] hover:text-white transition-all"
+              onClick={() => setShowGuia(true)}
+            >
+              <FileText className="w-4 h-4" />
+              Gerar Guia de Manutenção
+            </Button>
+          }
         />
       </div>
 
@@ -183,6 +196,13 @@ export default function DetalheProjetoExecucao() {
         onClose={() => { setShowCronForm(false); setEditingCron(null); }}
         onSave={handleSaveCron}
         initialData={editingCron}
+      />
+
+      <GuiaManutencaoModal
+        open={showGuia}
+        onClose={() => setShowGuia(false)}
+        projetoNome={projeto.nome_projeto}
+        clienteNome={projeto.cliente}
       />
     </div>
   );

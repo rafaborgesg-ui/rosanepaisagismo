@@ -32,6 +32,7 @@ import Pricing from './pages/Pricing';
 import Agradecimento from './pages/Agradecimento';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import TermosDeServico from './pages/TermosDeServico';
+import CatalogoBotanico from './pages/CatalogoBotanico';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isAuthenticated } = useAuth();
@@ -57,6 +58,7 @@ const AuthenticatedApp = () => {
       <Route path="/agradecimento" element={<Agradecimento />} />
       <Route path="/privacidade" element={<PrivacyPolicy />} />
       <Route path="/termos" element={<TermosDeServico />} />
+      <Route path="/catalogo" element={<CatalogoBotanico />} />
       <Route path="/admin" element={<AdminLanding />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/payment/cancel" element={<PaymentCancel />} />
