@@ -43,6 +43,7 @@ export const api = {
     CaixaSaida: createEntityMethods('caixa_saida'),
     Commercial: createEntityMethods('commercial'),
     Project: createEntityMethods('projects'),
+    Projeto: createEntityMethods('projects'),
     ProjetoExecucao: createEntityMethods('projetos_execucao'),
     CronogramaExecucao: createEntityMethods('cronograma_execucao'),
     Cliente: createEntityMethods('clientes'),
@@ -50,6 +51,9 @@ export const api = {
     Equipe: createEntityMethods('equipe'),
     MetaAnual: createEntityMethods('metas_anuais'),
     CatalogoBotanico: createEntityMethods('catalogo_botanico'),
+    LandingContent: createEntityMethods('landing_content'),
+    TeamInvite: createEntityMethods('team_invites'),
+    Subscription: createEntityMethods('subscriptions'),
   },
   functions: {
     invoke: async (name, payload) => {
