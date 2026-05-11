@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Playfair Display', serif;
+    --font-body: 'Inter', sans-serif;
+
+    --background: 220 20% 97%;
+    --foreground: 224 45% 10%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 45% 10%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 45% 10%;
+    --primary: 152 48% 26%;
+    --primary-foreground: 0 0% 98%;
+    --secondary: 220 16% 94%;
+    --secondary-foreground: 224 45% 14%;
+    --muted: 220 14% 95%;
+    --muted-foreground: 218 14% 48%;
+    --accent: 38 92% 50%;
+    --accent-foreground: 38 92% 12%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 218 18% 90%;
+    --input: 218 18% 90%;
+    --ring: 152 48% 26%;
+    --chart-1: 152 48% 26%;
+    --chart-2: 38 92% 50%;
+    --chart-3: 217 91% 60%;
+    --chart-4: 340 65% 55%;
+    --chart-5: 25 85% 58%;
+    --radius: 0.5rem;
+
+    --sidebar-background: 224 44% 8%;
+    --sidebar-foreground: 216 18% 78%;
+    --sidebar-primary: 38 92% 52%;
+    --sidebar-primary-foreground: 224 44% 8%;
+    --sidebar-accent: 224 36% 14%;
+    --sidebar-accent-foreground: 216 18% 92%;
+    --sidebar-border: 224 28% 13%;
+    --sidebar-ring: 38 92% 50%;
+  }
+}
+
+@layer base {
+  * { @apply border-border outline-ring/50; }
+  body { @apply bg-background text-foreground font-body antialiased; }
+  h1,h2,h3,h4 { @apply tracking-tight; }
+}
+
+/* Scrollbar */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: hsl(var(--border)); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: hsl(var(--muted-foreground) / 0.4); }
+
+/* Smooth transitions */
+* { transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1); }
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-scale-in {
+  animation: scale-in 0.5s ease-out;
+}
+
+/* Table row hover */
+.table-row-hover { @apply hover:bg-muted/40 transition-colors duration-100; }

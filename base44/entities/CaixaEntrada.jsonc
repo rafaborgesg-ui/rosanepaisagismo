@@ -1,0 +1,95 @@
+{
+  "name": "CaixaEntrada",
+  "type": "object",
+  "properties": {
+    "office_owner": {
+      "type": "string",
+      "description": "Email do dono do escrit\u00f3rio"
+    },
+    "cliente": {
+      "type": "string",
+      "description": "Nome do cliente"
+    },
+    "tipo_projeto": {
+      "type": "string",
+      "enum": [
+        "Projeto Paisag\u00edstico",
+        "Manuten\u00e7\u00e3o",
+        "Consultoria",
+        "Implanta\u00e7\u00e3o",
+        "Reforma",
+        "Outro"
+      ],
+      "description": "Tipo de projeto"
+    },
+    "categoria": {
+      "type": "string",
+      "enum": [
+        "Projeto",
+        "Manuten\u00e7\u00e3o Mensal",
+        "Consultoria",
+        "Implanta\u00e7\u00e3o",
+        "Venda de Plantas",
+        "Outro"
+      ],
+      "description": "Categoria da receita"
+    },
+    "competencia": {
+      "type": "string",
+      "description": "M\u00eas de compet\u00eancia"
+    },
+    "vencimento": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de vencimento"
+    },
+    "valor_total": {
+      "type": "number",
+      "description": "Valor total do contrato"
+    },
+    "parcelas": {
+      "type": "number",
+      "description": "N\u00famero de parcelas"
+    },
+    "valor_mensal": {
+      "type": "number",
+      "description": "Valor mensal da parcela"
+    },
+    "mes_inicio": {
+      "type": "string",
+      "description": "M\u00eas de in\u00edcio dos pagamentos"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Ativo",
+        "Finalizado",
+        "Cancelado",
+        "Pendente"
+      ],
+      "default": "Ativo",
+      "description": "Status do recebimento"
+    },
+    "pago": {
+      "type": "boolean",
+      "default": false,
+      "description": "Se o valor foi recebido/pago"
+    },
+    "observacoes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es gerais"
+    },
+    "arquivo_url": {
+      "type": "string",
+      "description": "URL do arquivo anexado"
+    },
+    "arquivo_nome": {
+      "type": "string",
+      "description": "Nome do arquivo anexado"
+    }
+  },
+  "required": [
+    "cliente",
+    "valor_total"
+  ]
+}

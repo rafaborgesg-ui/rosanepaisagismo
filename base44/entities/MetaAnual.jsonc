@@ -1,0 +1,32 @@
+{
+  "name": "MetaAnual",
+  "type": "object",
+  "properties": {
+    "office_owner": {
+      "type": "string",
+      "description": "Email do dono do escrit\u00f3rio"
+    },
+    "ano": {
+      "type": "number",
+      "description": "Ano de refer\u00eancia"
+    },
+    "meta_ideal": {
+      "type": "number",
+      "default": 600000,
+      "description": "Meta ideal"
+    },
+    "meta_realista": {
+      "type": "number",
+      "default": 400000,
+      "description": "Meta realista"
+    },
+    "meta_pessimista": {
+      "type": "number",
+      "default": 250000,
+      "description": "Meta pessimista"
+    }
+  },
+  "required": [
+    "ano"
+  ]
+}

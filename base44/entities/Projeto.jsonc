@@ -1,0 +1,105 @@
+{
+  "name": "Projeto",
+  "type": "object",
+  "properties": {
+    "office_owner": {
+      "type": "string",
+      "description": "Email do dono do escrit\u00f3rio"
+    },
+    "nome_projeto": {
+      "type": "string",
+      "description": "Nome do projeto"
+    },
+    "cliente": {
+      "type": "string",
+      "description": "Nome do cliente"
+    },
+    "endereco": {
+      "type": "string",
+      "description": "Endere\u00e7o do projeto"
+    },
+    "data_inicio": {
+      "type": "string",
+      "format": "date",
+      "description": "Data de in\u00edcio do projeto"
+    },
+    "data_prevista_termino": {
+      "type": "string",
+      "format": "date",
+      "description": "Data prevista de t\u00e9rmino"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Planejamento",
+        "Em Execu\u00e7\u00e3o",
+        "Finalizada",
+        "Pausada"
+      ],
+      "default": "Planejamento",
+      "description": "Status do projeto"
+    },
+    "responsavel": {
+      "type": "string",
+      "description": "Respons\u00e1vel pelo projeto"
+    },
+    "observacoes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es gerais"
+    }
+  },
+  "required": [
+    "nome_projeto",
+    "cliente"
+  ],
+  "rls": {
+    "create": {
+      "$or": [
+        {
+          "data.office_owner": "{{user.data.resolved_office_owner_email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "read": {
+      "$or": [
+        {
+          "data.office_owner": "{{user.data.resolved_office_owner_email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "update": {
+      "$or": [
+        {
+          "data.office_owner": "{{user.data.resolved_office_owner_email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    },
+    "delete": {
+      "$or": [
+        {
+          "data.office_owner": "{{user.data.resolved_office_owner_email}}"
+        },
+        {
+          "user_condition": {
+            "role": "admin"
+          }
+        }
+      ]
+    }
+  }
+}

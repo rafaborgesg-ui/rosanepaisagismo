@@ -1,0 +1,55 @@
+{
+  "name": "Fornecedor",
+  "type": "object",
+  "properties": {
+    "office_owner": {
+      "type": "string",
+      "description": "Email do dono do escrit\u00f3rio"
+    },
+    "nome": {
+      "type": "string",
+      "description": "Nome do fornecedor"
+    },
+    "categoria": {
+      "type": "string",
+      "enum": [
+        "Plantas",
+        "Insumos",
+        "Ferramentas",
+        "Transporte",
+        "Servi\u00e7os",
+        "Materiais",
+        "Outro"
+      ],
+      "description": "Categoria do fornecedor"
+    },
+    "contato": {
+      "type": "string",
+      "description": "Nome do contato"
+    },
+    "telefone": {
+      "type": "string",
+      "description": "Telefone"
+    },
+    "email": {
+      "type": "string",
+      "description": "E-mail"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Ativo",
+        "Inativo"
+      ],
+      "default": "Ativo",
+      "description": "Status do fornecedor"
+    },
+    "observacoes": {
+      "type": "string",
+      "description": "Observa\u00e7\u00f5es gerais"
+    }
+  },
+  "required": [
+    "nome"
+  ]
+}

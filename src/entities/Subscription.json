@@ -1,0 +1,55 @@
+{
+  "name": "Subscription",
+  "type": "object",
+  "properties": {
+    "user_email": {
+      "type": "string",
+      "description": "Email do usuário inscrito"
+    },
+    "plan": {
+      "type": "string",
+      "enum": [
+        "free",
+        "premium"
+      ],
+      "default": "free",
+      "description": "Tipo de plano"
+    },
+    "kiwify_customer_id": {
+      "type": "string",
+      "description": "ID do cliente no Kiwify"
+    },
+    "kiwify_sale_id": {
+      "type": "string",
+      "description": "ID da venda no Kiwify"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "active",
+        "cancelled",
+        "expired"
+      ],
+      "default": "active",
+      "description": "Status da assinatura"
+    },
+    "current_period_end": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Fim do período de cobrança atual"
+    },
+    "billing_cycle": {
+      "type": "string",
+      "enum": [
+        "monthly",
+        "semester",
+        "annual"
+      ],
+      "description": "Ciclo de faturamento"
+    }
+  },
+  "required": [
+    "user_email",
+    "plan"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "name": "TeamInvite",
+  "type": "object",
+  "properties": {
+    "owner_email": {
+      "type": "string",
+      "description": "Email do propriet\u00e1rio que enviou o convite"
+    },
+    "invited_email": {
+      "type": "string",
+      "description": "Email do usu\u00e1rio convidado"
+    },
+    "invited_name": {
+      "type": "string",
+      "description": "Nome do usu\u00e1rio convidado"
+    },
+    "role": {
+      "type": "string",
+      "enum": [
+        "user",
+        "admin"
+      ],
+      "default": "user",
+      "description": "Perfil do convidado"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Enviado",
+        "Aceito",
+        "Cancelado"
+      ],
+      "default": "Enviado",
+      "description": "Status do convite"
+    }
+  },
+  "required": [
+    "owner_email",
+    "invited_email"
+  ]
+}
