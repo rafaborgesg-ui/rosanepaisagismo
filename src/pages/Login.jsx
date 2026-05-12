@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import { auth } from '@/api/authService';
+import { useAuth } from '@/lib/AuthContext';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/use-toast";
@@ -12,18 +13,31 @@ export default function Login() {
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const { toast } = useToast();
+  const { checkUserAuth } = useAuth();
 
   const handleLogin = async (e) => {
     e.preventDefault();
     setIsLoading(true);
     try {
+      console.log('Iniciando login para:', email);
       await auth.login({ email, password });
+      console.log('Login bem-sucedido');
+      
+      // Aguarda um pouco para garantir que a sessão foi estabelecida
+      await new Promise(resolve => setTimeout(resolve, 500));
+      
+      // Verifica a autenticação novamente
+      await checkUserAuth();
+      console.log('Auth verificado');
+      
       const fromUrl = searchParams.get('from_url') || '/dashboard';
+      console.log('Redirecionando para:', fromUrl);
       navigate(fromUrl);
     } catch (error) {
+      console.error('Erro no login:', error);
       toast({
         title: "Erro no login",
-        description: error.message,
+        description: error.message || 'Credenciais inválidas ou erro de servidor',
         variant: "destructive",
       });
     } finally {
@@ -49,6 +63,7 @@ export default function Login() {
               onChange={(e) => setEmail(e.target.value)} 
               required 
               className="rounded-xl border-stone-200 h-12"
+              disabled={isLoading}
             />
           </div>
           <div className="space-y-2">
@@ -60,6 +75,7 @@ export default function Login() {
               onChange={(e) => setPassword(e.target.value)} 
               required 
               className="rounded-xl border-stone-200 h-12"
+              disabled={isLoading}
             />
           </div>
           

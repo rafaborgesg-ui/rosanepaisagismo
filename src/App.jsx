@@ -3,12 +3,13 @@ import { auth } from '@/api/authService';
 import { Toaster } from "@/components/ui/toaster"
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClientInstance } from '@/lib/query-client'
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
 import PageNotFound from './lib/PageNotFound';
 import { AuthProvider, useAuth } from '@/lib/AuthContext';
 import UserNotRegisteredError from '@/components/UserNotRegisteredError';
 import AppLayout from './components/layout/AppLayout';
+import ProtectedRoute from './components/ProtectedRoute';
 import ProtectedSubscriptionRoute from './components/ProtectedSubscriptionRoute';
 import Landing from './pages/Landing';
 import ServicoLanding from './pages/ServicoLanding';
@@ -71,25 +72,26 @@ const AuthenticatedApp = () => {
       <Route path="/admin" element={<AdminLanding />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/payment/cancel" element={<PaymentCancel />} />
-      {isAuthenticated && (
-        <>
-          <Route element={<AppLayout />}>
-            <Route path="/dashboard" element={<ProtectedSubscriptionRoute><Dashboard /></ProtectedSubscriptionRoute>} />
-            <Route path="/comercial" element={<Comercial />} />
-            <Route path="/clientes" element={<Clientes />} />
-            <Route path="/caixa-entrada" element={<CaixaEntrada />} />
-            <Route path="/caixa-saida" element={<CaixaSaida />} />
-            <Route path="/metas" element={<Metas />} />
-            <Route path="/relatorios" element={<Relatorios />} />
-            <Route path="/equipe" element={<Equipe />} />
-            <Route path="/fornecedores" element={<Fornecedores />} />
-            <Route path="/projetos" element={<Projetos />} />
-            <Route path="/projetos-execucao" element={<ProjetosExecucao />} />
-            <Route path="/projetos-execucao/:id" element={<DetalheProjetoExecucao />} />
-            <Route path="/agenda-execucao" element={<AgendaExecucao />} />
-          </Route>
-        </>
-      )}
+      
+      {/* Protected Routes */}
+      <Route element={<ProtectedRoute unauthenticatedElement={<Navigate to="/login" replace />} />}>
+        <Route element={<AppLayout />}>
+          <Route path="/dashboard" element={<ProtectedSubscriptionRoute><Dashboard /></ProtectedSubscriptionRoute>} />
+          <Route path="/comercial" element={<Comercial />} />
+          <Route path="/clientes" element={<Clientes />} />
+          <Route path="/caixa-entrada" element={<CaixaEntrada />} />
+          <Route path="/caixa-saida" element={<CaixaSaida />} />
+          <Route path="/metas" element={<Metas />} />
+          <Route path="/relatorios" element={<Relatorios />} />
+          <Route path="/equipe" element={<Equipe />} />
+          <Route path="/fornecedores" element={<Fornecedores />} />
+          <Route path="/projetos" element={<Projetos />} />
+          <Route path="/projetos-execucao" element={<ProjetosExecucao />} />
+          <Route path="/projetos-execucao/:id" element={<DetalheProjetoExecucao />} />
+          <Route path="/agenda-execucao" element={<AgendaExecucao />} />
+        </Route>
+      </Route>
+      
       <Route path="*" element={<PageNotFound />} />
     </Routes>
   );
