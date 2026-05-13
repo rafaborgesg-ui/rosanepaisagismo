@@ -1,361 +1,403 @@
-import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 import SEO from "@/components/seo/SEO";
 
-const HERO_IMAGES = [
-  "https://plus.unsplash.com/premium_photo-1687960116802-a9a05891d33f?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1684858474017-1aaaf5212fc7?auto=format&fit=crop&q=80&w=1920",
-  "https://plus.unsplash.com/premium_photo-1687960116506-f31f84371838?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1721222204126-e7042f2893b1?auto=format&fit=crop&q=80&w=1920",
-  "https://plus.unsplash.com/premium_photo-1738099055015-dccf18e6f037?auto=format&fit=crop&q=80&w=1920",
+const WHATSAPP = "5538999313930";
+
+const services = [
+  {
+    title: "Residências de alto padrão",
+    text: "Projetos completos para jardins, entradas, áreas gourmet, piscinas e espaços de convivência.",
+    href: "/paisagismo-residencial",
+    icon: "villa",
+  },
+  {
+    title: "Clínicas e consultórios",
+    text: "Paisagismo biofílico para elevar acolhimento, percepção de qualidade e experiência do paciente.",
+    href: "/paisagismo-clinicas",
+    icon: "local_florist",
+  },
+  {
+    title: "Áreas gourmet & piscinas",
+    text: "Ambientes externos de convivência com jardim, piscina, iluminação e manutenção pensadas para uso real.",
+    href: "/area-gourmet-piscina",
+    icon: "pool",
+  },
+  {
+    title: "Manutenção premium",
+    text: "Planos recorrentes para preservar o jardim, proteger o investimento e manter o visual sempre impecável.",
+    href: "/manutencao-premium",
+    icon: "verified",
+  },
 ];
 
-const SERVICES = [
-  { icon: "architecture", category: "Residencial Premium", title: "Projetos de Exteriores Autoral", desc: "Jardins autorais que valorizam a arquitetura, elevam o lifestyle e transformam imóveis em experiências.", link: "/paisagismo-residencial" },
-  { icon: "water_drop", category: "Áreas Gourmet & Piscinas", title: "Ambientes de convívio sofisticado", desc: "Piscinas, gourmet e lounges integrados com design botânico e iluminação cênica.", link: "/contato?interesse=Áreas+Gourmet+%26+Piscinas" },
-  { icon: "spa", category: "Clínicas & Corporativo", title: "Paisagismo biofílico de alto impacto", desc: "Espaços que aumentam bem-estar, percepção de valor e diferenciação no mercado.", link: "/paisagismo-clinicas" },
+const qualification = [
+  "Cidade e bairro do imóvel",
+  "Tipo de espaço e área aproximada",
+  "Faixa de investimento desejada",
+  "Prazo para começar o projeto",
 ];
 
-const TESTIMONIALS = [
-  { name: "Ana Paula Ferreira", role: "Proprietária — Alphaville, SP", text: "O escritório da Rosane transformou completamente a percepção do nosso imóvel. Valorizou mais de 30% após o projeto." },
-  { name: "Dr. Ricardo Mota", role: "Clínica Premium — BH, MG", text: "A consultoria foi cirúrgica. O jardim biofílico da nossa clínica criou uma experiência única para os pacientes." },
-  { name: "Construtora Ávila", role: "Condomínio de Luxo — SP", text: "Parceria de alto nível. Entrega dentro do prazo, com um resultado que superou todas as expectativas dos compradores." },
+const cases = [
+  {
+    title: "Casa com área gourmet",
+    result: "Jardim tropical, piscina integrada e iluminação cênica para uso social.",
+    metric: "Ticket ideal: R$ 35k a R$ 120k",
+    image: "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=900",
+  },
+  {
+    title: "Entrada residencial premium",
+    result: "Composição botânica para valorizar fachada, percurso e primeira impressão.",
+    metric: "Entrega em etapas: projeto, obra e manutenção",
+    image: "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=900",
+  },
+  {
+    title: "Clínica com biofilia",
+    result: "Ambiente mais acolhedor, sofisticado e memorável para pacientes.",
+    metric: "Diferencial competitivo para marcas de saúde",
+    image: "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&q=80&w=900",
+  },
 ];
+
+const testimonials = [
+  {
+    name: "Cliente residencial",
+    context: "Casa com piscina e área gourmet",
+    text: "O projeto trouxe unidade para a área externa. Antes tínhamos espaços soltos; agora a casa ganhou um ambiente de convivência que usamos toda semana.",
+  },
+  {
+    name: "Clínica premium",
+    context: "Recepção e fachada",
+    text: "O jardim mudou a primeira impressão dos pacientes. A clínica ficou mais acolhedora e alinhada ao posicionamento que queríamos transmitir.",
+  },
+  {
+    name: "Residência em reforma",
+    context: "Fachada e jardim social",
+    text: "A orientação técnica ajudou a evitar compras erradas e deixou a execução mais organizada. O resultado ficou elegante sem parecer exagerado.",
+  },
+];
+
+const faq = [
+  {
+    question: "Vocês fazem apenas o projeto ou também acompanham a execução?",
+    answer: "O atendimento pode incluir diagnóstico, projeto, orientação de implantação e manutenção. O melhor formato é definido depois do briefing, conforme estágio da obra, cidade e investimento.",
+  },
+  {
+    question: "Qual investimento mínimo faz sentido para um projeto premium?",
+    answer: "Para projetos residenciais completos, normalmente trabalhamos melhor a partir de R$ 25 mil de implantação. Revitalizações pontuais podem começar abaixo disso, dependendo do escopo.",
+  },
+  {
+    question: "Atendem fora de Montes Claros?",
+    answer: "Sim. O atendimento pode acontecer em Minas Gerais, São Paulo e outras regiões conforme escopo, agenda e viabilidade técnica.",
+  },
+  {
+    question: "Consigo enviar fotos antes de agendar uma reunião?",
+    answer: "Sim. A página de contato permite enviar informações e anexos. Fotos, planta baixa e medidas aproximadas aceleram muito o diagnóstico.",
+  },
+];
+
+const whatsappMessage = encodeURIComponent(
+  "Olá, Rosane. Vim pelo site e quero avaliar um projeto de paisagismo premium. Pode me ajudar?"
+);
 
 export default function Landing() {
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [slideIndex, setSlideIndex] = useState(0);
-  const [quizStep, setQuizStep] = useState(0);
-  const [quizData, setQuizData] = useState({});
-  const [quizDone, setQuizDone] = useState(false);
-  const slideTimer = useRef(null);
-
-  useEffect(() => {
-    slideTimer.current = setInterval(() => {
-      setSlideIndex(i => (i + 1) % HERO_IMAGES.length);
-    }, 6000);
-    return () => clearInterval(slideTimer.current);
-  }, []);
-
-  const QUIZ_STEPS = [
-    { key: "estilo", question: "Qual estilo mais te inspira?", options: ["Tropical Sofisticado", "Minimalista Contemporâneo", "Jardim Inglês Clássico", "Resort & Piscina"] },
-    { key: "imovel", question: "Qual é o seu imóvel?", options: ["Casa residencial", "Cobertura / Apartamento", "Clínica / Consultório", "Empresa / Condomínio"] },
-    { key: "orcamento", question: "Qual é o seu investimento?", options: ["R$ 15k – R$ 30k", "R$ 30k – R$ 80k", "R$ 80k – R$ 200k", "Acima de R$ 200k"] },
-  ];
-
-  const handleQuizSelect = (key, value) => {
-    const next = { ...quizData, [key]: value };
-    setQuizData(next);
-    if (quizStep < QUIZ_STEPS.length - 1) {
-      setQuizStep(quizStep + 1);
-    } else {
-      setQuizStep(quizStep + 1);
-    }
-  };
-
-  const ANTES = "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1200";
-  const DEPOIS = "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1200";
-
   return (
-    <div className="min-h-screen bg-[#fcfaf7] overflow-x-hidden">
-      <SEO 
-        title="Escritório de Paisagismo de Alto Padrão | São Paulo & Minas Gerais" 
-        description="Paisagismo autoral residencial e comercial. Projetos premium em São Paulo, Montes Claros e região. Jardim tropical, vertical, área gourmet, piscinas. Consultoria especializada."
+    <div className="min-h-screen bg-[#fbfaf6] text-[#173727] overflow-x-hidden">
+      <SEO
+        title="Projetos de Paisagismo Premium em MG e SP"
+        description="Paisagismo residencial e comercial de alto padrão. Projetos para casas, áreas gourmet, piscinas, clínicas e manutenção premium em Minas Gerais e São Paulo."
+        keywords="paisagismo premium, paisagista em Montes Claros, paisagismo residencial, jardim para área gourmet, paisagismo para clínicas, projeto de jardim"
         schema={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
-          "name": "Rosane Paisagismo",
-          "description": "Escritório de Paisagismo de Alto Padrão em São Paulo e Minas Gerais",
-          "url": "https://rosanepaisagismo.com",
-          "address": {
-            "@type": "PostalAddress",
-            "addressLocality": "São Paulo",
-            "addressRegion": "SP",
-            "addressCountry": "BR"
-          },
-          "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": "-23.5505",
-            "longitude": "-46.6333"
-          },
-          "areaServed": ["São Paulo", "Minas Gerais", "Montes Claros"]
+          name: "Rosane Paisagismo",
+          description: "Projetos de paisagismo premium para residências, clínicas e áreas externas.",
+          telephone: "+55 38 99931-3930",
+          areaServed: ["Montes Claros", "Minas Gerais", "São Paulo"],
+          url: "https://rosanepaisagismo-site.vercel.app/",
+          sameAs: ["https://www.instagram.com/rosanepaisagismo/"],
         }}
       />
+
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,900;1,400;1,700&family=Inter:wght@300;400;500;600;700&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
-        .font-serif-s { font-family: 'Playfair Display', serif; }
-        .font-sans-s { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; display: inline-block; }
       `}</style>
 
-      {/* ─── NAV ─────────────────────────────────────────── */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-stone-100/60 font-sans-s">
-        <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-          <a href="/" className="font-serif-s text-2xl font-bold text-[#1a3d2b] tracking-tight">
-            Rosane<span className="text-[#c09624]">.</span>
+      <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#173727]/90 backdrop-blur-xl font-body">
+        <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 md:px-8">
+          <Link to="/" className="flex items-center gap-3 text-white">
+            <span className="grid h-11 w-11 place-items-center rounded-full bg-[#d7ae45] font-display text-2xl font-bold text-[#173727]">R</span>
+            <span className="leading-tight">
+              <span className="block text-sm font-bold uppercase tracking-[0.24em]">Rosane</span>
+              <span className="block text-xs uppercase tracking-[0.18em] text-white/60">Paisagismo</span>
+            </span>
+          </Link>
+          <div className="hidden items-center gap-8 text-xs font-bold uppercase tracking-[0.18em] text-white/70 md:flex">
+            <a href="#servicos" className="hover:text-[#d7ae45]">Serviços</a>
+            <a href="#portfolio" className="hover:text-[#d7ae45]">Portfólio</a>
+            <a href="#metodo" className="hover:text-[#d7ae45]">Método</a>
+            <Link to="/contato" className="rounded-full bg-[#d7ae45] px-6 py-3 text-[#173727] hover:bg-white">Agendar diagnóstico</Link>
+          </div>
+          <a
+            href={`https://wa.me/${WHATSAPP}?text=${whatsappMessage}`}
+            target="_blank"
+            rel="noreferrer"
+            className="rounded-full bg-[#d7ae45] px-4 py-3 text-xs font-extrabold uppercase tracking-wider text-[#173727] md:hidden"
+          >
+            WhatsApp
           </a>
-          <div className="hidden md:flex items-center gap-10 text-[11px] font-bold uppercase tracking-[0.18em] text-stone-500">
-            <a href="#projetos" className="hover:text-[#c09624] transition-colors">Projetos</a>
-            <a href="#servicos" className="hover:text-[#c09624] transition-colors">Serviços</a>
-            <a href="#sobre" className="hover:text-[#c09624] transition-colors">Sobre</a>
-            <Link to="/catalogo" className="hover:text-[#c09624] transition-colors">Espécies</Link>
-            <Link to="/contato" className="px-7 py-3 bg-[#1a3d2b] text-white rounded-full hover:bg-[#c09624] transition-all">
-              Agendar Reunião
-            </Link>
-          </div>
-          <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
-            <span className="material-symbols-outlined text-[#1a3d2b]">menu</span>
-          </button>
         </div>
-        {menuOpen && (
-          <div className="md:hidden bg-white px-6 py-8 space-y-6 text-sm font-bold uppercase tracking-widest text-[#1a3d2b] border-t border-stone-100">
-            <a href="#projetos" className="block" onClick={() => setMenuOpen(false)}>Projetos</a>
-            <a href="#servicos" className="block" onClick={() => setMenuOpen(false)}>Serviços</a>
-            <Link to="/contato" className="block" onClick={() => setMenuOpen(false)}>Contato</Link>
-          </div>
-        )}
       </nav>
 
-      <main>
-        {/* ─── HERO CINEMATOGRÁFICO ─────────────────────── */}
-        <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-black">
-          <div className="absolute inset-0 transition-all duration-1000 ease-in-out" style={{ backgroundImage: `linear-gradient(to bottom, rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.80)), url('${HERO_IMAGES[slideIndex]}')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
-          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/80 z-10" />
-
-          <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
-            <p className="font-sans-s text-[11px] font-bold uppercase tracking-[0.5em] text-[#c09624] mb-8">
-              Escritório de Paisagismo de Alto Padrão · São Paulo & Minas Gerais
-            </p>
-            <h1 className="font-serif-s text-5xl md:text-8xl text-white leading-[1.05] mb-8">
-              Projetos de paisagismo autorais que transformam imóveis em <span className="italic text-[#c09624]">experiências</span>
-            </h1>
-            <p className="font-sans-s text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
-              Projetos residenciais e comerciais de alto padrão em São Paulo e Minas Gerais. Cada jardim é uma obra de arte viva que valoriza sua arquitetura e eleva seu lifestyle.
-            </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-              <Link to="/contato?utm_source=landing&utm_medium=hero&utm_campaign=orcamento" className="px-10 py-5 bg-[#c09624] text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
-                Solicitar Orçamento
-              </Link>
-              <Link to="/contato?utm_source=landing&utm_medium=hero&utm_campaign=reuniao" className="px-10 py-5 border border-white text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-[#c09624] hover:text-white transition-all">
-                Agendar Reunião
-              </Link>
-              <a href="#projetos" className="text-white font-bold text-[10px] uppercase tracking-widest border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
-                Ver Projetos ↓
-              </a>
+      <main className="font-body">
+        <section className="relative min-h-[92vh] overflow-hidden bg-[#173727] pt-28 text-white">
+          <img
+            src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=1920"
+            alt="Jardim residencial premium com paisagismo tropical"
+            className="absolute inset-0 h-full w-full object-cover opacity-38"
+          />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#173727] via-[#173727]/82 to-[#173727]/35" />
+          <div className="relative mx-auto grid min-h-[78vh] max-w-7xl items-center gap-12 px-5 py-16 md:grid-cols-[1.05fr_0.95fr] md:px-8">
+            <div className="max-w-3xl">
+              <p className="mb-6 text-xs font-extrabold uppercase tracking-[0.34em] text-[#d7ae45]">
+                Paisagismo premium em Minas Gerais e São Paulo
+              </p>
+              <h1 className="font-display text-5xl font-bold leading-[1.03] md:text-7xl">
+                Jardins que valorizam imóveis e transformam a experiência de viver.
+              </h1>
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/78">
+                Projetos autorais para residências, áreas gourmet, piscinas, clínicas e espaços corporativos. Estratégia estética, escolha botânica e execução pensadas para alto padrão.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <Link
+                  to="/contato?utm_source=site&utm_medium=hero&utm_campaign=diagnostico"
+                  className="rounded-full bg-[#d7ae45] px-8 py-4 text-center text-xs font-extrabold uppercase tracking-[0.2em] text-[#173727] shadow-2xl shadow-black/20 hover:bg-white"
+                >
+                  Agendar diagnóstico
+                </Link>
+                <a
+                  href={`https://wa.me/${WHATSAPP}?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-full border border-white/35 px-8 py-4 text-center text-xs font-extrabold uppercase tracking-[0.2em] text-white hover:border-[#d7ae45] hover:text-[#d7ae45]"
+                >
+                  Falar no WhatsApp
+                </a>
+                <Link
+                  to="/quiz-paisagismo"
+                  className="rounded-full border border-[#d7ae45]/70 px-8 py-4 text-center text-xs font-extrabold uppercase tracking-[0.2em] text-[#d7ae45] hover:bg-[#d7ae45] hover:text-[#173727]"
+                >
+                  Fazer quiz
+                </Link>
+              </div>
             </div>
-          </div>
 
-          <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-2">
-            {HERO_IMAGES.map((_, i) => (
-              <button key={i} onClick={() => setSlideIndex(i)}
-                className="rounded-full transition-all duration-500"
-                style={{ width: i === slideIndex ? 28 : 8, height: 8, backgroundColor: i === slideIndex ? '#c09624' : 'rgba(255,255,255,0.4)' }} />
-            ))}
+            <div className="rounded-[28px] border border-white/15 bg-white/10 p-6 shadow-2xl backdrop-blur-md">
+              <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[#d7ae45]">Meta de projeto ideal</p>
+              <div className="mt-6 grid grid-cols-2 gap-4">
+                {[
+                  ["25+", "anos de experiência"],
+                  ["200+", "projetos orientados"],
+                  ["R$25k+", "ticket recomendado"],
+                  ["4 etapas", "diagnóstico ao pós-obra"],
+                ].map(([value, label]) => (
+                  <div key={label} className="rounded-2xl bg-white/12 p-5">
+                    <p className="font-display text-4xl font-bold text-white">{value}</p>
+                    <p className="mt-2 text-xs font-bold uppercase tracking-widest text-white/58">{label}</p>
+                  </div>
+                ))}
+              </div>
+              <p className="mt-6 text-sm leading-7 text-white/70">
+                O objetivo do site agora é simples: atrair clientes com orçamento, qualificar rápido e levar para uma conversa comercial com contexto.
+              </p>
+            </div>
           </div>
         </section>
 
-        {/* ─── TRANSFORMAÇÃO PREMIUM ────────────────────── */}
-        <section className="py-24 px-6 bg-white">
-          <div className="max-w-6xl mx-auto text-center">
-            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Posicionamento Premium</p>
-            <h2 className="font-serif-s text-5xl text-[#1a3d2b] mb-6">Mais do que jardim, uma experiência de luxo.</h2>
-            <p className="font-sans-s text-stone-600 text-lg max-w-3xl mx-auto mb-16">
-              Projetos de paisagismo que comunicam exclusividade, arquitetura e bem-estar, com presença forte em São Paulo e Minas Gerais.
-            </p>
-            <div className="grid md:grid-cols-3 gap-10">
-              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
-                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Arquitetura & Valor</p>
-                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Projetos que valorizam imóveis</h3>
-                <p className="font-sans-s text-stone-500 leading-relaxed">Cada proposta é pensada para aumentar o capital estético e financeiro do seu terreno.</p>
-              </div>
-              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
-                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Lifestyle & Desejo</p>
-                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Ambientes que encantam</h3>
-                <p className="font-sans-s text-stone-500 leading-relaxed">Jardins que geram desejo, reforçam exclusividade e contam uma narrativa única.</p>
-              </div>
-              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
-                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Experiência & Prova</p>
-                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Conversão de leads premium</h3>
-                <p className="font-sans-s text-stone-500 leading-relaxed">Estrutura de captura, qualificação e fechamento para projetos de alto ticket.</p>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── NÚMEROS DE CREDIBILIDADE ─────────────────── */}
-        <section className="bg-[#1a3d2b] py-16">
-          <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-            {[ 
-              { n: "200+", l: "Projetos Entregues" },
-              { n: "25", l: "Anos de Experiência" },
-              { n: "99%", l: "Clientes Satisfeitos" },
-              { n: "3 Estados", l: "SP, MG & RJ" },
-            ].map(({ n, l }) => (
-              <div key={l}>
-                <p className="font-serif-s text-4xl font-bold text-[#c09624]">{n}</p>
-                <p className="font-sans-s text-[10px] uppercase tracking-widest text-white/50 mt-2">{l}</p>
+        <section className="bg-white px-5 py-12 md:px-8">
+          <div className="mx-auto grid max-w-7xl gap-5 md:grid-cols-4">
+            {["Projeto autoral", "Curadoria botânica", "Execução orientada", "Manutenção premium"].map((item) => (
+              <div key={item} className="border-l-2 border-[#d7ae45] py-2 pl-5">
+                <p className="text-sm font-extrabold uppercase tracking-[0.18em] text-[#173727]">{item}</p>
               </div>
             ))}
           </div>
         </section>
 
-        {/* ─── FILOSOFIA / NARRATIVA ────────────────────── */}
-        <section id="sobre" className="py-32 px-6 bg-[#fcfaf7]">
-          <div className="max-w-7xl mx-auto grid lg:grid-cols-2 gap-20 items-center">
-            <div className="relative">
-              <div className="aspect-[4/5] overflow-hidden rounded-[40px] shadow-2xl">
-                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?auto=format&fit=crop&q=80&w=900" alt="Jardim autoral" className="w-full h-full object-cover hover:scale-105 transition-transform duration-700" />
-              </div>
-              <div className="absolute -bottom-8 -right-8 bg-[#1a3d2b] text-white p-10 rounded-[28px] hidden md:block max-w-[240px] shadow-2xl">
-                <span className="material-symbols-outlined text-[#c09624] text-3xl block mb-3">eco</span>
-                <p className="font-serif-s text-lg leading-snug italic">"Cada projeto é um jardim secreto esperando para ser revelado."</p>
-              </div>
-            </div>
-            <div className="space-y-8">
-              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624]">Nossa Filosofia</p>
-              <h2 className="font-serif-s text-5xl text-[#1a3d2b] leading-tight">Criamos refúgios onde o luxo encontra a natureza.</h2>
-              <div className="h-px w-16 bg-[#c09624]" />
-              <p className="font-sans-s text-stone-600 text-lg leading-relaxed">
-                Cada terreno tem uma alma. Nossa missão é interpretá-la através de espécies selecionadas, iluminação cênica e design autoral que eleva o valor do imóvel e transforma a experiência de quem o vive.
-              </p>
-              <p className="font-sans-s text-stone-500 leading-relaxed">
-                Atendemos residências de alto padrão, clínicas premium, condomínios de luxo e escritórios corporativos em São Paulo, Minas Gerais e regiões adjacentes.
-              </p>
-              <Link to="/contato" className="inline-flex items-center gap-3 font-sans-s font-bold text-[11px] uppercase tracking-widest text-[#1a3d2b] border-b-2 border-[#c09624] pb-1 hover:text-[#c09624] transition-colors">
-                Conhecer o Escritório <span className="material-symbols-outlined text-sm">arrow_forward</span>
-              </Link>
-            </div>
-          </div>
-        </section>
-
-        {/* ─── SERVIÇOS ─────────────────────────────────── */}
-        <section id="servicos" className="py-32 px-6 bg-white">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center max-w-2xl mx-auto mb-20">
-              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Nossa Expertise</p>
-              <h2 className="font-serif-s text-5xl text-[#1a3d2b]">A exclusividade que sua arquitetura merece.</h2>
-            </div>
-            <div className="grid md:grid-cols-3 gap-12">
-              {SERVICES.map((s, i) => (
-                <div key={i} className="group p-10 rounded-3xl border border-stone-100 hover:border-[#1a3d2b] hover:shadow-2xl transition-all duration-500">
-                  <div className="w-14 h-14 bg-[#fcfaf7] rounded-2xl flex items-center justify-center mb-8 group-hover:bg-[#1a3d2b] transition-all duration-500">
-                    <span className="material-symbols-outlined text-[#1a3d2b] group-hover:text-[#c09624] text-3xl">{s.icon}</span>
-                  </div>
-                  <p className="font-sans-s text-[9px] font-bold uppercase tracking-widest text-[#c09624] mb-3">{s.category}</p>
-                  <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">{s.title}</h3>
-                  <p className="font-sans-s text-stone-500 leading-relaxed mb-8">{s.desc}</p>
-                  <Link to={s.link || "/contato"} className="inline-flex items-center gap-2 font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b border-stone-200 pb-1 group-hover:border-[#c09624] group-hover:text-[#c09624] transition-all">
-                    Solicitar este serviço <span className="material-symbols-outlined text-xs">arrow_forward</span>
-                  </Link>
-                </div>
+        <section className="bg-[#fbfaf6] px-5 py-16 md:px-8">
+          <div className="mx-auto max-w-7xl">
+            <p className="mb-6 text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Landing pages para SEO e tráfego</p>
+            <div className="grid gap-3 md:grid-cols-5">
+              {[
+                ["Jardim tropical", "/jardim-tropical"],
+                ["Jardim vertical", "/jardim-vertical"],
+                ["Condomínios", "/condominios-luxo"],
+                ["Fachadas comerciais", "/fachadas-comerciais"],
+                ["Corporativo", "/paisagismo-corporativo"],
+                ["Montes Claros", "/paisagista-em-montes-claros"],
+                ["São Paulo", "/paisagismo-em-sao-paulo"],
+                ["Alto padrão MG", "/paisagismo-alto-padrao-mg"],
+                ["Manutenção", "/manutencao-premium"],
+                ["Sobre", "/sobre"],
+              ].map(([label, href]) => (
+                <Link key={href} to={href} className="rounded-2xl border border-stone-200 bg-white px-5 py-4 text-sm font-extrabold uppercase tracking-wider text-[#173727] transition hover:border-[#d7ae45] hover:shadow-md">
+                  {label}
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── ANTES E DEPOIS ───────────────────────────── */}
-        <section className="py-32 px-6 bg-[#fcfaf7]" id="projetos">
-          <div className="max-w-7xl mx-auto">
-            <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-              <div>
-                <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Transformações Reais</p>
-                <h2 className="font-serif-s text-5xl text-[#1a3d2b]">Antes & Depois</h2>
-                <p className="font-sans-s text-stone-500 mt-4 text-lg max-w-lg">Deslize para ver a transformação completa. Cada projeto começa com um terreno e termina com um legado.</p>
-              </div>
-              <Link to="/contato" className="font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b-2 border-[#c09624] pb-1 hover:text-[#c09624] transition-colors whitespace-nowrap">
-                Solicitar Transformação →
-              </Link>
+        <section id="servicos" className="px-5 py-24 md:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-14 max-w-3xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Serviços de maior faturamento</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-6xl">
+                Venda menos orçamento solto. Venda transformação completa.
+              </h2>
             </div>
-            <BeforeAfterSlider before={ANTES} after={DEPOIS} labelBefore="Estado Inicial" labelAfter="Projeto Finalizado" />
-          </div>
-        </section>
-
-        {/* ─── QUIZ DE QUALIFICAÇÃO ─────────────────────── */}
-        <section className="py-32 px-6 bg-[#1a3d2b]">
-          <div className="max-w-2xl mx-auto text-center">
-            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Briefing Premium</p>
-            <h2 className="font-serif-s text-4xl md:text-5xl text-white mb-6">Receba um diagnóstico personalizado para o seu espaço</h2>
-            <p className="font-sans-s text-white/60 mb-14">Responda 3 perguntas rápidas e receba um projeto inicial pensado para valorizar seu imóvel.</p>
-
-            {quizStep < QUIZ_STEPS.length ? (
-              <div>
-                <div className="flex justify-center gap-2 mb-10">
-                  {QUIZ_STEPS.map((_, i) => (
-                    <div key={i} className="h-1 rounded-full transition-all duration-500" style={{ width: i <= quizStep ? 48 : 24, backgroundColor: i <= quizStep ? '#c09624' : 'rgba(255,255,255,0.2)' }} />
-                  ))}
-                </div>
-                <p className="font-serif-s text-2xl text-white mb-8">{QUIZ_STEPS[quizStep].question}</p>
-                <div className="grid grid-cols-2 gap-4">
-                  {QUIZ_STEPS[quizStep].options.map(opt => (
-                    <button key={opt} onClick={() => handleQuizSelect(QUIZ_STEPS[quizStep].key, opt)}
-                      className="font-sans-s font-medium text-sm px-6 py-4 rounded-2xl border border-white/20 text-white hover:bg-[#c09624] hover:border-[#c09624] transition-all text-center">
-                      {opt}
-                    </button>
-                  ))}
-                </div>
-              </div>
-            ) : !quizDone ? (
-              <form className="space-y-5 text-left" onSubmit={e => { e.preventDefault(); setQuizDone(true); const msg = `Olá! Tenho interesse em paisagismo.\n\nPerfil: Estilo: ${quizData.estilo}, Imóvel: ${quizData.imovel}, Investimento: ${quizData.orcamento}\n\nNome: ${e.target.nome.value}`; window.open(`https://wa.me/5538999999999?text=${encodeURIComponent(msg)}`,'_blank'); }}>
-                <p className="font-serif-s text-2xl text-white text-center mb-8">Quase lá! Para onde enviamos seu diagnóstico VIP?</p>
-                <input name="nome" required placeholder="Seu nome completo" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
-                <input name="whatsapp" required placeholder="WhatsApp com DDD" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
-                <button type="submit" className="w-full py-5 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all">
-                  Receber Análise VIP no WhatsApp →
-                </button>
-              </form>
-            ) : (
-              <div className="text-center">
-                <span className="material-symbols-outlined text-[#c09624] text-6xl mb-6 block">check_circle</span>
-                <h3 className="font-serif-s text-3xl text-white mb-4">Perfeito! Entraremos em contato em breve.</h3>
-                <p className="font-sans-s text-white/60">Nossa equipe já recebeu seu perfil e vai preparar uma proposta personalizada para você.</p>
-              </div>
-            )}
-          </div>
-        </section>
-
-        {/* ─── DEPOIMENTOS ──────────────────────────────── */}
-        <section className="py-32 px-6 bg-[#fcfaf7]">
-          <div className="max-w-7xl mx-auto">
-            <div className="text-center mb-20">
-              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Histórias Reais</p>
-              <h2 className="font-serif-s text-5xl text-[#1a3d2b]">O que nossos clientes dizem</h2>
-              <p className="font-sans-s text-stone-500 mt-4 text-lg">Projetos que transformaram vidas e imóveis</p>
-            </div>
-            <div className="grid md:grid-cols-3 gap-8">
-              {TESTIMONIALS.map((t, i) => (
-                <div key={i} className="p-10 bg-white rounded-3xl border border-stone-100 hover:shadow-2xl transition-all duration-300">
-                  <div className="flex mb-6">
-                    {[...Array(5)].map((_, j) => <span key={j} className="text-[#c09624] text-sm">★</span>)}
-                  </div>
-                  <p className="font-serif-s text-lg text-[#1a3d2b] italic leading-relaxed mb-8">"{t.text}"</p>
-                  <div>
-                    <p className="font-sans-s font-bold text-sm text-[#1a3d2b]">{t.name}</p>
-                    <p className="font-sans-s text-[11px] text-stone-400 uppercase tracking-wider">{t.role}</p>
-                  </div>
-                </div>
+            <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+              {services.map((service) => (
+                <Link key={service.title} to={service.href} className="group rounded-[22px] border border-stone-200 bg-white p-7 shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
+                  <span className="material-symbols-outlined grid h-12 w-12 place-items-center rounded-full bg-[#173727] text-[#d7ae45]">{service.icon}</span>
+                  <h3 className="mt-8 font-display text-2xl font-bold text-[#173727]">{service.title}</h3>
+                  <p className="mt-4 text-sm leading-7 text-stone-600">{service.text}</p>
+                  <p className="mt-8 text-xs font-extrabold uppercase tracking-[0.18em] text-[#b28a28] group-hover:text-[#173727]">Solicitar avaliação</p>
+                </Link>
               ))}
             </div>
           </div>
         </section>
 
-        {/* ─── CTA FINAL ────────────────────────────────── */}
-        <section className="py-40 bg-[#1a3d2b] relative overflow-hidden text-center px-6">
-          <div className="absolute inset-0 opacity-10">
-            <img src="https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=80&w=1920" className="w-full h-full object-cover" alt="" />
-          </div>
-          <div className="relative z-10 max-w-3xl mx-auto">
-            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.4em] text-[#c09624] mb-6">Pronto para começar?</p>
-            <h2 className="font-serif-s text-5xl md:text-7xl text-white mb-8 leading-tight">Vamos criar o seu<br /><span className="italic">refúgio verde.</span></h2>
-            <p className="font-sans-s text-white/60 text-lg mb-14 max-w-xl mx-auto">Agende uma reunião de conceito gratuita e descubra o potencial do seu espaço.</p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link to="/contato?utm_source=landing&utm_medium=footer&utm_campaign=projeto" className="px-12 py-6 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
-                Iniciar Meu Projeto
+        <section id="portfolio" className="bg-[#eef3ed] px-5 py-24 md:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-14 flex flex-col justify-between gap-6 md:flex-row md:items-end">
+              <div className="max-w-3xl">
+                <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Prova visual e comercial</p>
+                <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-6xl">O cliente precisa enxergar o resultado antes da reunião.</h2>
+              </div>
+              <Link to="/portfolio" className="text-xs font-extrabold uppercase tracking-[0.18em] text-[#173727] underline decoration-[#d7ae45] decoration-2 underline-offset-8">
+                Ver portfólio completo
               </Link>
-              <a href="https://wa.me/5538999999999" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-sans-s font-bold text-[11px] uppercase tracking-widest text-white border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
-                <span className="material-symbols-outlined text-base">chat</span> Falar no WhatsApp
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {cases.map((item) => (
+                <article key={item.title} className="overflow-hidden rounded-[24px] bg-white shadow-sm">
+                  <img src={item.image} alt={item.title} className="h-72 w-full object-cover" />
+                  <div className="p-7">
+                    <h3 className="font-display text-2xl font-bold">{item.title}</h3>
+                    <p className="mt-3 text-sm leading-7 text-stone-600">{item.result}</p>
+                    <p className="mt-5 rounded-full bg-[#fbfaf6] px-4 py-3 text-xs font-bold uppercase tracking-wider text-[#173727]">{item.metric}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="metodo" className="grid bg-white md:grid-cols-2">
+          <div className="px-5 py-24 md:px-12 lg:px-20">
+            <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Método comercial</p>
+            <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-6xl">Diagnóstico primeiro. Proposta depois.</h2>
+            <p className="mt-6 max-w-xl leading-8 text-stone-600">
+              Para chegar a R$100k por mês, o site precisa separar curiosidade de intenção real. Por isso, a chamada principal leva a um diagnóstico com dados suficientes para precificar, priorizar e fechar melhor.
+            </p>
+            <div className="mt-10 space-y-4">
+              {qualification.map((item, index) => (
+                <div key={item} className="flex items-center gap-4 rounded-2xl border border-stone-200 p-4">
+                  <span className="grid h-10 w-10 place-items-center rounded-full bg-[#173727] text-sm font-bold text-[#d7ae45]">{index + 1}</span>
+                  <span className="font-semibold text-[#173727]">{item}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="relative min-h-[520px] bg-[#173727]">
+            <img
+              src="https://media.base44.com/images/public/69ea9c43ca6eb4180010c463/9825cfba9_IMG_7921jpg.jpg"
+              alt="Rosane Borges, especialista em paisagismo"
+              className="absolute inset-0 h-full w-full object-cover opacity-90"
+            />
+            <div className="absolute inset-x-6 bottom-6 rounded-[24px] bg-white p-7 shadow-2xl md:inset-x-10 md:bottom-10">
+              <p className="text-xs font-extrabold uppercase tracking-[0.22em] text-[#b28a28]">Autoridade</p>
+              <h3 className="mt-2 font-display text-3xl font-bold text-[#173727]">Rosane Borges</h3>
+              <p className="mt-3 text-sm leading-7 text-stone-600">
+                Especialista em paisagismo com base técnica em produção vegetal, plantas ornamentais e projetos de alto padrão.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#fbfaf6] px-5 py-24 md:px-8">
+          <div className="mx-auto max-w-7xl">
+            <div className="mb-14 max-w-3xl">
+              <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Confiança para decidir</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-6xl">
+                O cliente premium precisa sentir método, cuidado e previsibilidade.
+              </h2>
+            </div>
+            <div className="grid gap-6 md:grid-cols-3">
+              {testimonials.map((item) => (
+                <article key={item.context} className="rounded-[24px] border border-stone-200 bg-white p-7 shadow-sm">
+                  <div className="mb-6 flex gap-1 text-[#d7ae45]" aria-label="Avaliação 5 estrelas">
+                    {[...Array(5)].map((_, index) => (
+                      <span key={index}>★</span>
+                    ))}
+                  </div>
+                  <p className="font-display text-xl font-bold leading-8 text-[#173727]">"{item.text}"</p>
+                  <div className="mt-7 border-t border-stone-200 pt-5">
+                    <p className="text-sm font-extrabold uppercase tracking-wider text-[#173727]">{item.name}</p>
+                    <p className="mt-1 text-xs font-bold uppercase tracking-wider text-stone-400">{item.context}</p>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-white px-5 py-24 md:px-8">
+          <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[0.85fr_1.15fr]">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Perguntas frequentes</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
+                Tire as dúvidas antes do diagnóstico.
+              </h2>
+              <p className="mt-5 leading-8 text-stone-600">
+                Quanto mais claro o escopo, melhor a proposta. A ideia é chegar na primeira conversa com contexto suficiente para orientar investimento, prazo e próximos passos.
+              </p>
+            </div>
+            <div className="space-y-4">
+              {faq.map((item) => (
+                <details key={item.question} className="group rounded-2xl border border-stone-200 bg-[#fbfaf6] p-6">
+                  <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-xl font-bold text-[#173727]">
+                    {item.question}
+                    <span className="material-symbols-outlined text-[#b28a28] transition group-open:rotate-180">expand_more</span>
+                  </summary>
+                  <p className="mt-4 leading-7 text-stone-600">{item.answer}</p>
+                </details>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#173727] px-5 py-24 text-center text-white md:px-8">
+          <div className="mx-auto max-w-4xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.34em] text-[#d7ae45]">Próximo passo</p>
+            <h2 className="mt-5 font-display text-4xl font-bold leading-tight md:text-6xl">
+              Vamos descobrir o potencial do seu jardim?
+            </h2>
+            <p className="mx-auto mt-6 max-w-2xl leading-8 text-white/70">
+              Envie cidade, tipo de imóvel e fotos do espaço. A equipe retorna com o melhor caminho para projeto, execução ou manutenção.
+            </p>
+            <div className="mt-10 flex flex-col justify-center gap-4 sm:flex-row">
+              <Link to="/contato?utm_source=site&utm_medium=cta_final&utm_campaign=diagnostico" className="rounded-full bg-[#d7ae45] px-9 py-4 text-xs font-extrabold uppercase tracking-[0.2em] text-[#173727] hover:bg-white">
+                Preencher diagnóstico
+              </Link>
+              <a href={`https://wa.me/${WHATSAPP}?text=${whatsappMessage}`} target="_blank" rel="noreferrer" className="rounded-full border border-white/30 px-9 py-4 text-xs font-extrabold uppercase tracking-[0.2em] text-white hover:border-[#d7ae45] hover:text-[#d7ae45]">
+                Chamar no WhatsApp
               </a>
             </div>
           </div>

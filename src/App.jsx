@@ -16,6 +16,12 @@ import ServicoLanding from './pages/ServicoLanding';
 import Portfolio from './pages/Portfolio';
 import PaisagismoResidencial from './pages/PaisagismoResidencial';
 import PaisagismoClinicas from './pages/PaisagismoClinicas';
+import AreaGourmetPiscina from './pages/AreaGourmetPiscina';
+import NicheLanding from './pages/NicheLanding';
+import QuizPaisagismo from './pages/QuizPaisagismo';
+import LocalLanding from './pages/LocalLanding';
+import ManutencaoPremium from './pages/ManutencaoPremium';
+import SobreEscritorio from './pages/SobreEscritorio';
 import AcceptInvite from './pages/AcceptInvite';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
@@ -63,6 +69,18 @@ const AuthenticatedApp = () => {
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/paisagismo-residencial" element={<PaisagismoResidencial />} />
       <Route path="/paisagismo-clinicas" element={<PaisagismoClinicas />} />
+      <Route path="/area-gourmet-piscina" element={<AreaGourmetPiscina />} />
+      <Route path="/jardim-tropical" element={<NicheLanding slug="jardim-tropical" />} />
+      <Route path="/jardim-vertical" element={<NicheLanding slug="jardim-vertical" />} />
+      <Route path="/condominios-luxo" element={<NicheLanding slug="condominios-luxo" />} />
+      <Route path="/fachadas-comerciais" element={<NicheLanding slug="fachadas-comerciais" />} />
+      <Route path="/paisagismo-corporativo" element={<NicheLanding slug="paisagismo-corporativo" />} />
+      <Route path="/quiz-paisagismo" element={<QuizPaisagismo />} />
+      <Route path="/manutencao-premium" element={<ManutencaoPremium />} />
+      <Route path="/sobre" element={<SobreEscritorio />} />
+      <Route path="/paisagista-em-montes-claros" element={<LocalLanding slug="paisagista-em-montes-claros" />} />
+      <Route path="/paisagismo-em-sao-paulo" element={<LocalLanding slug="paisagismo-em-sao-paulo" />} />
+      <Route path="/paisagismo-alto-padrao-mg" element={<LocalLanding slug="paisagismo-alto-padrao-mg" />} />
       <Route path="/accept-invite" element={<AcceptInvite />} />
       <Route path="/sistema" element={<Sistema />} />
       <Route path="/contato" element={<Contato />} />

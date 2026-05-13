@@ -1,266 +1,118 @@
-import { useState } from "react";
-import { Link } from "react-router-dom";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
+import SEO from "@/components/seo/SEO";
 
 const products = [
   {
-    id: 1,
-    icon: "assignment_turned_in",
-    iconBg: "bg-emerald-50",
-    iconColor: "text-[#276a4d]",
-    titleColor: "text-[#276a4d]",
-    btnColor: "bg-[#276a4d] hover:bg-[#1a3d2b]",
-    precoOriginal: "R$ 97,00",
-    preco: "R$ 47,00",
-    titulo: "Kit Profissional do Paisagista Lucrativo",
-    descricao: "A base organizacional que você precisa para conduzir propostas e briefings impecáveis.",
-    items: [
-      "Briefing detalhado (Arquitetura e Interiores)",
-      "Proposta Comercial Editável (Excelência)",
-      "Cronograma de execução mestre",
-      "Tabela técnica de manutenção",
-    ],
+    title: "Kit Profissional do Paisagista Lucrativo",
+    price: "R$ 47",
+    original: "R$ 97",
+    description: "Modelos para organizar briefing, proposta, cronograma e manutenção com apresentação mais profissional.",
+    items: ["Briefing detalhado", "Proposta comercial editável", "Cronograma de execução", "Tabela de manutenção"],
     link: "https://pay.kiwify.com.br/mnciAVd",
-    cta: "Acessar Kit Agora",
   },
   {
-    id: 2,
-    icon: "gavel",
-    iconBg: "bg-stone-100",
-    iconColor: "text-stone-600",
-    titleColor: "text-stone-700",
-    btnColor: "bg-stone-700 hover:bg-stone-800",
-    precoOriginal: "R$ 97,00",
-    preco: "R$ 47,00",
-    titulo: "Kit Contratos Blindados para Paisagistas",
-    descricao: "Segurança jurídica absoluta para seus projetos de execução, consultoria e manutenção.",
-    items: [
-      "Contrato de Projeto (Prazos e Entregas)",
-      "Contrato de Consultoria Técnica Especializada",
-      "Contrato de Execução e Implantação",
-      "Termos de Conclusão e Pós-Entrega",
-    ],
+    title: "Kit Contratos Blindados para Paisagistas",
+    price: "R$ 47",
+    original: "R$ 97",
+    description: "Documentos editáveis para deixar escopo, prazos e responsabilidades mais claros no relacionamento com clientes.",
+    items: ["Contrato de projeto", "Contrato de consultoria", "Contrato de execução", "Termos de conclusão"],
     link: "https://pay.kiwify.com.br/xfNh4Q2",
-    cta: "Acessar Contratos",
   },
 ];
 
 export default function Produtos() {
   return (
-    <div className="min-h-screen bg-[#f9f9f9] overflow-x-hidden">
+    <div className="min-h-screen bg-[#fbfaf6] text-[#173727] overflow-x-hidden">
+      <SEO
+        title="Materiais para Paisagistas"
+        description="Kits editáveis para paisagistas profissionalizarem briefing, propostas, contratos, cronogramas e gestão comercial."
+      />
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400;1,700&family=Work+Sans:wght@300;400;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
-        .font-serif-custom { font-family: 'Noto Serif', serif; }
-        .font-sans-custom { font-family: 'Work Sans', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
+        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; display: inline-block; }
       `}</style>
 
       <SiteNav activeLink="produtos" />
 
-      <main className="pt-20">
-        {/* Hero */}
-        <section className="relative bg-stone-50 overflow-hidden">
-          <div className="max-w-7xl mx-auto px-4 md:px-8 flex flex-col md:grid md:grid-cols-12 gap-8 items-center py-16 md:py-24">
-            <div className="md:col-span-7 z-10 text-center md:text-left font-sans-custom">
-              <span className="inline-block bg-[#276a4d]/10 text-[#276a4d] px-4 py-1 rounded-full text-xs mb-6 uppercase tracking-wider font-bold">
-                Excelência em Gestão
-              </span>
-              <h1 className="font-serif-custom text-4xl md:text-5xl text-[#1a3d2b] mb-6 leading-tight">
-                Transforme seu paisagismo em um negócio profissional e lucrativo
+      <main className="font-body">
+        <section className="bg-[#173727] px-5 pb-20 pt-36 text-white md:px-8">
+          <div className="mx-auto grid max-w-7xl gap-12 md:grid-cols-[1fr_0.75fr] md:items-center">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.32em] text-[#d7ae45]">Materiais profissionais</p>
+              <h1 className="mt-5 font-display text-5xl font-bold leading-tight md:text-7xl">
+                Para paisagistas que querem vender com mais clareza e segurança.
               </h1>
-              <p className="text-stone-500 mb-10 max-w-xl text-lg">
-                Documentos profissionais prontos para uso, criados por uma especialista com PhD em Produção Vegetal.
+              <p className="mt-7 max-w-2xl text-lg leading-8 text-white/72">
+                Esta área é voltada para profissionais. Se você é cliente final e quer contratar um projeto, vá para o diagnóstico de paisagismo.
               </p>
             </div>
-            <div className="md:col-span-5 w-full relative">
-              <div className="aspect-[4/5] rounded-2xl overflow-hidden shadow-2xl border-8 border-white">
-                <img
-                  alt="Rosane Borges"
-                  className="w-full h-full object-cover"
-                  src="https://media.base44.com/images/public/69ea9c43ca6eb4180010c463/9825cfba9_IMG_7921jpg.jpg"
-                />
-              </div>
-              <div className="absolute -bottom-6 -right-6 md:-right-12 bg-white p-6 rounded-2xl shadow-xl z-20">
-                <p className="text-[#276a4d] font-bold text-lg font-serif-custom">+15 Anos</p>
-                <p className="text-stone-400 text-sm font-sans-custom font-bold uppercase text-xs">Expertise no Mercado</p>
-              </div>
+            <div className="overflow-hidden rounded-[28px] border border-white/15">
+              <img src="https://media.base44.com/images/public/69ea9c43ca6eb4180010c463/9825cfba9_IMG_7921jpg.jpg" alt="Rosane Borges" className="h-full max-h-[560px] w-full object-cover" />
             </div>
           </div>
         </section>
 
-        {/* Authority */}
-        <section className="py-20 bg-white border-y border-stone-100 font-sans-custom">
-          <div className="max-w-3xl mx-auto px-4 text-center">
-            <h2 className="font-serif-custom text-3xl text-[#1a3d2b] mb-6">Expertise Técnica a Serviço da sua Carreira</h2>
-            <p className="text-stone-500 mb-8 leading-relaxed">
-              Rosane Borges é engenheira agrônoma, mestre e doutora (PhD) em Produção Vegetal, com especialização em plantas ornamentais. Seu método une o rigor científico à estética de alto padrão.
-            </p>
-            <div className="grid grid-cols-2 gap-8 py-8 border-y border-stone-100 justify-items-center">
-              <div>
-                <p className="text-3xl font-serif-custom text-[#276a4d] font-bold">Doutora</p>
-                <p className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-1">Em Produção Vegetal</p>
-              </div>
-              <div>
-                <p className="text-3xl font-serif-custom text-[#276a4d] font-bold">+500</p>
-                <p className="text-xs font-bold text-stone-400 uppercase tracking-wider mt-1">Projetos & Alunos</p>
-              </div>
-            </div>
+        <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
+          <div className="mb-12 max-w-3xl">
+            <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Produtos digitais</p>
+            <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
+              Documentos prontos para reduzir improviso na venda e na execução.
+            </h2>
           </div>
-        </section>
-
-        {/* Products */}
-        <section className="py-24 bg-stone-50 font-sans-custom" id="produtos">
-          <div className="max-w-7xl mx-auto px-4 md:px-8">
-            <div className="text-center mb-16">
-              <h2 className="font-serif-custom text-4xl text-[#1a3d2b] mb-4">Ferramentas de Gestão Profissional</h2>
-              <p className="text-stone-500">Pare de perder tempo criando documentos do zero toda semana.</p>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {products.map((p) => (
-                <div key={p.id} className="bg-white rounded-3xl p-8 md:p-12 border border-stone-100 shadow-sm hover:shadow-md transition-all flex flex-col">
-                  <div className="flex justify-between items-start mb-8">
-                    <div className={`p-4 ${p.iconBg} rounded-2xl`}>
-                      <span className={`material-symbols-outlined ${p.iconColor} text-3xl`}>{p.icon}</span>
-                    </div>
-                    <div className="text-right">
-                      <span className="text-stone-400 text-xs line-through block">De {p.precoOriginal}</span>
-                      <span className={`${p.titleColor} font-serif-custom text-4xl font-bold`}>{p.preco}</span>
-                    </div>
-                  </div>
-                  <h3 className={`font-serif-custom text-3xl ${p.titleColor} mb-4`}>{p.titulo}</h3>
-                  <p className="text-stone-500 mb-8 flex-grow">{p.descricao}</p>
-                  <ul className="space-y-4 mb-10 text-stone-500">
-                    {p.items.map((item, i) => (
-                      <li key={i} className="flex items-start gap-3">
-                        <span className={`material-symbols-outlined ${p.iconColor} text-sm`}>check_circle</span>
-                        {item}
-                      </li>
-                    ))}
-                  </ul>
-                  <a
-                    href={p.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={`w-full ${p.btnColor} text-white py-4 rounded-full text-center font-bold text-xs uppercase tracking-widest transition-colors`}
-                  >
-                    {p.cta}
-                  </a>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Combo */}
-        <section className="py-24 bg-[#1a3d2b] text-white overflow-hidden relative font-sans-custom" id="combo">
-          {/* subtle bg triangle */}
-          <div className="absolute inset-0 opacity-10 pointer-events-none">
-            <svg className="w-full h-full" preserveAspectRatio="none" viewBox="0 0 100 100">
-              <path d="M0 0 L100 0 L100 100 Z" fill="currentColor" />
-            </svg>
-          </div>
-          <div className="max-w-7xl mx-auto px-4 md:px-8 relative z-10">
-            <div className="bg-white/5 border border-white/10 rounded-[40px] p-8 md:p-20 backdrop-blur-xl">
-              <div className="flex flex-col lg:flex-row gap-16 items-center">
-                <div className="w-full lg:w-1/2 text-center lg:text-left">
-                  <span className="inline-block bg-amber-100 text-amber-800 px-6 py-2 rounded-full text-xs font-bold uppercase tracking-wider mb-8 animate-pulse">OFERTA HISTÓRICA</span>
-                  <h2 className="font-serif-custom text-5xl md:text-6xl mb-8">Combo Paisagista Profissional</h2>
-                  <p className="text-xl text-white/80 mb-12 leading-relaxed">
-                    Tenha o ecossistema completo para organizar seu escritório. Inclui o <b>Kit Profissional</b> + <b>Kit Contratos</b> + <b>Suporte VIP</b>.
-                  </p>
-                  <div className="flex items-center gap-10 justify-center lg:justify-start mb-12">
-                    <div className="opacity-50">
-                      <p className="text-sm uppercase font-bold mb-1 tracking-wide">De R$ 94,00</p>
-                      <p className="text-3xl font-serif-custom line-through">R$ 94</p>
-                    </div>
-                    <div className="text-amber-300">
-                      <p className="text-sm uppercase font-bold mb-1 tracking-wide">Por apenas</p>
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-6xl font-serif-custom font-bold">R$ 67</span>
-                      </div>
-                    </div>
-                  </div>
-                  <a
-                    href="https://pay.kiwify.com.br/lH4EUVh"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-block bg-amber-100 text-amber-900 px-12 py-6 rounded-full font-bold text-lg shadow-2xl hover:scale-105 active:scale-100 transition-all uppercase tracking-widest"
-                  >
-                    Garantir Meu Combo Agora
-                  </a>
-                  <p className="mt-6 text-sm opacity-60 font-bold uppercase tracking-wide">Pagamento seguro via Kiwify • Acesso imediato</p>
-                </div>
-                <div className="w-full lg:w-1/2">
-                  <div className="relative">
-                    <img
-                      alt="Celebrando Sucesso"
-                      className="rounded-[32px] shadow-2xl border-4 border-white/20 w-full"
-                      src="https://media.base44.com/images/public/69ea9c43ca6eb4180010c463/b7cd6c8a6_WhatsAppImage2026-05-02at21162511.jpg"
-                    />
-                    <div className="absolute -top-10 -right-4 md:-right-10 bg-white text-[#276a4d] p-8 rounded-3xl shadow-2xl text-center rotate-6">
-                      <span className="material-symbols-outlined text-5xl mb-2 block">workspace_premium</span>
-                      <p className="font-bold leading-tight uppercase text-xs font-sans-custom">Melhor<br />Compra</p>
-                    </div>
+          <div className="grid gap-7 md:grid-cols-2">
+            {products.map((product) => (
+              <article key={product.title} className="rounded-[28px] border border-stone-200 bg-white p-8 shadow-sm">
+                <div className="flex items-start justify-between gap-4">
+                  <span className="grid h-14 w-14 place-items-center rounded-full bg-[#173727] text-[#d7ae45]">
+                    <span className="material-symbols-outlined">description</span>
+                  </span>
+                  <div className="text-right">
+                    <p className="text-sm font-bold text-stone-400 line-through">{product.original}</p>
+                    <p className="font-display text-5xl font-bold text-[#173727]">{product.price}</p>
                   </div>
                 </div>
-              </div>
-            </div>
+                <h3 className="mt-8 font-display text-3xl font-bold">{product.title}</h3>
+                <p className="mt-4 leading-7 text-stone-600">{product.description}</p>
+                <ul className="mt-8 space-y-4">
+                  {product.items.map((item) => (
+                    <li key={item} className="flex items-center gap-3 text-sm font-semibold text-stone-700">
+                      <span className="material-symbols-outlined text-[#b28a28]">check_circle</span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+                <a href={product.link} target="_blank" rel="noreferrer" className="mt-9 block rounded-full bg-[#d7ae45] px-8 py-4 text-center text-xs font-extrabold uppercase tracking-[0.2em] text-[#173727] hover:bg-[#173727] hover:text-white">
+                  Acessar material
+                </a>
+              </article>
+            ))}
           </div>
         </section>
 
-        {/* Garantia + FAQ */}
-        <section className="py-24 bg-white font-sans-custom" id="faq">
-          <div className="max-w-4xl mx-auto px-4 md:px-8">
-            {/* Garantia */}
-            <div className="text-center mb-20 p-10 rounded-3xl border-2 border-dashed border-[#276a4d]/30 bg-stone-50">
-              <div className="w-20 h-20 bg-[#276a4d]/10 rounded-full flex items-center justify-center mx-auto mb-6">
-                <span className="material-symbols-outlined text-[#276a4d] text-4xl">verified</span>
-              </div>
-              <h2 className="font-serif-custom text-3xl text-[#1a3d2b] mb-4">Risco Zero: 7 dias de Garantia</h2>
-              <p className="text-stone-500 max-w-2xl mx-auto text-lg leading-relaxed">
-                Explore todos os documentos, abra cada planilha. Se não sentir que seu escritório subiu de nível, devolvemos 100% do seu dinheiro sem perguntas.
+        <section className="bg-[#eef3ed] px-5 py-20 md:px-8">
+          <div className="mx-auto grid max-w-7xl gap-10 rounded-[28px] bg-white p-8 shadow-sm md:grid-cols-[1fr_0.7fr] md:p-12">
+            <div>
+              <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Oferta combinada</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">Combo Paisagista Profissional</h2>
+              <p className="mt-5 max-w-2xl leading-8 text-stone-600">
+                Kit profissional + contratos em um único pacote para estruturar a parte comercial, documental e operacional do escritório.
               </p>
             </div>
-
-            {/* FAQ */}
-            <h2 className="font-serif-custom text-4xl text-[#1a3d2b] text-center mb-12">Perguntas Frequentes</h2>
-            <div className="space-y-4">
-              {[
-                {
-                  q: "Para quem é este material?",
-                  a: "O material é ideal para paisagistas, arquitetos e engenheiros que atuam no mercado e desejam profissionalizar sua gestão documental e processos comerciais.",
-                },
-                {
-                  q: "Em quais formatos os arquivos são entregues?",
-                  a: "Os arquivos são disponibilizados em formatos 100% editáveis: Word (.docx), Excel (.xlsx) e modelos estruturados no Canva para apresentações visuais.",
-                },
-                {
-                  q: "Como recebo o acesso?",
-                  a: "Imediatamente após a confirmação do pagamento, você receberá um e-mail da plataforma Kiwify com seus dados de login e link para a área de membros.",
-                },
-                {
-                  q: "Tenho suporte em caso de dúvidas?",
-                  a: "Sim! Dentro da plataforma você terá acesso aos nossos canais de suporte para auxiliar em qualquer dúvida sobre o uso do material.",
-                },
-              ].map((item, i) => (
-                <details key={i} className="group border border-stone-200 rounded-2xl overflow-hidden bg-stone-50">
-                  <summary className="flex justify-between items-center p-6 cursor-pointer list-none hover:bg-stone-100 transition-colors">
-                    <span className="text-lg font-bold text-[#1a3d2b]">{item.q}</span>
-                    <span className="material-symbols-outlined text-[#276a4d] transition-transform duration-300 group-open:rotate-180">expand_more</span>
-                  </summary>
-                  <div className="px-6 pb-6 text-stone-500 leading-relaxed">{item.a}</div>
-                </details>
-              ))}
+            <div className="flex flex-col justify-center gap-5 md:items-end">
+              <p className="font-display text-6xl font-bold text-[#173727]">R$ 67</p>
+              <a href="https://pay.kiwify.com.br/lH4EUVh" target="_blank" rel="noreferrer" className="rounded-full bg-[#173727] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.2em] text-white hover:bg-[#d7ae45] hover:text-[#173727]">
+                Garantir combo
+              </a>
             </div>
           </div>
         </section>
       </main>
 
       <SiteFooter />
-
       <WhatsAppFloat />
     </div>
   );

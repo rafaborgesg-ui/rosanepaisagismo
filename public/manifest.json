@@ -1,13 +1,13 @@
 {
   "name": "Rosane Paisagismo",
   "short_name": "Rosane",
-  "description": "Plataforma de Gestão de Projetos em Paisagismo",
+  "description": "Projetos de paisagismo premium para residências, clínicas, áreas gourmet e manutenção.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait-primary",
-  "background_color": "#ffffff",
-  "theme_color": "#276a4d",
+  "background_color": "#fbfaf6",
+  "theme_color": "#173727",
   "icons": [
     {
       "src": "/favicon.svg",
@@ -24,6 +24,6 @@
   ],
   "categories": [
     "business",
-    "productivity"
+    "lifestyle"
   ]
 }

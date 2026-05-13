@@ -1,4 +1,5 @@
 import { useLandingContent } from "@/hooks/useLandingContent";
+import { trackEvent } from "@/lib/tracking";
 
 export default function WhatsAppFloat() {
   const content = useLandingContent();
@@ -9,6 +10,7 @@ export default function WhatsAppFloat() {
       href={`https://wa.me/${numero}`}
       target="_blank"
       rel="noopener noreferrer"
+      onClick={() => trackEvent("whatsapp_click", { source: "floating_button" })}
       className="fixed bottom-8 right-8 w-14 h-14 bg-[#25D366] text-white rounded-full flex items-center justify-center shadow-xl z-50 hover:scale-110 transition-transform"
     >
       <svg className="w-8 h-8 fill-current" viewBox="0 0 24 24">
