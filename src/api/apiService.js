@@ -65,6 +65,7 @@ export const api = {
     MetaAnual: createEntityMethods('metas_anuais'),
     CatalogoBotanico: createEntityMethods('catalogo_botanico'),
     LandingContent: createEntityMethods('landing_content'),
+    Leads: createEntityMethods('leads'),
     TeamInvite: createEntityMethods('team_invites'),
     Subscription: createEntityMethods('subscriptions'),
   },

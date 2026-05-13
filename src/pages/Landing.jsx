@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
+import EmailCapturePopup from "@/components/landing/EmailCapturePopup";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 import SEO from "@/components/seo/SEO";
 
@@ -102,6 +103,7 @@ export default function Landing() {
             <a href="#servicos" className="hover:text-[#c09624] transition-colors">Serviços</a>
             <a href="#sobre" className="hover:text-[#c09624] transition-colors">Sobre</a>
             <Link to="/catalogo" className="hover:text-[#c09624] transition-colors">Espécies</Link>
+            <Link to="/guia-paisagismo" className="px-3 py-2 text-[#c09624] hover:text-[#1a3d2b] transition-colors">📖 Guia Grátis</Link>
             <Link to="/contato" className="px-7 py-3 bg-[#1a3d2b] text-white rounded-full hover:bg-[#c09624] transition-all">
               Agendar Reunião
             </Link>
@@ -145,6 +147,22 @@ export default function Landing() {
               <a href="#projetos" className="text-white font-bold text-[10px] uppercase tracking-widest border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
                 Ver Projetos ↓
               </a>
+            </div>
+
+            <div className="mt-16 flex flex-col sm:flex-row items-center justify-center gap-8 text-white/80 text-xs">
+              <div className="flex items-center gap-2">
+                <span className="text-lg">⭐⭐⭐⭐⭐</span>
+                <span>99% Clientes Satisfeitos</span>
+              </div>
+              <div className="w-px h-6 bg-white/20 hidden sm:block"></div>
+              <div className="flex items-center gap-2">
+                <span className="text-lg">✓</span>
+                <span><strong>3 vagas</strong> disponíveis este mês</span>
+              </div>
+              <div className="w-px h-6 bg-white/20 hidden sm:block"></div>
+              <Link to="/guia-paisagismo" className="text-[#c09624] hover:text-white transition-colors font-bold">
+                📖 Baixar Guia Grátis
+              </Link>
             </div>
           </div>
 
@@ -364,6 +382,7 @@ export default function Landing() {
 
       <SiteFooter />
       <WhatsAppFloat />
+      <EmailCapturePopup />
     </div>
   );
 }

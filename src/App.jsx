@@ -12,6 +12,7 @@ import AppLayout from './components/layout/AppLayout';
 import ProtectedRoute from './components/ProtectedRoute';
 import ProtectedSubscriptionRoute from './components/ProtectedSubscriptionRoute';
 import Landing from './pages/Landing';
+import GuiaPaisagismo from './pages/GuiaPaisagismo';
 import ServicoLanding from './pages/ServicoLanding';
 import Portfolio from './pages/Portfolio';
 import PaisagismoResidencial from './pages/PaisagismoResidencial';
@@ -59,6 +60,7 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
+      <Route path="/guia-paisagismo" element={<GuiaPaisagismo />} />
       <Route path="/servico/:id" element={<ServicoLanding />} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/paisagismo-residencial" element={<PaisagismoResidencial />} />

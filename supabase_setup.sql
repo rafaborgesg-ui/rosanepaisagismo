@@ -104,6 +104,23 @@ create table landing_content (
   created_at timestamp with time zone default timezone('utc'::text, now())
 );
 
+-- Leads
+create table leads (
+  id uuid default uuid_generate_v4() primary key,
+  nome text,
+  email text unique,
+  whatsapp text,
+  fonte text,
+  status text,
+  data_captura timestamp with time zone,
+  utm_source text,
+  utm_campaign text,
+  created_at timestamp with time zone default timezone('utc'::text, now())
+);
+
+create index if not exists idx_leads_email on leads(email);
+create index if not exists idx_leads_fonte on leads(fonte);
+
 -- Team Invites
 create table team_invites (
   id uuid default uuid_generate_v4() primary key,
