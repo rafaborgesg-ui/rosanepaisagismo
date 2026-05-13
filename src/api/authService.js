@@ -1,12 +1,21 @@
 import { supabase } from '../lib/supabaseClient';
 
+const ensureSupabaseAuth = () => {
+  if (!supabase) {
+    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+  }
+  return supabase;
+};
+
 export const auth = {
   isAuthenticated: async () => {
-    const { data: { session } } = await supabase.auth.getSession();
+    const client = ensureSupabaseAuth();
+    const { data: { session } } = await client.auth.getSession();
     return !!session;
   },
   me: async () => {
-    const { data: { user } } = await supabase.auth.getUser();
+    const client = ensureSupabaseAuth();
+    const { data: { user } } = await client.auth.getUser();
     if (!user) return null;
     return {
       id: user.id,
@@ -16,12 +25,14 @@ export const auth = {
     };
   },
   login: async ({ email, password }) => {
-    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    const client = ensureSupabaseAuth();
+    const { data, error } = await client.auth.signInWithPassword({ email, password });
     if (error) throw error;
     return data.user;
   },
   logout: async (redirectUrl) => {
-    await supabase.auth.signOut();
+    const client = ensureSupabaseAuth();
+    await client.auth.signOut();
     if (redirectUrl) {
       window.location.href = redirectUrl;
     }

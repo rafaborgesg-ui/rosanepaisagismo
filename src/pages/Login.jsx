@@ -49,8 +49,8 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center bg-[#f9f9f9] p-6">
       <div className="w-full max-w-md bg-white rounded-3xl shadow-xl p-10 border border-stone-100 animate-fade-in">
         <div className="text-center mb-10">
-          <h1 className="font-serif-s text-3xl font-bold text-[#1a3d2b] mb-2">Bem-vinda de volta</h1>
-          <p className="text-stone-500 text-sm">Acesse sua plataforma Rosane Paisagismo</p>
+          <h1 className="font-serif-s text-3xl font-bold text-[#1a3d2b] mb-2">Acesso ao Sistema</h1>
+          <p className="text-stone-500 text-sm">Plataforma de gestão para projetos premium</p>
         </div>
         
         <form onSubmit={handleLogin} className="space-y-6">

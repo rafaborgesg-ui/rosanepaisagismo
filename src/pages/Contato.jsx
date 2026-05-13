@@ -88,30 +88,30 @@ export default function Contato() {
           {/* Info */}
           <div className="space-y-12">
             <div className="space-y-6">
-              <span className="text-[10px] uppercase tracking-[0.2em] text-[#276a4d] font-bold block">Canais de Atendimento</span>
+              <span className="text-[10px] uppercase tracking-[0.2em] text-[#c09624] font-bold block">Atendimento Premium</span>
               <h1 className="font-serif-custom text-4xl md:text-6xl text-[#1a3d2b] italic leading-[1.1]">
-                Vamos planejar seu <br />
-                <span className="font-bold not-italic">refúgio particular</span>
+                Vamos criar seu <br />
+                <span className="font-bold not-italic">jardim exclusivo</span>
               </h1>
               <p className="text-stone-500 max-w-md">
-                Transformando conhecimento científico em espaços de contemplação e vida.
+                Cada projeto é único. Conte-nos sobre sua visão e transformaremos seu espaço em uma obra de arte viva.
               </p>
             </div>
             <div className="space-y-8">
               <div className="flex items-center gap-6">
                 <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-stone-100 shadow-sm">
-                  <span className="material-symbols-outlined text-[#276a4d]">mail</span>
+                  <span className="material-symbols-outlined text-[#c09624]">mail</span>
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-1">E-mail Direct</p>
-                  <a href="mailto:rosanepaisagismo@gmail.com" className="text-[#276a4d] font-semibold hover:underline">
+                  <a href="mailto:rosanepaisagismo@gmail.com" className="text-[#c09624] font-semibold hover:underline">
                     rosanepaisagismo@gmail.com
                   </a>
                 </div>
               </div>
               <div className="flex items-center gap-6">
                 <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-stone-100 shadow-sm">
-                  <span className="material-symbols-outlined text-[#276a4d]">location_on</span>
+                  <span className="material-symbols-outlined text-[#c09624]">location_on</span>
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-1">Headquarters</p>
@@ -120,11 +120,11 @@ export default function Contato() {
               </div>
               <div className="flex items-center gap-6">
                 <div className="w-12 h-12 rounded-xl bg-white flex items-center justify-center border border-stone-100 shadow-sm">
-                  <span className="material-symbols-outlined text-[#276a4d]">phone</span>
+                  <span className="material-symbols-outlined text-[#c09624]">phone</span>
                 </div>
                 <div>
                   <p className="text-[10px] uppercase tracking-widest text-stone-400 font-bold mb-1">WhatsApp</p>
-                  <a href={`https://wa.me/${whatsappNumero}`} className="text-[#276a4d] font-semibold hover:underline">
+                  <a href={`https://wa.me/${whatsappNumero}`} className="text-[#c09624] font-semibold hover:underline">
                    {whatsappNumero}
                   </a>
                 </div>
@@ -142,7 +142,7 @@ export default function Contato() {
               </div>
             ) : (
               <>
-                <h2 className="font-serif-custom text-2xl text-[#1a3d2b] mb-8">Solicitar Orçamento</h2>
+                <h2 className="font-serif-custom text-2xl text-[#1a3d2b] mb-8">Receba uma Consultoria Personalizada</h2>
                 <form className="space-y-6" onSubmit={handleSubmit}>
                   <div className="grid md:grid-cols-2 gap-6">
                     <div className="space-y-2">
@@ -181,14 +181,16 @@ export default function Contato() {
                   <div className="space-y-2">
                     <label className="text-[10px] uppercase tracking-widest text-stone-400 font-bold block ml-1">Interesse</label>
                     <select
-                      className="w-full bg-stone-50 border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-[#276a4d]/20 outline-none text-sm appearance-none"
+                      className="w-full bg-stone-50 border-none rounded-xl px-4 py-3 focus:ring-1 focus:ring-[#c09624]/20 outline-none text-sm appearance-none"
                       value={form.interesse}
                       onChange={e => setForm(p => ({ ...p, interesse: e.target.value }))}
                     >
                       <option>Projeto de Paisagismo</option>
+                      <option>Paisagismo Residencial Premium</option>
+                      <option>Áreas Gourmet & Piscinas</option>
+                      <option>Paisagismo para Clínicas</option>
                       <option>Consultoria Técnica</option>
                       <option>Implantação e Obra</option>
-                      <option>Sistema de Gestão (SaaS)</option>
                       <option>Outros</option>
                     </select>
                   </div>
@@ -228,9 +230,9 @@ export default function Contato() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-[#276a4d] text-white py-4 rounded-full text-[12px] uppercase tracking-[0.2em] font-bold shadow-lg shadow-[#276a4d]/20 hover:bg-[#1a3d2b] transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full bg-[#c09624] text-white py-4 rounded-full text-[12px] uppercase tracking-[0.2em] font-bold shadow-lg shadow-[#c09624]/20 hover:bg-[#a07d1f] transition-colors mt-4 disabled:opacity-50 disabled:cursor-not-allowed"
                   >
-                    {loading ? "Enviando..." : "Enviar Requisição"}
+                    {loading ? "Enviando..." : "Receber Consultoria"}
                   </button>
                 </form>
               </>

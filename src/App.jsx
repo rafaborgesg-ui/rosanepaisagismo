@@ -14,6 +14,8 @@ import ProtectedSubscriptionRoute from './components/ProtectedSubscriptionRoute'
 import Landing from './pages/Landing';
 import ServicoLanding from './pages/ServicoLanding';
 import Portfolio from './pages/Portfolio';
+import PaisagismoResidencial from './pages/PaisagismoResidencial';
+import PaisagismoClinicas from './pages/PaisagismoClinicas';
 import AcceptInvite from './pages/AcceptInvite';
 import PaymentSuccess from './pages/PaymentSuccess';
 import PaymentCancel from './pages/PaymentCancel';
@@ -59,6 +61,8 @@ const AuthenticatedApp = () => {
       <Route path="/" element={<Landing />} />
       <Route path="/servico/:id" element={<ServicoLanding />} />
       <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/paisagismo-residencial" element={<PaisagismoResidencial />} />
+      <Route path="/paisagismo-clinicas" element={<PaisagismoClinicas />} />
       <Route path="/accept-invite" element={<AcceptInvite />} />
       <Route path="/sistema" element={<Sistema />} />
       <Route path="/contato" element={<Contato />} />

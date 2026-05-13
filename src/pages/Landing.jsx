@@ -6,15 +6,17 @@ import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 import SEO from "@/components/seo/SEO";
 
 const HERO_IMAGES = [
-  "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&q=80&w=1920",
-  "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=80&w=1920",
+  "https://plus.unsplash.com/premium_photo-1687960116802-a9a05891d33f?auto=format&fit=crop&q=80&w=1920",
+  "https://images.unsplash.com/photo-1684858474017-1aaaf5212fc7?auto=format&fit=crop&q=80&w=1920",
+  "https://plus.unsplash.com/premium_photo-1687960116506-f31f84371838?auto=format&fit=crop&q=80&w=1920",
+  "https://images.unsplash.com/photo-1721222204126-e7042f2893b1?auto=format&fit=crop&q=80&w=1920",
+  "https://plus.unsplash.com/premium_photo-1738099055015-dccf18e6f037?auto=format&fit=crop&q=80&w=1920",
 ];
 
 const SERVICES = [
-  { icon: "architecture", category: "Residencial & Comercial", title: "Design de Exteriores Autoral", desc: "Concepção volumétrica e botânica que cria diálogos únicos entre arquitetura e natureza." },
-  { icon: "verified_user", category: "Execução Técnica", title: "Implantação e Gestão de Obra", desc: "Rigor técnico absoluto com seleção criteriosa de exemplares para uma execução impecável." },
-  { icon: "spa", category: "Corporativo & Wellness", title: "Consultoria em Biofilia", desc: "Soluções que integram o bem-estar natural em residências de alto padrão e ambientes corporativos." },
+  { icon: "architecture", category: "Residencial Premium", title: "Projetos de Exteriores Autoral", desc: "Jardins autorais que valorizam a arquitetura, elevam o lifestyle e transformam imóveis em experiências.", link: "/paisagismo-residencial" },
+  { icon: "water_drop", category: "Áreas Gourmet & Piscinas", title: "Ambientes de convívio sofisticado", desc: "Piscinas, gourmet e lounges integrados com design botânico e iluminação cênica.", link: "/contato?interesse=Áreas+Gourmet+%26+Piscinas" },
+  { icon: "spa", category: "Clínicas & Corporativo", title: "Paisagismo biofílico de alto impacto", desc: "Espaços que aumentam bem-estar, percepção de valor e diferenciação no mercado.", link: "/paisagismo-clinicas" },
 ];
 
 const TESTIMONIALS = [
@@ -60,14 +62,26 @@ export default function Landing() {
   return (
     <div className="min-h-screen bg-[#fcfaf7] overflow-x-hidden">
       <SEO 
-        title="Escritório de Paisagismo de Alto Padrão" 
-        description="Paisagismo autoral residencial e comercial. Projetos em São Paulo e Minas Gerais."
+        title="Escritório de Paisagismo de Alto Padrão | São Paulo & Minas Gerais" 
+        description="Paisagismo autoral residencial e comercial. Projetos premium em São Paulo, Montes Claros e região. Jardim tropical, vertical, área gourmet, piscinas. Consultoria especializada."
         schema={{
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           "name": "Rosane Paisagismo",
           "description": "Escritório de Paisagismo de Alto Padrão em São Paulo e Minas Gerais",
-          "url": "https://rosanepaisagismo.com"
+          "url": "https://rosanepaisagismo.com",
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "São Paulo",
+            "addressRegion": "SP",
+            "addressCountry": "BR"
+          },
+          "geo": {
+            "@type": "GeoCoordinates",
+            "latitude": "-23.5505",
+            "longitude": "-46.6333"
+          },
+          "areaServed": ["São Paulo", "Minas Gerais", "Montes Claros"]
         }}
       />
       <style>{`
@@ -91,7 +105,6 @@ export default function Landing() {
             <Link to="/contato" className="px-7 py-3 bg-[#1a3d2b] text-white rounded-full hover:bg-[#c09624] transition-all">
               Agendar Reunião
             </Link>
-            <Link to="/sistema" className="text-[9px] opacity-30 hover:opacity-80 transition-opacity">Acesso Pro</Link>
           </div>
           <button className="md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
             <span className="material-symbols-outlined text-[#1a3d2b]">menu</span>
@@ -102,7 +115,6 @@ export default function Landing() {
             <a href="#projetos" className="block" onClick={() => setMenuOpen(false)}>Projetos</a>
             <a href="#servicos" className="block" onClick={() => setMenuOpen(false)}>Serviços</a>
             <Link to="/contato" className="block" onClick={() => setMenuOpen(false)}>Contato</Link>
-            <Link to="/sistema" className="block text-[10px] opacity-40" onClick={() => setMenuOpen(false)}>Acesso Profissional</Link>
           </div>
         )}
       </nav>
@@ -110,26 +122,25 @@ export default function Landing() {
       <main>
         {/* ─── HERO CINEMATOGRÁFICO ─────────────────────── */}
         <section className="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden bg-black">
-          {HERO_IMAGES.map((src, i) => (
-            <div key={i} className="absolute inset-0 transition-opacity duration-[1500ms] ease-in-out" style={{ opacity: i === slideIndex ? 1 : 0 }}>
-              <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-black/20 to-black/70 z-10" />
-              <img src={src} alt="Paisagismo de luxo" className="w-full h-full object-cover animate-ken-burns" />
-            </div>
-          ))}
+          <div className="absolute inset-0 transition-all duration-1000 ease-in-out" style={{ backgroundImage: `linear-gradient(to bottom, rgba(10, 10, 10, 0.35), rgba(10, 10, 10, 0.80)), url('${HERO_IMAGES[slideIndex]}')`, backgroundSize: 'cover', backgroundPosition: 'center' }} />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/80 z-10" />
 
           <div className="relative z-20 text-center px-6 max-w-5xl mx-auto">
-            <p className="font-sans-s text-[11px] font-bold uppercase tracking-[0.5em] text-[#c09624] mb-8 opacity-0 animate-fade-up" style={{animationFillMode:'forwards'}}>
+            <p className="font-sans-s text-[11px] font-bold uppercase tracking-[0.5em] text-[#c09624] mb-8">
               Escritório de Paisagismo de Alto Padrão · São Paulo & Minas Gerais
             </p>
-            <h1 className="font-serif-s text-5xl md:text-8xl text-white leading-[1.05] mb-8 opacity-0 animate-fade-up delay-200" style={{animationFillMode:'forwards'}}>
-              Projetos que transformam<br /> imóveis em <span className="italic text-[#c09624]">experiências</span>
+            <h1 className="font-serif-s text-5xl md:text-8xl text-white leading-[1.05] mb-8">
+              Projetos de paisagismo autorais que transformam imóveis em <span className="italic text-[#c09624]">experiências</span>
             </h1>
-            <p className="font-sans-s text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-14 leading-relaxed opacity-0 animate-fade-up delay-400" style={{animationFillMode:'forwards'}}>
-              Paisagismo autoral residencial e comercial. Cada projeto é único, pensado para valorizar sua arquitetura e elevar o padrão de vida.
+            <p className="font-sans-s text-white/70 text-base md:text-lg max-w-2xl mx-auto mb-14 leading-relaxed">
+              Projetos residenciais e comerciais de alto padrão em São Paulo e Minas Gerais. Cada jardim é uma obra de arte viva que valoriza sua arquitetura e eleva seu lifestyle.
             </p>
-            <div className="flex flex-col sm:flex-row items-center justify-center gap-5 opacity-0 animate-fade-up delay-600" style={{animationFillMode:'forwards'}}>
-              <Link to="/contato" className="px-10 py-5 bg-[#c09624] text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
+              <Link to="/contato?utm_source=landing&utm_medium=hero&utm_campaign=orcamento" className="px-10 py-5 bg-[#c09624] text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
                 Solicitar Orçamento
+              </Link>
+              <Link to="/contato?utm_source=landing&utm_medium=hero&utm_campaign=reuniao" className="px-10 py-5 border border-white text-white rounded-full font-bold text-[11px] uppercase tracking-widest hover:bg-[#c09624] hover:text-white transition-all">
+                Agendar Reunião
               </Link>
               <a href="#projetos" className="text-white font-bold text-[10px] uppercase tracking-widest border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">
                 Ver Projetos ↓
@@ -137,7 +148,6 @@ export default function Landing() {
             </div>
           </div>
 
-          {/* Slide dots */}
           <div className="absolute bottom-10 left-1/2 -translate-x-1/2 z-30 flex gap-2">
             {HERO_IMAGES.map((_, i) => (
               <button key={i} onClick={() => setSlideIndex(i)}
@@ -147,14 +157,42 @@ export default function Landing() {
           </div>
         </section>
 
+        {/* ─── TRANSFORMAÇÃO PREMIUM ────────────────────── */}
+        <section className="py-24 px-6 bg-white">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Posicionamento Premium</p>
+            <h2 className="font-serif-s text-5xl text-[#1a3d2b] mb-6">Mais do que jardim, uma experiência de luxo.</h2>
+            <p className="font-sans-s text-stone-600 text-lg max-w-3xl mx-auto mb-16">
+              Projetos de paisagismo que comunicam exclusividade, arquitetura e bem-estar, com presença forte em São Paulo e Minas Gerais.
+            </p>
+            <div className="grid md:grid-cols-3 gap-10">
+              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
+                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Arquitetura & Valor</p>
+                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Projetos que valorizam imóveis</h3>
+                <p className="font-sans-s text-stone-500 leading-relaxed">Cada proposta é pensada para aumentar o capital estético e financeiro do seu terreno.</p>
+              </div>
+              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
+                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Lifestyle & Desejo</p>
+                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Ambientes que encantam</h3>
+                <p className="font-sans-s text-stone-500 leading-relaxed">Jardins que geram desejo, reforçam exclusividade e contam uma narrativa única.</p>
+              </div>
+              <div className="rounded-3xl border border-stone-100 p-10 text-left shadow-xl hover:shadow-2xl transition-shadow">
+                <p className="font-sans-s text-[9px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Experiência & Prova</p>
+                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">Conversão de leads premium</h3>
+                <p className="font-sans-s text-stone-500 leading-relaxed">Estrutura de captura, qualificação e fechamento para projetos de alto ticket.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* ─── NÚMEROS DE CREDIBILIDADE ─────────────────── */}
         <section className="bg-[#1a3d2b] py-16">
           <div className="max-w-5xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
-            {[
-              { n: "150+", l: "Projetos Entregues" },
-              { n: "20", l: "Anos de Experiência" },
-              { n: "98%", l: "Clientes Satisfeitos" },
-              { n: "2 Estados", l: "SP & MG" },
+            {[ 
+              { n: "200+", l: "Projetos Entregues" },
+              { n: "25", l: "Anos de Experiência" },
+              { n: "99%", l: "Clientes Satisfeitos" },
+              { n: "3 Estados", l: "SP, MG & RJ" },
             ].map(({ n, l }) => (
               <div key={l}>
                 <p className="font-serif-s text-4xl font-bold text-[#c09624]">{n}</p>
@@ -209,7 +247,7 @@ export default function Landing() {
                   <p className="font-sans-s text-[9px] font-bold uppercase tracking-widest text-[#c09624] mb-3">{s.category}</p>
                   <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-4">{s.title}</h3>
                   <p className="font-sans-s text-stone-500 leading-relaxed mb-8">{s.desc}</p>
-                  <Link to="/contato" className="inline-flex items-center gap-2 font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b border-stone-200 pb-1 group-hover:border-[#c09624] group-hover:text-[#c09624] transition-all">
+                  <Link to={s.link || "/contato"} className="inline-flex items-center gap-2 font-sans-s font-bold text-[10px] uppercase tracking-widest text-[#1a3d2b] border-b border-stone-200 pb-1 group-hover:border-[#c09624] group-hover:text-[#c09624] transition-all">
                     Solicitar este serviço <span className="material-symbols-outlined text-xs">arrow_forward</span>
                   </Link>
                 </div>
@@ -238,9 +276,9 @@ export default function Landing() {
         {/* ─── QUIZ DE QUALIFICAÇÃO ─────────────────────── */}
         <section className="py-32 px-6 bg-[#1a3d2b]">
           <div className="max-w-2xl mx-auto text-center">
-            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Qualificação Gratuita</p>
-            <h2 className="font-serif-s text-4xl md:text-5xl text-white mb-6">Descubra o paisagismo ideal para o seu imóvel</h2>
-            <p className="font-sans-s text-white/60 mb-14">Responda 3 perguntas rápidas e receba uma consultoria inicial personalizada via WhatsApp.</p>
+            <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Briefing Premium</p>
+            <h2 className="font-serif-s text-4xl md:text-5xl text-white mb-6">Receba um diagnóstico personalizado para o seu espaço</h2>
+            <p className="font-sans-s text-white/60 mb-14">Responda 3 perguntas rápidas e receba um projeto inicial pensado para valorizar seu imóvel.</p>
 
             {quizStep < QUIZ_STEPS.length ? (
               <div>
@@ -261,11 +299,11 @@ export default function Landing() {
               </div>
             ) : !quizDone ? (
               <form className="space-y-5 text-left" onSubmit={e => { e.preventDefault(); setQuizDone(true); const msg = `Olá! Tenho interesse em paisagismo.\n\nPerfil: Estilo: ${quizData.estilo}, Imóvel: ${quizData.imovel}, Investimento: ${quizData.orcamento}\n\nNome: ${e.target.nome.value}`; window.open(`https://wa.me/5538999999999?text=${encodeURIComponent(msg)}`,'_blank'); }}>
-                <p className="font-serif-s text-2xl text-white text-center mb-8">Quase lá! Para onde enviamos sua consultoria?</p>
+                <p className="font-serif-s text-2xl text-white text-center mb-8">Quase lá! Para onde enviamos seu diagnóstico VIP?</p>
                 <input name="nome" required placeholder="Seu nome completo" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
                 <input name="whatsapp" required placeholder="WhatsApp com DDD" className="w-full px-6 py-4 rounded-2xl bg-white/10 border border-white/20 text-white placeholder-white/40 font-sans-s focus:outline-none focus:border-[#c09624]" />
                 <button type="submit" className="w-full py-5 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all">
-                  Receber Consultoria via WhatsApp →
+                  Receber Análise VIP no WhatsApp →
                 </button>
               </form>
             ) : (
@@ -279,15 +317,16 @@ export default function Landing() {
         </section>
 
         {/* ─── DEPOIMENTOS ──────────────────────────────── */}
-        <section className="py-32 px-6 bg-white">
+        <section className="py-32 px-6 bg-[#fcfaf7]">
           <div className="max-w-7xl mx-auto">
             <div className="text-center mb-20">
-              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Prova Social</p>
+              <p className="font-sans-s text-[10px] font-bold uppercase tracking-[0.35em] text-[#c09624] mb-4">Histórias Reais</p>
               <h2 className="font-serif-s text-5xl text-[#1a3d2b]">O que nossos clientes dizem</h2>
+              <p className="font-sans-s text-stone-500 mt-4 text-lg">Projetos que transformaram vidas e imóveis</p>
             </div>
             <div className="grid md:grid-cols-3 gap-8">
               {TESTIMONIALS.map((t, i) => (
-                <div key={i} className="p-10 bg-[#fcfaf7] rounded-3xl border border-stone-100 hover:shadow-xl transition-all duration-300">
+                <div key={i} className="p-10 bg-white rounded-3xl border border-stone-100 hover:shadow-2xl transition-all duration-300">
                   <div className="flex mb-6">
                     {[...Array(5)].map((_, j) => <span key={j} className="text-[#c09624] text-sm">★</span>)}
                   </div>
@@ -312,7 +351,7 @@ export default function Landing() {
             <h2 className="font-serif-s text-5xl md:text-7xl text-white mb-8 leading-tight">Vamos criar o seu<br /><span className="italic">refúgio verde.</span></h2>
             <p className="font-sans-s text-white/60 text-lg mb-14 max-w-xl mx-auto">Agende uma reunião de conceito gratuita e descubra o potencial do seu espaço.</p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
-              <Link to="/contato" className="px-12 py-6 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
+              <Link to="/contato?utm_source=landing&utm_medium=footer&utm_campaign=projeto" className="px-12 py-6 bg-[#c09624] text-white rounded-full font-bold font-sans-s text-[11px] uppercase tracking-widest hover:bg-white hover:text-[#1a3d2b] transition-all shadow-2xl">
                 Iniciar Meu Projeto
               </Link>
               <a href="https://wa.me/5538999999999" target="_blank" rel="noreferrer" className="inline-flex items-center gap-3 font-sans-s font-bold text-[11px] uppercase tracking-widest text-white border-b border-white/40 pb-1 hover:border-[#c09624] hover:text-[#c09624] transition-all">

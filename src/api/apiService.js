@@ -1,13 +1,22 @@
 import { supabase } from '../lib/supabaseClient';
 
+const ensureSupabase = () => {
+  if (!supabase) {
+    throw new Error('Supabase is not configured. Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY.');
+  }
+  return supabase;
+};
+
 const createEntityMethods = (tableName) => ({
   list: async () => {
-    const { data, error } = await supabase.from(tableName).select('*');
+    const client = ensureSupabase();
+    const { data, error } = await client.from(tableName).select('*');
     if (error) throw error;
     return data;
   },
   filter: async (filters = {}) => {
-    let query = supabase.from(tableName).select('*');
+    const client = ensureSupabase();
+    let query = client.from(tableName).select('*');
     Object.keys(filters).forEach(key => {
       query = query.eq(key, filters[key]);
     });
@@ -16,22 +25,26 @@ const createEntityMethods = (tableName) => ({
     return data;
   },
   get: async (id) => {
-    const { data, error } = await supabase.from(tableName).select('*').eq('id', id).single();
+    const client = ensureSupabase();
+    const { data, error } = await client.from(tableName).select('*').eq('id', id).single();
     if (error) throw error;
     return data;
   },
   create: async (payload) => {
-    const { data, error } = await supabase.from(tableName).insert([payload]).select().single();
+    const client = ensureSupabase();
+    const { data, error } = await client.from(tableName).insert([payload]).select().single();
     if (error) throw error;
     return data;
   },
   update: async (id, payload) => {
-    const { data, error } = await supabase.from(tableName).update(payload).eq('id', id).select().single();
+    const client = ensureSupabase();
+    const { data, error } = await client.from(tableName).update(payload).eq('id', id).select().single();
     if (error) throw error;
     return data;
   },
   delete: async (id) => {
-    const { error } = await supabase.from(tableName).delete().eq('id', id);
+    const client = ensureSupabase();
+    const { error } = await client.from(tableName).delete().eq('id', id);
     if (error) throw error;
     return true;
   }
@@ -57,22 +70,24 @@ export const api = {
   },
   functions: {
     invoke: async (name, payload) => {
+      const client = ensureSupabase();
       // Supabase Edge Functions
-      const { data, error } = await supabase.functions.invoke(name, { body: payload });
+      const { data, error } = await client.functions.invoke(name, { body: payload });
       return { data, error };
     }
   },
   integrations: {
     Core: {
       UploadFile: async ({ file, bucket = 'uploads' }) => {
+        const client = ensureSupabase();
         const fileExt = file.name.split('.').pop();
         const fileName = `${Math.random()}.${fileExt}`;
         const filePath = `${fileName}`;
 
-        const { data, error } = await supabase.storage.from(bucket).upload(filePath, file);
+        const { data, error } = await client.storage.from(bucket).upload(filePath, file);
         if (error) throw error;
 
-        const { data: { publicUrl } } = supabase.storage.from(bucket).getPublicUrl(filePath);
+        const { data: { publicUrl } } = client.storage.from(bucket).getPublicUrl(filePath);
         return { data: { url: publicUrl }, error: null };
       }
     }

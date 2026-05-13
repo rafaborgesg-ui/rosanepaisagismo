@@ -156,7 +156,7 @@ export default function ServicoLanding() {
       {/* HERO */}
       <section className="relative pt-32 pb-20 md:py-40 flex items-center overflow-hidden bg-[#1a3d2b]">
         {data.heroImages.map((src, i) => (
-          <div key={i} className="absolute inset-0 transition-opacity duration-[1500ms] ease-in-out" style={{ opacity: i === slideIndex ? 1 : 0 }}>
+          <div key={i} className="absolute inset-0 transition-opacity duration-1000 ease-in-out" style={{ opacity: i === slideIndex ? 1 : 0 }}>
             <div className="absolute inset-0 bg-[#1a3d2b]/80 z-10" />
             <img src={src} alt="Paisagismo" className="w-full h-full object-cover opacity-30" />
           </div>
