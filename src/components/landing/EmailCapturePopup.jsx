@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { X, Check, Download } from "lucide-react";
 import { api } from "@/api/apiService";
 
 export default function EmailCapturePopup() {
@@ -9,15 +10,11 @@ export default function EmailCapturePopup() {
   const [sent, setSent] = useState(false);
   const [error, setError] = useState("");
 
-  // Mostrar popup após 20 segundos
   useEffect(() => {
     const timer = setTimeout(() => {
-      // Verificar se o usuário já viu o popup (localStorage)
       const popupSeen = localStorage.getItem("emailPopupSeen");
-      if (!popupSeen) {
-        setIsOpen(true);
-      }
-    }, 20000); // 20 segundos
+      if (!popupSeen) setIsOpen(true);
+    }, 22000);
 
     return () => clearTimeout(timer);
   }, []);
@@ -28,18 +25,16 @@ export default function EmailCapturePopup() {
     setError("");
 
     try {
-      // Salvar lead
       await api.entities.Leads.create({
         nome,
         email,
         whatsapp: "",
         fonte: "popup_homepage",
         data_captura: new Date().toISOString(),
-        status: "novo"
+        status: "novo",
       });
 
-      // Enviar email com lead magnet
-      const res = await api.functions.invoke('sendGuiaPaisagismoEmail', {
+      const res = await api.functions.invoke("sendGuiaPaisagismoEmail", {
         nome,
         email,
         whatsapp: "",
@@ -47,19 +42,16 @@ export default function EmailCapturePopup() {
 
       if (res.data && res.data.success) {
         setSent(true);
-        // Marcar como visto por 30 dias
         localStorage.setItem("emailPopupSeen", Date.now().toString());
-        
-        // Fechar popup após 3 segundos
         setTimeout(() => {
           setIsOpen(false);
           setSent(false);
           setEmail("");
           setNome("");
-        }, 3000);
+        }, 2800);
       }
     } catch (err) {
-      setError("Erro ao enviar. Tente novamente.");
+      setError("Não foi possível enviar agora. Tente novamente em instantes.");
     } finally {
       setLoading(false);
     }
@@ -74,58 +66,49 @@ export default function EmailCapturePopup() {
 
   return (
     <>
-      {/* Overlay */}
-      <div 
-        className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40"
-        onClick={handleClose}
-      />
+      <div className="fixed inset-0 z-40 bg-[#10130f]/62 backdrop-blur-sm" onClick={handleClose} />
 
-      {/* Modal */}
-      <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
-        <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden">
-          {/* Fechar Button */}
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="relative grid w-full max-w-3xl overflow-hidden rounded-[28px] bg-white shadow-[0_35px_120px_rgba(18,20,17,0.35)] md:grid-cols-[0.95fr_1.05fr]">
           <button
             onClick={handleClose}
-            className="absolute top-4 right-4 text-stone-400 hover:text-stone-600 text-2xl z-10"
+            className="absolute right-4 top-4 z-10 inline-flex h-10 w-10 items-center justify-center rounded-full bg-white/90 text-[#121411] shadow-sm transition hover:bg-[#f0efe8]"
+            aria-label="Fechar"
           >
-            ✕
+            <X className="h-4 w-4" aria-hidden="true" />
           </button>
 
+          <div className="hidden bg-[#163528] md:block">
+            <img
+              src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=85&w=900"
+              alt=""
+              className="h-full min-h-[520px] w-full object-cover opacity-82"
+            />
+          </div>
+
           {sent ? (
-            // Mensagem de sucesso
-            <div className="bg-gradient-to-br from-[#c09624] to-[#1a3d2b] p-12 text-center text-white">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="material-symbols-outlined text-3xl">check</span>
+            <div className="flex min-h-[420px] flex-col items-center justify-center p-10 text-center">
+              <div className="mb-5 flex h-16 w-16 items-center justify-center rounded-full bg-[#163528] text-white">
+                <Check className="h-7 w-7" aria-hidden="true" />
               </div>
-              <h3 className="text-xl font-bold mb-2">Guia enviado! 🎉</h3>
-              <p className="text-white/90">Verifique seu email em 1 minuto.</p>
+              <h3 className="text-2xl font-semibold tracking-[-0.02em] text-[#121411]">Guia enviado.</h3>
+              <p className="mt-3 max-w-xs text-sm leading-6 text-[#626960]">Confira sua caixa de entrada em alguns minutos.</p>
             </div>
           ) : (
-            // Formulário
-            <div className="p-8">
-              <div className="mb-6">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#c09624]">
-                  Oferta Especial
-                </span>
-                <h2 className="text-2xl font-bold text-[#1a3d2b] mt-2 mb-2">
-                  Guia Premium Grátis
-                </h2>
-                <p className="text-sm text-stone-600">
-                  "Como Valorizar Seu Imóvel em até 30% com Paisagismo"
-                </p>
-              </div>
+            <div className="p-8 md:p-10">
+              <Download className="mb-7 h-7 w-7 text-[#b89445]" aria-hidden="true" />
+              <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#b89445]">Material estratégico</p>
+              <h2 className="text-3xl font-semibold leading-tight tracking-[-0.03em] text-[#121411]">
+                Guia premium para valorizar áreas externas.
+              </h2>
+              <p className="mt-4 text-sm leading-7 text-[#626960]">
+                Receba uma curadoria objetiva com decisões que tornam jardins, piscinas e áreas gourmet mais sofisticados, funcionais e valorizados.
+              </p>
 
-              {/* Benefícios Mini */}
-              <div className="bg-[#f9f9f9] rounded-lg p-4 mb-6 space-y-2">
-                <p className="text-xs text-stone-600">
-                  ✓ 50 páginas com plantas e orçamentos
-                </p>
-                <p className="text-xs text-stone-600">
-                  ✓ 5 case studies de valorização
-                </p>
-                <p className="text-xs text-stone-600">
-                  ✓ 3 aulas exclusivas por email
-                </p>
+              <div className="my-7 grid gap-3 rounded-2xl bg-[#f7f7f3] p-5 text-sm text-[#4c524b]">
+                <p>Seleção botânica e baixa manutenção</p>
+                <p>Iluminação, circulação e permanência</p>
+                <p>Erros que reduzem percepção de luxo</p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
@@ -135,7 +118,7 @@ export default function EmailCapturePopup() {
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 text-sm focus:border-[#c09624] focus:outline-none"
+                  className="w-full rounded-full border border-[#e2dfd5] bg-white px-5 py-3 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
                 />
                 <input
                   type="email"
@@ -143,37 +126,23 @@ export default function EmailCapturePopup() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 text-sm focus:border-[#c09624] focus:outline-none"
+                  className="w-full rounded-full border border-[#e2dfd5] bg-white px-5 py-3 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
                 />
 
-                {error && (
-                  <p className="text-xs text-red-600 bg-red-50 p-2 rounded">
-                    {error}
-                  </p>
-                )}
+                {error && <p className="rounded-xl bg-red-50 p-3 text-xs text-red-700">{error}</p>}
 
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-[#c09624] text-white font-bold rounded-lg hover:bg-[#1a3d2b] transition-all disabled:opacity-50 text-sm uppercase tracking-wider"
+                  className="w-full rounded-full bg-[#121411] px-6 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition hover:bg-[#b89445] disabled:cursor-not-allowed disabled:opacity-55"
                 >
-                  {loading ? "Enviando..." : "Receber Guia Agora"}
+                  {loading ? "Enviando..." : "Receber guia premium"}
                 </button>
 
-                <p className="text-xs text-center text-stone-400">
-                  Sem spam. Você pode sair quando quiser.
+                <p className="text-center text-xs leading-5 text-[#8a9188]">
+                  Sem spam. Apenas conteúdo útil para projetos de alto padrão.
                 </p>
               </form>
-
-              {/* Urgência */}
-              <div className="mt-6 pt-6 border-t border-stone-200 text-center">
-                <p className="text-xs text-stone-500">
-                  ⏰ <strong>Oferta limitada:</strong> Apenas 100 primeiros
-                </p>
-                <p className="text-xs text-[#c09624] font-bold mt-1">
-                  Vagas: 87 disponíveis
-                </p>
-              </div>
             </div>
           )}
         </div>

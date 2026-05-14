@@ -13,16 +13,18 @@ export default function BeforeAfterSlider({ before, after, labelBefore = "Antes"
   };
 
   return (
-    <div 
+    <div
       ref={containerRef}
-      className="relative w-full aspect-video md:aspect-[21/9] overflow-hidden rounded-2xl cursor-col-resize select-none shadow-2xl"
+      className="relative w-full aspect-[4/3] overflow-hidden cursor-col-resize select-none bg-[#121411] md:aspect-[21/10]"
       onMouseMove={handleMove}
       onTouchMove={handleMove}
+      role="img"
+      aria-label={`${labelBefore} e ${labelAfter}`}
     >
       {/* After Image (Background) */}
       <img 
         src={after} 
-        alt="Depois" 
+        alt={labelAfter}
         className="absolute inset-0 w-full h-full object-cover"
       />
 
@@ -33,27 +35,27 @@ export default function BeforeAfterSlider({ before, after, labelBefore = "Antes"
       >
         <img 
           src={before} 
-          alt="Antes" 
+          alt={labelBefore}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute top-4 left-4 bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+        <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md md:left-6 md:top-6">
           {labelBefore}
         </div>
       </div>
 
-      <div className="absolute top-4 right-4 bg-[#276a4d]/60 backdrop-blur-sm text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+      <div className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#163528]/70 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md md:right-6 md:top-6">
         {labelAfter}
       </div>
 
       {/* Slider Line */}
-      <div 
-        className="absolute inset-y-0 w-1 bg-white shadow-[0_0_10px_rgba(0,0,0,0.5)] z-10"
+      <div
+        className="absolute inset-y-0 z-10 w-px bg-white shadow-[0_0_18px_rgba(0,0,0,0.45)]"
         style={{ left: `${sliderPos}%` }}
       >
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-[#276a4d]">
-          <div className="flex gap-1">
-            <div className="w-1.5 h-1.5 border-t-2 border-l-2 border-[#276a4d] rotate-[-45deg]"></div>
-            <div className="w-1.5 h-1.5 border-t-2 border-r-2 border-[#276a4d] rotate-[45deg]"></div>
+        <div className="absolute left-1/2 top-1/2 flex h-12 w-12 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/80 bg-white shadow-[0_16px_40px_rgba(18,20,17,0.22)]">
+          <div className="flex gap-1.5">
+            <div className="h-2 w-2 rotate-[-45deg] border-l-2 border-t-2 border-[#163528]"></div>
+            <div className="h-2 w-2 rotate-[45deg] border-r-2 border-t-2 border-[#163528]"></div>
           </div>
         </div>
       </div>

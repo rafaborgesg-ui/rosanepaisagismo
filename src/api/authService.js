@@ -8,7 +8,9 @@ const ensureSupabaseAuth = () => {
 };
 
 export const auth = {
+  isConfigured: () => !!supabase,
   isAuthenticated: async () => {
+    if (!supabase) return false;
     const client = ensureSupabaseAuth();
     const { data: { session } } = await client.auth.getSession();
     return !!session;
