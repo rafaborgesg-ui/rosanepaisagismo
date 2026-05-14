@@ -1,6 +1,14 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
+
+const navItems = [
+  { label: "Início", to: "/", key: "inicio" },
+  { label: "Portfólio", to: "/portfolio", key: "portfolio" },
+  { label: "Residencial", to: "/paisagismo-residencial", key: "residencial" },
+  { label: "Contato", to: "/contato", key: "contato" },
+];
 
 export default function SiteNav({ activeLink }) {
   const content = useLandingContent();
@@ -9,38 +17,62 @@ export default function SiteNav({ activeLink }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-white/90 backdrop-blur border-b border-stone-100 font-sans-custom">
-      <style>{`
-        .font-serif-custom { font-family: 'Noto Serif', serif; }
-        .font-sans-custom { font-family: 'Work Sans', sans-serif; }
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
-      `}</style>
-      <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-        <Link to="/" className="flex items-center" style={{minHeight: "16px"}}>
-          {logoTopo && (
-            <img src={logoTopo} alt="Logo" className="object-contain" style={{height: `${(logoSize * 0.4)}px`, maxWidth: "200px"}} />
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#121411]/72 text-white backdrop-blur-2xl">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-10">
+        <Link to="/" className="flex min-h-8 items-center" aria-label="Rosane Paisagismo">
+          {logoTopo ? (
+            <img
+              src={logoTopo}
+              alt="Rosane Paisagismo"
+              className="w-auto object-contain brightness-0 invert"
+              style={{ height: `${logoSize * 0.36}px`, maxWidth: "210px" }}
+            />
+          ) : (
+            <span className="text-[1.35rem] font-semibold tracking-tight md:text-[1.55rem]">
+              Rosane<span className="text-[#b89445]">.</span>
+            </span>
           )}
         </Link>
-        <div className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
-          <Link to="/" className={`hover:text-[#276a4d] transition-colors ${activeLink === "inicio" ? "text-[#276a4d] font-semibold" : ""}`}>Início</Link>
-          <Link to="/produtos" className={`hover:text-[#276a4d] transition-colors ${activeLink === "produtos" ? "text-[#276a4d] font-semibold" : ""}`}>Produtos</Link>
-          <Link to="/contato" className={`hover:text-[#276a4d] transition-colors ${activeLink === "contato" ? "text-[#276a4d] font-semibold" : ""}`}>Contato</Link>
-          <Link to="/sistema" className="ml-4 px-5 py-2 bg-[#276a4d] text-white rounded-full text-xs font-bold uppercase tracking-wider hover:bg-[#1a3d2b] transition-colors">
-            Acessar Sistema
+
+        <div className="hidden items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em] text-white/68 md:flex">
+          {navItems.map((item) => (
+            <Link
+              key={item.key}
+              to={item.to}
+              className={`transition-colors hover:text-white ${activeLink === item.key ? "text-[#d5bd7b]" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/contato"
+            className="rounded-full bg-white px-6 py-3 text-[#121411] transition-all hover:-translate-y-0.5 hover:bg-[#b89445] hover:text-white"
+          >
+            Agendar consultoria
           </Link>
         </div>
-        <button className="md:hidden p-2" onClick={() => setMenuOpen(!menuOpen)}>
-          <span className="material-symbols-outlined text-[#276a4d]">menu</span>
+
+        <button
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 md:hidden"
+          onClick={() => setMenuOpen((value) => !value)}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
+
       {menuOpen && (
-        <div className="md:hidden bg-white border-t border-stone-100 px-6 py-4 space-y-3 text-sm font-medium text-stone-700">
-          <Link to="/" className="block py-2" onClick={() => setMenuOpen(false)}>Início</Link>
-          <Link to="/produtos" className="block py-2" onClick={() => setMenuOpen(false)}>Produtos</Link>
-          <Link to="/contato" className="block py-2" onClick={() => setMenuOpen(false)}>Contato</Link>
-          <Link to="/sistema" className="block w-full mt-2 px-5 py-2 bg-[#276a4d] text-white rounded-full text-xs font-bold uppercase tracking-wider text-center" onClick={() => setMenuOpen(false)}>
-            Acessar Sistema
-          </Link>
+        <div className="border-t border-white/10 bg-[#121411]/96 px-6 py-6 text-center text-xs font-bold uppercase tracking-[0.18em] text-white/78 md:hidden">
+          <div className="grid gap-5">
+            {navItems.map((item) => (
+              <Link key={item.key} to={item.to} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
+            <Link to="/contato" className="text-[#d5bd7b]" onClick={() => setMenuOpen(false)}>
+              Solicitar projeto exclusivo
+            </Link>
+          </div>
         </div>
       )}
     </nav>
