@@ -94,9 +94,9 @@ export default function Contato() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">
       <SEO
-        title="Contato | Avaliacao de Projeto de Paisagismo"
+        title="Contato | Avaliação de Projeto de Paisagismo"
         description="Solicite atendimento para projetos exclusivos de jardins, piscinas, áreas gourmet, jardins verticais, clínicas e residências de alto padrão."
-        keywords="contato paisagista, avaliacao de projeto paisagismo, projeto de jardim premium, paisagismo alto padrao"
+        keywords="contato paisagista, avaliação de projeto paisagismo, projeto de jardim premium, paisagismo alto padrão"
         url="https://rosanepaisagismo-site.vercel.app/contato"
       />
       <SiteNav activeLink="contato" />

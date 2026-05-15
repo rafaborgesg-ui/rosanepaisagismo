@@ -25,8 +25,8 @@ export default function SiteFooter() {
               </p>
             )}
             <p className="max-w-md text-sm leading-7 text-white/58">
-              Paisagismo autoral de alto padrao para residencias, clinicas e projetos
-              selecionados que exigem leitura tecnica e implantacao orientada.
+              Paisagismo autoral de alto padrão para residências, clínicas e projetos
+              selecionados que exigem leitura técnica e implantação orientada.
             </p>
           </div>
 
@@ -36,20 +36,20 @@ export default function SiteFooter() {
             </p>
             <div className="grid gap-3 text-sm text-white/64">
               <Link to="/" className="transition-colors hover:text-white">
-                Inicio
+                Início
               </Link>
               <Link to="/portfolio" className="transition-colors hover:text-white">
                 Projetos
               </Link>
-              <a href="/#metodo" className="transition-colors hover:text-white">
-                Metodo
-              </a>
-              <a href="/#servicos" className="transition-colors hover:text-white">
+              <Link to="/#metodo" className="transition-colors hover:text-white">
+                Método
+              </Link>
+              <Link to="/#servicos" className="transition-colors hover:text-white">
                 Expertise
-              </a>
-              <a href="/#sobre" className="transition-colors hover:text-white">
+              </Link>
+              <Link to="/#sobre" className="transition-colors hover:text-white">
                 Sobre
-              </a>
+              </Link>
               <Link to="/contato" className="transition-colors hover:text-white">
                 Contato
               </Link>

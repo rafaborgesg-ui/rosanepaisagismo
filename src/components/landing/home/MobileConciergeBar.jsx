@@ -2,7 +2,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function MobileConciergeBar({
   href = "#contato-concierge",
-  label = "Iniciar avaliacao",
+  label = "Iniciar avaliação",
 }) {
   return (
     <div className="fixed inset-x-0 bottom-0 z-40 border-t border-[#d9d1bf] bg-[#f4f0e8]/96 p-3 backdrop-blur md:hidden">

@@ -7,13 +7,13 @@ export default function PresenceSection({ reducedMotion = false }) {
     <section id="depoimentos" className="px-4 py-20 md:py-28">
       <div className="mx-auto w-[min(100%,1180px)]">
         <div className="mb-12 max-w-3xl">
-          <p className={labelClass}>Presenca real</p>
+          <p className={labelClass}>Presença real</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Obras, estudos e bastidores que sustentam a autoridade tecnica.
+            Obras, estudos e bastidores que sustentam a autoridade técnica.
           </h2>
           <p className="mt-6 text-lg leading-8 text-[#4b5248]">
-            Em vez de depoimentos genericos, o acervo mostra processo real:
-            levantamento, estudo 3D, execucao e implantacoes concluidas.
+            Em vez de depoimentos genéricos, o acervo mostra processo real:
+            levantamento, estudo 3D, execução e implantações concluídas.
           </p>
         </div>
         <div className="grid gap-5 md:grid-cols-3">
@@ -30,7 +30,7 @@ export default function PresenceSection({ reducedMotion = false }) {
             >
               <img
                 src={image}
-                alt="Registro de estudo e implantacao"
+                alt="Registro de estudo e implantação"
                 className="h-[360px] w-full object-cover"
                 loading="lazy"
                 decoding="async"

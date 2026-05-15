@@ -7,7 +7,7 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
         <div className="relative min-h-[360px]">
           <img
             src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"
-            alt="Composicao de jardim em area social"
+            alt="Composição de jardim em área social"
             loading="lazy"
             decoding="async"
             className="absolute inset-0 h-full w-full object-cover"
@@ -22,8 +22,8 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
             Vamos avaliar o potencial do seu projeto?
           </h2>
           <p className="mt-5 leading-7 text-white/68">
-            Conte sobre o imovel, fase da obra e escopo desejado. A equipe retorna com
-            o proximo passo mais adequado para seu contexto.
+            Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com
+            o próximo passo mais adequado para seu contexto.
           </p>
           <form onSubmit={submitLead} className="mt-8 grid gap-3">
             <input
@@ -56,11 +56,11 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
                   setLead((prev) => ({ ...prev, propertyType: event.target.value }))
                 }
                 className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
-                aria-label="Tipo de imovel"
+                aria-label="Tipo de imóvel"
               >
                 <option className="text-[#171914]">Residencial</option>
-                <option className="text-[#171914]">Clinica ou corporativo</option>
-                <option className="text-[#171914]">Condominio ou area comum</option>
+                <option className="text-[#171914]">Clínica ou corporativo</option>
+                <option className="text-[#171914]">Condomínio ou área comum</option>
                 <option className="text-[#171914]">Empreendimento</option>
               </select>
             </div>
@@ -73,8 +73,8 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
               >
                 <option className="text-[#171914]">Terreno ou anteprojeto</option>
                 <option className="text-[#171914]">Em obra</option>
-                <option className="text-[#171914]">Imovel pronto</option>
-                <option className="text-[#171914]">Reforma de area externa</option>
+                <option className="text-[#171914]">Imóvel pronto</option>
+                <option className="text-[#171914]">Reforma de área externa</option>
               </select>
               <select
                 value={lead.scope}
@@ -83,8 +83,8 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
                 aria-label="Escopo desejado"
               >
                 <option className="text-[#171914]">Projeto completo</option>
-                <option className="text-[#171914]">Consultoria tecnica</option>
-                <option className="text-[#171914]">Projeto + implantacao</option>
+                <option className="text-[#171914]">Consultoria técnica</option>
+                <option className="text-[#171914]">Projeto + implantação</option>
                 <option className="text-[#171914]">Jardim vertical</option>
               </select>
             </div>
@@ -97,7 +97,7 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
                 className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
                 aria-label="Prazo desejado"
               >
-                <option className="text-[#171914]">Ate 3 meses</option>
+                <option className="text-[#171914]">Até 3 meses</option>
                 <option className="text-[#171914]">3 a 6 meses</option>
                 <option className="text-[#171914]">6 a 12 meses</option>
                 <option className="text-[#171914]">Sem prazo definido</option>
@@ -116,7 +116,7 @@ export default function ConciergeSection({ lead, setLead, submitLead }) {
               value={lead.details}
               onChange={(event) => setLead((prev) => ({ ...prev, details: event.target.value }))}
               className="min-h-28 rounded-[8px] border border-white/16 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]"
-              placeholder="Conte o contexto do imovel e o resultado que voce busca."
+              placeholder="Conte o contexto do imóvel e o resultado que você busca."
               aria-label="Detalhes do projeto"
             />
             <button

@@ -24,7 +24,7 @@ export default function ProjectNarrativeSection({ project, reducedMotion = false
           </p>
           <a
             href={buildWhatsAppUrl(
-              `Ola, quero iniciar uma avaliacao inspirada no projeto ${project.title}.`,
+              `Olá, quero iniciar uma avaliação inspirada no projeto ${project.title}.`,
             )}
             target="_blank"
             rel="noreferrer"

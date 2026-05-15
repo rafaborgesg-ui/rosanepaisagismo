@@ -17,8 +17,8 @@ export default function ProjectCtaSection() {
           Seu jardim pode ser o próximo espaço memorável.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/78">
-          Envie fotos, planta ou referencias. A primeira leitura ja mostra o caminho
-          mais elegante para transformar o espaco.
+          Envie fotos, planta ou referências. A primeira leitura já mostra o caminho
+          mais elegante para transformar o espaço.
         </p>
         <a
           href={buildWhatsAppUrl()}
@@ -26,7 +26,7 @@ export default function ProjectCtaSection() {
           rel="noreferrer"
           className="mt-9 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
         >
-          Iniciar avaliacao
+          Iniciar avaliação
           <ArrowRight className="h-4 w-4" aria-hidden="true" />
         </a>
       </div>

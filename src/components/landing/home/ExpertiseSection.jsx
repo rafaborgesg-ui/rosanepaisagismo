@@ -9,7 +9,7 @@ export default function ExpertiseSection({ reducedMotion = false }) {
         <div className="mb-12 max-w-3xl">
           <p className={labelClass}>Expertise</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Frentes de atuacao para projetos que exigem nivel alto de execucao.
+            Frentes de atuação para projetos que exigem nível alto de execução.
           </h2>
         </div>
         <div className="grid gap-3">

@@ -29,24 +29,24 @@ export default function HeroSection({ reducedMotion = false }) {
             variants={fadeUp}
             className="max-w-[21rem] font-heading text-[2.82rem] font-medium leading-[0.98] tracking-normal sm:max-w-4xl sm:text-6xl md:text-7xl lg:text-8xl"
           >
-            Paisagismo autoral de alto padrao.
+            Paisagismo autoral de alto padrão.
           </motion.h1>
           <motion.p
             variants={fadeUp}
             className="mt-7 max-w-[21rem] text-lg font-light leading-8 text-white/78 sm:max-w-2xl md:text-xl"
           >
-            Projetos botanicos e implantacao orientada para residencias, clinicas e
-            empreendimentos que exigem presenca, precisao e permanencia.
+            Projetos botânicos e implantação orientada para residências, clínicas e
+            empreendimentos que exigem presença, precisão e permanência.
           </motion.p>
           <motion.p
             variants={fadeUp}
             className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-[#d6c5a6]"
           >
-            Engenheira Agronoma • Doutora em Producao Vegetal • Atuacao desde 2016
+            Engenheira Agrônoma • Doutora em Produção Vegetal • Atuação desde 2016
           </motion.p>
           <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-4 sm:flex-row">
             <PremiumLink to="/contato" variant="light">
-              Iniciar avaliacao
+              Iniciar avaliação
             </PremiumLink>
             <PremiumLink href="#projetos" variant="outline">
               Ver projetos selecionados
@@ -57,8 +57,8 @@ export default function HeroSection({ reducedMotion = false }) {
             className="mt-12 hidden w-full max-w-[21rem] grid-cols-3 gap-3 border-t border-white/18 pt-6 sm:grid sm:max-w-2xl sm:gap-4"
           >
               {[
-                ["MG + SP", "atuacao selecionada"],
-                ["3D + Executivo", "entregas tecnicas"],
+                ["MG + SP", "atuação selecionada"],
+                ["3D + Executivo", "entregas técnicas"],
                 ["Projeto + Implant.", "fluxo orientado"],
               ].map(([number, text]) => (
                 <div key={number}>

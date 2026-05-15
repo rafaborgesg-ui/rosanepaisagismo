@@ -14,7 +14,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           <div className="max-w-3xl">
             <p className={labelClass}>Projetos selecionados</p>
             <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-              Obras, estudos e implantacoes com assinatura botanica.
+              Obras, estudos e implantações com assinatura botânica.
             </h2>
           </div>
           <PremiumLink to="/portfolio">Ver acervo completo</PremiumLink>

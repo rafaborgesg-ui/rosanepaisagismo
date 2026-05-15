@@ -45,7 +45,7 @@ export default function ContactFormCard({
       ) : (
         <>
           <div className="mb-8">
-            <p className={labelClass}>Iniciar avaliacao exclusiva</p>
+            <p className={labelClass}>Iniciar avaliação exclusiva</p>
             <h2 className="mt-3 font-heading text-3xl font-medium tracking-normal text-[#171914]">
               Conte sobre o espaço.
             </h2>

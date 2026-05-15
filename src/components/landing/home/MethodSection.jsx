@@ -8,14 +8,14 @@ export default function MethodSection({ reducedMotion = false }) {
       <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d3b473]">
-            Metodo
+            Método
           </p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Um fluxo claro entre conceito, tecnica e implantacao.
+            Um fluxo claro entre conceito, técnica e implantação.
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/68">
-            O objetivo e reduzir ruido nas decisoes e proteger o resultado final do
-            jardim, da primeira reuniao ate a fase de maturacao.
+            O objetivo é reduzir ruído nas decisões e proteger o resultado final do
+            jardim, da primeira reunião até a fase de maturação.
           </p>
         </div>
         <div className="grid gap-4">

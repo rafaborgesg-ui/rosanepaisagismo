@@ -8,13 +8,13 @@ export default function DeliverablesSection({ reducedMotion = false }) {
     <section className="bg-white px-4 py-20 md:py-28">
       <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.9fr_1.1fr]">
         <div className="max-w-3xl">
-          <p className={labelClass}>Entregaveis</p>
+          <p className={labelClass}>Entregáveis</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            O valor do projeto esta no que ele entrega para a obra.
+            O valor do projeto está no que ele entrega para a obra.
           </h2>
           <p className="mt-6 text-lg leading-8 text-[#4b5248]">
-            Cada etapa transforma decisao estetica em diretriz tecnica. O cliente
-            entende escopo, prazos e caminho de implantacao com seguranca.
+            Cada etapa transforma decisão estética em diretriz técnica. O cliente
+            entende escopo, prazos e caminho de implantação com segurança.
           </p>
         </div>
         <div className="grid gap-3">

@@ -16,11 +16,11 @@ export default function PortfolioCtaSection() {
           Próximo projeto
         </p>
         <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-          O proximo projeto pode ser o seu imovel.
+          O próximo projeto pode ser o seu imóvel.
         </h2>
         <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/72">
-          Envie fotos, planta ou referencias. A primeira leitura identifica aderencia,
-          escopo e proximo passo.
+          Envie fotos, planta ou referências. A primeira leitura identifica aderência,
+          escopo e próximo passo.
         </p>
         <a
           href={buildWhatsAppUrl()}

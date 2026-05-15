@@ -13,12 +13,12 @@ export default function PortfolioGallery({
           <div>
             <p className={labelClass}>Galeria selecionada</p>
             <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-              Composicoes reais, leitura tecnica e narrativa visual.
+              Composições reais, leitura técnica e narrativa visual.
             </h2>
           </div>
           <p className="text-base leading-8 text-[#5f665c]">
-            Cada estudo apresenta contexto, solucao aplicada e escopo tecnico para
-            orientar decisoes de projeto e implantacao.
+            Cada estudo apresenta contexto, solução aplicada e escopo técnico para
+            orientar decisões de projeto e implantação.
           </p>
         </div>
 

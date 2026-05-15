@@ -30,22 +30,22 @@ export default function PortfolioHero({ reducedMotion = false }) {
           Projetos selecionados
         </p>
         <h1 className="mt-5 max-w-[21rem] font-heading text-[2.55rem] font-medium leading-[0.98] tracking-normal sm:max-w-5xl sm:text-6xl md:text-7xl lg:text-8xl">
-          Estudos e obras com assinatura botanica.
+          Estudos e obras com assinatura botânica.
         </h1>
         <p className="mt-7 max-w-[21rem] text-lg font-light leading-8 text-white/76 sm:max-w-2xl md:text-xl">
-          Acervo real com foco em fachada, percurso, permanencia e leitura
-          arquitetonica da area externa.
+          Acervo real com foco em fachada, percurso, permanência e leitura
+          arquitetônica da área externa.
         </p>
         <div className="mt-10 flex flex-col gap-4 sm:flex-row">
           <a
             href={buildWhatsAppUrl(
-              "Ola, quero iniciar uma avaliacao inspirada nos projetos selecionados da Rosane Paisagismo.",
+              "Olá, quero iniciar uma avaliação inspirada nos projetos selecionados da Rosane Paisagismo.",
             )}
             target="_blank"
             rel="noreferrer"
             className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
           >
-            Iniciar avaliacao
+            Iniciar avaliação
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
           <a

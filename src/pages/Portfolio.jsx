@@ -24,8 +24,8 @@ export default function Portfolio() {
     <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">
       <SEO
         title="Projetos Selecionados de Paisagismo Autoral"
-        description="Explore estudos, implantacoes orientadas e projetos autorais de paisagismo para residencias de alto padrao assinados pela Rosane Paisagismo."
-        keywords="projetos selecionados paisagismo, paisagismo autoral, estudo 3d paisagismo, implantacao orientada, paisagismo residencial"
+        description="Explore estudos, implantações orientadas e projetos autorais de paisagismo para residências de alto padrão assinados pela Rosane Paisagismo."
+        keywords="projetos selecionados paisagismo, paisagismo autoral, estudo 3d paisagismo, implantação orientada, paisagismo residencial"
         url="https://rosanepaisagismo-site.vercel.app/portfolio"
         image={premiumProjects[0].cover}
         schema={{

@@ -33,16 +33,16 @@ export default function Landing() {
   const submitLead = (event) => {
     event.preventDefault();
     const message = [
-      "Ola, quero iniciar uma avaliacao de projeto com a Rosane Paisagismo.",
+      "Olá, quero iniciar uma avaliação de projeto com a Rosane Paisagismo.",
       "",
       `Nome: ${lead.name || "-"}`,
       `WhatsApp: ${lead.whatsapp || "-"}`,
       `Cidade: ${lead.city || "-"}`,
-      `Tipo de imovel: ${lead.propertyType}`,
+      `Tipo de imóvel: ${lead.propertyType}`,
       `Fase: ${lead.phase}`,
       `Escopo desejado: ${lead.scope}`,
       `Prazo: ${lead.timeline}`,
-      `Faixa de investimento: ${lead.investment || "Nao informado"}`,
+      `Faixa de investimento: ${lead.investment || "Não informado"}`,
       `Detalhes: ${lead.details || "Sem detalhes adicionais."}`,
     ].join("\n");
     window.open(buildWhatsAppUrl(message), "_blank", "noopener,noreferrer");
@@ -51,18 +51,18 @@ export default function Landing() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f4f0e8] text-[#151913]">
       <SEO
-        title="Paisagismo Autoral de Alto Padrao"
-        description="Escritorio boutique de paisagismo para residencias, clinicas e empreendimentos de alto padrao com base botanica, projeto tecnico e implantacao orientada."
-        keywords="paisagismo autoral, paisagismo alto padrao, paisagismo residencial, projeto executivo paisagismo, jardim vertical, paisagismo para clinicas"
+        title="Paisagismo Autoral de Alto Padrão"
+        description="Escritório boutique de paisagismo para residências, clínicas e empreendimentos de alto padrão com base botânica, projeto técnico e implantação orientada."
+        keywords="paisagismo autoral, paisagismo alto padrão, paisagismo residencial, projeto executivo paisagismo, jardim vertical, paisagismo para clínicas"
         schema={{
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
           name: "Rosane Borges Paisagismo",
           description:
-            "Escritorio boutique de paisagismo para residencias, clinicas e empreendimentos com projeto tecnico e implantacao orientada.",
+            "Escritório boutique de paisagismo para residências, clínicas e empreendimentos com projeto técnico e implantação orientada.",
           url: "https://rosanepaisagismo-site.vercel.app",
           telephone: "+55 38 99931-3930",
-          areaServed: ["Minas Gerais", "Sao Paulo", "Brasil"],
+          areaServed: ["Minas Gerais", "São Paulo", "Brasil"],
           sameAs: ["https://www.instagram.com/rosanepaisagismo/"],
         }}
       />

@@ -16,61 +16,61 @@ export const selectedProjects = [
     category: "Estudo 3D e executivo",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p2_i2.jpg",
     summary:
-      "Composicao de entrada com leitura arquitetonica, privacidade e percurso de chegada.",
+      "Composição de entrada com leitura arquitetônica, privacidade e percurso de chegada.",
   },
   {
-    title: "Acesso principal e composicao botanica",
+    title: "Acesso principal e composição botânica",
     category: "Projeto autoral",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg",
     summary:
-      "Paleta vegetal desenhada para escala da fachada, permanencia visual e baixa manutencao.",
+      "Paleta vegetal desenhada para escala da fachada, permanência visual e baixa manutenção.",
   },
   {
-    title: "Jardim vertical e ambientacao externa",
-    category: "Implantacao acompanhada",
+    title: "Jardim vertical e ambientação externa",
+    category: "Implantação acompanhada",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i1.jpg",
     summary:
-      "Integracao entre textura vegetal, materiais e pontos de permanencia para uso cotidiano.",
+      "Integração entre textura vegetal, materiais e pontos de permanência para uso cotidiano.",
   },
   {
     title: "Paisagismo residencial de grande escala",
     category: "Curadoria vegetal",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg",
     summary:
-      "Setorizacao de especies e percurso para valorizar arquitetura, sombra e vistas do imovel.",
+      "Setorização de espécies e percurso para valorizar arquitetura, sombra e vistas do imóvel.",
   },
 ];
 
 export const process = [
   {
     icon: ScanSearch,
-    title: "Diagnostico e briefing privado",
-    text: "Leitura do imovel, rotina de uso, fase da obra, prioridades e investimento desejado.",
+    title: "Diagnóstico e briefing privado",
+    text: "Leitura do imóvel, rotina de uso, fase da obra, prioridades e investimento desejado.",
   },
   {
     icon: Ruler,
-    title: "Leitura tecnica do espaco",
-    text: "Insolacao, solo, circulacao, privacidade, vistas e pontos de permanencia.",
+    title: "Leitura técnica do espaço",
+    text: "Insolação, solo, circulação, privacidade, vistas e pontos de permanência.",
   },
   {
     icon: PenTool,
-    title: "Conceito botanico e atmosfera",
-    text: "Curadoria de especies, materiais e narrativa visual alinhada a arquitetura.",
+    title: "Conceito botânico e atmosfera",
+    text: "Curadoria de espécies, materiais e narrativa visual alinhada à arquitetura.",
   },
   {
     icon: ClipboardList,
     title: "Estudo 3D e projeto executivo",
-    text: "Anteprojeto, refinamentos e detalhamento tecnico para implantacao com clareza.",
+    text: "Anteprojeto, refinamentos e detalhamento técnico para implantação com clareza.",
   },
   {
     icon: Building2,
-    title: "Implantacao orientada",
-    text: "Acompanhamento de fornecedores, compras, especificacoes e padrao de execucao.",
+    title: "Implantação orientada",
+    text: "Acompanhamento de fornecedores, compras, especificações e padrão de execução.",
   },
   {
     icon: BadgeCheck,
-    title: "Maturacao e acompanhamento",
-    text: "Ajustes finais, orientacoes tecnicas e evolucao do jardim apos implantacao.",
+    title: "Maturação e acompanhamento",
+    text: "Ajustes finais, orientações técnicas e evolução do jardim após implantação.",
   },
 ];
 
@@ -78,44 +78,44 @@ export const expertise = [
   {
     title: "Projeto de paisagismo completo",
     detail:
-      "Para residencias e empreendimentos que precisam de conceito, 3D, executivo e definicoes tecnicas.",
+      "Para residências e empreendimentos que precisam de conceito, 3D, executivo e definições técnicas.",
   },
   {
-    title: "Consultoria tecnica seletiva",
+    title: "Consultoria técnica seletiva",
     detail:
-      "Para ajustes especificos de especies, implantacao, materialidade, iluminacao e manutencao.",
+      "Para ajustes específicos de espécies, implantação, materialidade, iluminação e manutenção.",
   },
   {
-    title: "Implantacao com projeto incluso",
+    title: "Implantação com projeto incluso",
     detail:
-      "Para clientes que priorizam execucao orientada, padrao visual e menor risco na obra.",
+      "Para clientes que priorizam execução orientada, padrão visual e menor risco na obra.",
   },
   {
     title: "Jardins verticais e fachadas vivas",
     detail:
-      "Composicoes botanicas de impacto controlado para residencias, clinicas e areas sociais.",
+      "Composições botânicas de impacto controlado para residências, clínicas e áreas sociais.",
   },
   {
-    title: "Paisagismo para clinicas e corporativo",
+    title: "Paisagismo para clínicas e corporativo",
     detail:
-      "Biofilia aplicada a experiencia de marca, acolhimento e percepcao imediata de cuidado.",
+      "Biofilia aplicada à experiência de marca, acolhimento e percepção imediata de cuidado.",
   },
   {
-    title: "Areas gourmet, piscina e permanencia",
+    title: "Áreas gourmet, piscina e permanência",
     detail:
-      "Setorizacao para receber melhor, com conforto termico, privacidade e fluidez de uso.",
+      "Setorização para receber melhor, com conforto térmico, privacidade e fluidez de uso.",
   },
 ];
 
 export const deliverables = [
   "Estudo 3D com ajustes de refinamento.",
   "Projeto executivo em Layout/SketchUp ou AutoCAD.",
-  "Manual tecnico de implantacao e manutencao.",
-  "Especificacao de especies, vasos, jardineiras e materiais.",
-  "Curadoria de fornecedores e composicao de acabamentos.",
-  "Indicacao de iluminacao de jardim e infraestrutura para irrigacao.",
-  "Orcamento aproximado de implantacao por etapa.",
-  "Visitas tecnicas conforme escopo contratado.",
+  "Manual técnico de implantação e manutenção.",
+  "Especificação de espécies, vasos, jardineiras e materiais.",
+  "Curadoria de fornecedores e composição de acabamentos.",
+  "Indicação de iluminação de jardim e infraestrutura para irrigação.",
+  "Orçamento aproximado de implantação por etapa.",
+  "Visitas técnicas conforme escopo contratado.",
 ];
 
 export const presenceImages = [

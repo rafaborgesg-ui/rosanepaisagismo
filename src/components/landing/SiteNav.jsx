@@ -4,23 +4,15 @@ import { Menu, X } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
 const navItems = [
-  { label: "Inicio", to: "/", key: "inicio" },
+  { label: "Início", to: "/", key: "inicio" },
   { label: "Projetos", to: "/portfolio", key: "portfolio" },
-  { label: "Expertise", href: "/#servicos", key: "expertise" },
-  { label: "Metodo", href: "/#metodo", key: "metodo" },
-  { label: "Sobre", href: "/#sobre", key: "sobre" },
+  { label: "Expertise", to: "/#servicos", key: "expertise" },
+  { label: "Método", to: "/#metodo", key: "metodo" },
+  { label: "Sobre", to: "/#sobre", key: "sobre" },
   { label: "Contato", to: "/contato", key: "contato" },
 ];
 
 function NavTarget({ item, children, className = "", onClick = undefined }) {
-  if (item.href) {
-    return (
-      <a href={item.href} className={className} onClick={onClick}>
-        {children}
-      </a>
-    );
-  }
-
   return (
     <Link to={item.to} className={className} onClick={onClick}>
       {children}
@@ -44,8 +36,8 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
   const homeAtTop = activeLink === "inicio" && !isScrolled && !menuOpen;
   const navClass = homeAtTop
-    ? "border-white/8 bg-transparent"
-    : "border-white/12 bg-[#111913]/78";
+    ? "border-white/10 bg-[#111913]/56"
+    : "border-white/14 bg-[#111913]/88 shadow-[0_10px_35px_rgba(0,0,0,0.25)]";
 
   return (
     <nav
@@ -79,12 +71,6 @@ export default function SiteNav({ activeLink = "" } = {}) {
               {item.label}
             </NavTarget>
           ))}
-          <Link
-            to="/contato"
-            className="rounded-full bg-white px-6 py-3 text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
-          >
-            Iniciar avaliacao
-          </Link>
         </div>
 
         <button
@@ -110,13 +96,6 @@ export default function SiteNav({ activeLink = "" } = {}) {
                 {item.label}
               </NavTarget>
             ))}
-            <Link
-              to="/contato"
-              className="text-[#d3b473]"
-              onClick={() => setMenuOpen(false)}
-            >
-              Iniciar avaliacao
-            </Link>
           </div>
         </div>
       )}

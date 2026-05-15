@@ -9,19 +9,19 @@ export default function ManifestoSection({ reducedMotion = false }) {
         <motion.div {...getInViewProps(reducedMotion, { offset: 26 })}>
           <p className={labelClass}>Manifesto</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Jardim de alto padrao nao e decoracao final. E arquitetura viva.
+            Jardim de alto padrão não é decoração final. É arquitetura viva.
           </h2>
           <p className="mt-7 text-lg leading-8 text-[#5f665c]">
-            Um projeto bem resolvido organiza circulacao, sombra, privacidade e
-            atmosfera. Ele valoriza o patrimonio, melhora o uso cotidiano e traduz o
-            padrao da casa na paisagem.
+            Um projeto bem resolvido organiza circulação, sombra, privacidade e
+            atmosfera. Ele valoriza o patrimônio, melhora o uso cotidiano e traduz o
+            padrão da casa na paisagem.
           </p>
           <div className="mt-9 grid gap-4 sm:grid-cols-2">
             {[
-              ["Precisao botanica", "Especies definidas por clima, solo e manutencao."],
-              ["Escala arquitetonica", "Composicao desenhada para leitura da fachada."],
-              ["Conforto e permanencia", "Sombra, frescor e uso real dos ambientes."],
-              ["Curadoria tecnica", "Materiais, fornecedores e implantacao orientada."],
+              ["Precisão botânica", "Espécies definidas por clima, solo e manutenção."],
+              ["Escala arquitetônica", "Composição desenhada para leitura da fachada."],
+              ["Conforto e permanência", "Sombra, frescor e uso real dos ambientes."],
+              ["Curadoria técnica", "Materiais, fornecedores e implantação orientada."],
             ].map(([title, text]) => (
               <div key={title} className="border-l border-[#c8b88d] pl-4">
                 <h3 className="font-semibold text-[#171914]">{title}</h3>
