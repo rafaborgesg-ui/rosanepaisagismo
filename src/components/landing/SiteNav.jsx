@@ -1,78 +1,78 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
+
+const navItems = [
+  { label: "Início", to: "/", key: "inicio" },
+  { label: "Portfólio", to: "/portfolio", key: "portfolio" },
+  { label: "Residencial", to: "/paisagismo-residencial", key: "residencial" },
+  { label: "Contato", to: "/contato", key: "contato" },
+];
 
 export default function SiteNav({ activeLink }) {
   const content = useLandingContent();
   const logoTopo = content?.logo_topo_url;
   const logoSize = content?.logo_topo_size || 100;
   const [menuOpen, setMenuOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
-  const isHome = typeof window !== "undefined" && window.location.pathname === "/";
-
-  useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 24);
-    handleScroll();
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinkClass = (key) =>
-    `text-[10px] font-extrabold uppercase tracking-[0.2em] hover:text-[#d7ae45] transition-colors ${activeLink === key ? "text-[#d7ae45]" : ""}`;
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 font-sans-custom text-white transition-all duration-500 ${
-      isHome && !scrolled
-        ? "bg-transparent border-b border-transparent"
-        : "bg-[#173727]/86 backdrop-blur-xl border-b border-white/10 shadow-2xl shadow-black/10"
-    }`}>
-      <style>{`
-        .font-serif-custom { font-family: 'Playfair Display', 'Noto Serif', serif; }
-        .font-sans-custom { font-family: 'Inter', 'Work Sans', sans-serif; }
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; display: inline-block; }
-      `}</style>
-      <div className="max-w-7xl mx-auto px-5 h-20 flex items-center justify-between md:px-8">
-        <Link to="/" className="flex items-center gap-3 group" style={{ minHeight: "16px" }}>
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#121411]/72 text-white backdrop-blur-2xl">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-10">
+        <Link to="/" className="flex min-h-8 items-center" aria-label="Rosane Paisagismo">
           {logoTopo ? (
-            <img src={logoTopo} alt="Rosane Paisagismo" className="object-contain" style={{ height: `${logoSize * 0.4}px`, maxWidth: "200px" }} />
+            <img
+              src={logoTopo}
+              alt="Rosane Paisagismo"
+              className="w-auto object-contain brightness-0 invert"
+              style={{ height: `${logoSize * 0.36}px`, maxWidth: "210px" }}
+            />
           ) : (
-            <>
-              <span className="grid h-10 w-10 place-items-center rounded-full bg-[#d7ae45] font-serif-custom text-xl font-bold text-[#173727] transition-transform group-hover:scale-105">R</span>
-              <span className="leading-tight">
-                <span className="block text-sm font-bold uppercase tracking-[0.2em] text-white">Rosane</span>
-                <span className="block text-[9px] uppercase tracking-[0.25em] text-[#d7ae45]">Paisagismo</span>
-              </span>
-            </>
+            <span className="text-[1.35rem] font-semibold tracking-tight md:text-[1.55rem]">
+              Rosane<span className="text-[#b89445]">.</span>
+            </span>
           )}
         </Link>
 
-        <div className="hidden lg:flex items-center gap-8">
-          <Link to="/" className={navLinkClass("inicio")}>Início</Link>
-          <Link to="/portfolio" className={navLinkClass("portfolio")}>Portfólio</Link>
-          <Link to="/sobre" className={navLinkClass("sobre")}>O Escritório</Link>
-          <Link to="/paisagismo-residencial" className={navLinkClass("residencial")}>Residencial</Link>
-          <Link to="/paisagismo-clinicas" className={navLinkClass("clinicas")}>Comercial</Link>
-          <Link to="/contato" className="ml-4 px-7 py-3.5 bg-[#d7ae45] text-[#173727] rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] hover:bg-white transition-all shadow-xl hover:scale-105">
-            Diagnóstico
+        <div className="hidden items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em] text-white/68 md:flex">
+          {navItems.map((item) => (
+            <Link
+              key={item.key}
+              to={item.to}
+              className={`transition-colors hover:text-white ${activeLink === item.key ? "text-[#d5bd7b]" : ""}`}
+            >
+              {item.label}
+            </Link>
+          ))}
+          <Link
+            to="/contato"
+            className="rounded-full bg-white px-6 py-3 text-[#121411] transition-all hover:-translate-y-0.5 hover:bg-[#b89445] hover:text-white"
+          >
+            Agendar consultoria
           </Link>
         </div>
 
-        <button className="lg:hidden p-2 text-white" onClick={() => setMenuOpen(!menuOpen)} aria-label="Abrir menu">
-          <span className="material-symbols-outlined text-3xl">{menuOpen ? 'close' : 'menu'}</span>
+        <button
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 md:hidden"
+          onClick={() => setMenuOpen((value) => !value)}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+        >
+          {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {menuOpen && (
-        <div className="lg:hidden bg-[#173727] border-t border-white/10 px-5 py-6 space-y-4 text-[10px] font-extrabold uppercase tracking-[0.2em] text-white absolute w-full shadow-2xl">
-          <Link to="/" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>Início</Link>
-          <Link to="/portfolio" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>Portfólio</Link>
-          <Link to="/sobre" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>O Escritório</Link>
-          <Link to="/paisagismo-residencial" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>Residencial</Link>
-          <Link to="/paisagismo-clinicas" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>Comercial</Link>
-          <Link to="/manutencao-premium" className="block py-3 border-b border-white/5 hover:text-[#d7ae45]" onClick={() => setMenuOpen(false)}>Manutenção</Link>
-          <Link to="/contato" className="block w-full mt-6 px-6 py-4 bg-[#d7ae45] text-[#173727] rounded-full text-center shadow-xl" onClick={() => setMenuOpen(false)}>
-            Agendar diagnóstico
-          </Link>
+        <div className="border-t border-white/10 bg-[#121411]/96 px-6 py-6 text-center text-xs font-bold uppercase tracking-[0.18em] text-white/78 md:hidden">
+          <div className="grid gap-5">
+            {navItems.map((item) => (
+              <Link key={item.key} to={item.to} onClick={() => setMenuOpen(false)}>
+                {item.label}
+              </Link>
+            ))}
+            <Link to="/contato" className="text-[#d5bd7b]" onClick={() => setMenuOpen(false)}>
+              Solicitar projeto exclusivo
+            </Link>
+          </div>
         </div>
       )}
     </nav>

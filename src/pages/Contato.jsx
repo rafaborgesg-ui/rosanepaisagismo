@@ -1,55 +1,45 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle2, Mail, MapPin, MessageCircle, Paperclip, Phone, X } from "lucide-react";
 import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import SEO from "@/components/seo/SEO";
 import { useLandingContent } from "@/hooks/useLandingContent";
-import { trackEvent } from "@/lib/tracking";
+import SEO from "@/components/seo/SEO";
 
-const investmentOptions = [
-  "Ainda não sei, preciso de orientação",
-  "Até R$ 15 mil",
-  "R$ 15 mil a R$ 30 mil",
-  "R$ 30 mil a R$ 80 mil",
-  "R$ 80 mil a R$ 200 mil",
-  "Acima de R$ 200 mil",
+const interests = [
+  "Projeto de Paisagismo",
+  "Paisagismo Residencial Premium",
+  "Áreas Gourmet & Piscinas",
+  "Paisagismo para Clínicas",
+  "Consultoria Técnica",
+  "Implantação e Obra",
+  "Outros",
 ];
 
-const urgencyOptions = [
-  "Quero começar imediatamente",
-  "Nos próximos 30 dias",
-  "Em até 3 meses",
-  "Estou planejando para depois",
-];
+const fadeUp = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.72, ease: [0.22, 1, 0.36, 1] } },
+};
 
 export default function Contato() {
   const content = useLandingContent();
   const whatsappNumero = content?.whatsapp_numero || "5538999313930";
-
   const urlParams = new URLSearchParams(window.location.search);
-  const interesseParam = urlParams.get("interesse") || "Projeto de Paisagismo Premium";
+  const interesseParam = urlParams.get("interesse") || "Projeto de Paisagismo";
 
-  const [form, setForm] = useState({
-    nome: "",
-    email: "",
-    whatsapp: "",
-    cidade: "",
-    tipo: "Residência de alto padrão",
-    investimento: "R$ 30 mil a R$ 80 mil",
-    urgencia: "Nos próximos 30 dias",
-    interesse: interesseParam,
-    mensagem: "",
-  });
+  const [form, setForm] = useState({ nome: "", email: "", whatsapp: "", interesse: interesseParam, mensagem: "" });
   const [sent, setSent] = useState(false);
   const [arquivo, setArquivo] = useState(null);
   const [arquivoErro, setArquivoErro] = useState("");
   const [loading, setLoading] = useState(false);
   const fileInputRef = useRef(null);
 
-  const updateForm = (field, value) => setForm((current) => ({ ...current, [field]: value }));
+  const whatsappMessage = encodeURIComponent(
+    `Olá, quero falar com um especialista sobre ${form.interesse || "um projeto exclusivo de paisagismo"}.`
+  );
 
   const handleArquivo = (e) => {
     const file = e.target.files[0];
@@ -63,21 +53,10 @@ export default function Contato() {
     setArquivo(file);
   };
 
-  const whatsappText = () => encodeURIComponent(
-    `Olá, Rosane. Vim pelo site e quero um diagnóstico de paisagismo premium.\n\n` +
-    `Nome: ${form.nome}\n` +
-    `Cidade: ${form.cidade}\n` +
-    `WhatsApp: ${form.whatsapp}\n` +
-    `Tipo de projeto: ${form.tipo}\n` +
-    `Interesse: ${form.interesse}\n` +
-    `Investimento: ${form.investimento}\n` +
-    `Prazo: ${form.urgencia}\n` +
-    `Mensagem: ${form.mensagem || "Ainda vou enviar mais detalhes."}`
-  );
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
+    setArquivoErro("");
 
     try {
       let arquivo_url = null;
@@ -89,206 +68,248 @@ export default function Contato() {
         arquivo_nome = arquivo.name;
       }
 
-      const mensagemCompleta = [
-        form.mensagem,
-        "",
-        "Dados de qualificação:",
-        `Cidade: ${form.cidade}`,
-        `Tipo de projeto: ${form.tipo}`,
-        `Investimento: ${form.investimento}`,
-        `Prazo: ${form.urgencia}`,
-      ].join("\n");
-
       const res = await api.functions.invoke("sendContactFormEmail", {
         nome: form.nome,
         email: form.email,
         whatsapp: form.whatsapp,
         interesse: form.interesse,
-        mensagem: mensagemCompleta,
+        mensagem: form.mensagem,
         arquivo_url,
         arquivo_nome,
       });
 
       if (res.data && res.data.success) {
         setSent(true);
-        trackEvent("briefing_submitted", {
-          interesse: form.interesse,
-          tipo: form.tipo,
-          investimento: form.investimento,
-          urgencia: form.urgencia,
-          cidade: form.cidade,
-        });
-        window.open(`https://wa.me/${whatsappNumero}?text=${whatsappText()}`, "_blank");
+        setForm({ nome: "", email: "", whatsapp: "", interesse: interesseParam, mensagem: "" });
+        setArquivo(null);
+        if (fileInputRef.current) fileInputRef.current.value = "";
       }
     } catch (error) {
-      setArquivoErro(error.message || "Erro ao enviar mensagem. Você também pode chamar pelo WhatsApp.");
+      setArquivoErro(error.message || "Erro ao enviar mensagem. Tente novamente pelo WhatsApp.");
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen bg-[#fbfaf6] text-[#173727] overflow-x-hidden">
+    <div className="min-h-screen overflow-x-hidden bg-white text-[#121411]">
       <SEO
-        title="Diagnóstico de Paisagismo Premium"
-        description="Preencha o briefing para receber uma avaliação de projeto de paisagismo residencial, comercial, clínico ou manutenção premium."
+        title="Contato | Agendar Consultoria de Paisagismo"
+        description="Agende uma consultoria com a Rosane Paisagismo para projetos exclusivos de jardins, piscinas, áreas gourmet, clínicas e residências de alto padrão."
+        keywords="contato paisagista, agendar consultoria paisagismo, projeto de jardim premium, orçamento paisagismo alto padrão"
+        url="https://rosanepaisagismo.com/contato"
       />
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
-        .font-display { font-family: 'Playfair Display', serif; }
-        .font-body { font-family: 'Inter', sans-serif; }
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; display: inline-block; }
-      `}</style>
-
       <SiteNav activeLink="contato" />
 
-      <main className="mx-auto grid max-w-7xl gap-16 px-5 pb-32 pt-40 font-body md:grid-cols-[0.9fr_1.1fr] md:px-8">
-        <motion.section 
-          initial={{ opacity: 0, x: -30 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-          className="space-y-10"
-        >
-          <Link to="/" className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#d7ae45] hover:text-[#173727] transition-colors">
-            <span className="material-symbols-outlined text-base">arrow_back</span>
-            Voltar ao início
-          </Link>
-          <div>
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#d7ae45]">Atendimento Exclusivo</p>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] md:text-[3.5rem] text-[#173727]">
-              Seu projeto de <span className="italic text-[#d7ae45]">assinatura</span> começa aqui.
-            </h1>
-            <p className="mt-6 max-w-xl text-[1.05rem] leading-8 text-stone-500 font-light">
-              Preencha o diagnóstico confidencial abaixo para que nossa equipe avalie a viabilidade, investimento e arquitetura ideal para o seu espaço.
-            </p>
-          </div>
-
-          <div className="grid gap-4">
-            {[
-              ["Triagem Especializada", "Análise do potencial botânico e arquitetônico do espaço."],
-              ["Direcionamento de Investimento", "Alinhamento transparente de escopo e expectativas."],
-              ["Design de Alto Padrão", "Apresentação da metodologia de criação e execução."],
-            ].map(([title, text]) => (
-              <div key={title} className="rounded-[24px] border border-stone-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
-                <h2 className="font-display text-2xl font-bold text-[#173727]">{title}</h2>
-                <p className="mt-2 text-sm leading-7 text-stone-500">{text}</p>
+      <main>
+        <section className="relative overflow-hidden bg-[#121411] px-5 pb-20 pt-32 text-white md:pb-28 md:pt-40">
+          <img
+            src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=85&w=2200"
+            alt=""
+            className="absolute inset-0 h-full w-full object-cover opacity-58"
+          />
+          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(18,20,17,0.94),rgba(18,20,17,0.54)_55%,rgba(18,20,17,0.86)),linear-gradient(180deg,rgba(18,20,17,0.35),rgba(18,20,17,0.96))]" />
+          <motion.div initial="hidden" animate="visible" variants={fadeUp} className="relative z-10 mx-auto grid max-w-7xl gap-14 lg:grid-cols-[0.95fr_1.05fr] lg:items-end">
+            <div>
+              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#d5bd7b]">Atendimento premium</p>
+              <h1 className="max-w-3xl text-5xl font-semibold leading-[0.98] tracking-[-0.04em] md:text-7xl">
+                Vamos desenhar um exterior à altura do seu imóvel.
+              </h1>
+              <p className="mt-8 max-w-2xl text-lg font-light leading-8 text-white/76">
+                Conte sobre sua casa, clínica, piscina ou área gourmet. A primeira conversa identifica potencial, prioridades e o caminho ideal para um projeto exclusivo.
+              </p>
+              <div className="mt-10 flex flex-col gap-4 sm:flex-row">
+                <a
+                  href={`https://wa.me/${whatsappNumero}?text=${whatsappMessage}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-[#121411] transition hover:-translate-y-0.5 hover:bg-[#b89445] hover:text-white"
+                >
+                  Falar com especialista <MessageCircle className="h-4 w-4" />
+                </a>
+                <a
+                  href="#briefing"
+                  className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/25 px-7 py-3 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition hover:bg-white/10"
+                >
+                  Enviar briefing <ArrowRight className="h-4 w-4" />
+                </a>
               </div>
-            ))}
-          </div>
+            </div>
 
-          <div className="rounded-[32px] bg-[#173727] p-10 text-white shadow-2xl relative overflow-hidden">
-            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#d7ae45]/10 to-transparent pointer-events-none" />
-            <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#d7ae45]">Acesso Direto ao Ateliê</p>
-            <a href={`https://wa.me/${whatsappNumero}`} className="mt-4 block font-display text-4xl font-bold hover:text-[#d7ae45] transition-colors">
-              +{whatsappNumero}
-            </a>
-            <a href="mailto:rosanepaisagismo@gmail.com" className="mt-4 block text-sm tracking-wide text-white/70 hover:text-[#d7ae45] transition-colors">
-              rosanepaisagismo@gmail.com
-            </a>
-          </div>
-        </motion.section>
-
-        <motion.section 
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="rounded-[40px] border border-stone-100 bg-white p-8 shadow-2xl shadow-stone-200/50 md:p-12 relative overflow-hidden"
-        >
-          {sent ? (
-            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="grid min-h-[520px] place-items-center text-center">
-              <div>
-                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-[#173727]/5 text-[#173727] mb-8">
-                  <span className="material-symbols-outlined text-5xl">verified</span>
+            <div className="grid gap-4 rounded-[28px] border border-white/12 bg-white/8 p-6 backdrop-blur-xl md:grid-cols-3">
+              {[
+                ["1", "Envie fotos, planta ou referência"],
+                ["2", "Receba uma avaliação inicial"],
+                ["3", "Agende a consultoria estratégica"],
+              ].map(([num, text]) => (
+                <div key={num} className="border-l border-[#d5bd7b]/45 pl-4">
+                  <p className="text-2xl font-semibold text-[#d5bd7b]">{num}</p>
+                  <p className="mt-2 text-sm leading-6 text-white/74">{text}</p>
                 </div>
-                <h2 className="font-display text-4xl font-bold text-[#173727]">Diagnóstico em Análise</h2>
-                <p className="mx-auto mt-6 max-w-md leading-8 text-stone-500">
-                  Suas informações foram recebidas com sucesso. O WhatsApp também foi aberto para contato imediato com nossa equipe.
-                </p>
+              ))}
+            </div>
+          </motion.div>
+        </section>
+
+        <section id="briefing" className="bg-[#f7f7f3] px-5 py-20 md:py-28">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+            <motion.aside initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="lg:sticky lg:top-28">
+              <p className="mb-5 text-[11px] font-bold uppercase tracking-[0.24em] text-[#b89445]">Briefing exclusivo</p>
+              <h2 className="text-4xl font-semibold leading-tight tracking-[-0.03em] md:text-5xl">
+                Poucas informações certas já revelam o potencial do projeto.
+              </h2>
+              <p className="mt-6 text-lg font-light leading-8 text-[#626960]">
+                Quanto mais contexto você enviar, melhor será a primeira leitura: fotos do espaço, planta, metragem, expectativas de uso e estilo desejado.
+              </p>
+
+              <div className="mt-10 grid gap-5">
+                <a href="mailto:rosanepaisagismo@gmail.com" className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_16px_50px_rgba(18,20,17,0.06)] transition hover:-translate-y-0.5">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#163528] text-white"><Mail className="h-5 w-5" /></span>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9188]">E-mail</p>
+                    <p className="mt-1 text-sm font-semibold text-[#121411]">rosanepaisagismo@gmail.com</p>
+                  </div>
+                </a>
+                <a href={`https://wa.me/${whatsappNumero}?text=${whatsappMessage}`} target="_blank" rel="noreferrer" className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_16px_50px_rgba(18,20,17,0.06)] transition hover:-translate-y-0.5">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#163528] text-white"><Phone className="h-5 w-5" /></span>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9188]">WhatsApp</p>
+                    <p className="mt-1 text-sm font-semibold text-[#121411]">Atendimento rápido e premium</p>
+                  </div>
+                </a>
+                <div className="flex items-center gap-4 rounded-2xl bg-white p-5 shadow-[0_16px_50px_rgba(18,20,17,0.06)]">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#163528] text-white"><MapPin className="h-5 w-5" /></span>
+                  <div>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#8a9188]">Atuação</p>
+                    <p className="mt-1 text-sm font-semibold text-[#121411]">SP, MG e projetos selecionados no Brasil</p>
+                  </div>
+                </div>
               </div>
+            </motion.aside>
+
+            <motion.div initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeUp} className="rounded-[30px] bg-white p-6 shadow-[0_26px_90px_rgba(18,20,17,0.1)] md:p-10">
+              {sent ? (
+                <div className="flex min-h-[520px] flex-col items-center justify-center text-center">
+                  <CheckCircle2 className="mb-6 h-16 w-16 text-[#163528]" />
+                  <h2 className="text-3xl font-semibold tracking-[-0.03em]">Briefing recebido.</h2>
+                  <p className="mt-4 max-w-md text-sm leading-7 text-[#626960]">
+                    Obrigado. A equipe vai analisar as informações e entrar em contato para alinhar os próximos passos.
+                  </p>
+                  <Link to="/portfolio" className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#121411] px-7 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition hover:bg-[#b89445]">
+                    Ver portfólio <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              ) : (
+                <>
+                  <div className="mb-8">
+                    <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.22em] text-[#b89445]">Solicitar projeto exclusivo</p>
+                    <h2 className="text-3xl font-semibold tracking-[-0.03em] text-[#121411]">Conte sobre o espaço.</h2>
+                  </div>
+
+                  <form className="space-y-5" onSubmit={handleSubmit}>
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <label className="grid gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">Nome completo</span>
+                        <input
+                          className="rounded-2xl border border-[#e2dfd5] bg-[#fbfbf8] px-5 py-4 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
+                          placeholder="Seu nome"
+                          type="text"
+                          required
+                          value={form.nome}
+                          onChange={(e) => setForm((prev) => ({ ...prev, nome: e.target.value }))}
+                        />
+                      </label>
+                      <label className="grid gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">E-mail</span>
+                        <input
+                          className="rounded-2xl border border-[#e2dfd5] bg-[#fbfbf8] px-5 py-4 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
+                          placeholder="seu@email.com"
+                          type="email"
+                          required
+                          value={form.email}
+                          onChange={(e) => setForm((prev) => ({ ...prev, email: e.target.value }))}
+                        />
+                      </label>
+                    </div>
+
+                    <div className="grid gap-5 md:grid-cols-2">
+                      <label className="grid gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">WhatsApp</span>
+                        <input
+                          className="rounded-2xl border border-[#e2dfd5] bg-[#fbfbf8] px-5 py-4 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
+                          placeholder="(00) 00000-0000"
+                          type="text"
+                          value={form.whatsapp}
+                          onChange={(e) => setForm((prev) => ({ ...prev, whatsapp: e.target.value }))}
+                        />
+                      </label>
+                      <label className="grid gap-2">
+                        <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">Interesse</span>
+                        <select
+                          className="rounded-2xl border border-[#e2dfd5] bg-[#fbfbf8] px-5 py-4 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
+                          value={form.interesse}
+                          onChange={(e) => setForm((prev) => ({ ...prev, interesse: e.target.value }))}
+                        >
+                          {interests.map((interest) => (
+                            <option key={interest}>{interest}</option>
+                          ))}
+                        </select>
+                      </label>
+                    </div>
+
+                    <label className="grid gap-2">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">Mensagem</span>
+                      <textarea
+                        className="min-h-36 resize-none rounded-2xl border border-[#e2dfd5] bg-[#fbfbf8] px-5 py-4 text-sm outline-none transition focus:border-[#b89445] focus:ring-4 focus:ring-[#b89445]/10"
+                        placeholder="Conte sobre metragem, uso desejado, fase da obra, cidade e referências que você gosta."
+                        value={form.mensagem}
+                        onChange={(e) => setForm((prev) => ({ ...prev, mensagem: e.target.value }))}
+                      />
+                    </label>
+
+                    <div className="grid gap-2">
+                      <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-[#8a9188]">Anexo opcional</span>
+                      <div
+                        className="flex cursor-pointer items-center gap-3 rounded-2xl border border-dashed border-[#d8d4c8] bg-[#fbfbf8] px-5 py-4 transition hover:border-[#b89445]"
+                        onClick={() => fileInputRef.current?.click()}
+                      >
+                        <Paperclip className="h-5 w-5 text-[#b89445]" />
+                        <span className="flex-1 truncate text-sm text-[#697067]">
+                          {arquivo ? arquivo.name : "Anexe fotos, planta ou referência em até 5 MB"}
+                        </span>
+                        {arquivo && (
+                          <button
+                            type="button"
+                            className="text-[#8a9188] transition hover:text-red-600"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setArquivo(null);
+                              if (fileInputRef.current) fileInputRef.current.value = "";
+                            }}
+                            aria-label="Remover arquivo"
+                          >
+                            <X className="h-4 w-4" />
+                          </button>
+                        )}
+                      </div>
+                      <input ref={fileInputRef} type="file" className="hidden" onChange={handleArquivo} />
+                      {arquivoErro && <p className="rounded-xl bg-red-50 p-3 text-xs text-red-700">{arquivoErro}</p>}
+                    </div>
+
+                    <button
+                      type="submit"
+                      disabled={loading}
+                      className="inline-flex w-full min-h-14 items-center justify-center gap-3 rounded-full bg-[#121411] px-8 py-4 text-[11px] font-bold uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5 hover:bg-[#b89445] disabled:cursor-not-allowed disabled:opacity-55"
+                    >
+                      {loading ? "Enviando..." : "Solicitar projeto exclusivo"}
+                      <ArrowRight className="h-4 w-4" />
+                    </button>
+                  </form>
+                </>
+              )}
             </motion.div>
-          ) : (
-            <form className="space-y-8 relative z-10" onSubmit={handleSubmit}>
-              <div>
-                <h2 className="font-display text-3xl font-bold text-[#173727]">Dados do Imóvel</h2>
-                <p className="mt-3 text-sm text-stone-500 leading-relaxed">As informações abaixo são essenciais para estruturar a arquitetura financeira e estética do seu projeto.</p>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Nome completo</span>
-                  <input required value={form.nome} onChange={(e) => updateForm("nome", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Seu nome" />
-                </label>
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">WhatsApp</span>
-                  <input required value={form.whatsapp} onChange={(e) => updateForm("whatsapp", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="(00) 00000-0000" />
-                </label>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">E-mail</span>
-                  <input required type="email" value={form.email} onChange={(e) => updateForm("email", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="seu@email.com" />
-                </label>
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Cidade e bairro</span>
-                  <input required value={form.cidade} onChange={(e) => updateForm("cidade", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Ex: Montes Claros, Ibituruna" />
-                </label>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Tipo de projeto</span>
-                  <select value={form.tipo} onChange={(e) => updateForm("tipo", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
-                    <option>Residência de alto padrão</option>
-                    <option>Área gourmet e piscina</option>
-                    <option>Clínica ou consultório</option>
-                    <option>Condomínio ou empresa</option>
-                    <option>Manutenção premium</option>
-                    <option>Consultoria técnica</option>
-                  </select>
-                </label>
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Interesse</span>
-                  <input value={form.interesse} onChange={(e) => updateForm("interesse", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" />
-                </label>
-              </div>
-
-              <div className="grid gap-5 md:grid-cols-2">
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Investimento previsto</span>
-                  <select value={form.investimento} onChange={(e) => updateForm("investimento", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
-                    {investmentOptions.map((option) => <option key={option}>{option}</option>)}
-                  </select>
-                </label>
-                <label className="space-y-2">
-                  <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Prazo</span>
-                  <select value={form.urgencia} onChange={(e) => updateForm("urgencia", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
-                    {urgencyOptions.map((option) => <option key={option}>{option}</option>)}
-                  </select>
-                </label>
-              </div>
-
-              <label className="space-y-2 block">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">O que você deseja transformar?</span>
-                <textarea value={form.mensagem} onChange={(e) => updateForm("mensagem", e.target.value)} rows={5} className="w-full resize-none rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Conte sobre o espaço, medidas aproximadas, estilo desejado, problemas atuais ou referências." />
-              </label>
-
-              <div className="space-y-2">
-                <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Fotos, planta ou referência</span>
-                <button type="button" onClick={() => fileInputRef.current?.click()} className="flex w-full items-center gap-3 rounded-2xl border-2 border-dashed border-stone-200 bg-stone-50 px-4 py-5 text-left hover:border-[#d7ae45] transition-colors">
-                  <span className="material-symbols-outlined text-[#d7ae45]">attach_file</span>
-                  <span className="min-w-0 flex-1 truncate text-sm text-stone-500">{arquivo ? arquivo.name : "Anexar arquivo opcional até 5 MB"}</span>
-                </button>
-                <input ref={fileInputRef} type="file" className="hidden" onChange={handleArquivo} />
-                {arquivoErro && <p className="text-sm text-red-600">{arquivoErro}</p>}
-              </div>
-
-              <button disabled={loading} className="w-full rounded-full bg-[#173727] px-8 py-5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#d7ae45] shadow-xl transition-all hover:scale-105 hover:bg-black disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100">
-                {loading ? "Processando..." : "Submeter Diagnóstico Exclusivo"}
-              </button>
-            </form>
-          )}
-        </motion.section>
+          </div>
+        </section>
       </main>
 
       <SiteFooter />
