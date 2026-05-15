@@ -103,6 +103,9 @@ export default function SiteFooter() {
             <Link to="/termos" className="transition-colors hover:text-white/70">
               Termos de Serviço
             </Link>
+            <Link to="/sistema" className="transition-colors hover:text-white/70">
+              Sistema
+            </Link>
           </div>
         </div>
       </div>

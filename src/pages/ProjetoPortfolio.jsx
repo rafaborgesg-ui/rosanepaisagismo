@@ -8,7 +8,7 @@ import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import ProjectHero from "@/components/landing/project/ProjectHero";
 import ProjectNarrativeSection from "@/components/landing/project/ProjectNarrativeSection";
 import ProjectGallerySection from "@/components/landing/project/ProjectGallerySection";
-import ProjectBeforeAfterSection from "@/components/landing/project/ProjectBeforeAfterSection";
+import TransformationSection from "@/components/landing/TransformationSection";
 import ProjectRelatedSection from "@/components/landing/project/ProjectRelatedSection";
 import ProjectCtaSection from "@/components/landing/project/ProjectCtaSection";
 import SEO from "@/components/seo/SEO";
@@ -69,11 +69,11 @@ export default function ProjetoPortfolio() {
           project={project}
           reducedMotion={Boolean(reducedMotion)}
         />
+        <TransformationSection project={project} />
         <ProjectGallerySection
           project={project}
           reducedMotion={Boolean(reducedMotion)}
         />
-        <ProjectBeforeAfterSection project={project} />
         <ProjectRelatedSection relatedProjects={relatedProjects} />
         <ProjectCtaSection />
       </main>

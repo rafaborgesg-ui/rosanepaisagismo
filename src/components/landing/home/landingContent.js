@@ -12,6 +12,7 @@ export const labelClass =
 
 export const selectedProjects = [
   {
+    slug: "estudo-3d-fachada-principal",
     title: "Fachada e entrada residencial",
     category: "Estudo 3D e executivo",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p2_i2.jpg",
@@ -19,6 +20,7 @@ export const selectedProjects = [
       "Composição de entrada com leitura arquitetônica, privacidade e percurso de chegada.",
   },
   {
+    slug: "residencial-curadoria-botanica",
     title: "Acesso principal e composição botânica",
     category: "Projeto autoral",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg",
@@ -26,6 +28,7 @@ export const selectedProjects = [
       "Paleta vegetal desenhada para escala da fachada, permanência visual e baixa manutenção.",
   },
   {
+    slug: "implantacao-acesso-e-estar",
     title: "Jardim vertical e ambientação externa",
     category: "Implantação acompanhada",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i1.jpg",
@@ -33,6 +36,7 @@ export const selectedProjects = [
       "Integração entre textura vegetal, materiais e pontos de permanência para uso cotidiano.",
   },
   {
+    slug: "estudo-executivo-de-areas-externas",
     title: "Paisagismo residencial de grande escala",
     category: "Curadoria vegetal",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg",

@@ -14,7 +14,7 @@ import SelectedProjectsSection from "@/components/landing/home/SelectedProjectsS
 import ExpertiseSection from "@/components/landing/home/ExpertiseSection";
 import MethodSection from "@/components/landing/home/MethodSection";
 import DeliverablesSection from "@/components/landing/home/DeliverablesSection";
-import PresenceSection from "@/components/landing/home/PresenceSection";
+import TestimonialsSection from "@/components/landing/home/TestimonialsSection";
 import ConciergeSection from "@/components/landing/home/ConciergeSection";
 import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 
@@ -136,7 +136,7 @@ export default function Landing() {
         <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
         <MethodSection reducedMotion={Boolean(reduceMotion)} />
         <DeliverablesSection reducedMotion={Boolean(reduceMotion)} />
-        <PresenceSection reducedMotion={Boolean(reduceMotion)} />
+        <TestimonialsSection reducedMotion={Boolean(reduceMotion)} />
         <ConciergeSection
           lead={lead}
           setLead={setLead}
