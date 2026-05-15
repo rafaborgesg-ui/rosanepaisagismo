@@ -67,24 +67,24 @@ const AuthenticatedApp = () => {
   return (
     <Routes>
       <Route path="/" element={<Landing />} />
-      <Route path="/guia-paisagismo" element={<GuiaPaisagismo />} />
-      <Route path="/servico/:id" element={<ServicoLanding />} />
+      <Route path="/guia-paisagismo" element={<Navigate to="/" replace />} />
+      <Route path="/servico/:id" element={<Navigate to="/" replace />} />
       <Route path="/portfolio" element={<Portfolio />} />
       <Route path="/portfolio/:slug" element={<ProjetoPortfolio />} />
-      <Route path="/paisagismo-residencial" element={<PaisagismoResidencial />} />
-      <Route path="/paisagismo-clinicas" element={<PaisagismoClinicas />} />
-      <Route path="/area-gourmet-piscina" element={<AreaGourmetPiscina />} />
-      <Route path="/jardim-tropical" element={<NicheLanding slug="jardim-tropical" />} />
-      <Route path="/jardim-vertical" element={<NicheLanding slug="jardim-vertical" />} />
-      <Route path="/condominios-luxo" element={<NicheLanding slug="condominios-luxo" />} />
-      <Route path="/fachadas-comerciais" element={<NicheLanding slug="fachadas-comerciais" />} />
-      <Route path="/paisagismo-corporativo" element={<NicheLanding slug="paisagismo-corporativo" />} />
-      <Route path="/quiz-paisagismo" element={<QuizPaisagismo />} />
-      <Route path="/manutencao-premium" element={<ManutencaoPremium />} />
-      <Route path="/sobre" element={<SobreEscritorio />} />
-      <Route path="/paisagista-em-montes-claros" element={<LocalLanding slug="paisagista-em-montes-claros" />} />
-      <Route path="/paisagismo-em-sao-paulo" element={<LocalLanding slug="paisagismo-em-sao-paulo" />} />
-      <Route path="/paisagismo-alto-padrao-mg" element={<LocalLanding slug="paisagismo-alto-padrao-mg" />} />
+      <Route path="/paisagismo-residencial" element={<Navigate to="/" replace />} />
+      <Route path="/paisagismo-clinicas" element={<Navigate to="/" replace />} />
+      <Route path="/area-gourmet-piscina" element={<Navigate to="/" replace />} />
+      <Route path="/jardim-tropical" element={<Navigate to="/" replace />} />
+      <Route path="/jardim-vertical" element={<Navigate to="/" replace />} />
+      <Route path="/condominios-luxo" element={<Navigate to="/" replace />} />
+      <Route path="/fachadas-comerciais" element={<Navigate to="/" replace />} />
+      <Route path="/paisagismo-corporativo" element={<Navigate to="/" replace />} />
+      <Route path="/quiz-paisagismo" element={<Navigate to="/" replace />} />
+      <Route path="/manutencao-premium" element={<Navigate to="/" replace />} />
+      <Route path="/sobre" element={<Navigate to="/#sobre" replace />} />
+      <Route path="/paisagista-em-montes-claros" element={<Navigate to="/" replace />} />
+      <Route path="/paisagismo-em-sao-paulo" element={<Navigate to="/" replace />} />
+      <Route path="/paisagismo-alto-padrao-mg" element={<Navigate to="/" replace />} />
       <Route path="/accept-invite" element={<AcceptInvite />} />
       <Route path="/sistema" element={<Sistema />} />
       <Route path="/contato" element={<Contato />} />
