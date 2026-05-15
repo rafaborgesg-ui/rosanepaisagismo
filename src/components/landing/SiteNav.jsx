@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
 const navItems = [
-  { label: "Início", to: "/", key: "inicio" },
-  { label: "Portfólio", to: "/portfolio", key: "portfolio" },
+  { label: "Inicio", to: "/", key: "inicio" },
+  { label: "Projetos", to: "/portfolio", key: "portfolio" },
   { label: "Expertise", href: "/#servicos", key: "expertise" },
+  { label: "Metodo", href: "/#metodo", key: "metodo" },
   { label: "Sobre", href: "/#sobre", key: "sobre" },
   { label: "Contato", to: "/contato", key: "contato" },
 ];
@@ -32,9 +33,24 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const logoTopo = content?.logo_topo_url;
   const logoSize = content?.logo_topo_size || 100;
   const [menuOpen, setMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setIsScrolled(window.scrollY > 20);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  const homeAtTop = activeLink === "inicio" && !isScrolled && !menuOpen;
+  const navClass = homeAtTop
+    ? "border-white/8 bg-transparent"
+    : "border-white/12 bg-[#111913]/78";
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/12 bg-[#171914]/72 text-white backdrop-blur-2xl">
+    <nav
+      className={`fixed inset-x-0 top-0 z-50 border-b text-white backdrop-blur-2xl transition-colors duration-500 ${navClass}`}
+    >
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-10">
         <Link to="/" className="flex min-h-8 items-center" aria-label="Rosane Borges Paisagismo">
           {logoTopo ? (
@@ -67,7 +83,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
             to="/contato"
             className="rounded-full bg-white px-6 py-3 text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
           >
-            Solicitar projeto
+            Iniciar avaliacao
           </Link>
         </div>
 
@@ -99,7 +115,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
               className="text-[#d3b473]"
               onClick={() => setMenuOpen(false)}
             >
-              Solicitar projeto
+              Iniciar avaliacao
             </Link>
           </div>
         </div>

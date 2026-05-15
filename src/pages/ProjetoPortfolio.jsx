@@ -1,5 +1,5 @@
 import { Link, Navigate, useParams } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowLeft,
   ArrowRight,
@@ -13,6 +13,7 @@ import {
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
+import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl, getProjectBySlug, premiumProjects } from "@/data/premiumProjects";
@@ -30,6 +31,7 @@ const labelClass =
   "text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#8f7b55]";
 
 export default function ProjetoPortfolio() {
+  const reducedMotion = useReducedMotion();
   const { slug } = useParams();
   const project = getProjectBySlug(slug);
 
@@ -85,9 +87,9 @@ export default function ProjetoPortfolio() {
 
           <div className="relative z-10 mx-auto flex min-h-screen w-full max-w-[1180px] flex-col justify-end px-4 pb-12 pt-32 md:pb-16">
             <motion.div
-              initial="hidden"
-              animate="visible"
-              variants={fadeUp}
+              initial={reducedMotion ? false : "hidden"}
+              animate={reducedMotion ? undefined : "visible"}
+              variants={reducedMotion ? undefined : fadeUp}
               className="w-full min-w-0 max-w-4xl"
             >
               <Link
@@ -106,9 +108,9 @@ export default function ProjetoPortfolio() {
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 22 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.18, duration: 0.7 }}
+              initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+              animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+              transition={reducedMotion ? { duration: 0 } : { delay: 0.18, duration: 0.7 }}
               className="mt-12 grid gap-3 border-t border-white/18 pt-6 sm:grid-cols-3"
             >
               {heroStats.map(({ icon: Icon, label, value }) => (
@@ -129,10 +131,10 @@ export default function ProjetoPortfolio() {
         <section className="px-4 py-20 md:py-28">
           <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.85fr_1.15fr]">
             <motion.aside
-              initial="hidden"
-              whileInView="visible"
+              initial={reducedMotion ? false : "hidden"}
+              whileInView={reducedMotion ? undefined : "visible"}
               viewport={{ once: true, margin: "-90px" }}
-              variants={fadeUp}
+              variants={reducedMotion ? undefined : fadeUp}
               className="lg:sticky lg:top-28 lg:self-start"
             >
               <p className={labelClass}>Leitura do espaço</p>
@@ -144,7 +146,7 @@ export default function ProjetoPortfolio() {
                 primeiro olhar e consistente depois da implantação.
               </p>
               <a
-                href={buildWhatsAppUrl(`Olá, quero conversar sobre um projeto inspirado no case ${project.title}.`)}
+                href={buildWhatsAppUrl(`Ola, quero iniciar uma avaliacao inspirada no projeto ${project.title}.`)}
                 target="_blank"
                 rel="noreferrer"
                 className="mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#171914] px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#6f7b5f]"
@@ -161,10 +163,14 @@ export default function ProjetoPortfolio() {
               ].map(([title, text], index) => (
                 <motion.article
                   key={title}
-                  initial={{ opacity: 0, y: 22 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+                  whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ delay: index * 0.08, duration: 0.65 }}
+                  transition={
+                    reducedMotion
+                      ? { duration: 0 }
+                      : { delay: index * 0.08, duration: 0.65 }
+                  }
                   className="rounded-[8px] border border-[#dfd9cc] bg-white p-7 shadow-[0_20px_60px_rgba(36,35,28,0.06)] md:p-9"
                 >
                   <p className={labelClass}>{title}</p>
@@ -173,10 +179,10 @@ export default function ProjetoPortfolio() {
               ))}
 
               <motion.article
-                initial={{ opacity: 0, y: 22 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={reducedMotion ? false : { opacity: 0, y: 22 }}
+                whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.65 }}
+                transition={reducedMotion ? { duration: 0 } : { duration: 0.65 }}
                 className="rounded-[8px] border border-[#dfd9cc] bg-[#171914] p-7 text-white shadow-[0_20px_60px_rgba(36,35,28,0.08)] md:p-9"
               >
                 <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d3b473]">
@@ -210,10 +216,14 @@ export default function ProjetoPortfolio() {
               {project.gallery.map((image, index) => (
                 <motion.figure
                   key={image}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
+                  initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+                  whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
-                  transition={{ delay: index * 0.08, duration: 0.7 }}
+                  transition={
+                    reducedMotion
+                      ? { duration: 0 }
+                      : { delay: index * 0.08, duration: 0.7 }
+                  }
                   className="overflow-hidden rounded-[8px] bg-[#262a21]"
                 >
                   <img
@@ -285,7 +295,7 @@ export default function ProjetoPortfolio() {
                       alt={item.title}
                       loading="lazy"
                       decoding="async"
-                      className="h-full w-full object-cover transition duration-700 group-hover:scale-105"
+                      className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
                     />
                   </div>
                   <div className="p-5">
@@ -303,7 +313,7 @@ export default function ProjetoPortfolio() {
 
         <section className="relative overflow-hidden bg-[#6f7b5f] px-4 py-20 text-white md:py-28">
           <img
-            src="https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=88&w=1800"
+            src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i1.jpg"
             alt=""
             loading="lazy"
             className="absolute inset-0 h-full w-full object-cover opacity-25"
@@ -315,8 +325,8 @@ export default function ProjetoPortfolio() {
               Seu jardim pode ser o próximo espaço memorável.
             </h2>
             <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-white/78">
-              Envie fotos, planta ou referências. A primeira leitura já mostra o caminho mais
-              elegante para transformar o espaço.
+              Envie fotos, planta ou referencias. A primeira leitura ja mostra o caminho mais
+              elegante para transformar o espaco.
             </p>
             <a
               href={buildWhatsAppUrl()}
@@ -324,7 +334,7 @@ export default function ProjetoPortfolio() {
               rel="noreferrer"
               className="mt-9 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
             >
-              Solicitar atendimento
+              Iniciar avaliacao
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
@@ -332,7 +342,8 @@ export default function ProjetoPortfolio() {
       </main>
 
       <SiteFooter />
-      <WhatsAppFloat />
+      <WhatsAppFloat hideOnMobile />
+      <MobileConciergeBar href="/contato#briefing" />
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import {
   ArrowRight,
   CheckCircle2,
@@ -15,6 +15,7 @@ import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
+import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import { useLandingContent } from "@/hooks/useLandingContent";
 import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
@@ -43,6 +44,7 @@ const labelClass =
   "text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#8f7b55]";
 
 export default function Contato() {
+  const reducedMotion = useReducedMotion();
   const content = useLandingContent();
   const whatsappNumero = content?.whatsapp_numero || "5538999313930";
   const urlParams = new URLSearchParams(window.location.search);
@@ -124,9 +126,9 @@ export default function Contato() {
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">
       <SEO
-        title="Contato | Solicitar Projeto de Paisagismo"
+        title="Contato | Avaliacao de Projeto de Paisagismo"
         description="Solicite atendimento para projetos exclusivos de jardins, piscinas, áreas gourmet, jardins verticais, clínicas e residências de alto padrão."
-        keywords="contato paisagista, agendar consultoria paisagismo, projeto de jardim premium, orçamento paisagismo alto padrão"
+        keywords="contato paisagista, avaliacao de projeto paisagismo, projeto de jardim premium, paisagismo alto padrao"
         url="https://rosanepaisagismo-site.vercel.app/contato"
       />
       <SiteNav activeLink="contato" />
@@ -134,15 +136,15 @@ export default function Contato() {
       <main>
         <section className="relative overflow-hidden bg-[#171914] px-4 pb-20 pt-32 text-white md:pb-28 md:pt-40">
           <img
-            src="https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=90&w=2200"
-            alt="Jardim residencial com arquitetura contemporânea"
+            src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg"
+            alt="Estudo de paisagismo residencial"
             className="absolute inset-0 h-full w-full object-cover opacity-72"
           />
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,18,14,0.92),rgba(16,18,14,0.44)_55%,rgba(16,18,14,0.82)),linear-gradient(180deg,rgba(16,18,14,0.28),rgba(16,18,14,0.94))]" />
           <motion.div
-            initial="hidden"
-            animate="visible"
-            variants={fadeUp}
+            initial={reducedMotion ? false : "hidden"}
+            animate={reducedMotion ? undefined : "visible"}
+            variants={reducedMotion ? undefined : fadeUp}
             className="relative z-10 mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-end"
           >
             <div>
@@ -195,10 +197,10 @@ export default function Contato() {
         <section id="briefing" className="px-4 py-20 md:py-28">
           <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
             <motion.aside
-              initial="hidden"
-              whileInView="visible"
+              initial={reducedMotion ? false : "hidden"}
+              whileInView={reducedMotion ? undefined : "visible"}
               viewport={{ once: true, margin: "-90px" }}
-              variants={fadeUp}
+              variants={reducedMotion ? undefined : fadeUp}
               className="lg:sticky lg:top-28"
             >
               <p className={labelClass}>Briefing exclusivo</p>
@@ -262,10 +264,10 @@ export default function Contato() {
             </motion.aside>
 
             <motion.div
-              initial="hidden"
-              whileInView="visible"
+              initial={reducedMotion ? false : "hidden"}
+              whileInView={reducedMotion ? undefined : "visible"}
               viewport={{ once: true, margin: "-90px" }}
-              variants={fadeUp}
+              variants={reducedMotion ? undefined : fadeUp}
               className="rounded-[8px] bg-white p-6 shadow-[0_26px_90px_rgba(36,35,28,0.1)] md:p-10"
             >
               {sent ? (
@@ -289,7 +291,7 @@ export default function Contato() {
               ) : (
                 <>
                   <div className="mb-8">
-                    <p className={labelClass}>Solicitar projeto exclusivo</p>
+                    <p className={labelClass}>Iniciar avaliacao exclusiva</p>
                     <h2 className="mt-3 font-heading text-3xl font-medium tracking-normal text-[#171914]">
                       Conte sobre o espaço.
                     </h2>
@@ -420,7 +422,7 @@ export default function Contato() {
                       disabled={loading}
                       className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[#171914] px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#6f7b5f] disabled:cursor-not-allowed disabled:opacity-55"
                     >
-                      {loading ? "Enviando..." : "Solicitar projeto"}
+                      {loading ? "Enviando..." : "Enviar briefing inicial"}
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </form>
@@ -432,7 +434,8 @@ export default function Contato() {
       </main>
 
       <SiteFooter />
-      <WhatsAppFloat />
+      <WhatsAppFloat hideOnMobile />
+      <MobileConciergeBar href="#briefing" label="Ir para briefing" />
     </div>
   );
 }

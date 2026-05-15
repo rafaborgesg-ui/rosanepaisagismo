@@ -25,8 +25,8 @@ export default function SiteFooter() {
               </p>
             )}
             <p className="max-w-md text-sm leading-7 text-white/58">
-              Paisagismo autoral de alto padrão para residências, piscinas, áreas
-              gourmet, jardins verticais, clínicas e espaços corporativos.
+              Paisagismo autoral de alto padrao para residencias, clinicas e projetos
+              selecionados que exigem leitura tecnica e implantacao orientada.
             </p>
           </div>
 
@@ -36,11 +36,14 @@ export default function SiteFooter() {
             </p>
             <div className="grid gap-3 text-sm text-white/64">
               <Link to="/" className="transition-colors hover:text-white">
-                Início
+                Inicio
               </Link>
               <Link to="/portfolio" className="transition-colors hover:text-white">
-                Portfólio
+                Projetos
               </Link>
+              <a href="/#metodo" className="transition-colors hover:text-white">
+                Metodo
+              </a>
               <a href="/#servicos" className="transition-colors hover:text-white">
                 Expertise
               </a>
@@ -72,7 +75,7 @@ export default function SiteFooter() {
                 className="flex items-center gap-3 transition-colors hover:text-white"
               >
                 <MessageCircle className="h-4 w-4 text-[#d3b473]" aria-hidden="true" />
-                WhatsApp premium
+                Atendimento privado no WhatsApp
               </a>
               <p className="flex items-center gap-3">
                 <MapPin className="h-4 w-4 text-[#d3b473]" aria-hidden="true" />

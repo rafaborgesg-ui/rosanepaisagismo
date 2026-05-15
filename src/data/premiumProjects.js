@@ -1,156 +1,123 @@
 export const WHATSAPP_NUMBER = "5538999313930";
 
 export const WHATSAPP_MESSAGE =
-  "Olá, quero solicitar um projeto exclusivo de paisagismo.";
+  "Ola, quero iniciar uma avaliacao de projeto com a Rosane Paisagismo.";
 
 export const portfolioCategories = [
   "Todos",
+  "Estudo 3D",
   "Residencial",
-  "Corporativo",
-  "Áreas gourmet",
-  "Jardins verticais",
-  "Piscinas",
-  "Pequenos espaços",
+  "Implantacao orientada",
+  "Fachadas e acessos",
 ];
+
+const localAsset = (name) => `/brand/${name}`;
 
 export const premiumProjects = [
   {
-    slug: "residencia-horizonte",
-    title: "Residência Horizonte",
+    slug: "estudo-3d-fachada-principal",
+    title: "Estudo 3D de fachada principal",
+    category: "Estudo 3D",
+    location: "Projeto residencial selecionado",
+    area: "Fachada e acesso social",
+    scope: "Conceito botanico, estudo 3D e diretrizes executivas",
+    cover: localAsset("PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg"),
+    gallery: [
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p2_i2.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p8_i1.jpg"),
+    ],
+    summary:
+      "Composicao de entrada com leitura arquitetonica, privacidade e percurso de chegada.",
+    challenge:
+      "Criar impacto de chegada sem excesso visual, mantendo proporcao entre arquitetura, vegetacao e acessos.",
+    solution:
+      "A proposta organiza massas vegetais, textura de piso e pontos focais para reforcar escala, permanencia e leitura do imovel.",
+    plants: ["Topiarias estruturantes", "Macicos de forracao", "Especies de destaque"],
+  },
+  {
+    slug: "residencial-curadoria-botanica",
+    title: "Residencial com curadoria botanica",
     category: "Residencial",
-    location: "Condomínio fechado",
-    area: "1.400 m²",
-    scope: "Projeto executivo e implantação",
-    cover:
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=88&w=1800",
+    location: "Residencia de alto padrao",
+    area: "Entrada, lateral e area de permanencia",
+    scope: "Projeto completo com direcionamento de implantacao",
+    cover: localAsset("PAISAGISMO-PRISCILLA-ROSANE_p2_i1.jpg"),
     gallery: [
-      "https://images.unsplash.com/photo-1600566753376-12c8ab7fb75b?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=88&w=1800",
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p2_i1.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p4_i2.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg"),
     ],
     summary:
-      "Jardim tropical contemporâneo conectado à piscina, área gourmet e circulação social da casa.",
+      "Paleta vegetal desenhada para valorizar fachada, conforto termico e manutencao previsivel.",
     challenge:
-      "Criar uma área externa marcante sem competir com a arquitetura, com sombra, privacidade e uso noturno elegante.",
+      "Equilibrar densidade verde e limpeza formal da arquitetura, preservando circulacao e manutencao simples.",
     solution:
-      "Foram combinadas espécies esculturais, massas verdes de baixa manutenção, iluminação cênica e percursos que conduzem naturalmente aos ambientes de permanência.",
-    plants: ["Palmeiras", "Filodendros", "Pacovás", "Jibóias", "Forrações tropicais"],
-    beforeAfter: {
-      before:
-        "https://images.unsplash.com/photo-1590011502447-90977f6b9571?auto=format&fit=crop&q=88&w=1600",
-      after:
-        "https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=88&w=1600",
-    },
+      "Foram definidas camadas vegetais por altura e textura, com especies adaptadas ao uso cotidiano do espaco.",
+    plants: ["Arbustos de estrutura", "Herbaceas tropicais", "Forracoes de baixa manutencao"],
   },
   {
-    slug: "cobertura-jardins",
-    title: "Cobertura Jardins",
-    category: "Pequenos espaços",
-    location: "São Paulo, SP",
-    area: "360 m²",
-    scope: "Conceito, vasos sob medida e curadoria botânica",
-    cover:
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=88&w=1800",
+    slug: "implantacao-acesso-e-estar",
+    title: "Implantacao orientada de acesso e estar",
+    category: "Implantacao orientada",
+    location: "Projeto residencial em fase de obra",
+    area: "Acessos, transicoes e areas externas",
+    scope: "Projeto e acompanhamento tecnico de implantacao",
+    cover: localAsset("PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"),
     gallery: [
-      "https://images.unsplash.com/photo-1600607688969-a5bfcd646154?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1518005020951-eccb494ad742?auto=format&fit=crop&q=88&w=1800",
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p8_i1.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p3_i1.jpg"),
     ],
     summary:
-      "Refúgio suspenso com espécies esculturais, permanência para receber e leitura urbana sofisticada.",
+      "Diretrizes tecnicas para execucao consistente entre desenho, fornecedores e resultado final.",
     challenge:
-      "Trazer presença vegetal para uma cobertura com vento, insolação intensa e pouco espaço técnico para jardineiras.",
+      "Traduzir estudo em uma sequencia clara de implantacao sem comprometer o conceito original.",
     solution:
-      "A solução privilegiou vasos estratégicos, espécies resistentes, pontos de sombra e uma composição que preserva a vista sem perder intimidade.",
-    plants: ["Oliveiras", "Agaves", "Clúsias", "Herbáceas aromáticas", "Capins ornamentais"],
+      "O escopo organiza especies, materiais e ritmo de execucao com checkpoints tecnicos ao longo da obra.",
+    plants: ["Especies de borda", "Macicos de preenchimento", "Pontos vegetais de destaque"],
   },
   {
-    slug: "clinica-essenza",
-    title: "Clínica Essenza",
-    category: "Corporativo",
-    location: "Montes Claros, MG",
-    area: "420 m²",
-    scope: "Fachada, recepção e jardim sensorial",
-    cover:
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=88&w=1800",
+    slug: "fachadas-e-percurso-de-chegada",
+    title: "Fachadas e percurso de chegada",
+    category: "Fachadas e acessos",
+    location: "Projeto residencial selecionado",
+    area: "Frente do lote e transicoes de entrada",
+    scope: "Estudo 3D, executivo e orientacao de composicao",
+    cover: localAsset("PAISAGISMO-PRISCILLA-ROSANE_p3_i2.jpg"),
     gallery: [
-      "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1598902108854-10e335adac99?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&q=88&w=1800",
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p3_i2.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p6_i1.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p5_i1.jpg"),
     ],
     summary:
-      "Biofilia aplicada à experiência de marca, com fachada acolhedora e recepção mais memorável.",
+      "Composicao de fachada para reforcar hierarquia de entrada e valor percebido do imovel.",
     challenge:
-      "Reforçar confiança e acolhimento sem criar manutenção complexa para uma operação de rotina intensa.",
+      "Conduzir o olhar para os pontos certos da fachada sem sobrecarregar o conjunto.",
     solution:
-      "A composição combina espécies de impacto, iluminação discreta e pontos verdes de leitura rápida para transformar a chegada em experiência.",
-    plants: ["Zamioculcas", "Pleomeles", "Pacovás", "Samambaias", "Costela-de-adão"],
+      "A leitura espacial combina volumes vegetais e negativos estrategicos para destacar arquitetura e percurso.",
+    plants: ["Especies de enquadramento", "Arbustos de ritmo", "Forracoes de acabamento"],
   },
   {
-    slug: "patio-gourmet",
-    title: "Pátio Gourmet",
-    category: "Áreas gourmet",
-    location: "Interior de São Paulo",
-    area: "720 m²",
-    scope: "Piscina, gourmet, deck e permanência",
-    cover:
-      "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&q=88&w=1800",
+    slug: "estudo-executivo-de-areas-externas",
+    title: "Estudo executivo de areas externas",
+    category: "Estudo 3D",
+    location: "Residencial com programa externo completo",
+    area: "Entrada, lateral e apoio gourmet",
+    scope: "Conceito, 3D e orientacoes executivas",
+    cover: localAsset("PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg"),
     gallery: [
-      "https://images.unsplash.com/photo-1576013551627-0cc20b96c2a7?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&q=88&w=1800",
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p4_i1.jpg"),
+      localAsset("PAISAGISMO-PRISCILLA-ROSANE_p2_i2.jpg"),
     ],
     summary:
-      "Ambiente para receber com sombra, aroma, textura e transições suaves entre estar, água e jardim.",
+      "Projeto orientado para permanencia, privacidade e integracao entre arquitetura e vegetacao.",
     challenge:
-      "Organizar fluxos sociais e áreas molhadas mantendo sensação de exclusividade, conforto térmico e baixa manutenção.",
+      "Manter unidade visual entre diferentes frentes externas com necessidades tecnicas distintas.",
     solution:
-      "O jardim foi setorizado por densidade vegetal, com espécies aromáticas próximas ao gourmet e volumes maiores para privacidade.",
-    plants: ["Lavandas", "Alecrins", "Podocarpos", "Moreias", "Palmeiras fênix"],
-  },
-  {
-    slug: "jardim-vertical-aurora",
-    title: "Jardim Vertical Aurora",
-    category: "Jardins verticais",
-    location: "Belo Horizonte, MG",
-    area: "85 m²",
-    scope: "Parede verde, irrigação e curadoria de espécies",
-    cover:
-      "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?auto=format&fit=crop&q=88&w=1800",
-    gallery: [
-      "https://images.unsplash.com/photo-1520412099551-62b6bafeb5bb?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1501004318641-b39e6451bec6?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1497215842964-222b430dc094?auto=format&fit=crop&q=88&w=1800",
-    ],
-    summary:
-      "Parede viva para um ambiente social com textura botânica, frescor visual e manutenção planejada.",
-    challenge:
-      "Criar impacto imediato em uma parede extensa, sem excesso visual e com irrigação confiável.",
-    solution:
-      "A paleta vegetal foi organizada por camadas de textura e tons de verde, com sistema técnico discreto e acesso para manutenção.",
-    plants: ["Samambaias", "Asplênios", "Jibóias", "Peperômias", "Ripsális"],
-  },
-  {
-    slug: "casa-reserva",
-    title: "Casa Reserva",
-    category: "Piscinas",
-    location: "Lago Sul",
-    area: "980 m²",
-    scope: "Paisagismo completo para piscina e fachada",
-    cover:
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=88&w=1800",
-    gallery: [
-      "https://images.unsplash.com/photo-1600585154526-990dced4db0d?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&q=88&w=1800",
-      "https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&q=88&w=1800",
-    ],
-    summary:
-      "Piscina integrada a um jardim de presença arquitetônica, com privacidade e elegância em todas as vistas.",
-    challenge:
-      "Equilibrar imponência, conforto e manutenção em um terreno amplo com áreas de uso muito diferentes.",
-    solution:
-      "Volumes vegetais maiores estruturam privacidade, enquanto texturas baixas aproximam o jardim das áreas de banho e estar.",
-    plants: ["Strelitzias", "Buxinhos", "Clúsias", "Dracenas", "Gramas ornamentais"],
+      "O estudo conecta especies, materiais e percursos em uma linguagem unica para toda a area externa.",
+    plants: ["Palmaceas pontuais", "Macicos tropicais", "Forracoes de transicao"],
   },
 ];
 
