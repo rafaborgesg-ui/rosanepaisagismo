@@ -9,8 +9,8 @@
     --font-heading: 'Playfair Display', serif;
     --font-body: 'Inter', sans-serif;
 
-    --background: 40 33% 98%; /* Sand/Off-white #fcfaf7 */
-    --foreground: 160 40% 17%; /* Deep Green #1a3d2b */
+    --background: 40 30% 96%; /* #f8f6f2 */
+    --foreground: 75 10% 9%; /* #171914 */
 
     --card: 0 0% 100%;
     --card-foreground: 160 40% 17%;
@@ -18,16 +18,16 @@
     --popover: 0 0% 100%;
     --popover-foreground: 160 40% 17%;
 
-    --primary: 160 40% 17%; /* #1a3d2b */
+    --primary: 75 10% 9%; /* #171914 */
     --primary-foreground: 40 33% 98%;
 
-    --secondary: 43 67% 45%; /* Antique Gold #c09624 */
-    --secondary-foreground: 160 40% 17%;
+    --secondary: 70 13% 43%; /* olive */
+    --secondary-foreground: 40 30% 96%;
 
     --muted: 40 10% 90%;
     --muted-foreground: 160 20% 30%;
 
-    --accent: 43 67% 45%; /* #c09624 */
+    --accent: 39 45% 52%; /* muted brass */
     --accent-foreground: 40 33% 98%;
 
     --destructive: 0 84% 60%;
@@ -35,8 +35,8 @@
 
     --border: 160 10% 90%;
     --input: 160 10% 90%;
-    --ring: 160 40% 17%;
-    --radius: 1rem; /* More organic rounded corners */
+    --ring: 75 10% 9%;
+    --radius: 0.5rem;
 
     --sidebar-background: 224 44% 8%;
     --sidebar-foreground: 216 18% 78%;
@@ -51,7 +51,7 @@
 
 @layer base {
   * { @apply border-border outline-ring/50; }
-  html { scroll-padding-top: 96px; }
+  html { scroll-behavior: smooth; scroll-padding-top: 96px; }
   body { @apply bg-background text-foreground font-body antialiased; }
   h1,h2,h3,h4 { @apply tracking-tight; }
 }

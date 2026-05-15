@@ -6,71 +6,100 @@ import { useLandingContent } from "@/hooks/useLandingContent";
 const navItems = [
   { label: "Início", to: "/", key: "inicio" },
   { label: "Portfólio", to: "/portfolio", key: "portfolio" },
-  { label: "Residencial", to: "/paisagismo-residencial", key: "residencial" },
+  { label: "Expertise", href: "/#servicos", key: "expertise" },
+  { label: "Sobre", href: "/#sobre", key: "sobre" },
   { label: "Contato", to: "/contato", key: "contato" },
 ];
 
-export default function SiteNav({ activeLink }) {
+function NavTarget({ item, children, className = "", onClick = undefined }) {
+  if (item.href) {
+    return (
+      <a href={item.href} className={className} onClick={onClick}>
+        {children}
+      </a>
+    );
+  }
+
+  return (
+    <Link to={item.to} className={className} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
+
+export default function SiteNav({ activeLink = "" } = {}) {
   const content = useLandingContent();
   const logoTopo = content?.logo_topo_url;
   const logoSize = content?.logo_topo_size || 100;
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#121411]/72 text-white backdrop-blur-2xl">
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/12 bg-[#171914]/72 text-white backdrop-blur-2xl">
       <div className="mx-auto flex h-[72px] max-w-7xl items-center justify-between px-5 md:px-10">
-        <Link to="/" className="flex min-h-8 items-center" aria-label="Rosane Paisagismo">
+        <Link to="/" className="flex min-h-8 items-center" aria-label="Rosane Borges Paisagismo">
           {logoTopo ? (
             <img
               src={logoTopo}
-              alt="Rosane Paisagismo"
+              alt="Rosane Borges Paisagismo"
               className="w-auto object-contain brightness-0 invert"
-              style={{ height: `${logoSize * 0.36}px`, maxWidth: "210px" }}
+              style={{ height: `${logoSize * 0.36}px`, maxWidth: "220px" }}
             />
           ) : (
-            <span className="text-[1.35rem] font-semibold tracking-tight md:text-[1.55rem]">
-              Rosane<span className="text-[#b89445]">.</span>
+            <span className="font-heading text-2xl font-medium tracking-normal md:text-3xl">
+              Rosane Borges
             </span>
           )}
         </Link>
 
-        <div className="hidden items-center gap-8 text-[11px] font-bold uppercase tracking-[0.18em] text-white/68 md:flex">
+        <div className="hidden items-center gap-7 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/68 lg:flex">
           {navItems.map((item) => (
-            <Link
+            <NavTarget
               key={item.key}
-              to={item.to}
-              className={`transition-colors hover:text-white ${activeLink === item.key ? "text-[#d5bd7b]" : ""}`}
+              item={item}
+              className={`transition-colors hover:text-white ${
+                activeLink === item.key ? "text-[#d3b473]" : ""
+              }`}
             >
               {item.label}
-            </Link>
+            </NavTarget>
           ))}
           <Link
             to="/contato"
-            className="rounded-full bg-white px-6 py-3 text-[#121411] transition-all hover:-translate-y-0.5 hover:bg-[#b89445] hover:text-white"
+            className="rounded-full bg-white px-6 py-3 text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
           >
-            Agendar consultoria
+            Solicitar projeto
           </Link>
         </div>
 
         <button
-          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/15 md:hidden"
+          className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-white/18 lg:hidden"
           onClick={() => setMenuOpen((value) => !value)}
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          type="button"
         >
           {menuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </div>
 
       {menuOpen && (
-        <div className="border-t border-white/10 bg-[#121411]/96 px-6 py-6 text-center text-xs font-bold uppercase tracking-[0.18em] text-white/78 md:hidden">
+        <div className="border-t border-white/10 bg-[#171914]/96 px-6 py-6 text-center text-xs font-semibold uppercase tracking-[0.12em] text-white/78 lg:hidden">
           <div className="grid gap-5">
             {navItems.map((item) => (
-              <Link key={item.key} to={item.to} onClick={() => setMenuOpen(false)}>
+              <NavTarget
+                key={item.key}
+                item={item}
+                onClick={() => setMenuOpen(false)}
+                className={activeLink === item.key ? "text-[#d3b473]" : ""}
+              >
                 {item.label}
-              </Link>
+              </NavTarget>
             ))}
-            <Link to="/contato" className="text-[#d5bd7b]" onClick={() => setMenuOpen(false)}>
-              Solicitar projeto exclusivo
+            <Link
+              to="/contato"
+              className="text-[#d3b473]"
+              onClick={() => setMenuOpen(false)}
+            >
+              Solicitar projeto
             </Link>
           </div>
         </div>

@@ -1,24 +1,24 @@
 import { Helmet } from "react-helmet-async";
 
 export default function SEO({
-  title,
-  description,
-  keywords,
+  title = "",
+  description = "",
+  keywords = "",
   image = "https://rosanepaisagismo-site.vercel.app/og-image.jpg",
   url = "https://rosanepaisagismo-site.vercel.app",
   type = "website",
-  schema,
-}) {
-  const baseTitle = "Rosane Paisagismo | Paisagismo de Alto Padrão em MG e SP";
-  const finalTitle = title ? `${title} | Rosane Paisagismo` : baseTitle;
+  schema = null,
+} = {}) {
+  const baseTitle = "Rosane Borges Paisagismo | Paisagismo de Alto Padrão";
+  const finalTitle = title ? `${title} | Rosane Borges Paisagismo` : baseTitle;
 
-  const defaultDesc =
-    "Paisagismo de alto padrão que valoriza arquitetura e transforma imóveis. Projetos autorais em Minas Gerais e São Paulo.";
-  const finalDesc = description || defaultDesc;
+  const finalDesc =
+    description ||
+    "Paisagismo residencial de alto padrão que une natureza, arquitetura e sofisticação em projetos autorais para jardins, piscinas e áreas gourmet.";
 
-  const defaultKeywords =
-    "paisagismo alto padrão, paisagista em Montes Claros, paisagista em São Paulo, projeto de paisagismo residencial, paisagismo corporativo, jardim tropical, área gourmet, rosane paisagismo";
-  const finalKeywords = keywords || defaultKeywords;
+  const finalKeywords =
+    keywords ||
+    "paisagismo residencial, paisagista, projetos de paisagismo, jardim moderno, paisagismo de luxo, paisagismo residencial alto padrão";
 
   return (
     <Helmet>
@@ -34,11 +34,11 @@ export default function SEO({
       <meta property="og:description" content={finalDesc} />
       <meta property="og:image" content={image} />
 
-      <meta property="twitter:card" content="summary_large_image" />
-      <meta property="twitter:url" content={url} />
-      <meta property="twitter:title" content={finalTitle} />
-      <meta property="twitter:description" content={finalDesc} />
-      <meta property="twitter:image" content={image} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={url} />
+      <meta name="twitter:title" content={finalTitle} />
+      <meta name="twitter:description" content={finalDesc} />
+      <meta name="twitter:image" content={image} />
 
       {schema && (
         <script type="application/ld+json">

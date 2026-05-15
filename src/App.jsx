@@ -15,6 +15,7 @@ import Landing from './pages/Landing';
 import GuiaPaisagismo from './pages/GuiaPaisagismo';
 import ServicoLanding from './pages/ServicoLanding';
 import Portfolio from './pages/Portfolio';
+import ProjetoPortfolio from './pages/ProjetoPortfolio';
 import PaisagismoResidencial from './pages/PaisagismoResidencial';
 import PaisagismoClinicas from './pages/PaisagismoClinicas';
 import AreaGourmetPiscina from './pages/AreaGourmetPiscina';
@@ -69,6 +70,7 @@ const AuthenticatedApp = () => {
       <Route path="/guia-paisagismo" element={<GuiaPaisagismo />} />
       <Route path="/servico/:id" element={<ServicoLanding />} />
       <Route path="/portfolio" element={<Portfolio />} />
+      <Route path="/portfolio/:slug" element={<ProjetoPortfolio />} />
       <Route path="/paisagismo-residencial" element={<PaisagismoResidencial />} />
       <Route path="/paisagismo-clinicas" element={<PaisagismoClinicas />} />
       <Route path="/area-gourmet-piscina" element={<AreaGourmetPiscina />} />
