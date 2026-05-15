@@ -75,7 +75,7 @@ export default function ProjetoPortfolio() {
           reducedMotion={Boolean(reducedMotion)}
         />
         <ProjectRelatedSection relatedProjects={relatedProjects} />
-        <ProjectCtaSection />
+        <ProjectCtaSection project={project} />
       </main>
 
       <SiteFooter />
