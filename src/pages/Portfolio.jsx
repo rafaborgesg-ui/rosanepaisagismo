@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useReducedMotion } from "framer-motion";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
@@ -10,10 +10,18 @@ import PortfolioGallery from "@/components/landing/portfolio/PortfolioGallery";
 import PortfolioCtaSection from "@/components/landing/portfolio/PortfolioCtaSection";
 import SEO from "@/components/seo/SEO";
 import { portfolioCategories, premiumProjects } from "@/data/premiumProjects";
+import { trackEvent } from "@/lib/tracking";
 
 export default function Portfolio() {
   const reducedMotion = useReducedMotion();
   const [filter, setFilter] = useState("Todos");
+
+  useEffect(() => {
+    trackEvent("portfolio_viewed", {
+      source: "portfolio_page",
+      page_path: window.location.pathname,
+    });
+  }, []);
 
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return premiumProjects;

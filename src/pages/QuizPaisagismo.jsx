@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
+import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import SEO from "@/components/seo/SEO";
-import { trackEvent } from "@/lib/tracking";
+import { getAttributionData, trackEvent } from "@/lib/tracking";
 
 const WHATSAPP = "5538999313930";
 
@@ -45,8 +46,31 @@ export default function QuizPaisagismo() {
     setStep((current) => current + 1);
   };
 
-  const sendLead = (event) => {
+  const sendLead = async (event) => {
     event.preventDefault();
+    const attribution = getAttributionData();
+    const isQualified = ["De R$ 25k a R$ 50k", "Acima de R$ 50k"].includes(
+      answers.investimento,
+    );
+
+    try {
+      await api.entities.Leads.create({
+        nome: lead.nome,
+        email: null,
+        whatsapp: lead.whatsapp,
+        fonte: "quiz_paisagismo",
+        status: isQualified ? "qualified" : "new",
+        data_captura: new Date().toISOString(),
+        utm_source: attribution.utm_source || null,
+        utm_campaign: attribution.utm_campaign || null,
+      });
+    } catch (error) {
+      trackEvent("briefing_lead_save_error", {
+        source: "quiz_paisagismo",
+        message: error?.message || "unknown_error",
+      });
+    }
+
     const text = encodeURIComponent(
       `Olá, Rosane. Respondi o quiz de paisagismo e quero um diagnóstico.\n\n` +
       `Nome: ${lead.nome}\n` +
@@ -58,6 +82,12 @@ export default function QuizPaisagismo() {
       `Prazo: ${answers.prazo}`
     );
     window.open(`https://wa.me/${WHATSAPP}?text=${text}`, "_blank");
+    trackEvent("briefing_submitted", {
+      source: "quiz_paisagismo",
+      investimento: answers.investimento,
+      cidade: lead.cidade,
+      ...attribution,
+    });
     trackEvent("quiz_lead_submitted", {
       estilo: answers.estilo,
       espaco: answers.espaco,
@@ -65,6 +95,14 @@ export default function QuizPaisagismo() {
       prazo: answers.prazo,
       cidade: lead.cidade,
     });
+    if (isQualified) {
+      trackEvent("lead_qualified", {
+        source: "quiz_paisagismo",
+        investimento: answers.investimento,
+        cidade: lead.cidade,
+        ...attribution,
+      });
+    }
   };
 
   return (

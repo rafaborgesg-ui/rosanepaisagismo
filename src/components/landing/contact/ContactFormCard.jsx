@@ -15,6 +15,7 @@ export default function ContactFormCard({
   fileInputRef,
   handleArquivo,
   handleSubmit,
+  onBriefingStarted,
 }) {
   return (
     <motion.div
@@ -51,7 +52,7 @@ export default function ContactFormCard({
             </h2>
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit}>
+          <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="grid gap-2">
                 <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">

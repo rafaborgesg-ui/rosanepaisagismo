@@ -36,8 +36,10 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
   const homeAtTop = activeLink === "inicio" && !isScrolled && !menuOpen;
   const navClass = homeAtTop
-    ? "border-white/10 bg-[#111913]/56"
-    : "border-white/14 bg-[#111913]/88 shadow-[0_10px_35px_rgba(0,0,0,0.25)]";
+    ? "border-white/12 bg-[#0f140f]/78 shadow-[0_10px_35px_rgba(0,0,0,0.2)]"
+    : "border-white/14 bg-[#0d120d]/92 shadow-[0_10px_35px_rgba(0,0,0,0.3)]";
+  const textGlowClass =
+    "[text-shadow:0_1px_2px_rgba(0,0,0,0.9),0_0_10px_rgba(0,0,0,0.45)]";
 
   return (
     <nav
@@ -49,17 +51,21 @@ export default function SiteNav({ activeLink = "" } = {}) {
             <img
               src={logoTopo}
               alt="Rosane Borges Paisagismo"
-              className="w-auto object-contain brightness-0 invert"
+              className="w-auto object-contain brightness-0 invert drop-shadow-[0_1px_2px_rgba(0,0,0,0.9)]"
               style={{ height: `${logoSize * 0.36}px`, maxWidth: "220px" }}
             />
           ) : (
-            <span className="font-heading text-2xl font-medium tracking-normal md:text-3xl">
+            <span
+              className={`font-heading text-2xl font-medium tracking-normal md:text-3xl ${textGlowClass}`}
+            >
               Rosane Borges
             </span>
           )}
         </Link>
 
-        <div className="hidden items-center gap-7 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/68 lg:flex">
+        <div
+          className={`hidden items-center gap-7 text-[0.68rem] font-semibold uppercase tracking-[0.12em] text-white/84 lg:flex ${textGlowClass}`}
+        >
           {navItems.map((item) => (
             <NavTarget
               key={item.key}
@@ -84,7 +90,9 @@ export default function SiteNav({ activeLink = "" } = {}) {
       </div>
 
       {menuOpen && (
-        <div className="border-t border-white/10 bg-[#171914]/96 px-6 py-6 text-center text-xs font-semibold uppercase tracking-[0.12em] text-white/78 lg:hidden">
+        <div
+          className={`border-t border-white/10 bg-[#171914]/96 px-6 py-6 text-center text-xs font-semibold uppercase tracking-[0.12em] text-white/86 lg:hidden ${textGlowClass}`}
+        >
           <div className="grid gap-5">
             {navItems.map((item) => (
               <NavTarget

@@ -10,6 +10,7 @@ import ContactSidebar from "@/components/landing/contact/ContactSidebar";
 import ContactFormCard from "@/components/landing/contact/ContactFormCard";
 import { useLandingContent } from "@/hooks/useLandingContent";
 import SEO from "@/components/seo/SEO";
+import { getAttributionData, trackEvent } from "@/lib/tracking";
 
 export default function Contato() {
   const reducedMotion = useReducedMotion();
@@ -29,6 +30,7 @@ export default function Contato() {
   const [arquivo, setArquivo] = useState(null);
   const [arquivoErro, setArquivoErro] = useState("");
   const [loading, setLoading] = useState(false);
+  const [briefingStarted, setBriefingStarted] = useState(false);
   const fileInputRef = useRef(null);
 
   const whatsappMessage = `Olá, quero falar com um especialista sobre ${
@@ -47,10 +49,27 @@ export default function Contato() {
     setArquivo(file);
   };
 
+  const handleBriefingStarted = () => {
+    if (briefingStarted) return;
+    setBriefingStarted(true);
+    trackEvent("briefing_started", {
+      source: "contato_form",
+      ...getAttributionData(),
+    });
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     setLoading(true);
     setArquivoErro("");
+    const attribution = getAttributionData();
+
+    trackEvent("briefing_submitted", {
+      source: "contato_form",
+      interesse: form.interesse,
+      city_hint: form.mensagem?.slice(0, 120) || "",
+      ...attribution,
+    });
 
     try {
       let arquivo_url = null;
@@ -73,6 +92,24 @@ export default function Contato() {
       });
 
       if (res.data?.success) {
+        try {
+          await api.entities.Leads.create({
+            nome: form.nome,
+            email: form.email || null,
+            whatsapp: form.whatsapp || null,
+            fonte: "contato_form",
+            status: "new",
+            data_captura: new Date().toISOString(),
+            utm_source: attribution.utm_source || null,
+            utm_campaign: attribution.utm_campaign || null,
+          });
+        } catch (leadError) {
+          trackEvent("briefing_lead_save_error", {
+            source: "contato_form",
+            message: leadError?.message || "unknown_error",
+          });
+        }
+
         setSent(true);
         setForm({
           nome: "",
@@ -85,6 +122,10 @@ export default function Contato() {
         if (fileInputRef.current) fileInputRef.current.value = "";
       }
     } catch (error) {
+      trackEvent("briefing_submit_error", {
+        source: "contato_form",
+        message: error?.message || "unknown_error",
+      });
       setArquivoErro(error.message || "Erro ao enviar mensagem. Tente novamente pelo WhatsApp.");
     } finally {
       setLoading(false);
@@ -126,6 +167,7 @@ export default function Contato() {
               fileInputRef={fileInputRef}
               handleArquivo={handleArquivo}
               handleSubmit={handleSubmit}
+              onBriefingStarted={handleBriefingStarted}
             />
           </div>
         </section>

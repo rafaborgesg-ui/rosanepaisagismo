@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { getProjectFacts, labelClass } from "@/components/landing/portfolio/portfolioShared";
+import { trackEvent } from "@/lib/tracking";
 
 export default function PortfolioGallery({
   filteredProjects = [],
@@ -40,6 +41,13 @@ export default function PortfolioGallery({
               >
                 <Link
                   to={`/portfolio/${project.slug}`}
+                  onClick={() =>
+                    trackEvent("case_cta_clicked", {
+                      source: "portfolio_gallery",
+                      project_slug: project.slug,
+                      project_category: project.category,
+                    })
+                  }
                   className="group block overflow-hidden rounded-[8px] bg-white shadow-[0_24px_70px_rgba(36,35,28,0.08)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_28px_90px_rgba(36,35,28,0.14)]"
                 >
                   <div className="relative aspect-[4/5] overflow-hidden bg-[#171914] md:aspect-[5/6]">

@@ -122,7 +122,7 @@ export default function PaisagismoResidencial() {
               viewport={{ once: true }}
               className="overflow-hidden rounded-[32px] shadow-2xl"
             >
-              <img src="https://images.unsplash.com/photo-1558904541-efa8c1965f9d?auto=format&fit=crop&q=80&w=1200" alt="Jardim residencial premium" className="h-full min-h-[520px] w-full object-cover hover:scale-105 transition-transform duration-700" />
+              <img src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg" alt="Jardim residencial premium" className="h-full min-h-[520px] w-full object-cover hover:scale-105 transition-transform duration-700" />
             </motion.div>
             <motion.div
               initial={{ opacity: 0, x: 30 }}
