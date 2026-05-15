@@ -21,33 +21,34 @@ export default function PlanosSection({ onSignup }) {
 
   return (
     <>
-    <section className="py-20 bg-[#f9f9f9] font-sans-s" id="planos">
+    <section className="py-32 bg-[#fcfaf7] font-body" id="planos">
       <style>{`
-        .font-serif-s { font-family: 'Noto Serif', serif; }
-        .font-sans-s { font-family: 'Work Sans', sans-serif; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
       `}</style>
       <div className="max-w-[1280px] mx-auto px-8">
-        <div className="text-center mb-12">
-          <h2 className="font-serif-s text-4xl lg:text-5xl font-bold text-[#1a3d2b] mb-2">Escolha o plano ideal</h2>
-          <p className="text-stone-500 text-lg">Experimente grátis por 7 dias. Cancele quando quiser.</p>
+        <div className="text-center mb-16">
+          <p className="text-[10px] font-extrabold uppercase tracking-[0.35em] text-[#d7ae45] mb-4">Investimento</p>
+          <h2 className="font-display text-4xl lg:text-6xl font-bold text-[#173727] mb-6">Licenças da Plataforma</h2>
+          <p className="text-stone-500 text-xl font-light">Elevando o padrão do seu escritório. 7 dias de garantia incondicional.</p>
         </div>
 
         {/* Seletor de Período */}
-        <div className="flex justify-center mb-16">
-          <div className="inline-flex p-1 bg-stone-100 rounded-full border border-stone-200">
+        <div className="flex justify-center mb-20">
+          <div className="inline-flex p-1 bg-white rounded-full border border-stone-200 shadow-sm">
             {[
               { key: "mensal", label: "Mensal" },
-              { key: "semestral", label: <span>Semestral <span className="opacity-80">-25%</span></span> },
-              { key: "anual", label: <span>Anual <span className="opacity-80">-40%</span></span> }].
+              { key: "semestral", label: <span>Semestral <span className="opacity-80 text-[#d7ae45] font-bold text-[10px]">-25%</span></span> },
+              { key: "anual", label: <span>Anual <span className="opacity-80 text-[#d7ae45] font-bold text-[10px]">-40%</span></span> }].
               map(({ key, label }) =>
               <button
                 key={key}
                 onClick={() => setPeriod(key)}
-                className={`px-6 py-2 rounded-full text-sm font-bold transition-all ${
+                className={`px-8 py-3 rounded-full text-[11px] font-extrabold uppercase tracking-[0.1em] transition-all ${
                 period === key ?
-                "bg-[#276a4d] text-white shadow-md" :
-                "text-stone-500 hover:bg-white"}`
+                "bg-[#173727] text-[#d7ae45] shadow-lg" :
+                "text-stone-500 hover:bg-stone-50"}`
                 }>
                 
                 {label}
@@ -57,61 +58,61 @@ export default function PlanosSection({ onSignup }) {
         </div>
 
         {/* Cards */}
-        <div className={`grid gap-8 items-start justify-center ${period === "anual" ? "md:grid-cols-2 max-w-3xl mx-auto" : "max-w-md mx-auto"}`}>
+        <div className={`grid gap-10 items-start justify-center ${period === "anual" ? "md:grid-cols-2 max-w-4xl mx-auto" : "max-w-lg mx-auto"}`}>
 
           {/* Básico — só no plano anual */}
           {period === "anual" &&
-            <div className="bg-white p-8 rounded-xl border border-stone-200 flex flex-col h-full shadow-sm">
-              <div className="mb-8">
-                <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-2">Básico</h3>
-                <div className="flex items-baseline gap-1">
-                  <span className="text-3xl font-bold text-[#1a3d2b]">R$ 39</span>
-                  <span className="text-stone-400">/mês</span>
+            <div className="bg-white p-12 rounded-[32px] border border-stone-200 flex flex-col h-full shadow-sm hover:shadow-xl transition-shadow">
+              <div className="mb-10">
+                <h3 className="font-display text-3xl font-bold text-[#173727] mb-2">Essencial</h3>
+                <div className="flex items-baseline gap-2 mt-4">
+                  <span className="text-5xl font-display font-bold text-[#173727]">R$ 39</span>
+                  <span className="text-stone-400 tracking-widest text-xs uppercase">/mês</span>
                 </div>
-                <p className="text-sm text-stone-500 mt-2 italic">Ideal para escritórios monogestão.</p>
+                <p className="text-sm text-stone-500 mt-4 leading-relaxed font-light">Ideal para profissionais autônomos em início de jornada.</p>
               </div>
-              <ul className="space-y-4 mb-10 flex-grow">
-                {["1 usuário", "8 projetos ativos", "Combo Paisagista Profissional", "Suporte por e-mail"].map((f, i) =>
-                <li key={i} className="flex items-center gap-3 text-sm text-stone-700">
-                    <span className="material-symbols-outlined text-[#276a4d] text-[20px]">check_circle</span>{f}
+              <ul className="space-y-5 mb-12 flex-grow">
+                {["1 usuário VIP", "Até 8 projetos ativos", "Acesso ao Master Bundle", "Suporte dedicado"].map((f, i) =>
+                <li key={i} className="flex items-center gap-4 text-[15px] text-stone-700">
+                    <span className="material-symbols-outlined text-[#d7ae45] text-[22px]">verified</span>{f}
                   </li>
                 )}
               </ul>
               <button
                 onClick={() => handleAssinar("basico_anual")}
-                className="w-full border border-[#276a4d] text-[#276a4d] py-3 rounded-lg font-bold text-sm hover:bg-[#276a4d] hover:text-white transition-all">
+                className="w-full border-2 border-[#173727] text-[#173727] py-5 rounded-full font-extrabold text-[11px] uppercase tracking-[0.2em] hover:bg-[#173727] hover:text-[#d7ae45] transition-all">
                 
-                Testar Grátis por 7 Dias
+                Iniciar Licença
               </button>
               
             </div>
             }
 
           {/* PRO — Destaque */}
-          <div className="bg-white p-8 rounded-xl border-2 border-[#276a4d] flex flex-col h-full shadow-2xl relative">
-            <div className="absolute top-0 right-8 -translate-y-1/2 bg-[#276a4d] text-white text-[10px] px-4 py-1 rounded-full font-bold uppercase tracking-wider">
-              O MAIS POPULAR
+          <div className="bg-[#173727] text-white p-12 rounded-[32px] border border-[#d7ae45]/30 flex flex-col h-full shadow-2xl relative transform md:-translate-y-4">
+            <div className="absolute top-0 right-10 -translate-y-1/2 bg-[#d7ae45] text-[#173727] text-[10px] px-5 py-2 rounded-full font-extrabold uppercase tracking-[0.3em] shadow-lg">
+              Escolha Premium
             </div>
-            <div className="mb-8">
-              <h3 className="font-serif-s text-2xl text-[#1a3d2b] mb-2">PRO</h3>
-              <div className="flex items-baseline gap-1">
-                <span className="text-3xl font-bold text-[#1a3d2b]">{proPrice[period]}</span>
-                <span className="text-stone-400">/mês</span>
+            <div className="mb-10">
+              <h3 className="font-display text-3xl font-bold text-white mb-2">Signature</h3>
+              <div className="flex items-baseline gap-2 mt-4">
+                <span className="text-5xl font-display font-bold text-[#d7ae45]">{proPrice[period]}</span>
+                <span className="text-white/40 tracking-widest text-xs uppercase">/mês</span>
               </div>
-              <p className="text-sm text-stone-500 mt-2 italic">Focado em escritórios em crescimento.</p>
+              <p className="text-sm text-white/60 mt-4 leading-relaxed font-light">Para escritórios consolidados e equipes em expansão.</p>
             </div>
-            <ul className="space-y-4 mb-10 flex-grow">
-              {["5 usuários", "15 projetos ativos", "Combo Paisagista Profissional", "Suporte por E-mail + WhatsApp"].map((f, i) =>
-                <li key={i} className={`flex items-center gap-3 text-sm ${i === 0 ? "font-semibold text-stone-800" : "text-stone-700"}`}>
-                  <span className="material-symbols-outlined text-[#276a4d] text-[20px]">check_circle</span>{f}
+            <ul className="space-y-5 mb-12 flex-grow">
+              {["5 usuários administrativos", "Até 15 projetos ativos", "Acesso ao Master Bundle", "Concierge Exclusivo (WhatsApp)"].map((f, i) =>
+                <li key={i} className={`flex items-center gap-4 text-[15px] ${i === 0 ? "font-semibold text-white" : "text-white/80"}`}>
+                  <span className="material-symbols-outlined text-[#d7ae45] text-[22px]">verified</span>{f}
                 </li>
                 )}
             </ul>
             <button
                 onClick={() => handleAssinar(`pro_${period}`)}
-                className="w-full bg-[#276a4d] text-white py-4 rounded-lg font-bold text-sm shadow-md hover:bg-[#1a3d2b] transition-all">
+                className="w-full bg-[#d7ae45] text-[#173727] py-5 rounded-full font-extrabold text-[11px] uppercase tracking-[0.2em] shadow-[0_0_30px_rgba(215,174,69,0.3)] hover:bg-white transition-all">
                 
-              Testar Grátis por 7 Dias
+              Desbloquear Acesso VIP
             </button>
           </div>
 

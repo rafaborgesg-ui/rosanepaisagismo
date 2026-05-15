@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { api } from "@/api/apiService";
+import { trackEvent } from "@/lib/tracking";
 
 export default function EmailCapturePopup() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,6 +48,7 @@ export default function EmailCapturePopup() {
 
       if (res.data && res.data.success) {
         setSent(true);
+        trackEvent("lead_magnet_submitted", { source: "popup_homepage" });
         // Marcar como visto por 30 dias
         localStorage.setItem("emailPopupSeen", Date.now().toString());
         
@@ -60,6 +62,7 @@ export default function EmailCapturePopup() {
       }
     } catch (err) {
       setError("Erro ao enviar. Tente novamente.");
+      trackEvent("lead_magnet_submit_error", { source: "popup_homepage" });
     } finally {
       setLoading(false);
     }
@@ -93,61 +96,65 @@ export default function EmailCapturePopup() {
 
           {sent ? (
             // Mensagem de sucesso
-            <div className="bg-gradient-to-br from-[#c09624] to-[#1a3d2b] p-12 text-center text-white">
-              <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-4">
-                <span className="material-symbols-outlined text-3xl">check</span>
+            <div className="bg-[#173727] p-16 text-center text-white relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#d7ae45]/10 to-transparent pointer-events-none" />
+              <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 relative z-10 border border-[#d7ae45]/20">
+                <span className="material-symbols-outlined text-4xl text-[#d7ae45]">verified</span>
               </div>
-              <h3 className="text-xl font-bold mb-2">Guia enviado! 🎉</h3>
-              <p className="text-white/90">Verifique seu email em 1 minuto.</p>
+              <h3 className="text-3xl font-bold mb-4 font-serif text-[#d7ae45] relative z-10">Acesso Liberado!</h3>
+              <p className="text-white/80 leading-relaxed relative z-10">O material exclusivo foi enviado para o seu e-mail institucional ou pessoal.</p>
             </div>
           ) : (
             // Formulário
-            <div className="p-8">
-              <div className="mb-6">
-                <span className="text-[10px] font-bold uppercase tracking-widest text-[#c09624]">
-                  Oferta Especial
+            <div className="p-10 md:p-12">
+              <div className="mb-8 text-center">
+                <span className="text-[9px] font-extrabold uppercase tracking-[0.3em] text-[#d7ae45]">
+                  Dossiê Botânico Gratuito
                 </span>
-                <h2 className="text-2xl font-bold text-[#1a3d2b] mt-2 mb-2">
-                  Guia Premium Grátis
+                <h2 className="text-3xl font-bold text-[#173727] mt-4 mb-3 font-serif">
+                  Guia Prático de Valorização
                 </h2>
-                <p className="text-sm text-stone-600">
-                  "Como Valorizar Seu Imóvel em até 30% com Paisagismo"
+                <p className="text-sm text-stone-500 leading-relaxed">
+                  Descubra os princípios de arquitetura externa que utilizamos para elevar o patrimônio de imóveis em até 30%.
                 </p>
               </div>
 
               {/* Benefícios Mini */}
-              <div className="bg-[#f9f9f9] rounded-lg p-4 mb-6 space-y-2">
-                <p className="text-xs text-stone-600">
-                  ✓ 50 páginas com plantas e orçamentos
+              <div className="bg-stone-50 rounded-2xl p-6 mb-8 space-y-3 border border-stone-100">
+                <p className="text-xs text-stone-600 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#d7ae45] text-sm">check_circle</span>
+                  Checklist premium para briefing
                 </p>
-                <p className="text-xs text-stone-600">
-                  ✓ 5 case studies de valorização
+                <p className="text-xs text-stone-600 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#d7ae45] text-sm">check_circle</span>
+                  Diretrizes de valorização visual
                 </p>
-                <p className="text-xs text-stone-600">
-                  ✓ 3 aulas exclusivas por email
+                <p className="text-xs text-stone-600 flex items-center gap-2">
+                  <span className="material-symbols-outlined text-[#d7ae45] text-sm">check_circle</span>
+                  Ideias para jardins, fachadas e áreas gourmet
                 </p>
               </div>
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <input
                   type="text"
-                  placeholder="Seu nome"
+                  placeholder="Nome Completo"
                   value={nome}
                   onChange={(e) => setNome(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 text-sm focus:border-[#c09624] focus:outline-none"
+                  className="w-full px-5 py-4 bg-stone-50 rounded-xl border border-stone-200 text-sm focus:border-[#d7ae45] focus:bg-white transition-colors outline-none"
                 />
                 <input
                   type="email"
-                  placeholder="seu@email.com"
+                  placeholder="Seu melhor e-mail"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   required
-                  className="w-full px-4 py-3 rounded-lg border border-stone-300 text-sm focus:border-[#c09624] focus:outline-none"
+                  className="w-full px-5 py-4 bg-stone-50 rounded-xl border border-stone-200 text-sm focus:border-[#d7ae45] focus:bg-white transition-colors outline-none"
                 />
 
                 {error && (
-                  <p className="text-xs text-red-600 bg-red-50 p-2 rounded">
+                  <p className="text-xs text-red-600 bg-red-50 p-3 rounded-lg font-semibold">
                     {error}
                   </p>
                 )}
@@ -155,25 +162,15 @@ export default function EmailCapturePopup() {
                 <button
                   type="submit"
                   disabled={loading}
-                  className="w-full py-3 bg-[#c09624] text-white font-bold rounded-lg hover:bg-[#1a3d2b] transition-all disabled:opacity-50 text-sm uppercase tracking-wider"
+                  className="w-full py-5 bg-[#d7ae45] text-[#173727] font-extrabold rounded-xl hover:bg-[#173727] hover:text-[#d7ae45] transition-all disabled:opacity-50 text-[10px] uppercase tracking-[0.2em] shadow-lg mt-2"
                 >
-                  {loading ? "Enviando..." : "Receber Guia Agora"}
+                  {loading ? "Processando envio..." : "Acessar Dossiê"}
                 </button>
 
-                <p className="text-xs text-center text-stone-400">
-                  Sem spam. Você pode sair quando quiser.
+                <p className="text-[9px] uppercase tracking-widest text-center text-stone-400 mt-4">
+                  Política de Privacidade Rigorosa
                 </p>
               </form>
-
-              {/* Urgência */}
-              <div className="mt-6 pt-6 border-t border-stone-200 text-center">
-                <p className="text-xs text-stone-500">
-                  ⏰ <strong>Oferta limitada:</strong> Apenas 100 primeiros
-                </p>
-                <p className="text-xs text-[#c09624] font-bold mt-1">
-                  Vagas: 87 disponíveis
-                </p>
-              </div>
             </div>
           )}
         </div>

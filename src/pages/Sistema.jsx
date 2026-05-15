@@ -25,81 +25,81 @@ export default function Sistema() {
   return (
     <div className="bg-[#f9f9f9] text-[#1a3d2b] min-h-screen overflow-x-hidden">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;600;700;900&family=Work+Sans:wght@400;500;600&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&family=Material+Symbols+Outlined:wght,FILL@400,0&display=swap');
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
         .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
-        .font-serif-s { font-family: 'Noto Serif', serif; }
-        .font-sans-s { font-family: 'Work Sans', sans-serif; }
       `}</style>
 
       {/* Navbar */}
-      <header className="sticky top-0 z-50 bg-white/90 backdrop-blur border-b border-stone-100 font-sans-s">
-        <div className="max-w-[1280px] mx-auto px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="font-serif-s text-xl font-bold text-[#1a3d2b] tracking-tight">
-            Rosane Paisagismo
+      <header className="sticky top-0 z-50 bg-[#173727]/90 backdrop-blur-xl border-b border-white/10 font-body">
+        <div className="max-w-[1280px] mx-auto px-8 h-20 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-3 text-white">
+            <span className="grid h-11 w-11 place-items-center rounded-full bg-[#d7ae45] font-display text-2xl font-bold text-[#173727]">R</span>
+            <span className="leading-tight">
+              <span className="block text-sm font-bold uppercase tracking-[0.24em]">Rosane</span>
+              <span className="block text-[10px] uppercase tracking-[0.18em] text-white/60">Plataforma</span>
+            </span>
           </Link>
-          <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-stone-600">
-            <Link to="/" className="hover:text-[#276a4d] transition-colors">Site</Link>
-            <a href="#funcionalidades" className="hover:text-[#276a4d] transition-colors">Funcionalidades</a>
-            <a href="#bonus" className="hover:text-[#276a4d] transition-colors">Bônus</a>
-            <a href="#planos" className="hover:text-[#276a4d] transition-colors">Planos</a>
+          <nav className="hidden md:flex items-center gap-8 text-[11px] font-extrabold uppercase tracking-[0.2em] text-white/70">
+            <Link to="/" className="hover:text-[#d7ae45] transition-colors">Site Institucional</Link>
+            <a href="#funcionalidades" className="hover:text-[#d7ae45] transition-colors">Recursos</a>
+            <a href="#bonus" className="hover:text-[#d7ae45] transition-colors">Bônus</a>
+            <a href="#planos" className="hover:text-[#d7ae45] transition-colors">Licenças</a>
           </nav>
           <button
             onClick={handleLogin}
-            className="px-6 py-2.5 bg-[#276a4d] text-white rounded-xl text-sm font-bold hover:bg-[#1a3d2b] transition-colors font-sans-s"
+            className="px-8 py-4 bg-[#d7ae45] text-[#173727] rounded-full text-[10px] font-extrabold uppercase tracking-[0.2em] hover:bg-white transition-all shadow-xl"
           >
-            Acessar Plataforma
+            Painel do Cliente
           </button>
         </div>
       </header>
 
       {/* Hero */}
-      <section className="relative overflow-hidden bg-white py-20 lg:py-32 border-b border-stone-100">
-        <div className="max-w-[1280px] mx-auto px-8 grid lg:grid-cols-2 gap-16 items-center">
-          <div className="z-10">
-            <p className="font-sans-s text-[#276a4d] mb-6 uppercase tracking-[0.2em] text-xs font-bold">O FUTURO DO SEU ESCRITÓRIO</p>
-            <h1 className="font-serif-s text-5xl lg:text-6xl font-bold text-[#1a3d2b] mb-8 leading-tight">
-              Suas finanças<br />sob controle
+      <section className="relative overflow-hidden bg-[#173727] py-24 lg:py-32 text-white">
+        <div className="absolute top-0 right-0 w-2/3 h-full bg-gradient-to-bl from-[#d7ae45]/10 to-transparent pointer-events-none" />
+        <div className="max-w-[1280px] mx-auto px-8 grid lg:grid-cols-[1.1fr_0.9fr] gap-16 items-center relative z-10">
+          <div>
+            <p className="font-body text-[#d7ae45] mb-6 uppercase tracking-[0.4em] text-[10px] font-extrabold">Gestão de Alto Padrão</p>
+            <h1 className="font-display text-5xl lg:text-[4.5rem] font-bold text-white mb-8 leading-[1.1]">
+              Eleve a gestão do seu <span className="italic text-[#d7ae45]">escritório.</span>
             </h1>
-            <p className="font-sans-s text-stone-500 mb-10 max-w-lg text-lg leading-relaxed">
-              A primeira plataforma de gestão financeira e operacional pensada exclusivamente para arquitetos e paisagistas. Organize fluxos, controle obras e prospere.
+            <p className="font-body text-white/70 mb-12 max-w-lg text-xl font-light leading-relaxed">
+              A primeira plataforma financeira e operacional premium pensada exclusivamente para escritórios de arquitetura e paisagismo.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col sm:flex-row gap-5">
               <button
                 onClick={handleSignup}
-                className="px-8 py-4 bg-[#276a4d] text-white rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-[#1a3d2b] transition-colors font-sans-s shadow-lg shadow-[#276a4d]/20"
+                className="px-10 py-5 bg-[#d7ae45] text-[#173727] rounded-full font-extrabold text-[11px] uppercase tracking-[0.2em] hover:bg-white transition-all font-body shadow-xl hover:scale-105"
               >
-                Começar
+                Inicie sua jornada
               </button>
               <button
                 onClick={handleSignup}
-                className="px-8 py-4 border border-stone-200 text-[#1a3d2b] rounded-xl font-bold text-sm hover:bg-stone-50 transition-colors font-sans-s"
+                className="px-10 py-5 border border-white/20 text-white rounded-full font-extrabold text-[11px] hover:border-[#d7ae45] transition-all font-body uppercase tracking-[0.2em]"
               >
-                Ver demonstração
+                Ver recursos VIP
               </button>
-            </div>
-            <div className="mt-8 flex items-center gap-4 text-sm text-stone-400 font-sans-s">
-              <div className="w-9 h-9 rounded-full bg-stone-100 border-2 border-white flex items-center justify-center text-[10px] font-bold text-stone-500">+</div>
-              <p>Junte-se a outros profissionais</p>
             </div>
           </div>
 
           {/* Dashboard preview */}
-          <div className="relative flex items-center justify-center lg:h-[560px]">
-            <div className="relative w-full max-w-2xl bg-white rounded-xl border border-stone-200 shadow-2xl overflow-hidden lg:rotate-1 hover:rotate-0 transition-transform duration-500">
-              <div className="bg-stone-50 px-4 py-2 border-b border-stone-200 flex items-center gap-2">
-                <div className="flex gap-1.5">
-                  <div className="w-3 h-3 rounded-full bg-red-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-yellow-400"></div>
-                  <div className="w-3 h-3 rounded-full bg-green-400"></div>
+          <div className="relative flex items-center justify-center">
+            <div className="relative w-full max-w-2xl bg-white/5 backdrop-blur-xl rounded-[32px] border border-white/10 shadow-[0_0_80px_rgba(215,174,69,0.15)] overflow-hidden transition-transform duration-700 hover:scale-105">
+              <div className="bg-white/5 px-6 py-4 border-b border-white/10 flex items-center gap-3">
+                <div className="flex gap-2">
+                  <div className="w-3 h-3 rounded-full bg-white/20"></div>
+                  <div className="w-3 h-3 rounded-full bg-white/20"></div>
+                  <div className="w-3 h-3 rounded-full bg-white/20"></div>
                 </div>
-                <div className="flex-grow mx-4 h-6 bg-white rounded-md border border-stone-200 flex items-center px-3">
-                  <span className="text-[10px] text-stone-400 font-sans-s truncate">rosanepaisagismo.com/dashboard</span>
+                <div className="flex-grow mx-4 h-8 bg-white/5 rounded-full border border-white/10 flex items-center px-4">
+                  <span className="text-[10px] text-white/40 font-body uppercase tracking-widest truncate">rosanepaisagismo.com/plataforma</span>
                 </div>
               </div>
               <img
                   alt="Painel do Sistema"
-                  className="w-full h-auto object-cover"
+                  className="w-full h-auto object-cover opacity-90 mix-blend-screen"
                   src="https://media.base44.com/images/public/69ea9c43ca6eb4180010c463/ad4bc841d_image.png"
                 />
             </div>
@@ -241,35 +241,36 @@ export default function Sistema() {
       <PlanosSection onSignup={handleSignup} />
 
       {/* CTA Final */}
-      <section className="py-20 px-8 bg-[#1a3d2b] text-white text-center">
-        <div className="max-w-2xl mx-auto font-sans-s">
-          <h2 className="font-serif-s text-4xl lg:text-5xl font-bold mb-6">Pronto para transformar seu negócio?</h2>
-          <p className="text-white/70 text-lg mb-10 leading-relaxed">
-            Junte-se a outros paisagistas que já gerenciam suas finanças com inteligência.
+      <section className="py-32 px-8 bg-[#173727] text-white text-center relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-1/2 h-full bg-gradient-to-r from-[#d7ae45]/10 to-transparent pointer-events-none" />
+        <div className="max-w-3xl mx-auto font-body relative z-10">
+          <h2 className="font-display text-4xl lg:text-6xl font-bold mb-8">Elevando a Arquitetura de Negócios.</h2>
+          <p className="text-white/60 text-xl mb-12 leading-relaxed font-light">
+            O sistema que organiza as finanças, protege o caixa e permite que o foco volte para a criação de projetos espetaculares.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="flex flex-col sm:flex-row gap-6 justify-center">
             <button
               onClick={handleSignup}
-              className="px-8 py-4 bg-white text-[#1a3d2b] rounded-xl font-bold text-sm uppercase tracking-wider hover:bg-stone-100 transition-colors"
+              className="px-10 py-5 bg-[#d7ae45] text-[#173727] rounded-full font-extrabold text-[11px] uppercase tracking-[0.2em] hover:bg-white transition-all shadow-xl hover:scale-105"
             >
-              Criar conta
+              Inicie a Transformação
             </button>
             <button
               onClick={handleLogin}
-              className="px-8 py-4 border border-white/30 text-white rounded-xl font-bold text-sm hover:bg-white/10 transition-colors"
+              className="px-10 py-5 border border-white/20 text-white rounded-full font-extrabold text-[11px] hover:border-[#d7ae45] transition-all uppercase tracking-[0.2em]"
             >
-              Já tenho conta
+              Acessar Painel
             </button>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-20 bg-white border-t border-stone-200 font-sans-s" id="faq">
+      <section className="py-32 bg-white border-t border-stone-100 font-body" id="faq">
         <div className="max-w-[1280px] mx-auto px-8">
-          <div className="text-center mb-12">
-            <p className="text-[#c09624] mb-2 uppercase tracking-[0.2em] text-xs font-bold">DÚVIDAS</p>
-            <h2 className="font-serif-s text-4xl lg:text-5xl font-bold text-[#1a3d2b]">Perguntas Frequentes</h2>
+          <div className="text-center mb-16">
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.35em] text-[#d7ae45] mb-4">Suporte de Elite</p>
+            <h2 className="font-display text-4xl lg:text-5xl font-bold text-[#173727]">Dúvidas Frequentes</h2>
           </div>
           <div className="max-w-3xl mx-auto space-y-4">
             {[

@@ -1,5 +1,6 @@
 import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
@@ -141,90 +142,103 @@ export default function Contato() {
 
       <SiteNav activeLink="contato" />
 
-      <main className="mx-auto grid max-w-7xl gap-10 px-5 pb-24 pt-32 font-body md:grid-cols-[0.9fr_1.1fr] md:px-8">
-        <section className="space-y-8">
-          <Link to="/" className="inline-flex items-center gap-2 text-xs font-extrabold uppercase tracking-[0.2em] text-[#b28a28]">
+      <main className="mx-auto grid max-w-7xl gap-16 px-5 pb-32 pt-40 font-body md:grid-cols-[0.9fr_1.1fr] md:px-8">
+        <motion.section 
+          initial={{ opacity: 0, x: -30 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.8 }}
+          className="space-y-10"
+        >
+          <Link to="/" className="inline-flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#d7ae45] hover:text-[#173727] transition-colors">
             <span className="material-symbols-outlined text-base">arrow_back</span>
-            Voltar ao site
+            Voltar ao início
           </Link>
           <div>
-            <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Diagnóstico premium</p>
-            <h1 className="mt-5 font-display text-5xl font-bold leading-tight md:text-6xl">
-              Conte o cenário. Nós indicamos o melhor caminho.
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.3em] text-[#d7ae45]">Atendimento Exclusivo</p>
+            <h1 className="mt-5 font-display text-5xl font-bold leading-[1.05] md:text-[3.5rem] text-[#173727]">
+              Seu projeto de <span className="italic text-[#d7ae45]">assinatura</span> começa aqui.
             </h1>
-            <p className="mt-6 max-w-xl leading-8 text-stone-600">
-              Este briefing ajuda a entender potencial, urgência e investimento. Assim a conversa já começa com direção, e não com um orçamento genérico.
+            <p className="mt-6 max-w-xl text-[1.05rem] leading-8 text-stone-500 font-light">
+              Preencha o diagnóstico confidencial abaixo para que nossa equipe avalie a viabilidade, investimento e arquitetura ideal para o seu espaço.
             </p>
           </div>
 
           <div className="grid gap-4">
             {[
-              ["Resposta comercial", "Retorno com próximos passos e perguntas técnicas."],
-              ["WhatsApp qualificado", "A mensagem chega com cidade, prazo e investimento."],
-              ["Projeto de alto padrão", "Indicado para quem busca estética, técnica e execução."],
+              ["Triagem Especializada", "Análise do potencial botânico e arquitetônico do espaço."],
+              ["Direcionamento de Investimento", "Alinhamento transparente de escopo e expectativas."],
+              ["Design de Alto Padrão", "Apresentação da metodologia de criação e execução."],
             ].map(([title, text]) => (
-              <div key={title} className="rounded-2xl border border-stone-200 bg-white p-5">
-                <h2 className="font-display text-2xl font-bold">{title}</h2>
-                <p className="mt-2 text-sm leading-7 text-stone-600">{text}</p>
+              <div key={title} className="rounded-[24px] border border-stone-100 bg-white p-6 shadow-sm hover:shadow-md transition-shadow">
+                <h2 className="font-display text-2xl font-bold text-[#173727]">{title}</h2>
+                <p className="mt-2 text-sm leading-7 text-stone-500">{text}</p>
               </div>
             ))}
           </div>
 
-          <div className="rounded-[24px] bg-[#173727] p-7 text-white">
-            <p className="text-xs font-extrabold uppercase tracking-[0.24em] text-[#d7ae45]">Contato direto</p>
-            <a href={`https://wa.me/${whatsappNumero}`} className="mt-3 block font-display text-3xl font-bold">
+          <div className="rounded-[32px] bg-[#173727] p-10 text-white shadow-2xl relative overflow-hidden">
+            <div className="absolute right-0 top-0 w-32 h-full bg-gradient-to-l from-[#d7ae45]/10 to-transparent pointer-events-none" />
+            <p className="text-[10px] font-extrabold uppercase tracking-[0.24em] text-[#d7ae45]">Acesso Direto ao Ateliê</p>
+            <a href={`https://wa.me/${whatsappNumero}`} className="mt-4 block font-display text-4xl font-bold hover:text-[#d7ae45] transition-colors">
               +{whatsappNumero}
             </a>
-            <a href="mailto:rosanepaisagismo@gmail.com" className="mt-3 block text-white/70 hover:text-[#d7ae45]">
+            <a href="mailto:rosanepaisagismo@gmail.com" className="mt-4 block text-sm tracking-wide text-white/70 hover:text-[#d7ae45] transition-colors">
               rosanepaisagismo@gmail.com
             </a>
           </div>
-        </section>
+        </motion.section>
 
-        <section className="rounded-[28px] border border-stone-200 bg-white p-6 shadow-xl shadow-stone-200/60 md:p-9">
+        <motion.section 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
+          className="rounded-[40px] border border-stone-100 bg-white p-8 shadow-2xl shadow-stone-200/50 md:p-12 relative overflow-hidden"
+        >
           {sent ? (
-            <div className="grid min-h-[520px] place-items-center text-center">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="grid min-h-[520px] place-items-center text-center">
               <div>
-                <span className="material-symbols-outlined mb-5 block text-6xl text-[#276a4d]">check_circle</span>
-                <h2 className="font-display text-4xl font-bold">Briefing enviado.</h2>
-                <p className="mx-auto mt-4 max-w-md leading-7 text-stone-600">
-                  Também abrimos o WhatsApp com sua mensagem pronta para agilizar o atendimento.
+                <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-[#173727]/5 text-[#173727] mb-8">
+                  <span className="material-symbols-outlined text-5xl">verified</span>
+                </div>
+                <h2 className="font-display text-4xl font-bold text-[#173727]">Diagnóstico em Análise</h2>
+                <p className="mx-auto mt-6 max-w-md leading-8 text-stone-500">
+                  Suas informações foram recebidas com sucesso. O WhatsApp também foi aberto para contato imediato com nossa equipe.
                 </p>
               </div>
-            </div>
+            </motion.div>
           ) : (
-            <form className="space-y-6" onSubmit={handleSubmit}>
+            <form className="space-y-8 relative z-10" onSubmit={handleSubmit}>
               <div>
-                <h2 className="font-display text-3xl font-bold">Briefing rápido</h2>
-                <p className="mt-2 text-sm text-stone-500">Campos pensados para qualificar projetos com maior chance de fechamento.</p>
+                <h2 className="font-display text-3xl font-bold text-[#173727]">Dados do Imóvel</h2>
+                <p className="mt-3 text-sm text-stone-500 leading-relaxed">As informações abaixo são essenciais para estruturar a arquitetura financeira e estética do seu projeto.</p>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Nome completo</span>
-                  <input required value={form.nome} onChange={(e) => updateForm("nome", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" placeholder="Seu nome" />
+                  <input required value={form.nome} onChange={(e) => updateForm("nome", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Seu nome" />
                 </label>
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">WhatsApp</span>
-                  <input required value={form.whatsapp} onChange={(e) => updateForm("whatsapp", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" placeholder="(00) 00000-0000" />
+                  <input required value={form.whatsapp} onChange={(e) => updateForm("whatsapp", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="(00) 00000-0000" />
                 </label>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">E-mail</span>
-                  <input required type="email" value={form.email} onChange={(e) => updateForm("email", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" placeholder="seu@email.com" />
+                  <input required type="email" value={form.email} onChange={(e) => updateForm("email", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="seu@email.com" />
                 </label>
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Cidade e bairro</span>
-                  <input required value={form.cidade} onChange={(e) => updateForm("cidade", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" placeholder="Ex: Montes Claros, Ibituruna" />
+                  <input required value={form.cidade} onChange={(e) => updateForm("cidade", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Ex: Montes Claros, Ibituruna" />
                 </label>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Tipo de projeto</span>
-                  <select value={form.tipo} onChange={(e) => updateForm("tipo", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]">
+                  <select value={form.tipo} onChange={(e) => updateForm("tipo", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
                     <option>Residência de alto padrão</option>
                     <option>Área gourmet e piscina</option>
                     <option>Clínica ou consultório</option>
@@ -235,20 +249,20 @@ export default function Contato() {
                 </label>
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Interesse</span>
-                  <input value={form.interesse} onChange={(e) => updateForm("interesse", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" />
+                  <input value={form.interesse} onChange={(e) => updateForm("interesse", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" />
                 </label>
               </div>
 
               <div className="grid gap-5 md:grid-cols-2">
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Investimento previsto</span>
-                  <select value={form.investimento} onChange={(e) => updateForm("investimento", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]">
+                  <select value={form.investimento} onChange={(e) => updateForm("investimento", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
                     {investmentOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </label>
                 <label className="space-y-2">
                   <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Prazo</span>
-                  <select value={form.urgencia} onChange={(e) => updateForm("urgencia", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]">
+                  <select value={form.urgencia} onChange={(e) => updateForm("urgencia", e.target.value)} className="w-full rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]">
                     {urgencyOptions.map((option) => <option key={option}>{option}</option>)}
                   </select>
                 </label>
@@ -256,25 +270,25 @@ export default function Contato() {
 
               <label className="space-y-2 block">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">O que você deseja transformar?</span>
-                <textarea value={form.mensagem} onChange={(e) => updateForm("mensagem", e.target.value)} rows={5} className="w-full resize-none rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#b28a28]" placeholder="Conte sobre o espaço, medidas aproximadas, estilo desejado, problemas atuais ou referências." />
+                <textarea value={form.mensagem} onChange={(e) => updateForm("mensagem", e.target.value)} rows={5} className="w-full resize-none rounded-2xl border border-stone-200 bg-stone-50 px-4 py-4 outline-none focus:border-[#d7ae45]" placeholder="Conte sobre o espaço, medidas aproximadas, estilo desejado, problemas atuais ou referências." />
               </label>
 
               <div className="space-y-2">
                 <span className="text-xs font-extrabold uppercase tracking-widest text-stone-500">Fotos, planta ou referência</span>
-                <button type="button" onClick={() => fileInputRef.current?.click()} className="flex w-full items-center gap-3 rounded-2xl border-2 border-dashed border-stone-200 bg-stone-50 px-4 py-5 text-left hover:border-[#b28a28]">
-                  <span className="material-symbols-outlined text-[#b28a28]">attach_file</span>
+                <button type="button" onClick={() => fileInputRef.current?.click()} className="flex w-full items-center gap-3 rounded-2xl border-2 border-dashed border-stone-200 bg-stone-50 px-4 py-5 text-left hover:border-[#d7ae45] transition-colors">
+                  <span className="material-symbols-outlined text-[#d7ae45]">attach_file</span>
                   <span className="min-w-0 flex-1 truncate text-sm text-stone-500">{arquivo ? arquivo.name : "Anexar arquivo opcional até 5 MB"}</span>
                 </button>
                 <input ref={fileInputRef} type="file" className="hidden" onChange={handleArquivo} />
                 {arquivoErro && <p className="text-sm text-red-600">{arquivoErro}</p>}
               </div>
 
-              <button disabled={loading} className="w-full rounded-full bg-[#d7ae45] px-8 py-5 text-xs font-extrabold uppercase tracking-[0.22em] text-[#173727] transition hover:bg-[#173727] hover:text-white disabled:cursor-not-allowed disabled:opacity-60">
-                {loading ? "Enviando briefing..." : "Enviar briefing e abrir WhatsApp"}
+              <button disabled={loading} className="w-full rounded-full bg-[#173727] px-8 py-5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#d7ae45] shadow-xl transition-all hover:scale-105 hover:bg-black disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100">
+                {loading ? "Processando..." : "Submeter Diagnóstico Exclusivo"}
               </button>
             </form>
           )}
-        </section>
+        </motion.section>
       </main>
 
       <SiteFooter />

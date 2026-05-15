@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
@@ -77,28 +78,34 @@ export default function Portfolio() {
       <SiteNav activeLink="portfolio" />
 
       <main className="font-body">
-        <section className="bg-[#173727] px-5 pb-20 pt-36 text-white md:px-8">
-          <div className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_0.8fr] md:items-end">
+        <section className="bg-[#173727] px-5 pb-32 pt-40 text-white md:px-8 overflow-hidden relative">
+          <div className="absolute top-0 right-0 w-full h-full bg-gradient-to-b from-[#173727]/50 to-[#173727] z-0 pointer-events-none" />
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_0.8fr] md:items-end relative z-10"
+          >
             <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.32em] text-[#d7ae45]">Portfólio estratégico</p>
-              <h1 className="mt-5 font-display text-5xl font-bold leading-tight md:text-7xl">
-                Projetos que vendem valor antes de vender planta.
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.32em] text-[#d7ae45]">Galeria Editorial</p>
+              <h1 className="mt-6 font-display text-5xl font-bold leading-tight md:text-7xl">
+                Onde a arquitetura encontra o seu estado de arte.
               </h1>
             </div>
             <p className="max-w-xl text-lg leading-8 text-white/70">
-              A seleção abaixo mostra tipos de transformação que atraem projetos de maior ticket. Substitua gradualmente as imagens por obras reais, fotos de bastidor e antes/depois da Rosane.
+              Explore casos reais onde transformamos áreas externas convencionais em resorts particulares. Cada projeto reflete nossa metodologia focada em estética, biofilia e valorização patrimonial.
             </p>
-          </div>
+          </motion.div>
         </section>
 
-        <section className="sticky top-16 z-30 border-b border-stone-200 bg-white/95 px-5 py-4 backdrop-blur md:px-8">
-          <div className="mx-auto flex max-w-7xl gap-3 overflow-x-auto">
+        <section className="sticky top-0 z-30 border-b border-stone-100 bg-white/80 px-5 py-4 backdrop-blur-xl md:px-8 shadow-sm">
+          <div className="mx-auto flex max-w-7xl gap-2 overflow-x-auto no-scrollbar pb-2 pt-1">
             {categories.map((category) => (
               <button
                 key={category}
                 onClick={() => setFilter(category)}
-                className={`whitespace-nowrap rounded-full px-5 py-3 text-xs font-extrabold uppercase tracking-wider transition ${
-                  filter === category ? "bg-[#173727] text-white" : "bg-stone-100 text-stone-600 hover:bg-stone-200"
+                className={`whitespace-nowrap rounded-full px-6 py-3 text-[10px] font-extrabold uppercase tracking-[0.15em] transition-all duration-300 ${
+                  filter === category ? "bg-[#173727] text-[#d7ae45] shadow-lg scale-105" : "bg-stone-50 border border-stone-200 text-stone-500 hover:bg-stone-100 hover:text-[#173727]"
                 }`}
               >
                 {category}
@@ -107,58 +114,75 @@ export default function Portfolio() {
           </div>
         </section>
 
-        <section className="mx-auto max-w-7xl px-5 py-20 md:px-8">
-          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {filteredProjects.map((project) => (
-              <article key={project.title} className="group overflow-hidden rounded-[24px] border border-stone-200 bg-white shadow-sm transition hover:-translate-y-1 hover:shadow-xl">
-                <div className="relative aspect-[4/3] overflow-hidden">
-                  <img src={project.image} alt={project.title} className="h-full w-full object-cover transition duration-700 group-hover:scale-105" />
-                  <span className="absolute left-5 top-5 rounded-full bg-white/92 px-4 py-2 text-xs font-extrabold uppercase tracking-wider text-[#173727]">
-                    {project.category}
-                  </span>
-                </div>
-                <div className="p-7">
-                  <h2 className="font-display text-3xl font-bold">{project.title}</h2>
-                  <div className="mt-6 space-y-4">
-                    <div>
-                      <p className="text-xs font-extrabold uppercase tracking-widest text-[#b28a28]">Desafio</p>
-                      <p className="mt-2 text-sm leading-7 text-stone-600">{project.challenge}</p>
+        <section className="mx-auto max-w-7xl px-5 py-32 md:px-8">
+          <motion.div layout className="grid gap-12 md:grid-cols-2 lg:grid-cols-3">
+            <AnimatePresence>
+              {filteredProjects.map((project, index) => (
+                <motion.article 
+                  layout
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.5, delay: index * 0.05 }}
+                  key={project.title} 
+                  className="group flex flex-col overflow-hidden rounded-[32px] border border-stone-100 bg-white shadow-xl shadow-stone-200/40 hover:shadow-2xl transition-shadow duration-500"
+                >
+                  <div className="relative aspect-[4/3] overflow-hidden bg-stone-100">
+                    <img src={project.image} alt={project.title} className="h-full w-full object-cover transition duration-1000 group-hover:scale-110" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#173727]/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    <span className="absolute left-6 top-6 rounded-full bg-white/95 backdrop-blur px-5 py-2.5 text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#173727] shadow-sm">
+                      {project.category}
+                    </span>
+                  </div>
+                  <div className="p-8 flex-1 flex flex-col">
+                    <h2 className="font-display text-3xl font-bold text-[#173727] leading-tight">{project.title}</h2>
+                    <div className="mt-8 space-y-6 flex-1">
+                      <div>
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#b28a28]">O Desafio Inicial</p>
+                        <p className="mt-2 text-sm leading-7 text-stone-600">{project.challenge}</p>
+                      </div>
+                      <div>
+                        <p className="text-[10px] font-extrabold uppercase tracking-[0.2em] text-[#b28a28]">Solução Botânica</p>
+                        <p className="mt-2 text-sm leading-7 text-stone-600">{project.solution}</p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-xs font-extrabold uppercase tracking-widest text-[#b28a28]">Solução</p>
-                      <p className="mt-2 text-sm leading-7 text-stone-600">{project.solution}</p>
+                    <div className="mt-8 grid grid-cols-3 gap-3 border-t border-stone-100 pt-6">
+                      {project.stats.map((stat) => (
+                        <p key={stat} className="rounded-2xl border border-stone-100 bg-[#fbfaf6] p-3 text-center text-[10px] font-bold uppercase tracking-wider text-[#173727] flex items-center justify-center">
+                          {stat}
+                        </p>
+                      ))}
                     </div>
                   </div>
-                  <div className="mt-6 grid grid-cols-3 gap-2 border-t border-stone-200 pt-5">
-                    {project.stats.map((stat) => (
-                      <p key={stat} className="rounded-xl bg-[#fbfaf6] px-3 py-3 text-center text-[11px] font-bold uppercase tracking-wider text-[#173727]">
-                        {stat}
-                      </p>
-                    ))}
-                  </div>
-                </div>
-              </article>
-            ))}
-          </div>
+                </motion.article>
+              ))}
+            </AnimatePresence>
+          </motion.div>
         </section>
 
-        <section className="bg-[#eef3ed] px-5 py-20 md:px-8">
-          <div className="mx-auto grid max-w-7xl gap-10 rounded-[28px] bg-white p-8 shadow-sm md:grid-cols-[1fr_0.7fr] md:p-12">
-            <div>
-              <p className="text-xs font-extrabold uppercase tracking-[0.28em] text-[#b28a28]">Próximo nível</p>
-              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-5xl">
-                Um portfólio profissional precisa provar processo, não apenas beleza.
+        <section className="bg-[#fbfaf6] px-5 py-32 md:px-8 border-t border-stone-200">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mx-auto grid max-w-7xl gap-12 rounded-[40px] bg-[#173727] p-10 shadow-2xl md:grid-cols-[1fr_0.7fr] md:p-16 relative overflow-hidden"
+          >
+            <div className="absolute right-0 top-0 w-1/2 h-full bg-gradient-to-l from-[#d7ae45]/10 to-transparent pointer-events-none" />
+            <div className="relative z-10 text-white">
+              <p className="text-[10px] font-extrabold uppercase tracking-[0.28em] text-[#d7ae45]">Seu Imóvel Aqui</p>
+              <h2 className="mt-4 font-display text-4xl font-bold leading-tight md:text-6xl">
+                Pronto para o seu projeto de assinatura?
               </h2>
-              <p className="mt-5 max-w-2xl leading-8 text-stone-600">
-                A próxima etapa recomendada é cadastrar casos reais com fotos próprias, depoimentos, vídeos curtos e dados de obra. Isso aumenta confiança e reduz negociação por preço.
+              <p className="mt-6 max-w-2xl leading-8 text-white/70">
+                Pare de tratar o seu jardim como sobra da obra. Transforme sua área externa no metro quadrado mais valioso e disputado da casa. O diagnóstico inicial é o primeiro passo para essa mudança.
               </p>
             </div>
-            <div className="flex items-center md:justify-end">
-              <Link to="/contato?interesse=Projeto+Premium+via+Portfolio" className="rounded-full bg-[#d7ae45] px-8 py-4 text-xs font-extrabold uppercase tracking-[0.2em] text-[#173727] hover:bg-[#173727] hover:text-white">
-                Quero um projeto assim
+            <div className="relative z-10 flex items-center md:justify-end mt-8 md:mt-0">
+              <Link to="/contato?interesse=Projeto+Premium+via+Portfolio" className="rounded-full bg-[#d7ae45] px-10 py-5 text-xs font-extrabold uppercase tracking-[0.2em] text-[#173727] shadow-xl transition-all hover:scale-105 hover:bg-white hover:text-[#173727]">
+                Solicitar Diagnóstico Agora
               </Link>
             </div>
-          </div>
+          </motion.div>
         </section>
       </main>
 

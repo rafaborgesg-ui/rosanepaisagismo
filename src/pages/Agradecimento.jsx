@@ -3,6 +3,8 @@ import { useAuth } from "@/lib/AuthContext";
 import { api } from "@/api/apiService";
 import { auth } from "@/api/authService";
 
+import { motion } from "framer-motion";
+
 export default function Agradecimento() {
   const { isAuthenticated } = useAuth();
 
@@ -15,99 +17,128 @@ export default function Agradecimento() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f9f9f9] flex flex-col overflow-x-hidden">
+    <div className="min-h-screen bg-[#173727] flex flex-col overflow-x-hidden text-white">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,600;0,700;1,400&family=Work+Sans:wght@300;400;500;600;700&display=swap');
-        @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap');
-        .material-symbols-outlined { font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal; font-size: 24px; line-height: 1; letter-spacing: normal; text-transform: none; display: inline-block; white-space: nowrap; word-wrap: normal; direction: ltr; -webkit-font-smoothing: antialiased; }
-        .font-serif-s { font-family: 'Noto Serif', serif; }
-        .font-sans-s { font-family: 'Work Sans', sans-serif; }
-        @keyframes fadeUp {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp 0.8s ease forwards; }
-        .fade-up-2 { animation: fadeUp 0.8s ease 0.2s forwards; opacity: 0; }
-        .fade-up-3 { animation: fadeUp 0.8s ease 0.45s forwards; opacity: 0; }
-        .fade-up-4 { animation: fadeUp 0.8s ease 0.65s forwards; opacity: 0; }
+        .font-display { font-family: 'Playfair Display', serif; }
+        .font-body { font-family: 'Inter', sans-serif; }
       `}</style>
 
       {/* Topo */}
-      <header className="w-full py-6 px-8 flex items-center justify-center border-b border-stone-100 bg-white font-sans-s">
-        <Link to="/" className="font-serif-s text-lg font-bold text-[#1a3d2b] tracking-tight">
+      <header className="w-full py-8 px-8 flex items-center justify-center border-b border-white/10 bg-[#173727] font-body">
+        <Link to="/" className="font-display text-2xl font-bold text-[#d7ae45] tracking-widest uppercase">
           Rosane Paisagismo
         </Link>
       </header>
 
       {/* Conteúdo principal */}
-      <main className="flex-1 flex items-center justify-center px-6 py-20">
-        <div className="max-w-2xl w-full text-center font-sans-s">
+      <main className="flex-1 flex items-center justify-center px-6 py-20 relative">
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[#d7ae45]/5 to-transparent pointer-events-none" />
+        
+        <div className="max-w-3xl w-full text-center font-body relative z-10">
 
           {/* Ícone de sucesso */}
-          <div className="fade-up flex justify-center mb-8">
-            <div className="w-20 h-20 rounded-full bg-[#276a4d]/10 flex items-center justify-center">
-              <span className="material-symbols-outlined text-[#276a4d]" style={{fontSize: "42px"}}>check_circle</span>
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="flex justify-center mb-10"
+          >
+            <div className="w-24 h-24 rounded-full bg-white/5 border border-[#d7ae45]/30 flex items-center justify-center relative overflow-hidden">
+              <div className="absolute inset-0 bg-[#d7ae45]/20 animate-pulse"></div>
+              <span className="material-symbols-outlined text-[#d7ae45] relative z-10" style={{fontSize: "48px"}}>verified</span>
             </div>
-          </div>
+          </motion.div>
 
           {/* Badge */}
-          <div className="fade-up-2 flex justify-center mb-6">
-            <span className="inline-flex items-center gap-2 bg-[#276a4d]/10 text-[#276a4d] px-5 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest">
-              <span className="material-symbols-outlined text-[14px]">verified</span>
-              Compra Realizada com Sucesso
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+            className="flex justify-center mb-8"
+          >
+            <span className="inline-flex items-center gap-3 bg-[#d7ae45]/10 text-[#d7ae45] border border-[#d7ae45]/20 px-6 py-2 rounded-full text-[10px] font-extrabold uppercase tracking-[0.3em]">
+              <span className="material-symbols-outlined text-[16px]">check_circle</span>
+              Acesso Liberado com Sucesso
             </span>
-          </div>
+          </motion.div>
 
           {/* Título */}
-          <h1 className="fade-up-3 font-serif-s text-5xl lg:text-6xl font-bold text-[#1a3d2b] mb-6 leading-tight">
-            Obrigado!
-          </h1>
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+            className="font-display text-5xl lg:text-7xl font-bold text-white mb-8 leading-tight"
+          >
+            Seja Bem-vindo à<br/>
+            <span className="text-[#d7ae45] italic">Alta Renda.</span>
+          </motion.h1>
 
           {/* Texto */}
-          <p className="fade-up-3 text-stone-500 text-lg leading-relaxed mb-12 max-w-lg mx-auto">
-            Sua jornada rumo à excelência começou. O sistema{" "}
-            <span className="font-semibold text-[#276a4d]">Paisagismo Inteligente</span>{" "}
-            agora é seu aliado na gestão do seu escritório.
-          </p>
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.6 }}
+            className="text-white/60 text-xl leading-relaxed mb-16 max-w-2xl mx-auto font-light"
+          >
+            Sua jornada rumo à excelência botânica começou. O sistema{" "}
+            <span className="font-bold text-[#d7ae45]">Paisagismo Inteligente</span>{" "}
+            agora é a chave para a gestão premium do seu escritório.
+          </motion.p>
 
           {/* CTA */}
-          <div className="fade-up-4">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.8 }}
+          >
             <button
               onClick={handleAcessar}
-              className="inline-flex items-center gap-3 bg-[#276a4d] text-white px-10 py-5 rounded-xl font-bold text-sm uppercase tracking-widest hover:bg-[#1a3d2b] transition-colors shadow-lg shadow-[#276a4d]/20"
+              className="inline-flex items-center justify-center gap-4 bg-[#d7ae45] text-[#173727] px-12 py-6 rounded-full font-extrabold text-[11px] uppercase tracking-[0.25em] hover:bg-white transition-all duration-300 shadow-2xl hover:scale-105 w-full sm:w-auto"
             >
-              Acessar Plataforma
+              Acessar Plataforma Exclusiva
               <span className="material-symbols-outlined text-[20px]">arrow_forward</span>
             </button>
-          </div>
+          </motion.div>
 
           {/* Divisor */}
-          <div className="my-16 flex items-center gap-6">
-            <div className="flex-1 h-px bg-stone-200"></div>
-            <span className="material-symbols-outlined text-stone-300">eco</span>
-            <div className="flex-1 h-px bg-stone-200"></div>
-          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 1, delay: 1 }}
+            className="my-20 flex items-center gap-6"
+          >
+            <div className="flex-1 h-px bg-gradient-to-r from-transparent to-[#d7ae45]/30"></div>
+            <span className="material-symbols-outlined text-[#d7ae45]/50">diamond</span>
+            <div className="flex-1 h-px bg-gradient-to-l from-transparent to-[#d7ae45]/30"></div>
+          </motion.div>
 
           {/* Destaques */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-left">
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 1.2 }}
+            className="grid grid-cols-1 md:grid-cols-3 gap-8 text-left"
+          >
             {[
-              { icon: "lock", title: "Acesso Imediato", desc: "Entre na plataforma agora mesmo com seu e-mail de cadastro." },
-              { icon: "support_agent", title: "Suporte Incluso", desc: "Nossa equipe está disponível para te ajudar em cada etapa." },
-              { icon: "card_giftcard", title: "Bônus Ativado", desc: "O Combo Paisagista Profissional já está disponível na sua conta." },
+              { icon: "lock", title: "Acesso Premium", desc: "Entre na plataforma agora mesmo com seu e-mail de cadastro." },
+              { icon: "support_agent", title: "Concierge Incluso", desc: "Nossa equipe está disponível para guiar cada etapa da sua experiência." },
+              { icon: "card_giftcard", title: "Bônus Ativado", desc: "O Masterclass de Projetos Autorais já está liberado no painel." },
             ].map((item, i) => (
-              <div key={i} className="bg-white border border-stone-100 rounded-2xl p-6 shadow-sm">
-                <span className="material-symbols-outlined text-[#276a4d] mb-3 block">{item.icon}</span>
-                <h3 className="font-serif-s font-bold text-[#1a3d2b] mb-1 text-sm">{item.title}</h3>
-                <p className="text-stone-400 text-xs leading-relaxed">{item.desc}</p>
+              <div key={i} className="bg-white/5 border border-white/10 rounded-[32px] p-8 backdrop-blur-md hover:bg-white/10 transition-colors">
+                <div className="w-12 h-12 rounded-full bg-[#d7ae45]/10 flex items-center justify-center mb-6 border border-[#d7ae45]/20">
+                  <span className="material-symbols-outlined text-[#d7ae45]">{item.icon}</span>
+                </div>
+                <h3 className="font-display font-bold text-white mb-2 text-xl">{item.title}</h3>
+                <p className="text-white/50 text-sm leading-relaxed">{item.desc}</p>
               </div>
             ))}
-          </div>
+          </motion.div>
         </div>
       </main>
 
       {/* Rodapé simples */}
-      <footer className="py-8 text-center text-xs text-stone-400 font-sans-s uppercase tracking-widest border-t border-stone-100">
-        © 2026 Rosane Borges · Paisagismo Inteligente
+      <footer className="py-10 text-center text-[10px] text-white/30 font-body uppercase tracking-[0.3em] border-t border-white/5">
+        © {new Date().getFullYear()} Rosane Borges · Exclusividade em Paisagismo
       </footer>
     </div>
   );
