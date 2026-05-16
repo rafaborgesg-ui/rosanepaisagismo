@@ -45,7 +45,7 @@ export default function SiteFooter() {
                 Método
               </Link>
               <Link to="/#servicos" className="transition-colors hover:text-white">
-                Expertise
+                Nossos Serviços
               </Link>
               <Link to="/#sobre" className="transition-colors hover:text-white">
                 Sobre

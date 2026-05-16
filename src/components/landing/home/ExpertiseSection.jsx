@@ -7,7 +7,7 @@ export default function ExpertiseSection({ reducedMotion = false }) {
     <section id="servicos" className="bg-white px-4 py-20 md:py-28">
       <div className="mx-auto w-[min(100%,1180px)]">
         <div className="mb-12 max-w-3xl">
-          <p className={labelClass}>Expertise</p>
+          <p className={labelClass}>Nossos Serviços</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
             Frentes de atuação para projetos que exigem nível alto de execução.
           </h2>
