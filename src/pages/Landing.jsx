@@ -8,7 +8,6 @@ import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
 import { getAttributionData, trackEvent } from "@/lib/tracking";
 import HeroSection from "@/components/landing/home/HeroSection";
-import ManifestoSection from "@/components/landing/home/ManifestoSection";
 import FounderSection from "@/components/landing/home/FounderSection";
 import SelectedProjectsSection from "@/components/landing/home/SelectedProjectsSection";
 import ExpertiseSection from "@/components/landing/home/ExpertiseSection";
@@ -129,7 +128,6 @@ export default function Landing() {
 
       <main>
         <HeroSection reducedMotion={Boolean(reduceMotion)} />
-        <ManifestoSection reducedMotion={Boolean(reduceMotion)} />
         <FounderSection reducedMotion={Boolean(reduceMotion)} />
         <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
         <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
