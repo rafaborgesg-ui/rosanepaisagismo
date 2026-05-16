@@ -4,7 +4,6 @@ import { MapPin, Ruler, Sparkles } from "lucide-react";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import ProjectHero from "@/components/landing/project/ProjectHero";
 import ProjectNarrativeSection from "@/components/landing/project/ProjectNarrativeSection";
 import ProjectGallerySection from "@/components/landing/project/ProjectGallerySection";
@@ -80,7 +79,6 @@ export default function ProjetoPortfolio() {
 
       <SiteFooter />
       <WhatsAppFloat hideOnMobile />
-      <MobileConciergeBar href="/contato#briefing" />
     </div>
   );
 }

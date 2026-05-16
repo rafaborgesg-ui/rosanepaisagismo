@@ -3,7 +3,6 @@ import { useReducedMotion } from "framer-motion";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import PortfolioHero from "@/components/landing/portfolio/PortfolioHero";
 import PortfolioFilterBar from "@/components/landing/portfolio/PortfolioFilterBar";
 import PortfolioGallery from "@/components/landing/portfolio/PortfolioGallery";
@@ -66,7 +65,6 @@ export default function Portfolio() {
 
       <SiteFooter />
       <WhatsAppFloat hideOnMobile />
-      <MobileConciergeBar href="/contato#briefing" />
     </div>
   );
 }

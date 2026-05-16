@@ -16,7 +16,6 @@ import MethodSection from "@/components/landing/home/MethodSection";
 import DeliverablesSection from "@/components/landing/home/DeliverablesSection";
 import TestimonialsSection from "@/components/landing/home/TestimonialsSection";
 import ConciergeSection from "@/components/landing/home/ConciergeSection";
-import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 
 export default function Landing() {
   const reduceMotion = useReducedMotion();
@@ -148,7 +147,6 @@ export default function Landing() {
 
       <SiteFooter />
       <WhatsAppFloat hideOnMobile />
-      <MobileConciergeBar />
     </div>
   );
 }

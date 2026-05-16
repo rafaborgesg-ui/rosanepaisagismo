@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 
 export default function TermosDeServico() {
@@ -9,20 +10,9 @@ export default function TermosDeServico() {
         .font-serif-custom { font-family: 'Noto Serif', serif; }
         .font-sans-custom { font-family: 'Work Sans', sans-serif; }
       `}</style>
+      <SiteNav />
 
-      {/* Navbar simples */}
-      <nav className="bg-white border-b border-stone-100 px-6 h-16 flex items-center">
-        <div className="max-w-4xl mx-auto w-full flex items-center justify-between">
-          <Link to="/" className="font-serif-custom text-lg font-bold text-[#1a3d2b]">
-            Rosane Paisagismo
-          </Link>
-          <Link to="/" className="text-sm text-stone-500 hover:text-[#276a4d] transition-colors font-sans-custom">
-            ← Voltar ao site
-          </Link>
-        </div>
-      </nav>
-
-      <main className="max-w-4xl mx-auto px-6 py-16 font-sans-custom">
+      <main className="max-w-4xl mx-auto px-6 pb-16 pt-32 font-sans-custom">
         <h1 className="font-serif-custom text-4xl text-[#1a3d2b] mb-4">Termos de Serviço</h1>
         <p className="text-stone-400 text-sm mb-12">Última atualização: maio de 2026</p>
 

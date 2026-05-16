@@ -4,7 +4,6 @@ import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
-import MobileConciergeBar from "@/components/landing/home/MobileConciergeBar";
 import ContactHero from "@/components/landing/contact/ContactHero";
 import ContactSidebar from "@/components/landing/contact/ContactSidebar";
 import ContactFormCard from "@/components/landing/contact/ContactFormCard";
@@ -175,7 +174,6 @@ export default function Contato() {
 
       <SiteFooter />
       <WhatsAppFloat hideOnMobile />
-      <MobileConciergeBar href="#briefing" label="Ir para briefing" />
     </div>
   );
 }
