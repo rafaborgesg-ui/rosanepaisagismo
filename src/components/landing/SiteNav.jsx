@@ -5,10 +5,10 @@ import { useLandingContent } from "@/hooks/useLandingContent";
 
 const navItems = [
   { label: "Início", to: "/", key: "inicio" },
+  { label: "Sobre", to: "/#sobre", key: "sobre" },
   { label: "Projetos", to: "/portfolio", key: "portfolio" },
   { label: "Nossos Serviços", to: "/#servicos", key: "expertise" },
   { label: "Método", to: "/#metodo", key: "metodo" },
-  { label: "Sobre", to: "/#sobre", key: "sobre" },
   { label: "Contato", to: "/contato", key: "contato" },
 ];
 
