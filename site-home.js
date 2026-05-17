@@ -20,8 +20,18 @@
   if (fp) fp.textContent = 'Projeto em Destaque';
 
   var heroLogo = document.querySelector('.hero-logo');
+  var dockedLogo = document.querySelector('.hero-logo-docked');
   var root = document.documentElement;
   var logoBaseRect = null;
+
+  if (!dockedLogo && heroLogo) {
+    dockedLogo = document.createElement('img');
+    dockedLogo.className = 'hero-logo-docked';
+    dockedLogo.src = './rosane-logo-hero-white.png';
+    dockedLogo.alt = 'Rosane Borges Paisagismo';
+    dockedLogo.setAttribute('aria-hidden', 'true');
+    document.body.appendChild(dockedLogo);
+  }
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -65,6 +75,10 @@
       root.style.setProperty('--rbp-logo-x', ((targetX - logoBaseRect.centerX) * turn).toFixed(2));
       root.style.setProperty('--rbp-logo-y', ((targetY - logoBaseRect.centerY) * turn).toFixed(2));
     }
+
+    var dockedOpacity = clamp((turn - .58) / .22, 0, 1);
+    root.style.setProperty('--rbp-docked-opacity', dockedOpacity.toFixed(4));
+    document.body.classList.toggle('rbp-logo-docked', dockedOpacity > .98);
 
     setFeatureTitle();
   }
