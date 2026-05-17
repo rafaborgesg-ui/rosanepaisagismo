@@ -21,6 +21,7 @@
 
   var heroLogo = document.querySelector('.hero-logo');
   var root = document.documentElement;
+  var logoBaseRect = null;
 
   function clamp(value, min, max) {
     return Math.min(max, Math.max(min, value));
@@ -43,15 +44,26 @@
     root.style.setProperty('--rbp-hero-turn', turn.toFixed(4));
 
     if (heroLogo) {
-      var rect = heroLogo.getBoundingClientRect();
-      var currentCenterX = rect.left + rect.width / 2;
-      var currentCenterY = rect.top + rect.height / 2;
-      var targetX = 168;
-      var targetY = 78;
-      var scale = 1 - turn * .72;
+      if (!logoBaseRect || turn < .01) {
+        var fresh = heroLogo.getBoundingClientRect();
+        logoBaseRect = {
+          centerX: fresh.left + fresh.width / 2,
+          centerY: fresh.top + fresh.height / 2,
+          width: fresh.width,
+          height: fresh.height
+        };
+      }
+
+      var isMobile = window.innerWidth < 768;
+      var finalScale = isMobile ? .34 : .42;
+      var targetLeft = isMobile ? 90 : 138;
+      var targetTop = isMobile ? 34 : 42;
+      var targetX = targetLeft + (logoBaseRect.width * finalScale) / 2;
+      var targetY = targetTop + (logoBaseRect.height * finalScale) / 2;
+      var scale = 1 - turn * (1 - finalScale);
       root.style.setProperty('--rbp-logo-scale', scale.toFixed(4));
-      root.style.setProperty('--rbp-logo-x', ((targetX - currentCenterX) * turn).toFixed(2));
-      root.style.setProperty('--rbp-logo-y', ((targetY - currentCenterY) * turn).toFixed(2));
+      root.style.setProperty('--rbp-logo-x', ((targetX - logoBaseRect.centerX) * turn).toFixed(2));
+      root.style.setProperty('--rbp-logo-y', ((targetY - logoBaseRect.centerY) * turn).toFixed(2));
     }
 
     setFeatureTitle();
@@ -68,7 +80,10 @@
   }
 
   window.addEventListener('scroll', requestMotionUpdate, { passive: true });
-  window.addEventListener('resize', requestMotionUpdate);
+  window.addEventListener('resize', function () {
+    logoBaseRect = null;
+    requestMotionUpdate();
+  });
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', setHeroMotion);
   } else {

@@ -55,6 +55,7 @@ body.rbp-loaded .hero-bg {
 .hero-logo {
   transform-origin: center center !important;
   will-change: transform, opacity;
+  z-index: 30;
 }
 
 body.rbp-loaded .hero-logo {
