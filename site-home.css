@@ -3,6 +3,19 @@ body {
   overflow-x: hidden !important;
 }
 
+html.rbp-preloading,
+html.rbp-preloading body {
+  height: 100%;
+  overflow: hidden !important;
+  overscroll-behavior: none;
+}
+
+html.rbp-preloading body {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+}
+
 .slick-dots {
   bottom: 28px !important;
   right: 54px !important;
