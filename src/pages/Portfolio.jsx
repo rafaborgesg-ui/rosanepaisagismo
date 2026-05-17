@@ -8,11 +8,13 @@ import PortfolioFilterBar from "@/components/landing/portfolio/PortfolioFilterBa
 import PortfolioGallery from "@/components/landing/portfolio/PortfolioGallery";
 import PortfolioCtaSection from "@/components/landing/portfolio/PortfolioCtaSection";
 import SEO from "@/components/seo/SEO";
-import { portfolioCategories, premiumProjects } from "@/data/premiumProjects";
+import { portfolioCategories } from "@/data/premiumProjects";
+import { usePortfolioProjects } from "@/lib/portfolioStorage";
 import { trackEvent } from "@/lib/tracking";
 
 export default function Portfolio() {
   const reducedMotion = useReducedMotion();
+  const premiumProjects = usePortfolioProjects();
   const [filter, setFilter] = useState("Todos");
 
   useEffect(() => {

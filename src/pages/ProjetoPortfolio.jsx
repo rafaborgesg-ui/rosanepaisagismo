@@ -11,12 +11,13 @@ import TransformationSection from "@/components/landing/TransformationSection";
 import ProjectRelatedSection from "@/components/landing/project/ProjectRelatedSection";
 import ProjectCtaSection from "@/components/landing/project/ProjectCtaSection";
 import SEO from "@/components/seo/SEO";
-import { getProjectBySlug, premiumProjects } from "@/data/premiumProjects";
+import { usePortfolioProjects } from "@/lib/portfolioStorage";
 
 export default function ProjetoPortfolio() {
   const reducedMotion = useReducedMotion();
   const { slug } = useParams();
-  const project = getProjectBySlug(slug);
+  const premiumProjects = usePortfolioProjects();
+  const project = premiumProjects.find((item) => item.slug === slug);
 
   if (!project) {
     return <Navigate to="/portfolio" replace />;

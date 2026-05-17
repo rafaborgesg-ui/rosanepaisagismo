@@ -44,7 +44,7 @@ import Clientes from './pages/Clientes';
 import Sistema from './pages/Sistema';
 import Contato from './pages/Contato';
 import Produtos from './pages/Produtos';
-import AdminLanding from './pages/AdminLanding';
+import Admin from './pages/Admin';
 import Pricing from './pages/Pricing';
 import Agradecimento from './pages/Agradecimento';
 import PrivacyPolicy from './pages/PrivacyPolicy';
@@ -97,7 +97,7 @@ const AuthenticatedApp = () => {
       <Route path="/termos" element={<TermosDeServico />} />
       <Route path="/catalogo" element={<CatalogoBotanico />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/admin" element={<AdminLanding />} />
+      <Route path="/admin" element={<Admin />} />
       <Route path="/payment/success" element={<PaymentSuccess />} />
       <Route path="/payment/cancel" element={<PaymentCancel />} />
       

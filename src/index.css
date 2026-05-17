@@ -129,6 +129,10 @@
   will-change: transform, opacity;
 }
 
+.rb-site-brand-home-settled {
+  will-change: auto;
+}
+
 .rb-site-brand-image {
   display: block;
   height: 100%;
@@ -137,6 +141,11 @@
   object-fit: contain;
   user-select: none;
   -webkit-user-drag: none;
+}
+
+.rb-site-brand-image-hero {
+  image-rendering: auto;
+  transform: translateZ(0);
 }
 
 @keyframes ken-burns {

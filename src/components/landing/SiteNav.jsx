@@ -25,6 +25,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const logoSize = content?.logo_topo_size || 100;
   const brandLogoSrc = "/brand/rosane-logo-white.png";
   const brandRef = useRef(null);
+  const heroBrandRef = useRef(null);
   const scrolledRef = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -52,6 +53,16 @@ export default function SiteNav({ activeLink = "" } = {}) {
         brand.style.height = "";
         brand.style.opacity = "";
         brand.style.transform = "";
+        brand.classList.remove("rb-site-brand-home-settled");
+      }
+      const heroBrand = heroBrandRef.current;
+      if (heroBrand) {
+        heroBrand.style.left = "";
+        heroBrand.style.top = "";
+        heroBrand.style.height = "";
+        heroBrand.style.opacity = "";
+        heroBrand.style.transform = "";
+        heroBrand.classList.remove("rb-site-brand-home-settled");
       }
       return undefined;
     }
@@ -69,20 +80,26 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
       const mobile = window.innerWidth < 768;
       const endLeft = mobile ? 20 : 40;
-      const endTop = mobile ? 20 : 24;
-      const endHeight = mobile ? 38 : 46;
+      const endTop = mobile ? 20 : 19;
+      const endHeight = mobile ? 38 : 48;
       const startOffset = window.innerHeight * 0.73;
       const progress = Math.min(1, Math.max(0, window.scrollY / startOffset));
-      const scale = 4.6 - 3.6 * progress;
+      const startScale = 5.7;
+      const scale = startScale - (startScale - 1) * progress;
       const y = Math.max(0, startOffset - window.scrollY);
       const brand = brandRef.current;
+      const heroBrand = heroBrandRef.current;
 
-      if (brand) {
-        brand.style.left = `${endLeft}px`;
-        brand.style.top = `${endTop}px`;
-        brand.style.height = `${endHeight}px`;
-        brand.style.opacity = "1";
-        brand.style.transform = `translate3d(0px, ${y.toFixed(2)}px, 0) scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
+      if (heroBrand) {
+        const isSettled = progress >= 0.995;
+        heroBrand.style.left = `${endLeft}px`;
+        heroBrand.style.top = `${endTop}px`;
+        heroBrand.style.height = `${endHeight}px`;
+        heroBrand.style.opacity = isSettled ? "0" : "1";
+        heroBrand.style.transform = isSettled
+          ? "none"
+          : `translate3d(0px, ${y.toFixed(2)}px, 0) scale3d(${scale.toFixed(4)}, ${scale.toFixed(4)}, 1)`;
+        heroBrand.classList.toggle("rb-site-brand-home-settled", isSettled);
       }
     };
 
@@ -129,11 +146,27 @@ export default function SiteNav({ activeLink = "" } = {}) {
       />
 
       <div className="relative z-10 mx-auto flex h-[78px] max-w-[1680px] items-center justify-between px-5 md:h-[86px] md:px-10">
+        {isHome && !isMobile && (
+          <Link
+            ref={heroBrandRef}
+            to="/"
+            className="rb-site-brand rb-site-brand-home flex h-12 max-w-[320px] items-center"
+            aria-label="Rosane Borges Paisagismo"
+            onClick={closeMenu}
+          >
+            <img
+              src={brandLogoSrc}
+              alt="Rosane Borges Paisagismo"
+              className="rb-site-brand-image rb-site-brand-image-hero drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)]"
+            />
+          </Link>
+        )}
+
         <Link
           ref={brandRef}
           to="/"
-          className={`rb-site-brand flex items-center ${
-            isHome && !isMobile ? "rb-site-brand-home min-h-8" : "h-10 max-w-[205px] md:h-12 md:max-w-[320px]"
+          className={`rb-site-brand flex h-10 max-w-[205px] items-center md:h-12 md:max-w-[320px] ${
+            isHome && !isMobile && !isScrolled && !menuOpen ? "pointer-events-none opacity-0" : "opacity-100"
           }`}
           aria-label="Rosane Borges Paisagismo"
           onClick={closeMenu}
@@ -149,9 +182,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
             <img
               src={brandLogoSrc}
               alt="Rosane Borges Paisagismo"
-              className={`drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] ${
-                isHome && !isMobile ? "rb-site-brand-image" : "h-full w-auto max-w-full object-contain"
-              } ${
+              className={`h-full w-auto max-w-full object-contain drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] ${
                 headerIsLight ? "brightness-0 opacity-80 drop-shadow-none" : ""
               }`}
             />
