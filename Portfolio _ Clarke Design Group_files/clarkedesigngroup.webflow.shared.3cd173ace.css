@@ -2050,8 +2050,8 @@ textarea.w-input, textarea.w-select {
   --cream-bg: #faf9f6;
   --cdg-black: #353535;
   --white: white;
-  --cdg-green: #7e876d;
-  --70: #a5ab99;
+  --cdg-green: #181F1A;
+  --70: #181F1A;
   --k48: #7a7a7a;
   --k32: #525252;
 }
@@ -2229,7 +2229,7 @@ label {
 
 .footer-1 {
   color: var(--white);
-  background-color: #7e876dcc;
+  background-color: #181F1Acc;
   flex-direction: column;
   justify-content: flex-end;
   align-items: flex-start;
@@ -3209,7 +3209,7 @@ label {
   grid-row-gap: 1rem;
   opacity: 0;
   color: var(--white);
-  background-color: #7e876de6;
+  background-color: #181F1Ae6;
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
