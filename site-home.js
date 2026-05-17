@@ -58,7 +58,7 @@
       var startY = window.innerHeight * (isMobile ? .40 : .36);
       var logoWidth = Math.min(isMobile ? 430 : 820, window.innerWidth * (isMobile ? .86 : .76));
       var targetLeft = isMobile ? 92 : 132;
-      var targetTop = isMobile ? 50 : 58;
+      var targetTop = isMobile ? 42 : 45;
       var targetX = targetLeft + (logoWidth * finalScale) / 2;
       var targetY = targetTop + (motionLogo.offsetHeight * finalScale) / 2;
       var eased = turn < .5 ? 2 * turn * turn : 1 - Math.pow(-2 * turn + 2, 2) / 2;
