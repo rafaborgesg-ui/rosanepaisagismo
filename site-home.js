@@ -20,17 +20,15 @@
   if (fp) fp.textContent = 'Projeto em Destaque';
 
   var heroLogo = document.querySelector('.hero-logo');
-  var dockedLogo = document.querySelector('.hero-logo-docked');
+  var motionLogo = document.querySelector('.hero-logo-motion');
   var root = document.documentElement;
-  var logoBaseRect = null;
 
-  if (!dockedLogo && heroLogo) {
-    dockedLogo = document.createElement('img');
-    dockedLogo.className = 'hero-logo-docked';
-    dockedLogo.src = './rosane-logo-hero-white.png';
-    dockedLogo.alt = 'Rosane Borges Paisagismo';
-    dockedLogo.setAttribute('aria-hidden', 'true');
-    document.body.appendChild(dockedLogo);
+  if (!motionLogo && heroLogo) {
+    motionLogo = document.createElement('img');
+    motionLogo.className = 'hero-logo-motion';
+    motionLogo.src = './rosane-logo-hero-white.png';
+    motionLogo.alt = 'Rosane Borges Paisagismo';
+    document.body.appendChild(motionLogo);
   }
 
   function clamp(value, min, max) {
@@ -53,32 +51,25 @@
     document.body.classList.toggle('rbp-scrolling-home', turn > .01);
     root.style.setProperty('--rbp-hero-turn', turn.toFixed(4));
 
-    if (heroLogo) {
-      if (!logoBaseRect || turn < .01) {
-        var fresh = heroLogo.getBoundingClientRect();
-        logoBaseRect = {
-          centerX: fresh.left + fresh.width / 2,
-          centerY: fresh.top + fresh.height / 2,
-          width: fresh.width,
-          height: fresh.height
-        };
-      }
-
+    if (motionLogo) {
       var isMobile = window.innerWidth < 768;
       var finalScale = isMobile ? .34 : .42;
-      var targetLeft = isMobile ? 90 : 138;
-      var targetTop = isMobile ? 34 : 42;
-      var targetX = targetLeft + (logoBaseRect.width * finalScale) / 2;
-      var targetY = targetTop + (logoBaseRect.height * finalScale) / 2;
-      var scale = 1 - turn * (1 - finalScale);
-      root.style.setProperty('--rbp-logo-scale', scale.toFixed(4));
-      root.style.setProperty('--rbp-logo-x', ((targetX - logoBaseRect.centerX) * turn).toFixed(2));
-      root.style.setProperty('--rbp-logo-y', ((targetY - logoBaseRect.centerY) * turn).toFixed(2));
+      var startX = window.innerWidth / 2;
+      var startY = window.innerHeight * (isMobile ? .40 : .36);
+      var logoWidth = Math.min(isMobile ? 430 : 820, window.innerWidth * (isMobile ? .86 : .76));
+      var targetLeft = isMobile ? 92 : 132;
+      var targetTop = isMobile ? 50 : 58;
+      var targetX = targetLeft + (logoWidth * finalScale) / 2;
+      var targetY = targetTop + (motionLogo.offsetHeight * finalScale) / 2;
+      var eased = turn < .5 ? 2 * turn * turn : 1 - Math.pow(-2 * turn + 2, 2) / 2;
+      var x = startX + (targetX - startX) * eased;
+      var yPos = startY + (targetY - startY) * eased;
+      var scale = 1 - eased * (1 - finalScale);
+      root.style.setProperty('--rbp-motion-x', x.toFixed(2));
+      root.style.setProperty('--rbp-motion-y', yPos.toFixed(2));
+      root.style.setProperty('--rbp-motion-scale', scale.toFixed(4));
+      root.style.setProperty('--rbp-motion-opacity', document.body.classList.contains('rbp-loaded') ? '1' : '0');
     }
-
-    var dockedOpacity = clamp((turn - .58) / .22, 0, 1);
-    root.style.setProperty('--rbp-docked-opacity', dockedOpacity.toFixed(4));
-    document.body.classList.toggle('rbp-logo-docked', dockedOpacity > .98);
 
     setFeatureTitle();
   }
@@ -95,7 +86,6 @@
 
   window.addEventListener('scroll', requestMotionUpdate, { passive: true });
   window.addEventListener('resize', function () {
-    logoBaseRect = null;
     requestMotionUpdate();
   });
   if (document.readyState === 'loading') {
@@ -103,4 +93,7 @@
   } else {
     setHeroMotion();
   }
+
+  setTimeout(requestMotionUpdate, 4700);
+  setTimeout(requestMotionUpdate, 5450);
 })();

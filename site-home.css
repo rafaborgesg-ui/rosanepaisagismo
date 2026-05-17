@@ -53,33 +53,23 @@ body.rbp-loaded .hero-bg {
 }
 
 .hero-logo {
-  transform-origin: center center !important;
-  will-change: transform, opacity;
-  z-index: 30;
-}
-
-.hero-logo-docked {
-  position: fixed;
-  top: 37px;
-  left: 132px;
-  z-index: 1010;
-  width: min(342px, 38vw);
-  height: auto;
-  opacity: var(--rbp-docked-opacity, 0);
-  transform: translate3d(calc((1 - var(--rbp-docked-opacity, 0)) * 18px), 0, 0);
-  transition: opacity .16s linear, transform .16s linear;
-  pointer-events: none;
-  will-change: opacity, transform;
-}
-
-body.rbp-loaded .hero-logo {
-  transform:
-    translate3d(calc(var(--rbp-logo-x, 0) * 1px), calc(var(--rbp-logo-y, 0) * 1px), 0)
-    scale(var(--rbp-logo-scale, 1)) !important;
-}
-
-body.rbp-logo-docked .hero-logo {
   opacity: 0 !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+}
+
+.hero-logo-motion {
+  position: fixed;
+  top: calc(var(--rbp-motion-y, 50) * 1px);
+  left: calc(var(--rbp-motion-x, 50) * 1px);
+  z-index: 1010;
+  width: min(820px, 76vw);
+  height: auto;
+  opacity: var(--rbp-motion-opacity, 0);
+  transform: translate3d(-50%, -50%, 0) scale(var(--rbp-motion-scale, 1));
+  transform-origin: center center;
+  pointer-events: none;
+  will-change: top, left, opacity, transform;
 }
 
 .featured-project-list-sticky {
@@ -141,9 +131,7 @@ body[data-feature-index="3"] .home-project-titles > .ht-3 {
 }
 
 @media (max-width: 767px) {
-  .hero-logo-docked {
-    top: 36px;
-    left: 92px;
-    width: min(218px, 52vw);
+  .hero-logo-motion {
+    width: min(430px, 86vw);
   }
 }
