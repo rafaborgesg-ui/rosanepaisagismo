@@ -1,0 +1,109 @@
+html,
+body {
+  overflow-x: hidden !important;
+}
+
+.slick-dots {
+  bottom: 28px !important;
+  right: 54px !important;
+  z-index: 20;
+}
+
+@media (max-width: 767px) {
+  .slick-dots {
+    bottom: 34px !important;
+    right: 26px !important;
+  }
+}
+
+.hero {
+  perspective: 1400px;
+  transform-origin: 50% 100%;
+  will-change: transform, opacity, filter;
+}
+
+body.rbp-loaded .hero {
+  animation: rbpHeroReveal 1.55s cubic-bezier(.18, .74, .22, 1) both;
+}
+
+body.rbp-scrolling-home .hero {
+  transform:
+    translate3d(0, calc(var(--rbp-hero-turn, 0) * -8vh), 0)
+    rotateX(calc(var(--rbp-hero-turn, 0) * -11deg))
+    scale(calc(1 - (var(--rbp-hero-turn, 0) * .035)));
+  opacity: calc(1 - (var(--rbp-hero-turn, 0) * .28));
+  filter: brightness(calc(1 - (var(--rbp-hero-turn, 0) * .08)));
+}
+
+body.rbp-loaded .hero-bg {
+  animation: rbpHeroPhotoZoom 1.8s cubic-bezier(.18, .72, .22, 1) both;
+}
+
+.hero-logo {
+  transform-origin: center center !important;
+  will-change: transform, opacity;
+}
+
+body.rbp-loaded .hero-logo {
+  transform:
+    translate3d(calc(var(--rbp-logo-x, 0) * 1px), calc(var(--rbp-logo-y, 0) * 1px), 0)
+    scale(var(--rbp-logo-scale, 1)) !important;
+}
+
+.featured-project-list-sticky {
+  z-index: 2;
+}
+
+.sticky-title-box {
+  z-index: 5;
+}
+
+.home-project-titles {
+  position: relative;
+  min-height: clamp(64px, 8vw, 122px);
+}
+
+.home-project-titles > .w-dyn-list {
+  display: block !important;
+  opacity: 0 !important;
+  visibility: hidden;
+  position: absolute;
+  inset: 0;
+  transition: opacity .42s ease, transform .42s ease, visibility .42s ease;
+  transform: translate3d(0, 18px, 0);
+}
+
+body[data-feature-index="1"] .home-project-titles > .ht-1,
+body[data-feature-index="2"] .home-project-titles > .ht-2,
+body[data-feature-index="3"] .home-project-titles > .ht-3 {
+  opacity: 1 !important;
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.fp {
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+
+@keyframes rbpHeroReveal {
+  0% {
+    opacity: 0;
+    transform: scale(1.065);
+    filter: blur(4px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+}
+
+@keyframes rbpHeroPhotoZoom {
+  0% {
+    transform: scale(1.055);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

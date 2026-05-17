@@ -1,0 +1,143 @@
+.rbp-page-section {
+  padding: clamp(72px, 9vw, 130px) 24px;
+  background: #f8f7f2;
+}
+
+.rbp-page-inner {
+  width: min(1180px, 100%);
+  margin: 0 auto;
+}
+
+.rbp-about-grid {
+  display: grid;
+  grid-template-columns: minmax(280px, .9fr) minmax(320px, 1fr);
+  gap: clamp(40px, 7vw, 96px);
+  align-items: center;
+}
+
+.rbp-about-photo,
+.rbp-team-photo {
+  position: relative;
+  overflow: hidden;
+  background: #181f1a;
+}
+
+.rbp-about-photo {
+  min-height: 560px;
+}
+
+.rbp-about-photo img,
+.rbp-team-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.rbp-about-copy {
+  color: #181f1a;
+  font-size: clamp(18px, 1.7vw, 24px);
+  line-height: 1.62;
+}
+
+.rbp-about-copy p {
+  margin: 0 0 24px;
+}
+
+.rbp-about-copy p:last-child {
+  margin-bottom: 0;
+}
+
+.rbp-team-title {
+  margin: 0 0 clamp(34px, 5vw, 62px);
+  color: #181f1a;
+  font-size: clamp(42px, 7vw, 96px);
+  line-height: .95;
+  font-weight: 400;
+  text-align: center;
+}
+
+.rbp-team-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 5vw, 70px);
+}
+
+.rbp-team-card {
+  color: #181f1a;
+}
+
+.rbp-team-photo {
+  aspect-ratio: 4 / 5;
+}
+
+.rbp-team-card h3 {
+  margin: 24px 0 8px;
+  font-size: clamp(24px, 3vw, 42px);
+  line-height: 1;
+  font-weight: 400;
+}
+
+.rbp-team-card p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.4;
+  text-transform: uppercase;
+  letter-spacing: .12em;
+}
+
+.rbp-legal-page {
+  min-height: 65vh;
+  padding: clamp(120px, 16vw, 190px) 24px clamp(76px, 9vw, 120px);
+  background: #f8f7f2;
+  color: #181f1a;
+}
+
+.rbp-legal-page__inner {
+  width: min(900px, 100%);
+  margin: 0 auto;
+}
+
+.rbp-legal-page h1 {
+  margin: 0 0 28px;
+  font-size: clamp(44px, 7vw, 92px);
+  line-height: .95;
+  font-weight: 400;
+}
+
+.rbp-legal-page p,
+.rbp-legal-page li {
+  font-size: 18px;
+  line-height: 1.75;
+}
+
+.rbp-admin-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-top: 34px;
+}
+
+.rbp-admin-card {
+  min-height: 180px;
+  padding: 24px;
+  border: 1px solid rgba(24, 31, 26, .16);
+  background: #fff;
+}
+
+.rbp-admin-card h2 {
+  margin: 0 0 12px;
+  font-size: 22px;
+}
+
+@media (max-width: 767px) {
+  .rbp-about-grid,
+  .rbp-team-grid,
+  .rbp-admin-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .rbp-about-photo {
+    min-height: 420px;
+  }
+}
