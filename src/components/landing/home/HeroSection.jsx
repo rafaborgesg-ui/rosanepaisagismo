@@ -1,77 +1,89 @@
+import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
-import PremiumLink from "@/components/landing/home/PremiumLink";
-import { getFadeUp, getStagger } from "@/components/landing/home/motion";
 
 export default function HeroSection({ reducedMotion = false }) {
-  const fadeUp = getFadeUp(reducedMotion);
-  const stagger = getStagger(reducedMotion);
+  const slides = useMemo(
+    () => [
+      {
+        src: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg",
+        alt: "Fachada residencial com paisagismo autoral",
+      },
+      {
+        src: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p9_i1.jpg",
+        alt: "Jardim residencial contemporaneo com leitura arquitetonica",
+      },
+      {
+        src: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i1.jpg",
+        alt: "Jardim vertical e area externa com paisagismo premium",
+      },
+      {
+        src: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p3_i2.jpg",
+        alt: "Projeto de paisagismo residencial de alto padrao",
+      },
+    ],
+    []
+  );
+  const [activeSlide, setActiveSlide] = useState(0);
+
+  useEffect(() => {
+    if (reducedMotion) return undefined;
+
+    const timer = window.setInterval(() => {
+      setActiveSlide((current) => (current + 1) % slides.length);
+    }, 5200);
+
+    return () => window.clearInterval(timer);
+  }, [reducedMotion, slides.length]);
 
   return (
-    <section className="relative min-h-[92svh] overflow-hidden bg-[#101812] text-white">
-      <motion.img
-        src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg"
-        alt="Fachada residencial com paisagismo autoral"
-        className="absolute inset-0 h-full w-full object-cover"
-        initial={reducedMotion ? false : { scale: 1.05 }}
-        animate={reducedMotion ? undefined : { scale: 1 }}
-        transition={reducedMotion ? undefined : { duration: 8, ease: "easeOut" }}
-      />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,24,18,0.92),rgba(16,24,18,0.34)_56%,rgba(16,24,18,0.68)),linear-gradient(180deg,rgba(16,24,18,0.18),rgba(16,24,18,0.86))]" />
+    <section data-hero-logo-stage className="relative min-h-svh overflow-hidden bg-[#101812] text-white">
+      {slides.map((slide, index) => {
+        const isActive = activeSlide === index;
 
-      <div className="relative z-10 mx-auto flex min-h-[92svh] w-full max-w-[1180px] items-end px-4 pb-24 pt-32 md:pb-16">
-        <motion.div
-          initial={reducedMotion ? false : "hidden"}
-          animate={reducedMotion ? undefined : "visible"}
-          variants={stagger}
-          className="w-full min-w-0 max-w-4xl"
-        >
-          <motion.h1
-            variants={fadeUp}
-            className="max-w-[21rem] font-heading text-[2.82rem] font-medium leading-[0.98] tracking-normal sm:max-w-4xl sm:text-6xl md:text-7xl lg:text-8xl"
-          >
-            Paisagismo autoral de alto padrão.
-          </motion.h1>
-          <motion.p
-            variants={fadeUp}
-            className="mt-7 max-w-[21rem] text-lg font-light leading-8 text-white/78 sm:max-w-2xl md:text-xl"
-          >
-            Projetos botânicos e implantação orientada para residências, clínicas e
-            empreendimentos que exigem presença, precisão e permanência.
-          </motion.p>
-          <motion.p
-            variants={fadeUp}
-            className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-[#d6c5a6]"
-          >
-            Engenheira Agrônoma • Doutora em Produção Vegetal • Atuação desde 2016
-          </motion.p>
-          <motion.div variants={fadeUp} className="mt-10 flex flex-col gap-4 sm:flex-row">
-            <PremiumLink to="/contato" variant="light">
-              Iniciar avaliação
-            </PremiumLink>
-            <PremiumLink href="#projetos" variant="outline">
-              Ver projetos selecionados
-            </PremiumLink>
-          </motion.div>
-          <motion.div
-            variants={fadeUp}
-            className="mt-12 hidden w-full max-w-[21rem] grid-cols-3 gap-3 border-t border-white/18 pt-6 sm:grid sm:max-w-2xl sm:gap-4"
-          >
-              {[
-                ["MG + SP", "atuação selecionada"],
-                ["3D + Executivo", "entregas técnicas"],
-                ["Projeto + Implant.", "fluxo orientado"],
-              ].map(([number, text]) => (
-                <div key={number}>
-                  <p className="font-heading text-[1.9rem] font-medium leading-tight tracking-normal sm:text-3xl md:text-4xl">
-                    {number}
-                  </p>
-                <p className="mt-2 text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-white/56">
-                  {text}
-                </p>
-              </div>
-            ))}
-          </motion.div>
-        </motion.div>
+        return (
+          <motion.img
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            aria-hidden={!isActive}
+            className="absolute inset-0 h-full w-full object-cover"
+            initial={false}
+            animate={
+              reducedMotion
+                ? { opacity: isActive ? 1 : 0 }
+                : {
+                    opacity: isActive ? 1 : 0,
+                    scale: isActive ? 1 : 1.018,
+                  }
+            }
+            transition={
+              reducedMotion
+                ? { duration: 0 }
+                : {
+                    opacity: { duration: 0.95, ease: "easeInOut" },
+                    scale: { duration: 5.2, ease: [0.16, 1, 0.3, 1] },
+                  }
+            }
+            loading={index === 0 ? "eager" : "lazy"}
+            style={{ zIndex: isActive ? 2 : 1 }}
+          />
+        );
+      })}
+
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,24,18,0.22),rgba(16,24,18,0.02)_48%,rgba(16,24,18,0.16)),linear-gradient(180deg,rgba(16,24,18,0.02)_45%,rgba(16,24,18,0.34)_100%)]" />
+
+      <div className="absolute bottom-8 right-6 z-20 flex items-center gap-2 md:bottom-12 md:right-10">
+        {slides.map((slide, index) => (
+          <button
+            key={slide.src}
+            type="button"
+            aria-label={`Ver imagem ${index + 1}`}
+            onClick={() => setActiveSlide(index)}
+            className={`h-3 w-3 rounded-full border border-white/50 transition-all duration-300 ${
+              activeSlide === index ? "bg-white" : "bg-white/35 hover:bg-white/70"
+            }`}
+          />
+        ))}
       </div>
     </section>
   );

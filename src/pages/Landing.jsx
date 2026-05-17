@@ -3,6 +3,7 @@ import { useReducedMotion } from "framer-motion";
 import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
+import SitePreloader from "@/components/landing/SitePreloader";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
@@ -107,7 +108,8 @@ export default function Landing() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f4f0e8] text-[#151913]">
+    <div className="isolate min-h-screen overflow-x-hidden bg-[#10120e] text-[#151913]">
+      <SitePreloader />
       <SEO
         title="Paisagismo Autoral de Alto Padrão"
         description="Escritório boutique de paisagismo para residências, clínicas e empreendimentos de alto padrão com base botânica, projeto técnico e implantação orientada."
@@ -126,7 +128,7 @@ export default function Landing() {
       />
       <SiteNav activeLink="inicio" />
 
-      <main>
+      <main className="relative z-10 bg-[#f4f0e8] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
         <HeroSection reducedMotion={Boolean(reduceMotion)} />
         <FounderSection reducedMotion={Boolean(reduceMotion)} />
         <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
@@ -143,8 +145,9 @@ export default function Landing() {
         />
       </main>
 
-      <SiteFooter />
-      <WhatsAppFloat hideOnMobile />
+      <div className="relative z-0 h-[72svh] bg-transparent md:h-[68svh]" aria-hidden="true" />
+      <SiteFooter reveal />
+      <WhatsAppFloat hideOnMobile revealAfterHero />
     </div>
   );
 }

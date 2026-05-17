@@ -1,20 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MessageCircle } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 import { buildWhatsAppUrl, WHATSAPP_MESSAGE } from "@/data/premiumProjects";
 
-export default function WhatsAppFloat({ hideOnMobile = false }) {
+export default function WhatsAppFloat({ hideOnMobile = false, revealAfterHero = false }) {
   const content = useLandingContent();
   const numero = content?.whatsapp_numero;
   const [isHovered, setIsHovered] = useState(false);
+  const [isVisible, setIsVisible] = useState(!revealAfterHero);
   const href = numero
     ? `https://wa.me/${numero}?text=${encodeURIComponent(WHATSAPP_MESSAGE)}`
     : buildWhatsAppUrl();
 
+  useEffect(() => {
+    if (!revealAfterHero) {
+      setIsVisible(true);
+      return undefined;
+    }
+
+    const updateVisibility = () => {
+      const hero = document.querySelector("[data-hero-logo-stage]");
+      if (!hero) {
+        setIsVisible(true);
+        return;
+      }
+
+      setIsVisible(hero.getBoundingClientRect().bottom <= 24);
+    };
+
+    updateVisibility();
+    window.addEventListener("scroll", updateVisibility, { passive: true });
+    window.addEventListener("resize", updateVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", updateVisibility);
+      window.removeEventListener("resize", updateVisibility);
+    };
+  }, [revealAfterHero]);
+
   return (
     <div
-      className={`fixed bottom-5 right-5 z-50 flex items-center gap-3 md:bottom-8 md:right-8 ${
+      className={`fixed bottom-5 right-5 z-50 flex items-center gap-3 transition-all duration-500 ease-out md:bottom-8 md:right-8 ${
         hideOnMobile ? "hidden md:flex" : ""
+      } ${
+        isVisible ? "translate-y-0 opacity-100" : "pointer-events-none translate-y-4 opacity-0"
       }`}
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}

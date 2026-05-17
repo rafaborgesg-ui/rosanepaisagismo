@@ -116,6 +116,29 @@
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
 }
 
+.rb-site-brand {
+  transition:
+    color 320ms ease,
+    opacity 320ms ease;
+}
+
+.rb-site-brand-home {
+  position: fixed;
+  z-index: 60;
+  transform-origin: left top;
+  will-change: transform, opacity;
+}
+
+.rb-site-brand-image {
+  display: block;
+  height: 100%;
+  width: auto;
+  max-width: none;
+  object-fit: contain;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+
 @keyframes ken-burns {
   0% { transform: scale(1.05); }
   100% { transform: scale(1.15); }
