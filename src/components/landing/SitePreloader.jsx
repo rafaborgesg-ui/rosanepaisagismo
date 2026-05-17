@@ -2,12 +2,22 @@ import { useEffect, useState } from "react";
 
 const PRELOAD_DURATION = 4700;
 const FADE_DURATION = 720;
+const PRELOADER_SESSION_KEY = "rbp-preloader-seen";
 
 export default function SitePreloader() {
+  const [hasAlreadyPlayed] = useState(() => {
+    try {
+      return window.sessionStorage.getItem(PRELOADER_SESSION_KEY) === "true";
+    } catch {
+      return false;
+    }
+  });
   const [isFading, setIsFading] = useState(false);
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(!hasAlreadyPlayed);
 
   useEffect(() => {
+    if (hasAlreadyPlayed) return undefined;
+
     let locked = true;
     let finishTimer;
     let hideTimer;
@@ -48,6 +58,11 @@ export default function SitePreloader() {
 
     const release = () => {
       locked = false;
+      try {
+        window.sessionStorage.setItem(PRELOADER_SESSION_KEY, "true");
+      } catch {
+        // Private browsing or blocked storage can ignore this.
+      }
       root.classList.remove("rbp-preloading");
       body.classList.remove("rbp-preloading");
       window.requestAnimationFrame(restoreDestination);
@@ -99,7 +114,7 @@ export default function SitePreloader() {
       root.classList.remove("rbp-preloading");
       body.classList.remove("rbp-preloading");
     };
-  }, []);
+  }, [hasAlreadyPlayed]);
 
   if (!isVisible) return null;
 

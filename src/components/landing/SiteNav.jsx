@@ -28,9 +28,33 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const scrolledRef = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  });
 
   useEffect(() => {
-    if (activeLink !== "inicio") return undefined;
+    const updateViewport = () => setIsMobile(window.innerWidth < 768);
+
+    updateViewport();
+    window.addEventListener("resize", updateViewport);
+
+    return () => window.removeEventListener("resize", updateViewport);
+  }, []);
+
+  useEffect(() => {
+    if (activeLink !== "inicio" || isMobile) {
+      setIsScrolled(isMobile);
+      const brand = brandRef.current;
+      if (brand) {
+        brand.style.left = "";
+        brand.style.top = "";
+        brand.style.height = "";
+        brand.style.opacity = "";
+        brand.style.transform = "";
+      }
+      return undefined;
+    }
 
     let frameId = 0;
 
@@ -75,7 +99,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
       window.removeEventListener("scroll", requestUpdate);
       window.removeEventListener("resize", requestUpdate);
     };
-  }, [activeLink]);
+  }, [activeLink, isMobile]);
 
   useEffect(() => {
     document.body.style.overflow = menuOpen ? "hidden" : "";
@@ -86,17 +110,20 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
   const isHome = activeLink === "inicio";
   const showCompactLinks = !menuOpen && (!isHome || isScrolled);
-  const headerHasSurface = menuOpen || !isHome || isScrolled;
-  const textGlowClass = "[text-shadow:0_2px_18px_rgba(0,0,0,0.38)]";
+  const headerHasSurface = menuOpen || isMobile || !isHome || isScrolled;
+  const headerIsLight = isMobile && !menuOpen;
+  const textGlowClass = headerIsLight ? "" : "[text-shadow:0_2px_18px_rgba(0,0,0,0.38)]";
 
   const closeMenu = () => setMenuOpen(false);
 
   return (
-    <nav className="fixed inset-x-0 top-0 z-50 text-white">
+    <nav className={`fixed inset-x-0 top-0 z-50 ${headerIsLight ? "text-[#313832]" : "text-white"}`}>
       <div
         className={`absolute inset-x-0 top-0 h-[78px] border-b transition-all duration-500 md:h-[86px] ${
-          headerHasSurface
-            ? "border-white/14 bg-[#10120e] shadow-[0_16px_40px_rgba(0,0,0,0.2)]"
+          headerIsLight
+            ? "border-[#ddd7ca] bg-[#f4f0e8] shadow-[0_14px_34px_rgba(25,28,22,0.08)]"
+            : headerHasSurface
+              ? "border-white/14 bg-[#10120e] shadow-[0_16px_40px_rgba(0,0,0,0.2)]"
             : "border-transparent bg-transparent"
         }`}
       />
@@ -105,7 +132,9 @@ export default function SiteNav({ activeLink = "" } = {}) {
         <Link
           ref={brandRef}
           to="/"
-          className={`rb-site-brand flex min-h-8 items-center ${isHome ? "rb-site-brand-home" : ""}`}
+          className={`rb-site-brand flex items-center ${
+            isHome && !isMobile ? "rb-site-brand-home min-h-8" : "h-10 max-w-[205px] md:h-12 md:max-w-[320px]"
+          }`}
           aria-label="Rosane Borges Paisagismo"
           onClick={closeMenu}
         >
@@ -120,7 +149,11 @@ export default function SiteNav({ activeLink = "" } = {}) {
             <img
               src={brandLogoSrc}
               alt="Rosane Borges Paisagismo"
-              className="rb-site-brand-image drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)]"
+              className={`drop-shadow-[0_2px_18px_rgba(0,0,0,0.42)] ${
+                isHome && !isMobile ? "rb-site-brand-image" : "h-full w-auto max-w-full object-contain"
+              } ${
+                headerIsLight ? "brightness-0 opacity-80 drop-shadow-none" : ""
+              }`}
             />
           )}
         </Link>
@@ -144,7 +177,9 @@ export default function SiteNav({ activeLink = "" } = {}) {
         </div>
 
         <button
-          className={`group ml-auto inline-flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-white/86 transition-colors hover:text-white ${textGlowClass}`}
+          className={`group ml-auto inline-flex items-center gap-2 text-[0.66rem] font-semibold uppercase tracking-[0.18em] transition-colors ${
+            headerIsLight ? "text-[#313832]/78 hover:text-[#313832]" : "text-white/86 hover:text-white"
+          } ${textGlowClass}`}
           onClick={() => setMenuOpen((value) => !value)}
           aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
           aria-expanded={menuOpen}
