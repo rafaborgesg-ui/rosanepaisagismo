@@ -7,8 +7,8 @@ export default function SiteFooter({ reveal = false } = {}) {
   const content = useLandingContent();
   const logoRodape = content?.logo_rodape_url;
   const footerClass = reveal
-    ? "fixed inset-x-0 bottom-0 z-0 flex min-h-[72svh] items-end bg-[#10120e] px-5 py-16 text-white md:min-h-[68svh] md:py-20"
-    : "bg-[#10120e] px-5 py-16 text-white md:py-20";
+    ? "fixed inset-x-0 bottom-0 z-0 flex min-h-[72svh] items-end bg-[#10120e] px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-16 text-white md:min-h-[68svh] md:py-20"
+    : "bg-[#10120e] px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-16 text-white md:py-20";
 
   return (
     <footer className={footerClass}>
@@ -99,7 +99,7 @@ export default function SiteFooter({ reveal = false } = {}) {
 
         <div className="flex flex-col gap-4 pt-8 text-xs text-white/38 md:flex-row md:items-center md:justify-between">
           <span>© 2026 Rosane Borges Paisagismo. Todos os direitos reservados.</span>
-          <div className="flex gap-5">
+          <div className="flex flex-wrap gap-x-5 gap-y-3">
             <Link to="/privacidade" className="transition-colors hover:text-white/70">
               Política de Privacidade
             </Link>

@@ -4,6 +4,7 @@ import {
   CheckCircle2,
   Edit3,
   FileText,
+  GripVertical,
   ImagePlus,
   LayoutDashboard,
   Layers3,
@@ -284,6 +285,19 @@ export default function Admin() {
       ...current,
       slides: (Array.isArray(current.slides) ? current.slides : []).filter((_, slideIndex) => slideIndex !== index),
     }));
+  };
+
+  const reorderHeroSlide = (fromIndex, toIndex) => {
+    setLandingForm((current) => {
+      const slides = Array.isArray(current.slides) ? [...current.slides] : [];
+      if (fromIndex === toIndex || fromIndex < 0 || toIndex < 0 || fromIndex >= slides.length || toIndex >= slides.length) {
+        return current;
+      }
+
+      const [movedSlide] = slides.splice(fromIndex, 1);
+      slides.splice(toIndex, 0, movedSlide);
+      return { ...current, slides };
+    });
   };
 
   const uploadHeroSlide = async (index, file) => {
@@ -586,6 +600,7 @@ export default function Admin() {
               updateHeroSlide={updateHeroSlide}
               addHeroSlide={addHeroSlide}
               removeHeroSlide={removeHeroSlide}
+              reorderHeroSlide={reorderHeroSlide}
               uploadHeroSlide={uploadHeroSlide}
               saveLandingContent={saveLandingContent}
               isSaving={isSaving}
@@ -689,6 +704,7 @@ function HeroPanel({
   updateHeroSlide,
   addHeroSlide,
   removeHeroSlide,
+  reorderHeroSlide,
   uploadHeroSlide,
   saveLandingContent,
   isSaving,
@@ -696,6 +712,13 @@ function HeroPanel({
   isAuthenticated,
 }) {
   const slides = Array.isArray(landingForm.slides) ? landingForm.slides : [];
+  const [draggedSlideIndex, setDraggedSlideIndex] = useState(null);
+  const [dragOverIndex, setDragOverIndex] = useState(null);
+
+  const finishDragging = () => {
+    setDraggedSlideIndex(null);
+    setDragOverIndex(null);
+  };
 
   return (
     <form onSubmit={saveLandingContent} className="grid gap-6">
@@ -708,7 +731,42 @@ function HeroPanel({
         )}
         <div className="grid gap-4">
           {slides.map((slide, index) => (
-            <article key={`${slide.imagem_url}-${index}`} className="grid gap-4 border border-[#eee7da] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr_auto]">
+            <article
+              key={`${slide.imagem_url}-${index}`}
+              onDragOver={(event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+                setDragOverIndex(index);
+              }}
+              onDragLeave={() => setDragOverIndex((current) => (current === index ? null : current))}
+              onDrop={(event) => {
+                event.preventDefault();
+                const sourceIndex = draggedSlideIndex ?? Number(event.dataTransfer.getData("text/plain"));
+                if (Number.isInteger(sourceIndex)) reorderHeroSlide(sourceIndex, index);
+                finishDragging();
+              }}
+              className={`grid gap-4 border bg-[#fbfaf7] p-4 transition md:grid-cols-[auto_220px_1fr_auto] ${
+                dragOverIndex === index
+                  ? "border-[#1a3d2b] shadow-[0_14px_40px_rgba(26,61,43,0.14)]"
+                  : "border-[#eee7da]"
+              } ${draggedSlideIndex === index ? "opacity-55" : ""}`}
+            >
+              <button
+                type="button"
+                draggable={slides.length > 1 && !isSaving}
+                onDragStart={(event) => {
+                  setDraggedSlideIndex(index);
+                  event.dataTransfer.effectAllowed = "move";
+                  event.dataTransfer.setData("text/plain", String(index));
+                }}
+                onDragEnd={finishDragging}
+                disabled={slides.length <= 1 || isSaving}
+                className="flex h-full min-h-12 cursor-grab items-center justify-center rounded-sm border border-[#d8cfbd] bg-white px-3 text-[#1a3d2b] transition hover:bg-[#1a3d2b] hover:text-white active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-35 md:min-h-36"
+                aria-label={`Arrastar slide ${index + 1} para reordenar`}
+                title="Arraste para mudar a ordem"
+              >
+                <GripVertical className="h-5 w-5" aria-hidden="true" />
+              </button>
               <ImagePreview src={slide.imagem_url} alt={slide.titulo || `Slide ${index + 1}`} className="h-36" />
               <div className="grid gap-3">
                 <TextInput label={`Título do slide ${index + 1}`} value={slide.titulo} onChange={(value) => updateHeroSlide(index, "titulo", value)} />

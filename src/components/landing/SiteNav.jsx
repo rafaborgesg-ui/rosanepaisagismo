@@ -179,11 +179,15 @@ export default function SiteNav({ activeLink = "" } = {}) {
           aria-label="Rosane Borges Paisagismo"
           onClick={closeMenu}
         >
-          {logoTopo && !isHome ? (
+          {logoTopo ? (
             <img
               src={logoTopo}
               alt="Rosane Borges Paisagismo"
-              className="w-auto object-contain brightness-0 invert drop-shadow-[0_2px_16px_rgba(0,0,0,0.42)]"
+              className={`w-auto object-contain ${
+                headerIsLight
+                  ? "brightness-0 opacity-80 drop-shadow-none"
+                  : "brightness-0 invert drop-shadow-[0_2px_16px_rgba(0,0,0,0.42)]"
+              }`}
               style={{ height: `${logoSize * 0.36}px`, maxWidth: "220px" }}
             />
           ) : (
