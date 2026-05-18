@@ -728,6 +728,7 @@ function SettingsPanel({ landingForm, updateLandingField, uploadLandingImage, sa
           <span className={labelClass}>Logo do topo</span>
           <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4">
             <ImagePreview src={landingForm.logo_topo_url} alt="Logo do topo" className="h-20" />
+            <AssetPath value={landingForm.logo_topo_url} />
             <ImageUploadButton
               label={landingForm.logo_topo_url ? "Trocar logo" : "Enviar logo"}
               disabled={!isAuthenticated || isSaving}
@@ -740,6 +741,7 @@ function SettingsPanel({ landingForm, updateLandingField, uploadLandingImage, sa
           <span className={labelClass}>Logo do rodapé</span>
           <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4">
             <ImagePreview src={landingForm.logo_rodape_url} alt="Logo do rodapé" className="h-20" />
+            <AssetPath value={landingForm.logo_rodape_url} />
             <ImageUploadButton
               label={landingForm.logo_rodape_url ? "Trocar logo" : "Enviar logo"}
               disabled={!isAuthenticated || isSaving}
@@ -971,6 +973,17 @@ function ImagePreview({ src, alt, className = "h-32" }) {
           Sem foto
         </div>
       )}
+    </div>
+  );
+}
+
+function AssetPath({ value }) {
+  return (
+    <div className="rounded-sm border border-[#e4dccd] bg-white px-3 py-2">
+      <p className="text-[0.58rem] font-semibold uppercase tracking-[0.16em] text-[#8d753f]">Caminho atual</p>
+      <p className="mt-1 break-all font-mono text-[0.68rem] leading-5 text-stone-500">
+        {value || "Nenhuma imagem definida"}
+      </p>
     </div>
   );
 }

@@ -27,7 +27,7 @@ export default function Portfolio() {
   const filteredProjects = useMemo(() => {
     if (filter === "Todos") return premiumProjects;
     return premiumProjects.filter((project) => project.category === filter);
-  }, [filter]);
+  }, [filter, premiumProjects]);
 
   return (
     <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">

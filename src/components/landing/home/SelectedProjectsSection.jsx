@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import PremiumLink from "@/components/landing/home/PremiumLink";
-import { labelClass, selectedProjects } from "@/components/landing/home/landingContent";
+import { labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
+import { usePortfolioProjects } from "@/lib/portfolioStorage";
 
 const cardLayout = [
   "md:col-start-1 md:row-start-1",
@@ -19,6 +20,12 @@ const imageLayout = [
 ];
 
 export default function SelectedProjectsSection({ reducedMotion = false }) {
+  const { projects } = usePortfolioProjects();
+  const selectedProjects = projects.slice(0, 4).map((project) => ({
+    ...project,
+    image: project.cover,
+  }));
+
   return (
     <section id="projetos" className="bg-[#0d100d] px-4 py-20 text-white md:py-28">
       <div className="mx-auto w-[min(100%,1180px)]">
