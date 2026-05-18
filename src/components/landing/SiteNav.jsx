@@ -27,8 +27,10 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const brandRef = useRef(null);
   const heroBrandRef = useRef(null);
   const scrolledRef = useRef(false);
+  const brandSettledRef = useRef(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isBrandSettled, setIsBrandSettled] = useState(false);
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.innerWidth < 768;
@@ -46,6 +48,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
   useEffect(() => {
     if (activeLink !== "inicio" || isMobile) {
       setIsScrolled(isMobile);
+      setIsBrandSettled(false);
       const brand = brandRef.current;
       if (brand) {
         brand.style.left = "";
@@ -82,16 +85,20 @@ export default function SiteNav({ activeLink = "" } = {}) {
       const endLeft = mobile ? 20 : 40;
       const endTop = mobile ? 20 : 19;
       const endHeight = mobile ? 38 : 48;
-      const startOffset = window.innerHeight * 0.73;
+      const startOffset = Math.max(window.innerHeight * 0.74, 600);
       const progress = Math.min(1, Math.max(0, window.scrollY / startOffset));
-      const startScale = 5.7;
+      const isSettled = progress >= 0.995;
+      if (isSettled !== brandSettledRef.current) {
+        brandSettledRef.current = isSettled;
+        setIsBrandSettled(isSettled);
+      }
+
+      const startScale = 5.25;
       const scale = startScale - (startScale - 1) * progress;
       const y = Math.max(0, startOffset - window.scrollY);
-      const brand = brandRef.current;
       const heroBrand = heroBrandRef.current;
 
       if (heroBrand) {
-        const isSettled = progress >= 0.995;
         heroBrand.style.left = `${endLeft}px`;
         heroBrand.style.top = `${endTop}px`;
         heroBrand.style.height = `${endHeight}px`;
@@ -129,6 +136,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const showCompactLinks = !menuOpen && (!isHome || isScrolled);
   const headerHasSurface = menuOpen || isMobile || !isHome || isScrolled;
   const headerIsLight = isMobile && !menuOpen;
+  const showHeaderBrand = !isHome || isMobile || menuOpen || isBrandSettled || isScrolled;
   const textGlowClass = headerIsLight ? "" : "[text-shadow:0_2px_18px_rgba(0,0,0,0.38)]";
 
   const closeMenu = () => setMenuOpen(false);
@@ -166,7 +174,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
           ref={brandRef}
           to="/"
           className={`rb-site-brand flex h-10 max-w-[205px] items-center md:h-12 md:max-w-[320px] ${
-            isHome && !isMobile && !isScrolled && !menuOpen ? "pointer-events-none opacity-0" : "opacity-100"
+            showHeaderBrand ? "opacity-100" : "pointer-events-none opacity-0"
           }`}
           aria-label="Rosane Borges Paisagismo"
           onClick={closeMenu}

@@ -2,15 +2,12 @@ import { useEffect, useState } from "react";
 
 const PRELOAD_DURATION = 4700;
 const FADE_DURATION = 720;
-const PRELOADER_SESSION_KEY = "rbp-preloader-seen";
+const PRELOADER_RUNTIME_KEY = "__rbpPreloaderPlayed";
 
 export default function SitePreloader() {
   const [hasAlreadyPlayed] = useState(() => {
-    try {
-      return window.sessionStorage.getItem(PRELOADER_SESSION_KEY) === "true";
-    } catch {
-      return false;
-    }
+    if (typeof window === "undefined") return false;
+    return window[PRELOADER_RUNTIME_KEY] === true;
   });
   const [isFading, setIsFading] = useState(false);
   const [isVisible, setIsVisible] = useState(!hasAlreadyPlayed);
@@ -58,11 +55,7 @@ export default function SitePreloader() {
 
     const release = () => {
       locked = false;
-      try {
-        window.sessionStorage.setItem(PRELOADER_SESSION_KEY, "true");
-      } catch {
-        // Private browsing or blocked storage can ignore this.
-      }
+      window[PRELOADER_RUNTIME_KEY] = true;
       root.classList.remove("rbp-preloading");
       body.classList.remove("rbp-preloading");
       window.requestAnimationFrame(restoreDestination);
