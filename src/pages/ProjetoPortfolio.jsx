@@ -16,8 +16,21 @@ import { usePortfolioProjects } from "@/lib/portfolioStorage";
 export default function ProjetoPortfolio() {
   const reducedMotion = useReducedMotion();
   const { slug } = useParams();
-  const premiumProjects = usePortfolioProjects();
+  const { projects: premiumProjects, isLoading } = usePortfolioProjects();
   const project = premiumProjects.find((item) => item.slug === slug);
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#f8f6f2] text-[#171914]">
+        <SiteNav activeLink="portfolio" />
+        <main className="flex min-h-screen items-center justify-center px-6 pt-28">
+          <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#8f7b55]">
+            Carregando projeto
+          </p>
+        </main>
+      </div>
+    );
+  }
 
   if (!project) {
     return <Navigate to="/portfolio" replace />;

@@ -1,8 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
 import { motion } from "framer-motion";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function HeroSection({ reducedMotion = false }) {
-  const slides = useMemo(
+  const content = useLandingContent();
+  const defaultSlides = useMemo(
     () => [
       {
         src: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg",
@@ -23,6 +25,18 @@ export default function HeroSection({ reducedMotion = false }) {
     ],
     []
   );
+  const slides = useMemo(() => {
+    const adminSlides = Array.isArray(content?.slides)
+      ? content.slides
+          .map((slide) => ({
+            src: slide.imagem_url || slide.src || slide.image || "",
+            alt: slide.titulo || slide.alt || "Projeto de paisagismo Rosane Borges",
+          }))
+          .filter((slide) => slide.src)
+      : [];
+
+    return adminSlides.length ? adminSlides : defaultSlides;
+  }, [content?.slides, defaultSlides]);
   const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {

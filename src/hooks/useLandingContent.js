@@ -1,13 +1,23 @@
 import { useState, useEffect } from "react";
-import { api } from "@/api/apiService";
+import { getLandingContentRecord } from "@/lib/landingContentStorage";
 
 export function useLandingContent() {
   const [content, setContent] = useState(null);
 
   useEffect(() => {
-    api.entities.LandingContent.list().then(records => {
-      if (records.length > 0) setContent(records[0]);
-    });
+    let active = true;
+
+    getLandingContentRecord()
+      .then((record) => {
+        if (active && record) setContent(record);
+      })
+      .catch(() => {
+        if (active) setContent(null);
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   return content;

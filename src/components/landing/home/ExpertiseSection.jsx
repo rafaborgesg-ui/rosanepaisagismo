@@ -1,8 +1,18 @@
 import { motion } from "framer-motion";
 import { expertise, labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function ExpertiseSection({ reducedMotion = false }) {
+  const content = useLandingContent();
+  const adminServices = [1, 2, 3]
+    .map((index) => ({
+      title: content?.[`servico${index}_titulo`],
+      detail: content?.[`servico${index}_desc`],
+    }))
+    .filter((item) => item.title && item.detail);
+  const services = adminServices.length ? [...adminServices, ...expertise.slice(3)] : expertise;
+
   return (
     <section id="servicos" className="bg-white px-4 py-20 md:py-28">
       <div className="mx-auto w-[min(100%,1180px)]">
@@ -13,7 +23,7 @@ export default function ExpertiseSection({ reducedMotion = false }) {
           </h2>
         </div>
         <div className="grid gap-3">
-          {expertise.map((item, index) => (
+          {services.map((item, index) => (
             <motion.article
               key={item.title}
               {...getInViewProps(reducedMotion, {

@@ -14,7 +14,7 @@ import { trackEvent } from "@/lib/tracking";
 
 export default function Portfolio() {
   const reducedMotion = useReducedMotion();
-  const premiumProjects = usePortfolioProjects();
+  const { projects: premiumProjects } = usePortfolioProjects();
   const [filter, setFilter] = useState("Todos");
 
   useEffect(() => {

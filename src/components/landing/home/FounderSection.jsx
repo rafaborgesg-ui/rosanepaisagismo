@@ -2,8 +2,11 @@ import { motion } from "framer-motion";
 import { Check } from "lucide-react";
 import { labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function FounderSection({ reducedMotion = false }) {
+  const content = useLandingContent();
+
   return (
     <section id="sobre" className="bg-white px-4 py-20 md:py-28">
       <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
@@ -12,7 +15,7 @@ export default function FounderSection({ reducedMotion = false }) {
           className="overflow-hidden rounded-[8px] bg-[#111913]"
         >
           <img
-            src="/brand/rosane-borges.jpg"
+            src={content?.sobre_imagem_url || "/brand/rosane-borges.jpg"}
             alt="Rosane Borges em retrato institucional"
             loading="lazy"
             decoding="async"
@@ -20,15 +23,14 @@ export default function FounderSection({ reducedMotion = false }) {
           />
         </motion.figure>
         <motion.div {...getInViewProps(reducedMotion, { offset: 26 })}>
-          <p className={labelClass}>Rosane Borges</p>
+          <p className={labelClass}>{content?.sobre_cargo || "Rosane Borges"}</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Base acadêmica, critério de obra e leitura sensível da natureza.
+            {content?.sobre_titulo || "Base acadêmica, critério de obra e leitura sensível da natureza."}
           </h2>
           <p className="mt-7 text-lg leading-8 text-[#4b5248]">
-            Rosane une formação em agronomia, doutorado em Produção Vegetal e
-            experiência de campo para desenhar jardins que amadurecem com elegância.
-            Cada escolha considera solo, insolação, espécie, escala e manutenção
-            prevista.
+            {content?.sobre_frase ||
+              "Rosane une formação em agronomia, doutorado em Produção Vegetal e experiência de campo para desenhar jardins que amadurecem com elegância."}{" "}
+            {content?.sobre_texto || "Cada escolha considera solo, insolação, espécie, escala e manutenção prevista."}
           </p>
           <div className="mt-9 grid gap-3">
             {[

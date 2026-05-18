@@ -3,8 +3,8 @@ import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 const defaultBeforeAfter = {
   before: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p3_i2.jpg",
   after: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p4_i2.jpg",
-  labelBefore: "Potencial bruto",
-  labelAfter: "Experiência final",
+  labelBefore: "Antes",
+  labelAfter: "Depois",
 };
 
 export default function TransformationSection({ project = null }) {
@@ -17,8 +17,8 @@ export default function TransformationSection({ project = null }) {
           <BeforeAfterSlider
             before={beforeAfter.before}
             after={beforeAfter.after}
-            labelBefore={beforeAfter.labelBefore || "Potencial bruto"}
-            labelAfter={beforeAfter.labelAfter || "Experiência final"}
+            labelBefore={beforeAfter.labelBefore || "Antes"}
+            labelAfter={beforeAfter.labelAfter || "Depois"}
             className="rounded-[16px] md:rounded-[20px] md:aspect-[16/7]"
           />
         </div>
