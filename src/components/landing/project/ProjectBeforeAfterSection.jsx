@@ -2,7 +2,7 @@ import BeforeAfterSlider from "@/components/landing/BeforeAfterSlider";
 import { labelClass } from "@/components/landing/project/projectShared";
 
 export default function ProjectBeforeAfterSection({ project }) {
-  if (!project.beforeAfter) return null;
+  if (!project.beforeAfter?.before || !project.beforeAfter?.after) return null;
 
   return (
     <section className="px-4 py-20 md:py-28">

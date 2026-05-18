@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { getInViewProps } from "@/components/landing/home/motion";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
-const testimonials = [
+const defaultTestimonials = [
   {
     quote:
       "O escritório da Rosane transformou completamente a percepção do nosso imóvel. A residência valorizou mais de 30% após a execução do projeto.",
@@ -25,7 +26,30 @@ const testimonials = [
   },
 ];
 
+function getInitials(name = "") {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((item) => item[0])
+    .join("")
+    .toUpperCase();
+}
+
 export default function TestimonialsSection({ reducedMotion = false }) {
+  const content = useLandingContent();
+  const homeTexts = content?.home_texts || {};
+  const testimonials = defaultTestimonials.map((testimonial, index) => {
+    const number = index + 1;
+    const name = homeTexts[`testimonial_${number}_name`] || testimonial.name;
+    return {
+      quote: homeTexts[`testimonial_${number}_quote`] || testimonial.quote,
+      name,
+      role: homeTexts[`testimonial_${number}_role`] || testimonial.role,
+      initials: getInitials(name) || testimonial.initials,
+    };
+  });
+
   return (
     <section className="bg-white px-4 py-16 md:py-24">
       <div className="mx-auto grid w-[min(100%,1280px)] gap-6 lg:grid-cols-3">

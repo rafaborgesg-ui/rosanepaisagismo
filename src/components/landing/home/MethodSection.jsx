@@ -1,21 +1,25 @@
 import { motion } from "framer-motion";
 import { process } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function MethodSection({ reducedMotion = false }) {
+  const content = useLandingContent();
+  const homeTexts = content?.home_texts || {};
+
   return (
     <section id="metodo" className="bg-[#101812] px-4 py-20 text-white md:py-28">
       <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.85fr_1.15fr]">
         <div>
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d3b473]">
-            Método
+            {homeTexts.method_label || "Método"}
           </p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Um fluxo claro entre conceito, técnica e implantação.
+            {homeTexts.method_title || "Um fluxo claro entre conceito, técnica e implantação."}
           </h2>
           <p className="mt-6 text-lg leading-8 text-white/68">
-            O objetivo é reduzir ruído nas decisões e proteger o resultado final do
-            jardim, da primeira reunião até a fase de maturação.
+            {homeTexts.method_text ||
+              "O objetivo é reduzir ruído nas decisões e proteger o resultado final do jardim, da primeira reunião até a fase de maturação."}
           </p>
         </div>
         <div className="grid gap-4">

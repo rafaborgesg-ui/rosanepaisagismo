@@ -1,4 +1,5 @@
 import { MessageCircle } from "lucide-react";
+import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function ConciergeSection({
   lead,
@@ -7,12 +8,15 @@ export default function ConciergeSection({
   onBriefingStarted,
   isSubmitting = false,
 }) {
+  const content = useLandingContent();
+  const homeTexts = content?.home_texts || {};
+
   return (
     <section id="contato-concierge" className="bg-white px-4 py-20 pb-32 md:py-28 md:pb-28">
       <div className="mx-auto grid w-[min(100%,1180px)] overflow-hidden rounded-[8px] border border-[#dfd9cc] bg-[#111913] text-white shadow-[0_30px_90px_rgba(36,35,28,0.16)] lg:grid-cols-[0.9fr_1.1fr]">
         <div className="relative min-h-[360px]">
           <img
-            src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"
+            src={homeTexts.concierge_image_url || "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"}
             alt="Composição de jardim em área social"
             loading="lazy"
             decoding="async"
@@ -22,14 +26,14 @@ export default function ConciergeSection({
         </div>
         <div className="p-7 md:p-10 lg:p-12">
           <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d3b473]">
-            Atendimento
+            {homeTexts.concierge_label || "Atendimento"}
           </p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-5xl">
-            Vamos avaliar o potencial do seu projeto?
+            {homeTexts.concierge_title || "Vamos avaliar o potencial do seu projeto?"}
           </h2>
           <p className="mt-5 leading-7 text-white/68">
-            Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com
-            o próximo passo mais adequado para seu contexto.
+            {homeTexts.concierge_text ||
+              "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto."}
           </p>
           <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-8 grid gap-3">
             <input
@@ -143,7 +147,7 @@ export default function ConciergeSection({
               disabled={isSubmitting}
               className="mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
             >
-              {isSubmitting ? "Enviando..." : "Enviar briefing inicial"}
+              {isSubmitting ? "Enviando..." : homeTexts.concierge_button || "Enviar briefing inicial"}
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>

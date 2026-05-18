@@ -32,6 +32,7 @@ function fromRow(row) {
     beforeAfter: row.before_after || undefined,
     sortOrder: row.sort_order || 0,
     isPublished: row.is_published !== false,
+    isFeaturedHome: row.is_featured_home === true,
   };
 }
 
@@ -54,6 +55,7 @@ function toRow(project, index = 0) {
     before_after: project.beforeAfter || null,
     sort_order: Number.isFinite(sortOrder) ? sortOrder : (index + 1) * 10,
     is_published: project.isPublished !== false,
+    is_featured_home: project.isFeaturedHome === true,
   };
 }
 

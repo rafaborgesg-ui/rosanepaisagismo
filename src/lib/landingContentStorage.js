@@ -2,6 +2,50 @@ import { supabase } from "@/lib/supabaseClient";
 
 const TABLE = "landing_content";
 
+export const defaultHomeTexts = {
+  selected_label: "Projetos selecionados",
+  selected_title: "Obras, estudos e implantações com assinatura botânica.",
+  selected_cta: "Ver acervo completo",
+  services_label: "Nossos Serviços",
+  services_title: "Frentes de atuação para projetos que exigem nível alto de execução.",
+  method_label: "Método",
+  method_title: "Um fluxo claro entre conceito, técnica e implantação.",
+  method_text:
+    "O objetivo é reduzir ruído nas decisões e proteger o resultado final do jardim, da primeira reunião até a fase de maturação.",
+  deliverables_label: "Entregáveis",
+  deliverables_title: "O valor do projeto está no que ele entrega para a obra.",
+  deliverables_text:
+    "Cada etapa transforma decisão estética em diretriz técnica. O cliente entende escopo, prazos e caminho de implantação com segurança.",
+  deliverables_items: [
+    "Estudo 3D com ajustes de refinamento.",
+    "Projeto executivo em Layout/SketchUp ou AutoCAD.",
+    "Manual técnico de implantação e manutenção.",
+    "Especificação de espécies, vasos, jardineiras e materiais.",
+    "Curadoria de fornecedores e composição de acabamentos.",
+    "Indicação de iluminação de jardim e infraestrutura para irrigação.",
+    "Orçamento aproximado de implantação por etapa.",
+    "Visitas técnicas conforme escopo contratado.",
+  ],
+  testimonial_1_quote:
+    "O escritório da Rosane transformou completamente a percepção do nosso imóvel. A residência valorizou mais de 30% após a execução do projeto.",
+  testimonial_1_name: "Ana Paula Ferreira",
+  testimonial_1_role: "Proprietária — Alphaville, SP",
+  testimonial_2_quote:
+    "A consultoria foi cirúrgica. O jardim biofílico da nossa clínica criou uma experiência de conforto e luxo única para os nossos pacientes.",
+  testimonial_2_name: "Dr. Ricardo Mota",
+  testimonial_2_role: "Clínica premium — BH, MG",
+  testimonial_3_quote:
+    "Uma parceria de altíssimo nível. A entrega impecável e o design sofisticado superaram todas as expectativas dos nossos compradores.",
+  testimonial_3_name: "Construtora Ávila",
+  testimonial_3_role: "Condomínio de luxo — SP",
+  concierge_label: "Atendimento",
+  concierge_title: "Vamos avaliar o potencial do seu projeto?",
+  concierge_text:
+    "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto.",
+  concierge_image_url: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg",
+  concierge_button: "Enviar briefing inicial",
+};
+
 export const defaultHeroSlides = [
   {
     titulo: "Fachada residencial com paisagismo autoral",
@@ -40,6 +84,7 @@ export const defaultLandingContent = {
   servico3_desc: "Para clientes que priorizam execução orientada, padrão visual e menor risco na obra.",
   whatsapp_numero: "5538999313930",
   email_contato: "rosanepaisagismo@gmail.com",
+  home_texts: defaultHomeTexts,
 };
 
 export async function getLandingContentRecord() {

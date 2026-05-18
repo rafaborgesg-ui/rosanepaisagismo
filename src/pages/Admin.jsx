@@ -21,6 +21,7 @@ import SiteNav from "@/components/landing/SiteNav";
 import { portfolioCategories } from "@/data/premiumProjects";
 import { useAuth } from "@/lib/AuthContext";
 import {
+  defaultHomeTexts,
   defaultLandingContent,
   getLandingContentRecord,
   saveLandingContentRecord,
@@ -56,8 +57,15 @@ const emptyProject = {
   challenge: "",
   solution: "",
   plants: [],
+  beforeAfter: {
+    before: "",
+    after: "",
+    labelBefore: "Antes",
+    labelAfter: "Depois",
+  },
   sortOrder: 0,
   isPublished: true,
+  isFeaturedHome: false,
 };
 
 const inputClass =
@@ -95,6 +103,7 @@ function toLandingPayload(landingForm) {
     servico3_desc: landingForm.servico3_desc || null,
     whatsapp_numero: landingForm.whatsapp_numero || null,
     email_contato: landingForm.email_contato || null,
+    home_texts: { ...defaultHomeTexts, ...(landingForm.home_texts || {}) },
   };
 }
 
@@ -107,6 +116,13 @@ function normalizeProject(project, existingProjects) {
     slug = `${baseSlug}-${count}`;
     count += 1;
   }
+
+  const beforeAfter = {
+    before: project.beforeAfter?.before || "",
+    after: project.beforeAfter?.after || "",
+    labelBefore: "Antes",
+    labelAfter: "Depois",
+  };
 
   return {
     id: project.id,
@@ -122,8 +138,10 @@ function normalizeProject(project, existingProjects) {
     challenge: project.challenge.trim(),
     solution: project.solution.trim(),
     plants: textToList(project.plantsText),
+    beforeAfter: beforeAfter.before && beforeAfter.after ? beforeAfter : null,
     sortOrder: Number(project.sortOrder) || 0,
     isPublished: project.isPublished !== false,
+    isFeaturedHome: project.isFeaturedHome === true,
   };
 }
 
@@ -167,7 +185,11 @@ export default function Admin() {
       try {
         const record = await getLandingContentRecord();
         if (!active) return;
-        setLandingForm({ ...defaultLandingContent, ...(record || {}) });
+        setLandingForm({
+          ...defaultLandingContent,
+          ...(record || {}),
+          home_texts: { ...defaultHomeTexts, ...(record?.home_texts || {}) },
+        });
       } catch (currentError) {
         if (active) setMessage(currentError.message || "Não foi possível carregar conteúdo do site.");
       } finally {
@@ -230,6 +252,17 @@ export default function Admin() {
     setLandingForm((current) => ({ ...current, [field]: value }));
   };
 
+  const updateHomeTextField = (field, value) => {
+    setLandingForm((current) => ({
+      ...current,
+      home_texts: {
+        ...defaultHomeTexts,
+        ...(current.home_texts || {}),
+        [field]: value,
+      },
+    }));
+  };
+
   const updateHeroSlide = (index, field, value) => {
     setLandingForm((current) => ({
       ...current,
@@ -281,6 +314,20 @@ export default function Admin() {
     }
   };
 
+  const uploadHomeTextImage = async (field, file, folder = "site") => {
+    if (!requireLogin("enviar imagem")) return;
+    setIsSaving(true);
+    try {
+      const url = await uploadSiteImage(file, { folder });
+      updateHomeTextField(field, url);
+      setMessage("Imagem enviada. Clique em Salvar textos para publicar a alteração.");
+    } catch (currentError) {
+      setMessage(currentError.message || "Não foi possível enviar a imagem.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const startCreate = () => {
     setActiveModule("projects");
     setEditingSlug("new");
@@ -300,6 +347,13 @@ export default function Admin() {
     setMessage("");
     setProjectForm({
       ...project,
+      beforeAfter: {
+        before: project.beforeAfter?.before || "",
+        after: project.beforeAfter?.after || "",
+        labelBefore: "Antes",
+        labelAfter: "Depois",
+      },
+      isFeaturedHome: project.isFeaturedHome === true,
       originalSlug: project.slug,
       galleryText: listToText(project.gallery),
       plantsText: listToText(project.plants),
@@ -322,6 +376,13 @@ export default function Admin() {
       const url = await uploadSiteImage(file, { folder: "projects" });
       if (field === "cover") {
         updateProjectField("cover", url);
+      } else if (field === "before" || field === "after") {
+        updateProjectField("beforeAfter", {
+          ...(projectForm.beforeAfter || {}),
+          [field]: url,
+          labelBefore: "Antes",
+          labelAfter: "Depois",
+        });
       } else {
         const gallery = textToList(projectForm.galleryText);
         const nextGallery =
@@ -557,7 +618,9 @@ export default function Admin() {
             <TextsPanel
               landingForm={landingForm}
               updateLandingField={updateLandingField}
+              updateHomeTextField={updateHomeTextField}
               uploadLandingImage={uploadLandingImage}
+              uploadHomeTextImage={uploadHomeTextImage}
               saveLandingContent={saveLandingContent}
               isSaving={isSaving}
               isAuthenticated={isAuthenticated}
@@ -681,11 +744,24 @@ function HeroPanel({
   );
 }
 
-function TextsPanel({ landingForm, updateLandingField, uploadLandingImage, saveLandingContent, isSaving, isAuthenticated }) {
+
+function TextsPanel({
+  landingForm,
+  updateLandingField,
+  updateHomeTextField,
+  uploadLandingImage,
+  uploadHomeTextImage,
+  saveLandingContent,
+  isSaving,
+  isAuthenticated,
+}) {
+  const homeTexts = { ...defaultHomeTexts, ...(landingForm.home_texts || {}) };
+
   return (
     <form onSubmit={saveLandingContent} className="grid gap-6">
-      <PanelHeader title="Textos da página" description="Edite blocos institucionais e serviços principais salvos no Supabase." />
+      <PanelHeader title="Textos da página" description="Edite todas as seções principais da home salvas no Supabase." />
       <div className="grid gap-5 border border-[#ded7c8] bg-white p-6">
+        <AdminSectionTitle title="Sobre" description="Texto institucional, assinatura e foto da Rosane." />
         <div className="grid gap-5 md:grid-cols-2">
           <TextInput label="Título sobre" value={landingForm.sobre_titulo} onChange={(value) => updateLandingField("sobre_titulo", value)} />
           <TextInput label="Cargo / assinatura" value={landingForm.sobre_cargo} onChange={(value) => updateLandingField("sobre_cargo", value)} />
@@ -703,6 +779,21 @@ function TextsPanel({ landingForm, updateLandingField, uploadLandingImage, saveL
             />
           </div>
         </div>
+
+        <AdminSectionTitle title="Projetos selecionados" description="Chamada da seção de destaques da página inicial." />
+        <div className="grid gap-5 md:grid-cols-3">
+          <TextInput label="Etiqueta" value={homeTexts.selected_label} onChange={(value) => updateHomeTextField("selected_label", value)} />
+          <TextInput label="Botão" value={homeTexts.selected_cta} onChange={(value) => updateHomeTextField("selected_cta", value)} />
+          <div className="md:col-span-3">
+            <TextArea label="Título da seção" value={homeTexts.selected_title} onChange={(value) => updateHomeTextField("selected_title", value)} />
+          </div>
+        </div>
+
+        <AdminSectionTitle title="Nossos Serviços" description="Título geral e três serviços principais." />
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextInput label="Etiqueta serviços" value={homeTexts.services_label} onChange={(value) => updateHomeTextField("services_label", value)} />
+          <TextArea label="Título serviços" value={homeTexts.services_title} onChange={(value) => updateHomeTextField("services_title", value)} />
+        </div>
         <div className="grid gap-5 md:grid-cols-3">
           <TextInput label="Serviço 1" value={landingForm.servico1_titulo} onChange={(value) => updateLandingField("servico1_titulo", value)} />
           <TextInput label="Serviço 2" value={landingForm.servico2_titulo} onChange={(value) => updateLandingField("servico2_titulo", value)} />
@@ -713,9 +804,79 @@ function TextsPanel({ landingForm, updateLandingField, uploadLandingImage, saveL
           <TextArea label="Descrição serviço 2" value={landingForm.servico2_desc} onChange={(value) => updateLandingField("servico2_desc", value)} />
           <TextArea label="Descrição serviço 3" value={landingForm.servico3_desc} onChange={(value) => updateLandingField("servico3_desc", value)} />
         </div>
+
+        <AdminSectionTitle title="Método" description="Chamada e texto da seção de processo." />
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextInput label="Etiqueta método" value={homeTexts.method_label} onChange={(value) => updateHomeTextField("method_label", value)} />
+          <TextArea label="Título método" value={homeTexts.method_title} onChange={(value) => updateHomeTextField("method_title", value)} />
+        </div>
+        <TextArea label="Texto método" value={homeTexts.method_text} onChange={(value) => updateHomeTextField("method_text", value)} />
+
+        <AdminSectionTitle title="Entregáveis" description="Conteúdo da seção de valor entregue na obra." />
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextInput label="Etiqueta entregáveis" value={homeTexts.deliverables_label} onChange={(value) => updateHomeTextField("deliverables_label", value)} />
+          <TextArea label="Título entregáveis" value={homeTexts.deliverables_title} onChange={(value) => updateHomeTextField("deliverables_title", value)} />
+        </div>
+        <TextArea label="Texto entregáveis" value={homeTexts.deliverables_text} onChange={(value) => updateHomeTextField("deliverables_text", value)} />
+        <TextArea
+          label="Lista de entregáveis, um por linha"
+          value={listToText(homeTexts.deliverables_items)}
+          onChange={(value) => updateHomeTextField("deliverables_items", textToList(value))}
+        />
+
+        <AdminSectionTitle title="Depoimentos" description="Provas sociais exibidas na página inicial." />
+        {[1, 2, 3].map((index) => (
+          <div key={index} className="grid gap-5 border border-[#eee7da] bg-[#fbfaf7] p-4 md:grid-cols-2">
+            <div className="md:col-span-2">
+              <TextArea
+                label={`Depoimento ${index}`}
+                value={homeTexts[`testimonial_${index}_quote`]}
+                onChange={(value) => updateHomeTextField(`testimonial_${index}_quote`, value)}
+              />
+            </div>
+            <TextInput
+              label={`Nome depoimento ${index}`}
+              value={homeTexts[`testimonial_${index}_name`]}
+              onChange={(value) => updateHomeTextField(`testimonial_${index}_name`, value)}
+            />
+            <TextInput
+              label={`Descrição depoimento ${index}`}
+              value={homeTexts[`testimonial_${index}_role`]}
+              onChange={(value) => updateHomeTextField(`testimonial_${index}_role`, value)}
+            />
+          </div>
+        ))}
+
+        <AdminSectionTitle title="CTA final" description="Bloco de atendimento antes do rodapé." />
+        <div className="grid gap-5 md:grid-cols-2">
+          <TextInput label="Etiqueta CTA" value={homeTexts.concierge_label} onChange={(value) => updateHomeTextField("concierge_label", value)} />
+          <TextInput label="Botão CTA" value={homeTexts.concierge_button} onChange={(value) => updateHomeTextField("concierge_button", value)} />
+        </div>
+        <TextArea label="Título CTA" value={homeTexts.concierge_title} onChange={(value) => updateHomeTextField("concierge_title", value)} />
+        <TextArea label="Texto CTA" value={homeTexts.concierge_text} onChange={(value) => updateHomeTextField("concierge_text", value)} />
+        <div>
+          <span className={labelClass}>Imagem do CTA final</span>
+          <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr]">
+            <ImagePreview src={homeTexts.concierge_image_url} alt="Imagem do CTA final" className="h-36" />
+            <ImageUploadButton
+              label={homeTexts.concierge_image_url ? "Trocar foto" : "Enviar foto"}
+              disabled={!isAuthenticated || isSaving}
+              onUpload={(file) => uploadHomeTextImage("concierge_image_url", file, "home")}
+            />
+          </div>
+        </div>
         <SaveButton isSaving={isSaving} isAuthenticated={isAuthenticated} label="Salvar textos" />
       </div>
     </form>
+  );
+}
+
+function AdminSectionTitle({ title, description }) {
+  return (
+    <div className="border-t border-[#eee7da] pt-6 first:border-t-0 first:pt-0">
+      <p className={labelClass}>{title}</p>
+      <p className="mt-2 text-sm leading-6 text-stone-600">{description}</p>
+    </div>
   );
 }
 
@@ -807,6 +968,7 @@ function ProjectsPanel(props) {
                 <div className="flex items-center gap-2">
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#9b7b2f]">{project.category}</p>
                   {project.isPublished === false && <span className="text-[0.6rem] uppercase tracking-[0.12em] text-stone-400">Rascunho</span>}
+                  {project.isFeaturedHome && <span className="text-[0.6rem] uppercase tracking-[0.12em] text-[#1a3d2b]">Destaque home</span>}
                 </div>
                 <h3 className="mt-1 truncate font-serif-custom text-xl text-[#1a3d2b]">{project.title}</h3>
                 <p className="mt-1 line-clamp-2 text-sm leading-6 text-stone-600">{project.summary}</p>
@@ -867,10 +1029,16 @@ function ProjectsPanel(props) {
               <TextInput label="Local" value={projectForm.location} onChange={(value) => updateProjectField("location", value)} />
               <TextInput label="Área" value={projectForm.area} onChange={(value) => updateProjectField("area", value)} />
               <TextInput label="Escopo" value={projectForm.scope} onChange={(value) => updateProjectField("scope", value)} />
-              <label className="flex items-center gap-3 pt-7 text-sm text-stone-700">
-                <input type="checkbox" checked={projectForm.isPublished !== false} onChange={(event) => updateProjectField("isPublished", event.target.checked)} />
-                Publicado no site
-              </label>
+              <div className="grid gap-3 pt-7">
+                <label className="flex items-center gap-3 text-sm text-stone-700">
+                  <input type="checkbox" checked={projectForm.isPublished !== false} onChange={(event) => updateProjectField("isPublished", event.target.checked)} />
+                  Publicado no site
+                </label>
+                <label className="flex items-center gap-3 text-sm text-stone-700">
+                  <input type="checkbox" checked={projectForm.isFeaturedHome === true} onChange={(event) => updateProjectField("isFeaturedHome", event.target.checked)} />
+                  Destaque página inicial
+                </label>
+              </div>
             </div>
 
             <div>
@@ -883,6 +1051,31 @@ function ProjectsPanel(props) {
                   onUpload={(file) => uploadProjectImage("cover", file)}
                 />
               </div>
+            </div>
+
+            <div>
+              <span className={labelClass}>Antes e depois</span>
+              <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-white p-4 md:grid-cols-2">
+                <div className="grid gap-3">
+                  <ImagePreview src={projectForm.beforeAfter?.before} alt="Foto antes do projeto" className="h-40" />
+                  <ImageUploadButton
+                    label={projectForm.beforeAfter?.before ? "Trocar foto antes" : "Enviar foto antes"}
+                    disabled={!isAuthenticated || isSaving}
+                    onUpload={(file) => uploadProjectImage("before", file)}
+                  />
+                </div>
+                <div className="grid gap-3">
+                  <ImagePreview src={projectForm.beforeAfter?.after} alt="Foto depois do projeto" className="h-40" />
+                  <ImageUploadButton
+                    label={projectForm.beforeAfter?.after ? "Trocar foto depois" : "Enviar foto depois"}
+                    disabled={!isAuthenticated || isSaving}
+                    onUpload={(file) => uploadProjectImage("after", file)}
+                  />
+                </div>
+              </div>
+              <p className="mt-2 text-xs leading-5 text-stone-500">
+                A comparação aparece na página individual somente quando as duas fotos estiverem preenchidas.
+              </p>
             </div>
 
             <div>

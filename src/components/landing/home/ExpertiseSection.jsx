@@ -5,6 +5,7 @@ import { useLandingContent } from "@/hooks/useLandingContent";
 
 export default function ExpertiseSection({ reducedMotion = false }) {
   const content = useLandingContent();
+  const homeTexts = content?.home_texts || {};
   const adminServices = [1, 2, 3]
     .map((index) => ({
       title: content?.[`servico${index}_titulo`],
@@ -17,9 +18,9 @@ export default function ExpertiseSection({ reducedMotion = false }) {
     <section id="servicos" className="bg-white px-4 py-20 md:py-28">
       <div className="mx-auto w-[min(100%,1180px)]">
         <div className="mb-12 max-w-3xl">
-          <p className={labelClass}>Nossos Serviços</p>
+          <p className={labelClass}>{homeTexts.services_label || "Nossos Serviços"}</p>
           <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            Frentes de atuação para projetos que exigem nível alto de execução.
+            {homeTexts.services_title || "Frentes de atuação para projetos que exigem nível alto de execução."}
           </h2>
         </div>
         <div className="grid gap-3">
