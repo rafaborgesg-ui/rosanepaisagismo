@@ -1,4 +1,3 @@
-import { serve } from "https://deno.land/x/sift@0.6.0/mod.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const SUPABASE_URL = Deno.env.get("SUPABASE_URL") || "";
@@ -89,7 +88,7 @@ const sendWithBrevo = async ({ email, nome }) => {
   return response.json();
 };
 
-serve(async (req) => {
+Deno.serve(async (req) => {
   try {
     const body = await req.json();
     const { nome, email, whatsapp } = body;
