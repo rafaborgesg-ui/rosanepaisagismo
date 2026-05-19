@@ -8,9 +8,9 @@ import { usePortfolioProjects } from "@/lib/portfolioStorage";
 
 const cardLayout = [
   "md:col-start-1 md:row-start-1",
-  "md:col-start-2 md:row-start-1 md:mt-28",
+  "md:col-start-2 md:row-start-1 md:mt-32",
   "md:col-start-1 md:row-start-2",
-  "md:col-start-2 md:row-start-2 md:mt-14",
+  "md:col-start-2 md:row-start-2 md:mt-16",
 ];
 
 const imageLayout = [
@@ -24,27 +24,32 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
   const { projects } = usePortfolioProjects();
   const content = useLandingContent();
   const homeTexts = content?.home_texts || {};
-  const featuredProjects = projects.filter((project) => project.isFeaturedHome);
-  const selectedProjects = (featuredProjects.length ? featuredProjects : projects).slice(0, 4).map((project) => ({
-    ...project,
-    image: project.cover,
+  const featuredProjects = projects.filter((p) => p.isFeaturedHome);
+  const selectedProjects = (featuredProjects.length ? featuredProjects : projects).slice(0, 4).map((p) => ({
+    ...p,
+    image: p.cover,
   }));
 
   return (
-    <section id="projetos" className="bg-[#0b0f0b] px-5 py-24 text-white md:px-10 md:py-36">
+    <section id="projetos" className="relative bg-[#0b0f0b] px-5 py-section-md text-white md:px-10">
+      {/* Gold divider */}
+      <div className="absolute inset-x-0 top-0 flex justify-center">
+        <div className="h-px w-[min(280px,50vw)] rb-luxury-hairline-gold" />
+      </div>
+
       <div className="mx-auto w-[min(100%,1320px)]">
         <motion.div
-          {...getInViewProps(reducedMotion, { offset: 26 })}
-          className="mb-16 grid gap-8 lg:grid-cols-[0.95fr_0.45fr] lg:items-end"
+          {...getInViewProps(reducedMotion, { offset: 26, blur: true })}
+          className="mb-20 grid gap-8 lg:grid-cols-[0.95fr_0.45fr] lg:items-end"
         >
           <div className="max-w-3xl">
-            <p className={labelClass}>{homeTexts.selected_label || "Projetos destacados"}</p>
-            <h2 className="mt-5 font-heading text-[clamp(3.2rem,7vw,7.6rem)] font-medium leading-[0.88] text-white">
+            <p className={labelClass}>{homeTexts.selected_label || "Projetos selecionados"}</p>
+            <h2 className="mt-6 font-heading text-[clamp(3rem,6.6vw,7.2rem)] font-medium leading-[0.88] text-white">
               {homeTexts.selected_title || "Cases de natureza, arquitetura e permanência."}
             </h2>
           </div>
           <div className="max-w-md lg:justify-self-end">
-            <p className="mb-7 text-base font-light leading-8 text-white/62">
+            <p className="mb-8 text-base font-light leading-8 text-white/56">
               Uma seleção editorial de projetos que traduzem a assinatura da marca:
               proporção, curadoria botânica e leitura sensível do imóvel.
             </p>
@@ -54,14 +59,15 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           </div>
         </motion.div>
 
-        <div className="grid gap-12 md:grid-cols-2 md:items-start md:gap-x-14 md:gap-y-20">
+        <div className="grid gap-14 md:grid-cols-2 md:items-start md:gap-x-16 md:gap-y-24">
           {selectedProjects.map((project, index) => (
             <motion.article
               key={project.slug}
               {...getInViewProps(reducedMotion, {
-                offset: 28,
-                delay: reducedMotion ? 0 : index * 0.06,
-                duration: 0.68,
+                offset: 30,
+                delay: reducedMotion ? 0 : index * 0.07,
+                duration: 0.72,
+                blur: true,
               })}
               className={cardLayout[index] || ""}
             >
@@ -70,29 +76,29 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
                 className="rb-premium-focus group block"
                 aria-label={`Ver projeto ${project.title}`}
               >
-                <div className={`relative overflow-hidden bg-[#181c19] ${imageLayout[index] || imageLayout[3]}`}>
+                <div className={`rb-cinematic-image relative overflow-hidden bg-[#181c19] ${imageLayout[index] || imageLayout[3]}`}>
                   <img
                     src={project.image}
                     alt={project.title}
                     loading="lazy"
                     decoding="async"
-                    className="h-full w-full object-cover opacity-90 grayscale-[10%] transition duration-1000 group-hover:scale-[1.045] group-hover:opacity-100 group-hover:grayscale-0"
+                    className="h-full w-full object-cover opacity-88 grayscale-[10%]"
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_52%,rgba(5,8,5,0.72))] opacity-80 transition duration-700 group-hover:opacity-45" />
-                  <span className="absolute bottom-5 left-5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white/58">
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-40" />
+                  <span className="absolute bottom-5 left-6 font-heading text-xl text-white/52 transition-transform duration-700 group-hover:translate-y-[-4px]">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="mt-5 grid gap-3 border-b border-white/12 pb-7 md:grid-cols-[1fr_auto] md:items-start">
+                <div className="mt-6 grid gap-3 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-start">
                   <div>
-                    <h3 className="font-heading text-3xl font-medium leading-none text-white md:text-4xl">
+                    <h3 className="font-heading text-[1.7rem] font-medium leading-none text-white transition-colors duration-500 group-hover:text-[#d3b473] md:text-[2rem]">
                       {project.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/56">
+                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/50">
                       {project.summary}
                     </p>
                   </div>
-                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-[#d3b473] md:pt-1">
+                  <p className="text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473] md:pt-1">
                     {project.category}
                   </p>
                 </div>
@@ -103,9 +109,9 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
 
         <motion.div
           {...getInViewProps(reducedMotion, { offset: 22 })}
-          className="mt-20 grid gap-6 border-t border-white/14 pt-9 md:grid-cols-[1fr_auto] md:items-center"
+          className="mt-24 grid gap-6 border-t border-white/12 pt-10 md:grid-cols-[1fr_auto] md:items-center"
         >
-          <p className="max-w-2xl font-heading text-3xl font-medium leading-tight text-white md:text-4xl">
+          <p className="max-w-2xl font-heading text-[1.7rem] font-medium leading-tight text-white md:text-[2.1rem]">
             Cada projeto nasce de uma leitura privada do imóvel, do estilo de vida e da arquitetura.
           </p>
           <PremiumLink to="/contato" variant="light">

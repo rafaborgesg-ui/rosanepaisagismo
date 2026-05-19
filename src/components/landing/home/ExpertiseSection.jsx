@@ -8,20 +8,17 @@ export default function ExpertiseSection({ reducedMotion = false }) {
   const content = useLandingContent();
   const homeTexts = content?.home_texts || {};
   const adminServices = [1, 2, 3]
-    .map((index) => ({
-      title: content?.[`servico${index}_titulo`],
-      detail: content?.[`servico${index}_desc`],
-    }))
-    .filter((item) => item.title && item.detail);
+    .map((i) => ({ title: content?.[`servico${i}_titulo`], detail: content?.[`servico${i}_desc`] }))
+    .filter((s) => s.title && s.detail);
   const services = adminServices.length ? [...adminServices, ...expertise.slice(3)] : expertise;
 
   return (
-    <section id="servicos" className="bg-[#f3eee4] px-5 py-24 md:px-10 md:py-36">
+    <section id="servicos" className="bg-[#f3eee4] px-5 py-section-md md:px-10">
       <div className="mx-auto w-[min(100%,1320px)]">
-        <div className="mb-14 grid gap-8 lg:grid-cols-[0.92fr_0.5fr] lg:items-end">
+        <div className="mb-16 grid gap-8 lg:grid-cols-[0.92fr_0.5fr] lg:items-end">
           <div className="max-w-4xl">
             <p className={labelClass}>{homeTexts.services_label || "Atuação"}</p>
-            <h2 className="mt-5 font-heading text-[clamp(3rem,6.8vw,7rem)] font-medium leading-[0.9] text-[#111913]">
+            <h2 className="mt-6 font-heading text-[clamp(2.8rem,6.4vw,6.6rem)] font-medium leading-[0.9] text-[#111913]">
               {homeTexts.services_title || "Projetos criados para viver melhor."}
             </h2>
           </div>
@@ -40,19 +37,21 @@ export default function ExpertiseSection({ reducedMotion = false }) {
                 delay: reducedMotion ? 0 : index * 0.05,
                 duration: 0.6,
               })}
-              className="group grid gap-5 border-b border-[#d8cdbb] py-7 transition-colors duration-500 hover:bg-[#ebe2d3]/60 md:grid-cols-[0.16fr_0.62fr_0.82fr] md:items-start md:px-5"
+              className="group relative grid gap-5 border-b border-[#d8cdbb] py-8 transition-colors duration-600 hover:bg-[#ebe2d3]/50 md:grid-cols-[0.14fr_0.58fr_0.88fr] md:items-start md:px-6"
             >
+              {/* Gold left accent on hover */}
+              <span className="absolute left-0 top-0 h-full w-[2px] origin-top scale-y-0 bg-[#d3b473] transition-transform duration-600 group-hover:scale-y-100" aria-hidden="true" />
               <span className="font-heading text-3xl text-[#8a6e42]">
                 {String(index + 1).padStart(2, "0")}
               </span>
-              <h3 className="font-heading text-4xl font-medium leading-none text-[#111913] md:text-5xl">
+              <h3 className="font-heading text-[1.9rem] font-medium leading-none text-[#111913] transition-colors duration-500 group-hover:text-[#8a6e42] md:text-[2.2rem]">
                 {item.title}
               </h3>
               <p className="max-w-2xl text-base leading-8 text-[#4b5248]">{item.detail}</p>
             </motion.article>
           ))}
         </div>
-        <div className="mt-12 flex flex-col gap-4 border-t border-[#d8cdbb] pt-8 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 flex flex-col gap-4 border-t border-[#d8cdbb] pt-9 sm:flex-row sm:items-center sm:justify-between">
           <p className="max-w-xl text-sm leading-7 text-[#5f665c]">
             Para residências premium, clínicas, áreas gourmet, piscinas, fachadas vivas e
             projetos em fase de obra que precisam de decisão técnica clara.

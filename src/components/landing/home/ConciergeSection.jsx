@@ -2,7 +2,7 @@ import { MessageCircle } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
 const fieldClass =
-  "min-h-12 border border-white/16 bg-white/[0.07] px-4 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]";
+  "min-h-[52px] border-0 border-b border-white/14 bg-transparent px-1 text-sm text-white outline-none transition-all placeholder:text-white/36 focus:border-[#d3b473] focus:bg-white/[0.03]";
 
 export default function ConciergeSection({
   lead,
@@ -15,33 +15,33 @@ export default function ConciergeSection({
   const homeTexts = content?.home_texts || {};
 
   return (
-    <section id="contato-concierge" className="bg-[#f3eee4] px-5 py-24 pb-32 md:px-10 md:py-36 md:pb-36">
-      <div className="mx-auto grid w-[min(100%,1320px)] overflow-hidden bg-[#081009] text-white shadow-[0_34px_100px_rgba(36,35,28,0.22)] lg:grid-cols-[0.88fr_1.12fr]">
-        <div className="relative min-h-[420px]">
+    <section id="contato-concierge" className="bg-[#f3eee4] px-5 py-section-md md:px-10">
+      <div className="mx-auto grid w-[min(100%,1320px)] overflow-hidden bg-[#081009] text-white shadow-[0_40px_120px_rgba(36,35,28,0.2)] lg:grid-cols-[0.85fr_1.15fr]">
+        <div className="rb-cinematic-image relative min-h-[420px]">
           <img
             src={homeTexts.concierge_image_url || "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"}
             alt="Composição de jardim em área social"
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover grayscale-[8%]"
+            className="absolute inset-0 h-full w-full object-cover grayscale-[6%]"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,16,9,0.04),rgba(8,16,9,0.62))]" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,16,9,0.04),rgba(8,16,9,0.58))]" />
         </div>
-        <div className="p-7 md:p-10 lg:p-14">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
+        <div className="p-8 md:p-12 lg:p-16">
+          <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[#d3b473]">
             {homeTexts.concierge_label || "Atendimento consultivo"}
           </p>
-          <h2 className="mt-5 font-heading text-[clamp(3rem,5.8vw,6rem)] font-medium leading-[0.9]">
+          <h2 className="mt-6 font-heading text-[clamp(2.6rem,5.4vw,5.6rem)] font-medium leading-[0.9]">
             {homeTexts.concierge_title || "Vamos desenhar o próximo capítulo da sua área externa?"}
           </h2>
-          <p className="mt-6 max-w-2xl text-base font-light leading-8 text-white/68 md:text-lg">
+          <p className="mt-7 max-w-2xl text-base font-light leading-8 text-white/62 md:text-lg">
             {homeTexts.concierge_text ||
               "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto."}
           </p>
-          <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-8 grid gap-3">
+          <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-10 grid gap-4">
             <input
               value={lead.name}
-              onChange={(event) => setLead((prev) => ({ ...prev, name: event.target.value }))}
+              onChange={(e) => setLead((p) => ({ ...p, name: e.target.value }))}
               className={fieldClass}
               placeholder="Seu nome"
               aria-label="Seu nome"
@@ -49,18 +49,16 @@ export default function ConciergeSection({
             />
             <input
               value={lead.whatsapp}
-              onChange={(event) =>
-                setLead((prev) => ({ ...prev, whatsapp: event.target.value }))
-              }
+              onChange={(e) => setLead((p) => ({ ...p, whatsapp: e.target.value }))}
               className={fieldClass}
               placeholder="WhatsApp"
               aria-label="WhatsApp"
               required
             />
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <input
                 value={lead.city}
-                onChange={(event) => setLead((prev) => ({ ...prev, city: event.target.value }))}
+                onChange={(e) => setLead((p) => ({ ...p, city: e.target.value }))}
                 className={fieldClass}
                 placeholder="Cidade"
                 aria-label="Cidade"
@@ -68,9 +66,7 @@ export default function ConciergeSection({
               />
               <select
                 value={lead.propertyType}
-                onChange={(event) =>
-                  setLead((prev) => ({ ...prev, propertyType: event.target.value }))
-                }
+                onChange={(e) => setLead((p) => ({ ...p, propertyType: e.target.value }))}
                 className={fieldClass}
                 aria-label="Tipo de imóvel"
                 required
@@ -81,10 +77,10 @@ export default function ConciergeSection({
                 <option className="text-[#171914]">Empreendimento</option>
               </select>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <select
                 value={lead.phase}
-                onChange={(event) => setLead((prev) => ({ ...prev, phase: event.target.value }))}
+                onChange={(e) => setLead((p) => ({ ...p, phase: e.target.value }))}
                 className={fieldClass}
                 aria-label="Fase do projeto"
                 required
@@ -96,7 +92,7 @@ export default function ConciergeSection({
               </select>
               <select
                 value={lead.scope}
-                onChange={(event) => setLead((prev) => ({ ...prev, scope: event.target.value }))}
+                onChange={(e) => setLead((p) => ({ ...p, scope: e.target.value }))}
                 className={fieldClass}
                 aria-label="Escopo desejado"
                 required
@@ -107,12 +103,10 @@ export default function ConciergeSection({
                 <option className="text-[#171914]">Jardim vertical</option>
               </select>
             </div>
-            <div className="grid gap-3 sm:grid-cols-2">
+            <div className="grid gap-4 sm:grid-cols-2">
               <select
                 value={lead.timeline}
-                onChange={(event) =>
-                  setLead((prev) => ({ ...prev, timeline: event.target.value }))
-                }
+                onChange={(e) => setLead((p) => ({ ...p, timeline: e.target.value }))}
                 className={fieldClass}
                 aria-label="Prazo desejado"
                 required
@@ -124,9 +118,7 @@ export default function ConciergeSection({
               </select>
               <select
                 value={lead.investment}
-                onChange={(event) =>
-                  setLead((prev) => ({ ...prev, investment: event.target.value }))
-                }
+                onChange={(e) => setLead((p) => ({ ...p, investment: e.target.value }))}
                 className={fieldClass}
                 aria-label="Faixa de investimento"
                 required
@@ -140,7 +132,7 @@ export default function ConciergeSection({
             </div>
             <textarea
               value={lead.details}
-              onChange={(event) => setLead((prev) => ({ ...prev, details: event.target.value }))}
+              onChange={(e) => setLead((p) => ({ ...p, details: e.target.value }))}
               className={`${fieldClass} min-h-28 py-3`}
               placeholder="Conte o contexto do imóvel e o resultado que você busca."
               aria-label="Detalhes do projeto"
@@ -148,10 +140,10 @@ export default function ConciergeSection({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473] disabled:cursor-not-allowed disabled:opacity-60"
+              className="group/submit mt-3 inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full bg-white px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#f5e6c8] hover:shadow-[0_8px_32px_rgba(211,180,115,0.18)] disabled:cursor-not-allowed disabled:opacity-60"
             >
               {isSubmitting ? "Enviando..." : homeTexts.concierge_button || "Solicitar uma proposta autoral"}
-              <MessageCircle className="h-4 w-4" aria-hidden="true" />
+              <MessageCircle className="h-4 w-4 transition-transform duration-500 group-hover/submit:translate-x-0.5" aria-hidden="true" />
             </button>
           </form>
         </div>
