@@ -21,7 +21,7 @@ export default function ProjetoPortfolio() {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#f8f6f2] text-[#171914]">
+      <div className="min-h-screen bg-[#f3eee4] text-[#171914]">
         <SiteNav activeLink="portfolio" />
         <main className="flex min-h-screen items-center justify-center px-6 pt-28">
           <p className="text-sm font-semibold uppercase tracking-[0.18em] text-[#8f7b55]">
@@ -49,24 +49,24 @@ export default function ProjetoPortfolio() {
   const schema = {
     "@context": "https://schema.org",
     "@type": "CreativeWork",
-    name: `${project.title} | Rosane Paisagismo`,
+    name: `${project.title} | Rosane Borges Paisagismo`,
     description: project.summary,
     image: project.gallery,
     about: "Projeto de paisagismo de alto padrão",
     creator: {
       "@type": "Organization",
-      name: "Rosane Paisagismo",
-      url: "https://rosanepaisagismo-site.vercel.app",
+      name: "Rosane Borges Paisagismo",
+      url: "https://rosanepaisagismo.vercel.app",
     },
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f6f2] text-[#171914]">
+    <div className="min-h-screen bg-[#f3eee4] text-[#171914]">
       <SEO
         title={`${project.title} | Projeto de Paisagismo`}
-        description={`${project.summary} Conheça desafios, solução aplicada e espécies utilizadas neste projeto autoral da Rosane Paisagismo.`}
+        description={`${project.summary} Conheça desafios, solução aplicada e espécies utilizadas neste projeto autoral da Rosane Borges Paisagismo.`}
         keywords={`${project.category}, paisagismo residencial, projetos de paisagismo, jardim moderno, paisagismo de luxo`}
-        url={`https://rosanepaisagismo-site.vercel.app/portfolio/${project.slug}`}
+        url={`https://rosanepaisagismo.vercel.app/portfolio/${project.slug}`}
         image={project.cover}
         schema={schema}
       />

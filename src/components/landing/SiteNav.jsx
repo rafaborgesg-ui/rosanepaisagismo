@@ -68,7 +68,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
       <div
         className={`absolute inset-x-0 top-0 h-[76px] border-b transition-all duration-700 md:h-[88px] ${
           hasSurface
-            ? "border-white/12 bg-[#081009]/76 shadow-[0_18px_60px_rgba(0,0,0,0.24)] backdrop-blur-2xl"
+            ? "border-white/12 bg-[rgba(8,16,9,0.88)] shadow-[0_18px_60px_rgba(0,0,0,0.28)] backdrop-blur-2xl"
             : "border-transparent bg-transparent"
         }`}
       />

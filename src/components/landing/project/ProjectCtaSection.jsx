@@ -1,36 +1,37 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
 
 const steps = [
   {
     key: "atmosphere",
-    question: "Qual atmosfera arquitetonica mais te inspira?",
+    question: "Qual atmosfera mais se aproxima do seu desejo?",
     options: [
-      "Tropical Sofisticado",
-      "Minimalista Contemporaneo",
-      "Jardim Ingles Classico",
-      "Resort & Piscina",
+      "Tropical sofisticado",
+      "Contemporâneo minimalista",
+      "Natural e acolhedor",
+      "Resort, piscina e permanência",
     ],
   },
   {
     key: "nature",
-    question: "Qual a natureza do seu projeto?",
+    question: "Qual é a natureza do projeto?",
     options: [
-      "Casa residencial",
-      "Cobertura / Apartamento",
-      "Clinica / Consultorio",
-      "Empresa / Condominio",
+      "Residência",
+      "Área gourmet ou piscina",
+      "Clínica ou corporativo",
+      "Condomínio ou empreendimento",
     ],
   },
   {
     key: "investment",
-    question: "Qual e a sua expectativa de investimento?",
+    question: "Qual faixa de investimento deseja considerar?",
     options: [
-      "R$ 15k - R$ 30k",
-      "R$ 30k - R$ 80k",
-      "R$ 80k - R$ 200k",
-      "Acima de R$ 200k",
+      "Até R$ 30 mil",
+      "R$ 30 mil a R$ 80 mil",
+      "R$ 80 mil a R$ 200 mil",
+      "Acima de R$ 200 mil",
     ],
   },
 ];
@@ -43,30 +44,15 @@ const initialAnswers = {
   whatsapp: "",
 };
 
-function ProgressBars({ currentStep }) {
-  return (
-    <div className="mb-10 flex justify-center gap-2">
-      {steps.map((step, index) => (
-        <span
-          key={step.key}
-          className={`h-1 rounded-full transition-all duration-300 ${
-            index <= currentStep ? "w-12 bg-[#c09624]" : "w-5 bg-white/14"
-          }`}
-        />
-      ))}
-    </div>
-  );
-}
-
 function ChoiceButton({ children, selected, onClick }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-[62px] rounded-xl border px-5 py-4 text-center text-sm font-semibold transition duration-300 ${
+      className={`min-h-[58px] border px-5 py-4 text-left text-sm font-semibold transition duration-300 ${
         selected
-          ? "border-[#c09624] bg-[#c09624] text-white shadow-[0_18px_42px_rgba(0,0,0,0.18)]"
-          : "border-white/10 bg-transparent text-white/72 hover:border-[#c09624] hover:bg-white/[0.04] hover:text-white"
+          ? "border-[#d3b473] bg-[#d3b473] text-[#081009]"
+          : "border-white/14 bg-transparent text-white/72 hover:border-[#d3b473] hover:text-white"
       }`}
     >
       {children}
@@ -94,27 +80,25 @@ export default function ProjectCtaSection({ project }) {
     }, 160);
   };
 
-  const buildMessage = () => {
-    return [
-      "Ola, quero solicitar uma analise exclusiva da Rosane Paisagismo.",
-      "",
-      "Projeto de referencia no portfolio:",
-      `Nome: ${project?.title || "-"}`,
-      `Categoria: ${project?.category || "-"}`,
-      `Area: ${project?.area || "-"}`,
-      `Escopo: ${project?.scope || "-"}`,
-      `Local/contexto: ${project?.location || "-"}`,
-      "",
-      "Preferencias do diagnostico:",
-      `Atmosfera: ${answers.atmosphere || "-"}`,
-      `Natureza do projeto: ${answers.nature || "-"}`,
-      `Expectativa de investimento: ${answers.investment || "-"}`,
-      "",
-      "Contato:",
-      `Nome: ${answers.name || "-"}`,
-      `WhatsApp: ${answers.whatsapp || "-"}`,
-    ].join("\n");
-  };
+  const buildMessage = () => [
+    "Olá, quero solicitar uma análise privada da Rosane Borges Paisagismo.",
+    "",
+    "Projeto de referência:",
+    `Nome: ${project?.title || "-"}`,
+    `Categoria: ${project?.category || "-"}`,
+    `Área: ${project?.area || "-"}`,
+    `Escopo: ${project?.scope || "-"}`,
+    `Local/contexto: ${project?.location || "-"}`,
+    "",
+    "Preferências:",
+    `Atmosfera: ${answers.atmosphere || "-"}`,
+    `Natureza do projeto: ${answers.nature || "-"}`,
+    `Investimento: ${answers.investment || "-"}`,
+    "",
+    "Contato:",
+    `Nome: ${answers.name || "-"}`,
+    `WhatsApp: ${answers.whatsapp || "-"}`,
+  ].join("\n");
 
   const sendBriefing = () => {
     if (!canSend) return;
@@ -125,24 +109,43 @@ export default function ProjectCtaSection({ project }) {
   return (
     <section
       id="briefing-projeto"
-      className="relative min-h-[720px] overflow-hidden px-5 py-20 text-white md:px-10 md:py-24"
-      style={{ backgroundColor: "#1a3d2b" }}
+      className="relative overflow-hidden bg-[#081009] px-5 py-24 text-white md:px-10 md:py-36"
     >
-      <div className="absolute inset-0 opacity-[0.05] [background-image:linear-gradient(30deg,#ffffff_12%,transparent_12.5%,transparent_87%,#ffffff_87.5%,#ffffff),linear-gradient(150deg,#ffffff_12%,transparent_12.5%,transparent_87%,#ffffff_87.5%,#ffffff),linear-gradient(30deg,#ffffff_12%,transparent_12.5%,transparent_87%,#ffffff_87.5%,#ffffff),linear-gradient(150deg,#ffffff_12%,transparent_12.5%,transparent_87%,#ffffff_87.5%,#ffffff)] [background-position:0_0,0_0,28px_49px,28px_49px] [background-size:56px_98px]" />
-      <div className="relative mx-auto max-w-[920px]">
-        <div className="mx-auto mb-12 max-w-[560px] text-center">
-          <p className="mb-5 text-[0.64rem] font-bold uppercase tracking-[0.58em] text-[#c09624]">
+      <img
+        src={project?.cover}
+        alt=""
+        aria-hidden="true"
+        className="absolute inset-0 h-full w-full object-cover opacity-22 grayscale"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.94),rgba(8,16,9,0.76)_50%,rgba(8,16,9,0.94))]" />
+      <div className="relative mx-auto grid w-[min(100%,1320px)] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+        <div className="max-w-3xl">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
             Assessoria privada
           </p>
-          <h2 className="font-heading text-[clamp(2.95rem,5.4vw,4.85rem)] font-medium leading-[0.87] tracking-normal text-white">
-            Receba um diagnostico para a sua propriedade.
+          <h2 className="mt-5 font-heading text-[clamp(3.1rem,6.8vw,7rem)] font-medium leading-[0.9]">
+            Transforme referência em direção de projeto.
           </h2>
+          <p className="mt-8 max-w-lg text-base font-light leading-8 text-white/68 md:text-lg">
+            Responda três pontos de contexto e envie uma mensagem já estruturada para uma primeira leitura do seu imóvel.
+          </p>
         </div>
 
         <motion.div
           layout
-          className="mx-auto max-w-[680px] rounded-[24px] border border-white/10 bg-white/[0.06] px-6 py-12 shadow-[0_30px_90px_rgba(0,0,0,0.18)] backdrop-blur-md md:px-12"
+          className="border border-white/14 bg-white/[0.055] p-6 backdrop-blur-md md:p-9"
         >
+          <div className="mb-8 flex gap-2">
+            {steps.map((step, index) => (
+              <span
+                key={step.key}
+                className={`h-px flex-1 transition-all duration-300 ${
+                  index <= stepIndex ? "bg-[#d3b473]" : "bg-white/16"
+                }`}
+              />
+            ))}
+          </div>
+
           <AnimatePresence mode="wait">
             {!isContactStep && (
               <motion.div
@@ -152,11 +155,10 @@ export default function ProjectCtaSection({ project }) {
                 exit={{ opacity: 0, y: -12 }}
                 transition={{ duration: 0.28, ease: "easeOut" }}
               >
-                <ProgressBars currentStep={stepIndex} />
-                <h3 className="mx-auto mb-10 max-w-[580px] text-center font-heading text-[clamp(2rem,3.2vw,2.72rem)] font-medium leading-[0.95] tracking-normal text-white">
+                <h3 className="mb-8 font-heading text-[clamp(2.3rem,4vw,3.4rem)] font-medium leading-[0.96] text-white">
                   {currentStep.question}
                 </h3>
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="grid gap-3 md:grid-cols-2">
                   {currentStep.options.map((option) => (
                     <ChoiceButton
                       key={option}
@@ -181,19 +183,18 @@ export default function ProjectCtaSection({ project }) {
                   event.preventDefault();
                   sendBriefing();
                 }}
-                className="mx-auto max-w-[574px]"
               >
-                <p className="mb-8 text-center font-heading text-3xl font-medium leading-tight tracking-normal text-white">
-                  Etapa final. Para onde enviamos seu estudo VIP?
-                </p>
-                <div className="grid gap-6">
+                <h3 className="mb-7 font-heading text-[clamp(2.3rem,4vw,3.4rem)] font-medium leading-[0.96] text-white">
+                  Para onde enviamos o diagnóstico inicial?
+                </h3>
+                <div className="grid gap-3">
                   <input
                     value={answers.name}
                     onChange={(event) => updateAnswer("name", event.target.value)}
                     name="nome"
                     required
                     placeholder="Seu nome completo"
-                    className="w-full rounded-xl border border-white/10 bg-black/20 px-6 py-4 text-sm font-semibold text-white outline-none transition placeholder:text-white/30 focus:border-[#c09624]"
+                    className="min-h-12 border border-white/14 bg-black/20 px-5 text-sm text-white outline-none transition placeholder:text-white/34 focus:border-[#d3b473]"
                   />
                   <input
                     value={answers.whatsapp}
@@ -201,14 +202,15 @@ export default function ProjectCtaSection({ project }) {
                     name="whatsapp"
                     required
                     placeholder="WhatsApp com DDD"
-                    className="w-full rounded-xl border border-white/10 bg-black/20 px-6 py-4 text-sm font-semibold text-white outline-none transition placeholder:text-white/30 focus:border-[#c09624]"
+                    className="min-h-12 border border-white/14 bg-black/20 px-5 text-sm text-white outline-none transition placeholder:text-white/34 focus:border-[#d3b473]"
                   />
                   <button
                     type="submit"
                     disabled={!canSend}
-                    className="mt-4 w-full rounded-xl bg-[#c09624] px-6 py-5 text-[0.66rem] font-semibold uppercase tracking-widest text-white transition-colors hover:bg-white hover:text-[#1a3d2b] disabled:cursor-not-allowed disabled:opacity-45"
+                    className="mt-4 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473] disabled:cursor-not-allowed disabled:opacity-45"
                   >
-                    Solicitar Analise Exclusiva
+                    Solicitar análise privada
+                    <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>
               </motion.form>
@@ -217,18 +219,20 @@ export default function ProjectCtaSection({ project }) {
             {quizDone && (
               <motion.div
                 key="success"
-                initial={{ opacity: 0, scale: 0.94 }}
+                initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.94 }}
+                exit={{ opacity: 0, scale: 0.96 }}
                 transition={{ duration: 0.3, ease: "easeOut" }}
-                className="py-8 text-center"
+                className="py-8"
               >
-                <span className="mb-6 block text-6xl text-[#c09624]" aria-hidden="true">
-                  ✓
-                </span>
-                <h3 className="mb-4 font-heading text-3xl font-medium tracking-normal text-white">Tudo certo!</h3>
-                <p className="mx-auto max-w-md text-sm font-light leading-7 text-white/60">
-                  Suas respostas foram preparadas para o WhatsApp com as informações do projeto selecionado.
+                <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
+                  Mensagem preparada
+                </p>
+                <h3 className="mt-4 font-heading text-4xl font-medium text-white">
+                  Tudo certo.
+                </h3>
+                <p className="mt-4 max-w-md text-sm font-light leading-7 text-white/62">
+                  Suas respostas foram estruturadas no WhatsApp com as informações do projeto selecionado.
                 </p>
               </motion.div>
             )}
