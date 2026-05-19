@@ -7,8 +7,8 @@ export default function SiteFooter({ reveal = false } = {}) {
   const content = useLandingContent();
   const logoRodape = content?.logo_rodape_url;
   const footerClass = reveal
-    ? "fixed inset-x-0 bottom-0 z-0 flex min-h-[72svh] items-end bg-[#10120e] px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-16 text-white md:min-h-[68svh] md:py-20"
-    : "bg-[#10120e] px-5 pb-[calc(7rem+env(safe-area-inset-bottom))] pt-16 text-white md:py-20";
+    ? "bg-[#10120e] px-5 pb-[calc(12rem+env(safe-area-inset-bottom))] pt-16 text-white md:fixed md:inset-x-0 md:bottom-0 md:z-0 md:flex md:min-h-[68svh] md:items-end md:py-20"
+    : "bg-[#10120e] px-5 pb-[calc(12rem+env(safe-area-inset-bottom))] pt-16 text-white md:py-20";
 
   return (
     <footer className={footerClass}>

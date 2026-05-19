@@ -145,7 +145,7 @@ export default function Landing() {
         />
       </main>
 
-      <div className="relative z-0 h-[72svh] bg-transparent md:h-[68svh]" aria-hidden="true" />
+      <div className="relative z-0 hidden bg-transparent md:block md:h-[68svh]" aria-hidden="true" />
       <SiteFooter reveal />
       <WhatsAppFloat hideOnMobile revealAfterHero />
     </div>

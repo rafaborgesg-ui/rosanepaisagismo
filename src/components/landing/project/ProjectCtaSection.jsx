@@ -228,7 +228,7 @@ export default function ProjectCtaSection({ project }) {
                 </span>
                 <h3 className="mb-4 font-heading text-3xl font-medium tracking-normal text-white">Tudo certo!</h3>
                 <p className="mx-auto max-w-md text-sm font-light leading-7 text-white/60">
-                  Suas respostas foram preparadas para o WhatsApp com as informacoes do projeto selecionado.
+                  Suas respostas foram preparadas para o WhatsApp com as informações do projeto selecionado.
                 </p>
               </motion.div>
             )}

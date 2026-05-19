@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
@@ -38,19 +38,48 @@ export default function HeroSection({ reducedMotion = false }) {
     return adminSlides.length ? adminSlides : defaultSlides;
   }, [content?.slides, defaultSlides]);
   const [activeSlide, setActiveSlide] = useState(0);
+  const touchStartRef = useRef(null);
+
+  const goToSlide = (direction) => {
+    setActiveSlide((current) => {
+      if (!slides.length) return 0;
+      return direction === "next"
+        ? (current + 1) % slides.length
+        : (current - 1 + slides.length) % slides.length;
+    });
+  };
 
   useEffect(() => {
     if (reducedMotion) return undefined;
 
     const timer = window.setInterval(() => {
-      setActiveSlide((current) => (current + 1) % slides.length);
+      goToSlide("next");
     }, 5200);
 
     return () => window.clearInterval(timer);
   }, [reducedMotion, slides.length]);
 
   return (
-    <section data-hero-logo-stage className="relative min-h-svh overflow-hidden bg-[#101812] text-white">
+    <section
+      data-hero-logo-stage
+      className="relative min-h-svh touch-pan-y overflow-hidden bg-[#101812] text-white"
+      onTouchStart={(event) => {
+        const touch = event.touches[0];
+        touchStartRef.current = { x: touch.clientX, y: touch.clientY };
+      }}
+      onTouchEnd={(event) => {
+        const start = touchStartRef.current;
+        const touch = event.changedTouches[0];
+        touchStartRef.current = null;
+        if (!start || slides.length <= 1) return;
+
+        const deltaX = touch.clientX - start.x;
+        const deltaY = touch.clientY - start.y;
+        if (Math.abs(deltaX) < 46 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
+
+        goToSlide(deltaX < 0 ? "next" : "previous");
+      }}
+    >
       {slides.map((slide, index) => {
         const isActive = activeSlide === index;
 
