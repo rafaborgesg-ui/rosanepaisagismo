@@ -132,12 +132,12 @@ export default function Contato() {
   };
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">
+    <div className="min-h-screen overflow-x-hidden bg-[#f3eee4] text-[#171914]">
       <SEO
         title="Contato | Avaliação de Projeto de Paisagismo"
         description="Solicite atendimento para projetos exclusivos de jardins, piscinas, áreas gourmet, jardins verticais, clínicas e residências de alto padrão."
         keywords="contato paisagista, avaliação de projeto paisagismo, projeto de jardim premium, paisagismo alto padrão"
-        url="https://rosanepaisagismo-site.vercel.app/contato"
+        url="https://rosanepaisagismo.vercel.app/contato"
       />
       <SiteNav activeLink="contato" />
 
@@ -148,8 +148,8 @@ export default function Contato() {
           whatsappMessage={whatsappMessage}
         />
 
-        <section id="briefing" className="px-4 py-20 md:py-28">
-          <div className="mx-auto grid w-[min(100%,1180px)] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+        <section id="briefing" className="px-5 py-24 md:px-10 md:py-36">
+          <div className="mx-auto grid w-[min(100%,1320px)] gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
             <ContactSidebar
               reducedMotion={Boolean(reducedMotion)}
               whatsappMessage={whatsappMessage}

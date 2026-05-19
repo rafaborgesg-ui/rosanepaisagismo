@@ -3,6 +3,9 @@ import { motion } from "framer-motion";
 import { ArrowRight, CheckCircle2, Paperclip, X } from "lucide-react";
 import { fadeUp, interests, labelClass } from "@/components/landing/contact/contactShared";
 
+const inputClass =
+  "min-h-12 border border-[#d8cdbb] bg-transparent px-4 text-sm text-[#171914] outline-none transition placeholder:text-[#858b80] focus:border-[#8f7b55] focus:bg-white/40";
+
 export default function ContactFormCard({
   reducedMotion = false,
   sent,
@@ -23,21 +26,21 @@ export default function ContactFormCard({
       whileInView={reducedMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-90px" }}
       variants={reducedMotion ? undefined : fadeUp}
-      className="rounded-[8px] bg-white p-6 shadow-[0_26px_90px_rgba(36,35,28,0.1)] md:p-10"
+      className="border border-[#d8cdbb] bg-[#f8f3ea] p-6 shadow-[0_28px_90px_rgba(36,35,28,0.08)] md:p-9"
     >
       {sent ? (
-        <div className="flex min-h-[520px] flex-col items-center justify-center text-center">
-          <CheckCircle2 className="mb-6 h-16 w-16 text-[#6f7b5f]" aria-hidden="true" />
-          <h2 className="font-heading text-3xl font-medium tracking-normal">
-            Briefing recebido.
+        <div className="flex min-h-[520px] flex-col items-start justify-center">
+          <CheckCircle2 className="mb-6 h-14 w-14 text-[#8a6e42]" aria-hidden="true" />
+          <p className={labelClass}>Briefing recebido</p>
+          <h2 className="mt-3 font-heading text-5xl font-medium leading-none text-[#111913]">
+            Obrigado. Vamos analisar com cuidado.
           </h2>
-          <p className="mt-4 max-w-md text-sm leading-7 text-[#5f665c]">
-            Obrigado. A equipe vai analisar as informações e entrar em contato para
-            alinhar os próximos passos.
+          <p className="mt-5 max-w-md text-sm leading-7 text-[#4b5248]">
+            A equipe vai revisar as informações e entrar em contato para alinhar os próximos passos.
           </p>
           <Link
             to="/portfolio"
-            className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#171914] px-7 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-[#6f7b5f]"
+            className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#111913] px-7 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:bg-[#8a6e42]"
           >
             Ver portfólio
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
@@ -46,8 +49,8 @@ export default function ContactFormCard({
       ) : (
         <>
           <div className="mb-8">
-            <p className={labelClass}>Iniciar avaliação exclusiva</p>
-            <h2 className="mt-3 font-heading text-3xl font-medium tracking-normal text-[#171914]">
+            <p className={labelClass}>Iniciar avaliação autoral</p>
+            <h2 className="mt-3 font-heading text-[clamp(2.8rem,5vw,4.8rem)] font-medium leading-[0.92] text-[#111913]">
               Conte sobre o espaço.
             </h2>
           </div>
@@ -55,11 +58,11 @@ export default function ContactFormCard({
           <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="grid gap-2">
-                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                   Nome completo
                 </span>
                 <input
-                  className="rounded-[8px] border border-[#dfd9cc] bg-[#fbfaf7] px-5 py-4 text-sm outline-none transition focus:border-[#8f7b55] focus:ring-4 focus:ring-[#8f7b55]/10"
+                  className={inputClass}
                   placeholder="Seu nome"
                   type="text"
                   required
@@ -68,11 +71,11 @@ export default function ContactFormCard({
                 />
               </label>
               <label className="grid gap-2">
-                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                   E-mail
                 </span>
                 <input
-                  className="rounded-[8px] border border-[#dfd9cc] bg-[#fbfaf7] px-5 py-4 text-sm outline-none transition focus:border-[#8f7b55] focus:ring-4 focus:ring-[#8f7b55]/10"
+                  className={inputClass}
                   placeholder="seu@email.com"
                   type="email"
                   required
@@ -86,11 +89,11 @@ export default function ContactFormCard({
 
             <div className="grid gap-5 md:grid-cols-2">
               <label className="grid gap-2">
-                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                   WhatsApp
                 </span>
                 <input
-                  className="rounded-[8px] border border-[#dfd9cc] bg-[#fbfaf7] px-5 py-4 text-sm outline-none transition focus:border-[#8f7b55] focus:ring-4 focus:ring-[#8f7b55]/10"
+                  className={inputClass}
                   placeholder="(00) 00000-0000"
                   type="text"
                   value={form.whatsapp}
@@ -100,11 +103,11 @@ export default function ContactFormCard({
                 />
               </label>
               <label className="grid gap-2">
-                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+                <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                   Interesse
                 </span>
                 <select
-                  className="rounded-[8px] border border-[#dfd9cc] bg-[#fbfaf7] px-5 py-4 text-sm outline-none transition focus:border-[#8f7b55] focus:ring-4 focus:ring-[#8f7b55]/10"
+                  className={inputClass}
                   value={form.interesse}
                   onChange={(event) =>
                     setForm((prev) => ({ ...prev, interesse: event.target.value }))
@@ -118,12 +121,12 @@ export default function ContactFormCard({
             </div>
 
             <label className="grid gap-2">
-              <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+              <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                 Mensagem
               </span>
               <textarea
-                className="min-h-36 resize-none rounded-[8px] border border-[#dfd9cc] bg-[#fbfaf7] px-5 py-4 text-sm outline-none transition focus:border-[#8f7b55] focus:ring-4 focus:ring-[#8f7b55]/10"
-                placeholder="Conte sobre metragem, uso desejado, fase da obra, cidade e referências que você gosta."
+                className={`${inputClass} min-h-40 resize-none py-4`}
+                placeholder="Conte sobre metragem, cidade, fase da obra, uso desejado e referências que você gosta."
                 value={form.mensagem}
                 onChange={(event) =>
                   setForm((prev) => ({ ...prev, mensagem: event.target.value }))
@@ -132,12 +135,15 @@ export default function ContactFormCard({
             </label>
 
             <div className="grid gap-2">
-              <span className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
+              <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                 Anexo opcional
               </span>
               <div
-                className="flex cursor-pointer items-center gap-3 rounded-[8px] border border-dashed border-[#d3c9b7] bg-[#fbfaf7] px-5 py-4 transition hover:border-[#8f7b55]"
+                className="flex cursor-pointer items-center gap-3 border border-dashed border-[#d3c9b7] bg-transparent px-5 py-4 transition hover:border-[#8f7b55]"
                 onClick={() => fileInputRef.current?.click()}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
+                }}
                 role="button"
                 tabIndex={0}
               >
@@ -162,7 +168,7 @@ export default function ContactFormCard({
               </div>
               <input ref={fileInputRef} type="file" className="hidden" onChange={handleArquivo} />
               {arquivoErro && (
-                <p className="rounded-[8px] bg-red-50 p-3 text-xs text-red-700">
+                <p className="bg-red-50 p-3 text-xs text-red-700">
                   {arquivoErro}
                 </p>
               )}
@@ -171,9 +177,9 @@ export default function ContactFormCard({
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[#171914] px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition hover:-translate-y-0.5 hover:bg-[#6f7b5f] disabled:cursor-not-allowed disabled:opacity-55"
+              className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[#111913] px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#8a6e42] disabled:cursor-not-allowed disabled:opacity-55"
             >
-              {loading ? "Enviando..." : "Enviar briefing inicial"}
+              {loading ? "Enviando..." : "Solicitar proposta autoral"}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>

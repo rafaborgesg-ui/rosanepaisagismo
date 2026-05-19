@@ -13,65 +13,60 @@ export default function ContactSidebar({
       whileInView={reducedMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-90px" }}
       variants={reducedMotion ? undefined : fadeUp}
-      className="lg:sticky lg:top-28"
+      className="lg:sticky lg:top-32"
     >
-      <p className={labelClass}>Briefing exclusivo</p>
-      <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-5xl">
+      <p className={labelClass}>Briefing privado</p>
+      <h2 className="mt-5 font-heading text-[clamp(3rem,6.4vw,6.6rem)] font-medium leading-[0.9] text-[#111913]">
         Poucas informações certas já revelam o potencial do projeto.
       </h2>
-      <p className="mt-6 text-lg leading-8 text-[#5f665c]">
-        Fotos, planta, metragem, cidade e estilo desejado ajudam a transformar
-        referências soltas em uma primeira leitura mais precisa.
+      <p className="mt-8 max-w-lg text-lg font-light leading-9 text-[#4b5248]">
+        Fotos, planta, metragem, cidade e intenção de uso ajudam a transformar referências soltas
+        em uma primeira leitura mais precisa.
       </p>
 
-      <div className="mt-10 grid gap-4">
-        <a
-          href="mailto:rosanepaisagismo@gmail.com"
-          className="flex items-center gap-4 rounded-[8px] bg-white p-5 shadow-[0_16px_50px_rgba(36,35,28,0.06)] transition hover:-translate-y-0.5"
-        >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171914] text-white">
-            <Mail className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
-              E-mail
-            </p>
-            <p className="mt-1 text-sm font-semibold text-[#171914]">
-              rosanepaisagismo@gmail.com
-            </p>
-          </div>
-        </a>
-        <a
-          href={buildWhatsAppUrl(whatsappMessage)}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-4 rounded-[8px] bg-white p-5 shadow-[0_16px_50px_rgba(36,35,28,0.06)] transition hover:-translate-y-0.5"
-        >
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171914] text-white">
-            <Phone className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
-              WhatsApp
-            </p>
-            <p className="mt-1 text-sm font-semibold text-[#171914]">
-              Atendimento rápido e premium
-            </p>
-          </div>
-        </a>
-        <div className="flex items-center gap-4 rounded-[8px] bg-white p-5 shadow-[0_16px_50px_rgba(36,35,28,0.06)]">
-          <span className="flex h-11 w-11 items-center justify-center rounded-full bg-[#171914] text-white">
-            <MapPin className="h-5 w-5" aria-hidden="true" />
-          </span>
-          <div>
-            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.12em] text-[#8f7b55]">
-              Atuação
-            </p>
-            <p className="mt-1 text-sm font-semibold text-[#171914]">
-              MG, SP e projetos selecionados no Brasil
-            </p>
-          </div>
-        </div>
+      <div className="mt-10 grid border-t border-[#d8cdbb]">
+        {[
+          {
+            href: "mailto:rosanepaisagismo@gmail.com",
+            icon: Mail,
+            label: "E-mail",
+            value: "rosanepaisagismo@gmail.com",
+          },
+          {
+            href: buildWhatsAppUrl(whatsappMessage),
+            icon: Phone,
+            label: "WhatsApp",
+            value: "Atendimento rápido e consultivo",
+          },
+          {
+            icon: MapPin,
+            label: "Atuação",
+            value: "MG, SP e projetos selecionados no Brasil",
+          },
+        ].map((item) => {
+          const Icon = item.icon;
+          const content = (
+            <div className="grid grid-cols-[2.4rem_1fr] gap-4 border-b border-[#d8cdbb] py-5 transition hover:bg-[#ebe2d3]/50">
+              <Icon className="mt-1 h-4 w-4 text-[#8a6e42]" aria-hidden="true" />
+              <div>
+                <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
+                  {item.label}
+                </p>
+                <p className="mt-1 text-sm font-semibold leading-6 text-[#171914]">{item.value}</p>
+              </div>
+            </div>
+          );
+
+          if (item.href) {
+            return (
+              <a key={item.label} href={item.href} target={item.href.startsWith("http") ? "_blank" : undefined} rel={item.href.startsWith("http") ? "noreferrer" : undefined}>
+                {content}
+              </a>
+            );
+          }
+
+          return <div key={item.label}>{content}</div>;
+        })}
       </div>
     </motion.aside>
   );
