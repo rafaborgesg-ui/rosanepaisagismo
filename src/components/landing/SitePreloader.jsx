@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
-const PRELOAD_DURATION = 4700;
-const FADE_DURATION = 720;
+const PRELOAD_DURATION = 2200;
+const FADE_DURATION = 520;
 const PRELOADER_RUNTIME_KEY = "__rbpPreloaderPlayed";
 
 export default function SitePreloader() {
@@ -38,7 +38,12 @@ export default function SitePreloader() {
 
       const target = document.getElementById(decodeURIComponent(hash));
       if (target) {
-        target.scrollIntoView({ block: "start" });
+        const navOffset = 92;
+        const destination = Math.max(0, target.offsetTop - navOffset);
+        window.scrollTo({ top: destination, left: 0, behavior: "auto" });
+        if (window.__rbLenis?.scrollTo) {
+          window.__rbLenis.scrollTo(destination, { immediate: true });
+        }
       }
     };
 
@@ -154,7 +159,7 @@ export default function SitePreloader() {
           width: 100%;
           aspect-ratio: 1 / 1;
           transform-origin: center;
-          animation: rbpMarkDrop 4.7s cubic-bezier(.72, 0, .2, 1) both;
+          animation: rbpMarkDrop 2.2s cubic-bezier(.72, 0, .2, 1) both;
         }
 
         .rbp-preload-ghost,
@@ -172,7 +177,7 @@ export default function SitePreloader() {
           mask: url("/brand/rosane-logo-mark-white.png") center / contain no-repeat;
           opacity: 0;
           filter: drop-shadow(0 0 1px rgba(24, 31, 26, .32));
-          animation: rbpGhostReveal 4.7s ease both;
+          animation: rbpGhostReveal 2.2s ease both;
         }
 
         .rbp-preload-trace {
@@ -180,8 +185,8 @@ export default function SitePreloader() {
           background: url("/brand/rosane-logo-mark-trace-sprite.png") 0 0 / 7200% 100% no-repeat;
           filter: drop-shadow(0 0 1px rgba(24, 31, 26, .14));
           animation:
-            rbpTraceOpacity 4.7s ease both,
-            rbpTraceFrames 3.2s steps(71, end) .22s forwards;
+            rbpTraceOpacity 2.2s ease both,
+            rbpTraceFrames 1.55s steps(71, end) .12s forwards;
         }
 
         .rbp-preload-fill {
@@ -190,7 +195,7 @@ export default function SitePreloader() {
           mask: url("/brand/rosane-logo-mark-white.png") center / contain no-repeat;
           opacity: 0;
           clip-path: inset(0 0 100% 0);
-          animation: rbpGreenFill 4.7s cubic-bezier(.65, 0, .2, 1) both;
+          animation: rbpGreenFill 2.2s cubic-bezier(.65, 0, .2, 1) both;
         }
 
         @keyframes rbpGhostReveal {

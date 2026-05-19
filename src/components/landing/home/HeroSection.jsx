@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
 import PremiumLink from "@/components/landing/home/PremiumLink";
 
@@ -40,6 +40,9 @@ export default function HeroSection({ reducedMotion = false }) {
   }, [content?.slides, defaultSlides]);
   const [activeSlide, setActiveSlide] = useState(0);
   const touchStartRef = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const contentY = useTransform(scrollYProgress, [0, 0.18], ["0%", "18%"]);
+  const mediaY = useTransform(scrollYProgress, [0, 0.18], ["0%", "7%"]);
 
   const goToSlide = (direction) => {
     setActiveSlide((current) => {
@@ -97,7 +100,7 @@ export default function HeroSection({ reducedMotion = false }) {
             src={slide.src}
             alt={slide.alt}
             aria-hidden={!isActive}
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-[108%] w-full object-cover"
             initial={false}
             animate={
               reducedMotion
@@ -116,15 +119,18 @@ export default function HeroSection({ reducedMotion = false }) {
                   }
             }
             loading={index === 0 ? "eager" : "lazy"}
-            style={{ zIndex: isActive ? 2 : 1 }}
+            style={{ zIndex: isActive ? 2 : 1, y: reducedMotion ? 0 : mediaY }}
           />
         );
       })}
 
-      <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(8,13,9,0.76),rgba(8,13,9,0.28)_45%,rgba(8,13,9,0.5)),linear-gradient(180deg,rgba(8,13,9,0.42),rgba(8,13,9,0.04)_34%,rgba(8,13,9,0.84)_100%)]" />
+      <div className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_72%_34%,rgba(211,180,115,0.12),transparent_34%),linear-gradient(90deg,rgba(6,10,7,0.84),rgba(8,13,9,0.24)_45%,rgba(8,13,9,0.58)),linear-gradient(180deg,rgba(8,13,9,0.48),rgba(8,13,9,0.04)_34%,rgba(8,13,9,0.88)_100%)]" />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[30vh] bg-gradient-to-t from-[#0b0f0b] to-transparent" />
 
-      <div className="relative z-20 mx-auto flex min-h-[100svh] w-[min(100%,1680px)] items-end px-5 pb-16 pt-32 md:px-10 md:pb-16 lg:pb-20">
+      <motion.div
+        style={{ y: reducedMotion ? 0 : contentY }}
+        className="relative z-20 mx-auto flex min-h-[100svh] w-[min(100%,1680px)] items-end px-5 pb-20 pt-32 md:px-10 md:pb-16 lg:pb-20"
+      >
         <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,0.98fr)_minmax(320px,0.42fr)] lg:items-end">
           <motion.div
             initial={reducedMotion ? false : { opacity: 0, y: 36, filter: "blur(12px)" }}
@@ -133,19 +139,19 @@ export default function HeroSection({ reducedMotion = false }) {
             className="max-w-5xl"
           >
             <div className="mb-7 h-px w-28 rb-luxury-hairline" aria-hidden="true" />
-            <h1 className="max-w-5xl font-heading text-[clamp(3.6rem,8.1vw,8.8rem)] font-medium leading-[0.88] text-white [text-wrap:balance]">
+            <h1 className="max-w-5xl font-heading text-[clamp(3.45rem,8.1vw,8.8rem)] font-medium leading-[0.86] text-white [text-wrap:balance]">
               Paisagismo autoral para espaços que inspiram
             </h1>
             <p className="mt-6 max-w-2xl text-base font-light leading-8 text-white/78 md:text-lg md:leading-8">
-              Natureza, arquitetura e sensibilidade em equilíbrio para jardins criados sob medida,
-              com sofisticação, técnica e presença.
+              Natureza, arquitetura e sensibilidade em equilíbrio para jardins sob medida,
+              concebidos com técnica, atmosfera e desejo de permanência.
             </p>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
               <PremiumLink to="/contato" variant="light">
                 Conversar sobre meu projeto
               </PremiumLink>
               <PremiumLink to="/portfolio" variant="outline">
-                Ver projetos autorais
+                Explorar projetos
               </PremiumLink>
             </div>
           </motion.div>
@@ -164,7 +170,7 @@ export default function HeroSection({ reducedMotion = false }) {
             </p>
             <div className="mt-8 grid grid-cols-3 gap-5 border-t border-white/14 pt-6">
               {[
-                ["2016", "atuação"],
+                ["1:1", "sob medida"],
                 ["3D", "conceito"],
                 ["obra", "orientada"],
               ].map(([value, label]) => (
@@ -178,6 +184,15 @@ export default function HeroSection({ reducedMotion = false }) {
             </div>
           </motion.aside>
         </div>
+      </motion.div>
+
+      <div className="pointer-events-none absolute bottom-8 left-6 z-30 hidden items-center gap-4 text-white/48 md:left-10 md:flex">
+        <span className="h-12 w-px overflow-hidden bg-white/18">
+          <span className="block h-5 w-px animate-[rb-scroll-cue_1.9s_cubic-bezier(.16,1,.3,1)_infinite] bg-[#d3b473]" />
+        </span>
+        <span className="text-[0.62rem] font-semibold uppercase tracking-[0.18em]">
+          Role para descobrir
+        </span>
       </div>
 
       <div className="absolute bottom-8 right-6 z-30 flex items-center gap-2 md:bottom-12 md:right-10">

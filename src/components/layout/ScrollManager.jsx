@@ -14,14 +14,19 @@ export default function ScrollManager() {
     }
 
     const scrollToHash = () => {
+      if (document.documentElement.classList.contains("rbp-preloading")) return false;
       const target = document.getElementById(hash);
       if (!target) return false;
-      const top = target.getBoundingClientRect().top + window.scrollY - navOffset;
-      window.scrollTo({
-        top: Math.max(0, top),
-        left: 0,
-        behavior: "smooth",
-      });
+      const destination = Math.max(0, target.offsetTop - navOffset);
+      if (window.__rbLenis?.scrollTo) {
+        window.__rbLenis.scrollTo(destination, { duration: 1.05 });
+      } else {
+        window.scrollTo({
+          top: destination,
+          left: 0,
+          behavior: "smooth",
+        });
+      }
       return true;
     };
 

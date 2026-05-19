@@ -100,6 +100,18 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
             </motion.article>
           ))}
         </div>
+
+        <motion.div
+          {...getInViewProps(reducedMotion, { offset: 22 })}
+          className="mt-20 grid gap-6 border-t border-white/14 pt-9 md:grid-cols-[1fr_auto] md:items-center"
+        >
+          <p className="max-w-2xl font-heading text-3xl font-medium leading-tight text-white md:text-4xl">
+            Cada projeto nasce de uma leitura privada do imóvel, do estilo de vida e da arquitetura.
+          </p>
+          <PremiumLink to="/contato" variant="light">
+            Agendar uma consultoria
+          </PremiumLink>
+        </motion.div>
       </div>
     </section>
   );

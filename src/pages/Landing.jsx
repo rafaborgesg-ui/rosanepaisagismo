@@ -4,16 +4,19 @@ import { api } from "@/api/apiService";
 import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import SitePreloader from "@/components/landing/SitePreloader";
+import SmoothScroll from "@/components/landing/SmoothScroll";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
 import { getAttributionData, trackEvent } from "@/lib/tracking";
 import HeroSection from "@/components/landing/home/HeroSection";
+import ManifestoSection from "@/components/landing/home/ManifestoSection";
 import FounderSection from "@/components/landing/home/FounderSection";
 import SelectedProjectsSection from "@/components/landing/home/SelectedProjectsSection";
 import ExpertiseSection from "@/components/landing/home/ExpertiseSection";
 import MethodSection from "@/components/landing/home/MethodSection";
 import DeliverablesSection from "@/components/landing/home/DeliverablesSection";
+import PresenceSection from "@/components/landing/home/PresenceSection";
 import TestimonialsSection from "@/components/landing/home/TestimonialsSection";
 import ConciergeSection from "@/components/landing/home/ConciergeSection";
 
@@ -110,10 +113,12 @@ export default function Landing() {
   return (
     <div className="isolate min-h-screen overflow-x-hidden bg-[#0b0f0b] text-[#151913]">
       <SitePreloader />
+      <SmoothScroll disabled={Boolean(reduceMotion)} />
       <SEO
         title="Paisagismo Autoral de Alto Padrão"
-        description="Rosane Borges Paisagismo cria jardins autorais de alto padrão para residências, clínicas e empreendimentos, integrando natureza, arquitetura e estilo de vida."
-        keywords="paisagismo autoral, paisagismo alto padrão, paisagismo residencial, projeto executivo paisagismo, jardim vertical, paisagismo para clínicas"
+        description="Rosane Borges Paisagismo cria jardins autorais e projetos sob medida para residências premium, integrando natureza, arquitetura, técnica e estilo de vida."
+        keywords="paisagismo autoral, paisagismo alto padrão, paisagismo residencial premium, projeto executivo paisagismo, jardim contemporâneo, paisagismo para casas de luxo"
+        url="https://rosanepaisagismo.vercel.app"
         schema={{
           "@context": "https://schema.org",
           "@type": "ProfessionalService",
@@ -130,10 +135,12 @@ export default function Landing() {
 
       <main className="relative z-10 bg-[#f3eee4] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
         <HeroSection reducedMotion={Boolean(reduceMotion)} />
+        <ManifestoSection reducedMotion={Boolean(reduceMotion)} />
         <FounderSection reducedMotion={Boolean(reduceMotion)} />
         <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
         <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
         <MethodSection reducedMotion={Boolean(reduceMotion)} />
+        <PresenceSection reducedMotion={Boolean(reduceMotion)} />
         <DeliverablesSection reducedMotion={Boolean(reduceMotion)} />
         <TestimonialsSection reducedMotion={Boolean(reduceMotion)} />
         <ConciergeSection

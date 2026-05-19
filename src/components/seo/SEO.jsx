@@ -4,8 +4,8 @@ export default function SEO({
   title = "",
   description = "",
   keywords = "",
-  image = "https://rosanepaisagismo-site.vercel.app/og-image.jpg",
-  url = "https://rosanepaisagismo-site.vercel.app",
+  image = "https://rosanepaisagismo.vercel.app/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg",
+  url = "https://rosanepaisagismo.vercel.app",
   type = "website",
   schema = null,
 } = {}) {

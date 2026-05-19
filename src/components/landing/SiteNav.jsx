@@ -11,6 +11,15 @@ const navItems = [
   { label: "Contato", to: "/contato", key: "contato" },
 ];
 
+const secondaryNavItems = [
+  { label: "Paisagismo residencial", to: "/paisagismo-residencial" },
+  { label: "Clínicas premium", to: "/paisagismo-clinicas" },
+  { label: "Área gourmet e piscina", to: "/area-gourmet-piscina" },
+  { label: "Manutenção premium", to: "/manutencao-premium" },
+  { label: "Guia de paisagismo", to: "/guia-paisagismo" },
+  { label: "Sistema", to: "/sistema" },
+];
+
 function NavTarget({ item, children, className = "", onClick = undefined }) {
   return (
     <Link to={item.to} className={className} onClick={onClick}>
@@ -145,11 +154,27 @@ export default function SiteNav({ activeLink = "" } = {}) {
         />
         <div className="absolute inset-0 bg-[linear-gradient(90deg,#081009_0%,rgba(8,16,9,0.95)_48%,rgba(8,16,9,0.62)_100%)]" />
         <div className="relative mx-auto flex min-h-svh max-w-[1680px] flex-col justify-end px-6 pb-12 pt-28 md:px-10 md:pb-16">
-          <div className="grid gap-12 md:grid-cols-[0.74fr_minmax(340px,560px)] md:items-end">
+          <div className="grid gap-12 md:grid-cols-[0.68fr_minmax(340px,620px)] md:items-end">
             <div className="max-w-xl text-sm font-light leading-7 text-white/58">
               <div className="mb-8 h-px w-32 rb-luxury-hairline" aria-hidden="true" />
               Rosane Borges Paisagismo cria jardins autorais para quem busca viver melhor
               através da integração entre natureza, arquitetura e rotina.
+              <div className="mt-10 grid gap-3 border-t border-white/10 pt-7 sm:grid-cols-2">
+                {secondaryNavItems.map((item, index) => (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={closeMenu}
+                    className={`rb-premium-focus group inline-flex items-center justify-between gap-4 border-b border-white/8 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white/54 transition-all duration-700 hover:text-[#d3b473] ${
+                      menuOpen ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
+                    }`}
+                    style={{ transitionDelay: menuOpen ? `${320 + index * 45}ms` : "0ms" }}
+                  >
+                    <span>{item.label}</span>
+                    <span className="h-px w-6 origin-left bg-current opacity-42 transition-transform group-hover:scale-x-150" />
+                  </Link>
+                ))}
+              </div>
             </div>
             <div className="grid gap-2">
               {navItems.map((item, index) => (
