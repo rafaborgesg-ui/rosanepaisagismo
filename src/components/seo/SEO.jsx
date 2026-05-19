@@ -9,16 +9,16 @@ export default function SEO({
   type = "website",
   schema = null,
 } = {}) {
-  const baseTitle = "Rosane Borges Paisagismo | Paisagismo de Alto Padrão";
-  const finalTitle = title ? `${title} | Rosane Borges Paisagismo` : baseTitle;
+  const baseTitle = "Rosane Borges Paisagismo | Escritório Boutique de Paisagismo";
+  const finalTitle = title ? `${title} | Rosane Borges` : baseTitle;
 
   const finalDesc =
     description ||
-    "Paisagismo residencial de alto padrão que une natureza, arquitetura e sofisticação em projetos autorais para jardins, piscinas e áreas gourmet.";
+    "Projetos de paisagismo autoral de alto padrão. Arquitetura e curadoria botânica para residências premium, clínicas e empreendimentos. Agende uma consultoria especializada.";
 
   const finalKeywords =
     keywords ||
-    "paisagismo residencial, paisagista, projetos de paisagismo, jardim moderno, paisagismo de luxo, paisagismo residencial alto padrão";
+    "paisagismo alto padrão, paisagismo residencial de luxo, escritório boutique paisagismo, jardim contemporâneo, projeto paisagístico, rosane borges";
 
   return (
     <Helmet>

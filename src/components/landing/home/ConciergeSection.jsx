@@ -1,8 +1,59 @@
 import { MessageCircle } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
-const fieldClass =
-  "min-h-[52px] border-0 border-b border-white/14 bg-transparent px-1 text-sm text-white outline-none transition-all placeholder:text-white/36 focus:border-[#d3b473] focus:bg-white/[0.03]";
+const FloatingInput = ({ value, onChange, label, required, type = "text" }) => (
+  <div className="relative pt-4 w-full">
+    <input
+      type={type}
+      value={value}
+      onChange={onChange}
+      required={required}
+      placeholder={label}
+      className="peer min-h-[52px] w-full border-0 border-b border-white/20 bg-transparent px-1 py-2 text-sm text-white outline-none transition-all placeholder-transparent focus:border-[#d3b473] focus:bg-white/[0.02]"
+    />
+    <label className={`pointer-events-none absolute left-1 top-1/2 -translate-y-1/2 text-sm text-white/50 transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#d3b473] ${value ? "top-0 text-xs text-white/70" : ""}`}>
+      {label} {required && "*"}
+    </label>
+  </div>
+);
+
+const FloatingSelect = ({ value, onChange, label, options, required }) => (
+  <div className="relative pt-4 w-full">
+    <select
+      value={value}
+      onChange={onChange}
+      required={required}
+      className="peer min-h-[52px] w-full appearance-none border-0 border-b border-white/20 bg-transparent px-1 py-2 text-sm text-white outline-none transition-all focus:border-[#d3b473] focus:bg-white/[0.02] cursor-pointer"
+    >
+      <option value="" disabled hidden></option>
+      {options.map((opt) => (
+        <option key={opt} value={opt} className="text-[#171914]">
+          {opt}
+        </option>
+      ))}
+    </select>
+    <label className={`pointer-events-none absolute left-1 transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#d3b473] ${value ? 'top-0 text-xs text-white/70' : 'top-1/2 -translate-y-1/2 text-sm text-white/50'}`}>
+      {label} {required && "*"}
+    </label>
+    <div className="pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 text-white/30 peer-focus:text-[#d3b473]">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+    </div>
+  </div>
+);
+
+const FloatingTextarea = ({ value, onChange, label }) => (
+  <div className="relative pt-4 w-full">
+    <textarea
+      value={value}
+      onChange={onChange}
+      placeholder={label}
+      className="peer min-h-[112px] w-full border-0 border-b border-white/20 bg-transparent px-1 py-3 text-sm text-white outline-none transition-all placeholder-transparent focus:border-[#d3b473] focus:bg-white/[0.02] resize-none"
+    />
+    <label className={`pointer-events-none absolute left-1 top-6 -translate-y-1/2 text-sm text-white/50 transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#d3b473] ${value ? "top-0 text-xs text-white/70" : ""}`}>
+      {label}
+    </label>
+  </div>
+);
 
 export default function ConciergeSection({
   lead,
@@ -38,112 +89,82 @@ export default function ConciergeSection({
             {homeTexts.concierge_text ||
               "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto."}
           </p>
-          <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-10 grid gap-4">
-            <input
+          <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-10 grid gap-6">
+            <FloatingInput
+              label="Seu nome"
               value={lead.name}
               onChange={(e) => setLead((p) => ({ ...p, name: e.target.value }))}
-              className={fieldClass}
-              placeholder="Seu nome"
-              aria-label="Seu nome"
               required
             />
-            <input
-              value={lead.whatsapp}
-              onChange={(e) => setLead((p) => ({ ...p, whatsapp: e.target.value }))}
-              className={fieldClass}
-              placeholder="WhatsApp"
-              aria-label="WhatsApp"
-              required
-            />
-            <div className="grid gap-4 sm:grid-cols-2">
-              <input
-                value={lead.city}
-                onChange={(e) => setLead((p) => ({ ...p, city: e.target.value }))}
-                className={fieldClass}
-                placeholder="Cidade"
-                aria-label="Cidade"
+            <div className="grid gap-6 sm:grid-cols-2">
+              <FloatingInput
+                label="WhatsApp"
+                type="tel"
+                value={lead.whatsapp}
+                onChange={(e) => setLead((p) => ({ ...p, whatsapp: e.target.value }))}
                 required
               />
-              <select
+              <FloatingInput
+                label="Cidade do projeto"
+                value={lead.city}
+                onChange={(e) => setLead((p) => ({ ...p, city: e.target.value }))}
+                required
+              />
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <FloatingSelect
+                label="Tipo de imóvel"
                 value={lead.propertyType}
                 onChange={(e) => setLead((p) => ({ ...p, propertyType: e.target.value }))}
-                className={fieldClass}
-                aria-label="Tipo de imóvel"
                 required
-              >
-                <option className="text-[#171914]">Residencial</option>
-                <option className="text-[#171914]">Clínica ou corporativo</option>
-                <option className="text-[#171914]">Condomínio ou área comum</option>
-                <option className="text-[#171914]">Empreendimento</option>
-              </select>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <select
+                options={["Residencial", "Clínica ou corporativo", "Condomínio ou área comum", "Empreendimento"]}
+              />
+              <FloatingSelect
+                label="Fase do projeto"
                 value={lead.phase}
                 onChange={(e) => setLead((p) => ({ ...p, phase: e.target.value }))}
-                className={fieldClass}
-                aria-label="Fase do projeto"
                 required
-              >
-                <option className="text-[#171914]">Terreno ou anteprojeto</option>
-                <option className="text-[#171914]">Em obra</option>
-                <option className="text-[#171914]">Imóvel pronto</option>
-                <option className="text-[#171914]">Reforma de área externa</option>
-              </select>
-              <select
+                options={["Terreno ou anteprojeto", "Em obra", "Imóvel pronto", "Reforma de área externa"]}
+              />
+            </div>
+            <div className="grid gap-6 sm:grid-cols-2">
+              <FloatingSelect
+                label="Escopo desejado"
                 value={lead.scope}
                 onChange={(e) => setLead((p) => ({ ...p, scope: e.target.value }))}
-                className={fieldClass}
-                aria-label="Escopo desejado"
                 required
-              >
-                <option className="text-[#171914]">Projeto completo</option>
-                <option className="text-[#171914]">Consultoria técnica</option>
-                <option className="text-[#171914]">Projeto + implantação</option>
-                <option className="text-[#171914]">Jardim vertical</option>
-              </select>
-            </div>
-            <div className="grid gap-4 sm:grid-cols-2">
-              <select
+                options={["Projeto completo", "Consultoria técnica", "Projeto + implantação", "Jardim vertical"]}
+              />
+              <FloatingSelect
+                label="Prazo desejado"
                 value={lead.timeline}
                 onChange={(e) => setLead((p) => ({ ...p, timeline: e.target.value }))}
-                className={fieldClass}
-                aria-label="Prazo desejado"
                 required
-              >
-                <option className="text-[#171914]">Até 3 meses</option>
-                <option className="text-[#171914]">3 a 6 meses</option>
-                <option className="text-[#171914]">6 a 12 meses</option>
-                <option className="text-[#171914]">Sem prazo definido</option>
-              </select>
-              <select
+                options={["Até 3 meses", "3 a 6 meses", "6 a 12 meses", "Sem prazo definido"]}
+              />
+            </div>
+            <div className="grid gap-6 sm:grid-cols-1">
+              <FloatingSelect
+                label="Faixa de investimento (opcional)"
                 value={lead.investment}
                 onChange={(e) => setLead((p) => ({ ...p, investment: e.target.value }))}
-                className={fieldClass}
-                aria-label="Faixa de investimento"
-                required
-              >
-                <option className="text-[#171914]">Até R$15 mil</option>
-                <option className="text-[#171914]">R$15k a R$35k</option>
-                <option className="text-[#171914]">R$35k a R$80k</option>
-                <option className="text-[#171914]">Acima de R$80k</option>
-                <option className="text-[#171914]">Ainda não sei</option>
-              </select>
+                options={["Até R$15 mil", "R$15k a R$35k", "R$35k a R$80k", "Acima de R$80k", "Ainda não sei"]}
+              />
             </div>
-            <textarea
+            <FloatingTextarea
+              label="Detalhes e expectativas do projeto"
               value={lead.details}
               onChange={(e) => setLead((p) => ({ ...p, details: e.target.value }))}
-              className={`${fieldClass} min-h-28 py-3`}
-              placeholder="Conte o contexto do imóvel e o resultado que você busca."
-              aria-label="Detalhes do projeto"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="group/submit mt-3 inline-flex min-h-[52px] items-center justify-center gap-3 rounded-full bg-white px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition-all duration-500 hover:-translate-y-0.5 hover:bg-[#f5e6c8] hover:shadow-[0_8px_32px_rgba(211,180,115,0.18)] disabled:cursor-not-allowed disabled:opacity-60"
+              className="group/submit mt-4 inline-flex min-h-[56px] w-full sm:w-auto items-center justify-center gap-4 rounded-full bg-white px-10 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#171914] transition-all duration-500 hover:-translate-y-1 hover:bg-[#f5e6c8] hover:shadow-[0_12px_40px_rgba(211,180,115,0.22)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
-              {isSubmitting ? "Enviando..." : homeTexts.concierge_button || "Solicitar uma proposta autoral"}
-              <MessageCircle className="h-4 w-4 transition-transform duration-500 group-hover/submit:translate-x-0.5" aria-hidden="true" />
+              <span className="relative z-10 flex items-center gap-3">
+                 {isSubmitting ? "Enviando Requisição..." : homeTexts.concierge_button || "Solicitar uma proposta autoral"}
+                 <MessageCircle className="h-4 w-4 transition-transform duration-500 group-hover/submit:translate-x-1 group-hover/submit:scale-110" aria-hidden="true" />
+              </span>
             </button>
           </form>
         </div>

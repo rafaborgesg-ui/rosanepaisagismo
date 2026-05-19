@@ -1,5 +1,6 @@
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useRef } from "react";
 import PremiumLink from "@/components/landing/home/PremiumLink";
 import { labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
@@ -20,6 +21,31 @@ const imageLayout = [
   "aspect-[4/3] md:aspect-[1.08]",
 ];
 
+function ParallaxImage({ src, alt, reducedMotion, className }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  
+  // Imagem desce um pouco enquanto usuário faz o scroll para criar a ilusão de profundidade
+  const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
+
+  return (
+    <div ref={ref} className={`relative overflow-hidden bg-[#181c19] ${className}`}>
+      <motion.img
+        src={src}
+        alt={alt}
+        loading="lazy"
+        decoding="async"
+        style={{ y: reducedMotion ? "0%" : y }}
+        className="absolute inset-0 h-[120%] w-full object-cover opacity-88 grayscale-[10%] origin-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
+      />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-30" />
+    </div>
+  );
+}
+
 export default function SelectedProjectsSection({ reducedMotion = false }) {
   const { projects } = usePortfolioProjects();
   const content = useLandingContent();
@@ -31,13 +57,13 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
   }));
 
   return (
-    <section id="projetos" className="relative bg-[#0b0f0b] px-5 py-section-md text-white md:px-10">
+    <section id="projetos" className="relative bg-[#0b0f0b] px-5 py-section-md text-white md:px-10 overflow-hidden">
       {/* Gold divider */}
       <div className="absolute inset-x-0 top-0 flex justify-center">
         <div className="h-px w-[min(280px,50vw)] rb-luxury-hairline-gold" />
       </div>
 
-      <div className="mx-auto w-[min(100%,1320px)]">
+      <div className="mx-auto w-[min(100%,1320px)] relative z-10">
         <motion.div
           {...getInViewProps(reducedMotion, { offset: 26, blur: true })}
           className="mb-20 grid gap-8 lg:grid-cols-[0.95fr_0.45fr] lg:items-end"
@@ -63,12 +89,10 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           {selectedProjects.map((project, index) => (
             <motion.article
               key={project.slug}
-              {...getInViewProps(reducedMotion, {
-                offset: 30,
-                delay: reducedMotion ? 0 : index * 0.07,
-                duration: 0.72,
-                blur: true,
-              })}
+              initial={reducedMotion ? false : { opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
+              whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
               className={cardLayout[index] || ""}
             >
               <Link
@@ -76,25 +100,24 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
                 className="rb-premium-focus group block"
                 aria-label={`Ver projeto ${project.title}`}
               >
-                <div className={`rb-cinematic-image relative overflow-hidden bg-[#181c19] ${imageLayout[index] || imageLayout[3]}`}>
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover opacity-88 grayscale-[10%]"
+                <div className="relative">
+                  <ParallaxImage 
+                    src={project.image} 
+                    alt={project.title} 
+                    reducedMotion={reducedMotion} 
+                    className={imageLayout[index] || imageLayout[3]} 
                   />
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-40" />
-                  <span className="absolute bottom-5 left-6 font-heading text-xl text-white/52 transition-transform duration-700 group-hover:translate-y-[-4px]">
+                  <span className="absolute bottom-5 left-6 font-heading text-xl text-white/52 transition-transform duration-700 group-hover:translate-y-[-4px] group-hover:text-white">
                     {String(index + 1).padStart(2, "0")}
                   </span>
                 </div>
-                <div className="mt-6 grid gap-3 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-start">
+                <div className="mt-6 grid gap-3 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-start relative">
+                  <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-[#d3b473] to-transparent transition-all duration-700 ease-out group-hover:w-full" />
                   <div>
                     <h3 className="font-heading text-[1.7rem] font-medium leading-none text-white transition-colors duration-500 group-hover:text-[#d3b473] md:text-[2rem]">
                       {project.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/50">
+                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/50 transition-colors duration-500 group-hover:text-white/70">
                       {project.summary}
                     </p>
                   </div>
