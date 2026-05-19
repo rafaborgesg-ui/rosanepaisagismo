@@ -1,9 +1,18 @@
 import { motion } from "framer-motion";
-import { Leaf, MessageCircle } from "lucide-react";
+import { Check, Leaf, MessageCircle } from "lucide-react";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
 import { fadeUp, labelClass } from "@/components/landing/project/projectShared";
 
 export default function ProjectNarrativeSection({ project, reducedMotion = false }) {
+  const intentions = project.intentions?.length
+    ? project.intentions
+    : [
+        "Equilibrar arquitetura, vegetação e rotina de manutenção",
+        "Criar uma leitura botânica autoral para o espaço",
+        "Transformar a área externa em experiência de uso",
+      ];
+  const materials = project.materials?.length ? project.materials : project.plants;
+
   return (
     <section className="bg-[#f3eee4] px-5 py-24 md:px-10 md:py-36">
       <div className="mx-auto grid w-[min(100%,1320px)] gap-16 lg:grid-cols-[0.78fr_1.22fr]">
@@ -66,14 +75,49 @@ export default function ProjectNarrativeSection({ project, reducedMotion = false
             transition={reducedMotion ? { duration: 0 } : { duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
             className="grid gap-5 border-b border-[#d8cdbb] py-8 md:grid-cols-[0.34fr_1fr]"
           >
-            <p className={labelClass}>Curadoria botânica</p>
-            <div className="grid gap-3 sm:grid-cols-2">
-              {project.plants.map((plant) => (
-                <div key={plant} className="flex items-center gap-3 border-b border-[#d8cdbb] pb-3 text-[#343830]">
-                  <Leaf className="h-4 w-4 text-[#8a6e42]" aria-hidden="true" />
-                  <span>{plant}</span>
+            <p className={labelClass}>Intenções</p>
+            <div className="grid gap-4">
+              {intentions.map((item, index) => (
+                <div
+                  key={item}
+                  className="grid grid-cols-[2.4rem_1fr] items-start gap-4 border-b border-[#d8cdbb] pb-4 last:border-b-0 last:pb-0"
+                >
+                  <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[#c3ad86] text-[0.64rem] font-semibold text-[#8a6e42]">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <p className="text-xl font-light leading-8 text-[#343830] md:text-2xl md:leading-9">
+                    {item}
+                  </p>
                 </div>
               ))}
+            </div>
+          </motion.article>
+
+          <motion.article
+            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+            whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-80px" }}
+            transition={reducedMotion ? { duration: 0 } : { duration: 0.65, ease: [0.16, 1, 0.3, 1] }}
+            className="grid gap-5 border-b border-[#d8cdbb] py-8 md:grid-cols-[0.34fr_1fr]"
+          >
+            <p className={labelClass}>Curadoria botânica</p>
+            <div className="grid gap-8">
+              <div className="grid gap-3 sm:grid-cols-2">
+                {project.plants.map((plant) => (
+                  <div key={plant} className="flex items-center gap-3 border-b border-[#d8cdbb] pb-3 text-[#343830]">
+                    <Leaf className="h-4 w-4 text-[#8a6e42]" aria-hidden="true" />
+                    <span>{plant}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="grid gap-3 border border-[#d8cdbb] p-5 sm:grid-cols-3">
+                {materials.map((item) => (
+                  <div key={item} className="flex items-start gap-3 text-sm leading-6 text-[#4b5248]">
+                    <Check className="mt-1 h-4 w-4 shrink-0 text-[#8a6e42]" aria-hidden="true" />
+                    <span>{item}</span>
+                  </div>
+                ))}
+              </div>
             </div>
           </motion.article>
         </div>

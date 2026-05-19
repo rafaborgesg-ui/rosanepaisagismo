@@ -1,6 +1,8 @@
 import { motion } from "framer-motion";
 
 export default function ProjectGallerySection({ project, reducedMotion = false }) {
+  const captions = project.galleryCaptions || [];
+
   return (
     <section className="bg-[#081009] px-5 py-24 text-white md:px-10 md:py-36">
       <div className="mx-auto w-[min(100%,1320px)]">
@@ -19,7 +21,7 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
           </p>
         </div>
 
-        <div className="grid gap-10">
+        <div className="grid gap-6 lg:grid-cols-12 lg:gap-8">
           {project.gallery.map((image, index) => (
             <motion.figure
               key={image}
@@ -31,18 +33,33 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
                   ? { duration: 0 }
                   : { delay: index * 0.06, duration: 0.75, ease: [0.16, 1, 0.3, 1] }
               }
-              className={index % 2 === 0 ? "lg:pr-[12%]" : "lg:pl-[12%]"}
+              className={
+                index === 0
+                  ? "lg:col-span-8 lg:row-span-2"
+                  : index === 1
+                    ? "lg:col-span-4 lg:pt-16"
+                    : "lg:col-span-4 lg:self-end"
+              }
             >
-              <div className="relative overflow-hidden bg-[#151b14]">
+              <div className="group relative overflow-hidden bg-[#151b14]">
                 <img
                   src={image}
                   alt={`${project.title} - imagem ${index + 1}`}
                   loading={index === 0 ? "eager" : "lazy"}
                   decoding="async"
-                  className="h-[64vh] min-h-[390px] w-full object-cover grayscale-[6%]"
+                  className={`w-full object-cover grayscale-[6%] transition duration-1000 group-hover:scale-[1.025] group-hover:grayscale-0 ${
+                    index === 0
+                      ? "h-[66vh] min-h-[420px]"
+                      : "h-[42vh] min-h-[320px] lg:h-[38vh]"
+                  }`}
                 />
-                <div className="absolute bottom-5 left-5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white/58">
-                  {String(index + 1).padStart(2, "0")} / {project.title}
+                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#081009]/88 to-transparent p-5">
+                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
+                    {String(index + 1).padStart(2, "0")} / {project.category}
+                  </p>
+                  <figcaption className="mt-2 max-w-xl text-sm font-light leading-6 text-white/72">
+                    {captions[index] || project.title}
+                  </figcaption>
                 </div>
               </div>
             </motion.figure>

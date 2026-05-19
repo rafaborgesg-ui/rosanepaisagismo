@@ -34,6 +34,17 @@ export const premiumProjects = [
     solution:
       "A proposta organiza massas vegetais, textura de piso e pontos focais para reforçar escala, permanência e leitura do imóvel.",
     plants: ["Topiarias estruturantes", "Maciços de forração", "Espécies de destaque"],
+    intentions: [
+      "Valorizar a chegada sem competir com a arquitetura",
+      "Criar massas verdes de leitura limpa e sofisticada",
+      "Organizar percurso, proporção e pontos focais",
+    ],
+    materials: ["Volumes podados", "Texturas minerais", "Iluminação de acolhimento"],
+    galleryCaptions: [
+      "Fachada com massas vegetais em diálogo com o volume arquitetônico.",
+      "Enquadramento do acesso principal e reforço de privacidade.",
+      "Camadas de textura para leitura elegante desde a rua.",
+    ],
   },
   {
     slug: "residencial-curadoria-botanica",
@@ -55,6 +66,17 @@ export const premiumProjects = [
     solution:
       "Foram definidas camadas vegetais por altura e textura, com espécies adaptadas ao uso cotidiano do espaço.",
     plants: ["Arbustos de estrutura", "Herbáceas tropicais", "Forrações de baixa manutenção"],
+    intentions: [
+      "Construir conforto térmico com vegetação de presença",
+      "Preservar circulação fluida entre entrada e permanência",
+      "Definir uma paleta botânica durável para a rotina da casa",
+    ],
+    materials: ["Folhagens tropicais", "Bordas orgânicas", "Forrações de baixa manutenção"],
+    galleryCaptions: [
+      "Entrada com curadoria botânica para acolhimento e valor percebido.",
+      "Ritmo vegetal em camadas para profundidade e conforto visual.",
+      "Áreas de transição pensadas para manutenção previsível.",
+    ],
   },
   {
     slug: "implantacao-acesso-e-estar",
@@ -76,6 +98,17 @@ export const premiumProjects = [
     solution:
       "O escopo organiza espécies, materiais e ritmo de execução com checkpoints técnicos ao longo da obra.",
     plants: ["Espécies de borda", "Maciços de preenchimento", "Pontos vegetais de destaque"],
+    intentions: [
+      "Transformar o conceito em uma implantação clara para obra",
+      "Reduzir improvisos entre fornecedores e execução",
+      "Preservar a linguagem visual definida no estudo",
+    ],
+    materials: ["Checkpoints técnicos", "Mapeamento de espécies", "Diretrizes de obra"],
+    galleryCaptions: [
+      "Acesso organizado por camadas de vegetação e circulação.",
+      "Implantação orientada para manter o desenho original.",
+      "Detalhes de transição entre percurso, bordas e áreas externas.",
+    ],
   },
   {
     slug: "fachadas-e-percurso-de-chegada",
@@ -97,6 +130,17 @@ export const premiumProjects = [
     solution:
       "A leitura espacial combina volumes vegetais e negativos estratégicos para destacar arquitetura e percurso.",
     plants: ["Espécies de enquadramento", "Arbustos de ritmo", "Forrações de acabamento"],
+    intentions: [
+      "Reforçar hierarquia de entrada desde o primeiro olhar",
+      "Usar vegetação como moldura da arquitetura",
+      "Criar uma chegada elegante, sem excesso ornamental",
+    ],
+    materials: ["Maciços de ritmo", "Áreas negativas", "Espécies de enquadramento"],
+    galleryCaptions: [
+      "Percurso de chegada com leitura gradual da fachada.",
+      "Volumes e vazios equilibram presença vegetal e arquitetura.",
+      "Acabamentos verdes desenhados para elevar o conjunto.",
+    ],
   },
   {
     slug: "estudo-executivo-de-areas-externas",
@@ -118,6 +162,17 @@ export const premiumProjects = [
     solution:
       "O estudo conecta espécies, materiais e percursos em uma linguagem única para toda a área externa.",
     plants: ["Palmáceas pontuais", "Maciços tropicais", "Forrações de transição"],
+    intentions: [
+      "Unificar diferentes áreas externas em uma linguagem única",
+      "Desenhar permanência com privacidade e conforto",
+      "Antecipar escolhas executivas para uma obra mais precisa",
+    ],
+    materials: ["Estudo 3D", "Paleta tropical", "Diretrizes executivas"],
+    galleryCaptions: [
+      "Áreas externas conectadas por uma mesma intenção visual.",
+      "Permanência com privacidade, sombra e presença botânica.",
+      "Leitura executiva para alinhar conceito e implantação.",
+    ],
   },
 ];
 

@@ -1,21 +1,25 @@
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { ArrowDown, ArrowLeft } from "lucide-react";
 import { fadeUp } from "@/components/landing/project/projectShared";
 
 export default function ProjectHero({ project, heroStats, reducedMotion = false }) {
   return (
-    <section className="relative min-h-[96svh] overflow-hidden bg-[#081009] text-white">
-      <img
+    <section className="relative min-h-svh overflow-hidden bg-[#081009] text-white">
+      <motion.img
         src={project.cover}
         alt={project.title}
         className="absolute inset-0 h-full w-full object-cover"
         decoding="async"
+        initial={reducedMotion ? false : { scale: 1.06 }}
+        animate={reducedMotion ? undefined : { scale: 1 }}
+        transition={reducedMotion ? { duration: 0 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.9),rgba(8,16,9,0.26)_54%,rgba(8,16,9,0.72)),linear-gradient(180deg,rgba(8,16,9,0.36),rgba(8,16,9,0.06)_42%,rgba(8,16,9,0.9))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_38%,rgba(211,180,115,0.14),transparent_30%),linear-gradient(90deg,rgba(8,16,9,0.92),rgba(8,16,9,0.28)_54%,rgba(8,16,9,0.74)),linear-gradient(180deg,rgba(8,16,9,0.24),rgba(8,16,9,0.05)_42%,rgba(8,16,9,0.92))]" />
       <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#081009] to-transparent" />
+      <div className="absolute bottom-0 left-5 top-28 hidden w-px bg-gradient-to-b from-white/0 via-white/20 to-white/0 md:block lg:left-10" />
 
-      <div className="relative z-10 mx-auto grid min-h-[96svh] w-[min(100%,1680px)] items-end gap-12 px-5 pb-16 pt-32 md:px-10 md:pb-20 lg:grid-cols-[0.95fr_0.46fr]">
+      <div className="relative z-10 mx-auto grid min-h-svh w-[min(100%,1680px)] items-end gap-12 px-5 pb-12 pt-32 md:px-10 md:pb-20 lg:grid-cols-[0.95fr_0.46fr]">
         <motion.div
           initial={reducedMotion ? false : "hidden"}
           animate={reducedMotion ? undefined : "visible"}
@@ -38,6 +42,18 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
           <p className="mt-7 max-w-2xl text-base font-light leading-8 text-white/76 md:text-lg">
             {project.summary}
           </p>
+          <div className="mt-9 flex flex-wrap items-center gap-4">
+            <a
+              href="#briefing-projeto"
+              className="rb-premium-focus inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
+            >
+              Solicitar proposta autoral
+              <ArrowDown className="h-4 w-4" aria-hidden="true" />
+            </a>
+            <span className="max-w-[17rem] text-xs font-light leading-6 text-white/52">
+              Uma leitura inicial para transformar referência em direção técnica de projeto.
+            </span>
+          </div>
         </motion.div>
 
         <motion.aside
@@ -50,14 +66,25 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
             Ficha do projeto
           </p>
           <div className="mt-6 grid gap-5 border-t border-white/14 pt-6">
-            {heroStats.map(({ label, value }) => (
-              <div key={label}>
-                <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/44">
-                  {label}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-white/84">{value}</p>
+            {heroStats.map(({ icon: Icon, label, value }) => (
+              <div key={label} className="grid grid-cols-[1.25rem_1fr] gap-4">
+                <Icon className="mt-1 h-4 w-4 text-[#d3b473]" aria-hidden="true" />
+                <div>
+                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/44">
+                    {label}
+                  </p>
+                  <p className="mt-2 text-sm leading-6 text-white/84">{value}</p>
+                </div>
               </div>
             ))}
+          </div>
+          <div className="mt-8 border-t border-white/14 pt-5">
+            <p className="text-[0.62rem] font-semibold uppercase tracking-[0.16em] text-white/44">
+              Direção
+            </p>
+            <p className="mt-2 text-sm leading-6 text-white/84">
+              Natureza, arquitetura e rotina em uma composição sob medida.
+            </p>
           </div>
         </motion.aside>
       </div>
