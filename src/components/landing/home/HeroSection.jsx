@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
+import PremiumLink from "@/components/landing/home/PremiumLink";
 
 export default function HeroSection({ reducedMotion = false }) {
   const content = useLandingContent();
@@ -59,10 +60,17 @@ export default function HeroSection({ reducedMotion = false }) {
     return () => window.clearInterval(timer);
   }, [reducedMotion, slides.length]);
 
+  const activeProjectText = [
+    "Fachadas, jardins e áreas de permanência desenhados como parte da arquitetura.",
+    "Curadoria botânica com técnica, ritmo visual e maturação pensada para o tempo.",
+    "Ambientes externos que elevam o cotidiano sem perder naturalidade.",
+    "Projetos sob medida para residências, clínicas e empreendimentos selecionados.",
+  ];
+
   return (
     <section
       data-hero-logo-stage
-      className="relative min-h-svh touch-pan-y overflow-hidden bg-[#101812] text-white"
+      className="relative min-h-[100svh] touch-pan-y overflow-hidden bg-[#0a100c] text-white"
       onTouchStart={(event) => {
         const touch = event.touches[0];
         touchStartRef.current = { x: touch.clientX, y: touch.clientY };
@@ -96,15 +104,15 @@ export default function HeroSection({ reducedMotion = false }) {
                 ? { opacity: isActive ? 1 : 0 }
                 : {
                     opacity: isActive ? 1 : 0,
-                    scale: isActive ? 1 : 1.018,
+                    scale: isActive ? 1.065 : 1.02,
                   }
             }
             transition={
               reducedMotion
                 ? { duration: 0 }
                 : {
-                    opacity: { duration: 0.95, ease: "easeInOut" },
-                    scale: { duration: 5.2, ease: [0.16, 1, 0.3, 1] },
+                    opacity: { duration: 1.15, ease: "easeInOut" },
+                    scale: { duration: 6.8, ease: [0.16, 1, 0.3, 1] },
                   }
             }
             loading={index === 0 ? "eager" : "lazy"}
@@ -113,17 +121,74 @@ export default function HeroSection({ reducedMotion = false }) {
         );
       })}
 
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(16,24,18,0.22),rgba(16,24,18,0.02)_48%,rgba(16,24,18,0.16)),linear-gradient(180deg,rgba(16,24,18,0.02)_45%,rgba(16,24,18,0.34)_100%)]" />
+      <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,rgba(8,13,9,0.76),rgba(8,13,9,0.28)_45%,rgba(8,13,9,0.5)),linear-gradient(180deg,rgba(8,13,9,0.42),rgba(8,13,9,0.04)_34%,rgba(8,13,9,0.84)_100%)]" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[30vh] bg-gradient-to-t from-[#0b0f0b] to-transparent" />
 
-      <div className="absolute bottom-8 right-6 z-20 flex items-center gap-2 md:bottom-12 md:right-10">
+      <div className="relative z-20 mx-auto flex min-h-[100svh] w-[min(100%,1680px)] items-end px-5 pb-16 pt-32 md:px-10 md:pb-16 lg:pb-20">
+        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,0.98fr)_minmax(320px,0.42fr)] lg:items-end">
+          <motion.div
+            initial={reducedMotion ? false : { opacity: 0, y: 36, filter: "blur(12px)" }}
+            animate={reducedMotion ? {} : { opacity: 1, y: 0, filter: "blur(0px)" }}
+            transition={{ duration: 1.05, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+            className="max-w-5xl"
+          >
+            <div className="mb-7 h-px w-28 rb-luxury-hairline" aria-hidden="true" />
+            <h1 className="max-w-5xl font-heading text-[clamp(3.6rem,8.1vw,8.8rem)] font-medium leading-[0.88] text-white [text-wrap:balance]">
+              Paisagismo autoral para espaços que inspiram
+            </h1>
+            <p className="mt-6 max-w-2xl text-base font-light leading-8 text-white/78 md:text-lg md:leading-8">
+              Natureza, arquitetura e sensibilidade em equilíbrio para jardins criados sob medida,
+              com sofisticação, técnica e presença.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+              <PremiumLink to="/contato" variant="light">
+                Conversar sobre meu projeto
+              </PremiumLink>
+              <PremiumLink to="/portfolio" variant="outline">
+                Ver projetos autorais
+              </PremiumLink>
+            </div>
+          </motion.div>
+
+          <motion.aside
+            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
+            animate={reducedMotion ? {} : { opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
+            className="hidden border-l border-white/18 pl-7 text-white/72 lg:block"
+          >
+            <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
+              Rosane Borges Paisagismo
+            </p>
+            <p className="mt-5 text-lg font-light leading-8">
+              {activeProjectText[activeSlide] || activeProjectText[0]}
+            </p>
+            <div className="mt-8 grid grid-cols-3 gap-5 border-t border-white/14 pt-6">
+              {[
+                ["2016", "atuação"],
+                ["3D", "conceito"],
+                ["obra", "orientada"],
+              ].map(([value, label]) => (
+                <div key={label}>
+                  <p className="font-heading text-3xl text-white">{value}</p>
+                  <p className="mt-1 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-white/44">
+                    {label}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </motion.aside>
+        </div>
+      </div>
+
+      <div className="absolute bottom-8 right-6 z-30 flex items-center gap-2 md:bottom-12 md:right-10">
         {slides.map((slide, index) => (
           <button
             key={slide.src}
             type="button"
             aria-label={`Ver imagem ${index + 1}`}
             onClick={() => setActiveSlide(index)}
-            className={`h-3 w-3 rounded-full border border-white/50 transition-all duration-300 ${
-              activeSlide === index ? "bg-white" : "bg-white/35 hover:bg-white/70"
+            className={`h-1.5 rounded-full border border-white/40 transition-all duration-500 ${
+              activeSlide === index ? "w-9 bg-white" : "w-1.5 bg-white/20 hover:bg-white/70"
             }`}
           />
         ))}

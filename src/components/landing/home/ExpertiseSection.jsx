@@ -15,30 +15,39 @@ export default function ExpertiseSection({ reducedMotion = false }) {
   const services = adminServices.length ? [...adminServices, ...expertise.slice(3)] : expertise;
 
   return (
-    <section id="servicos" className="bg-white px-4 py-20 md:py-28">
-      <div className="mx-auto w-[min(100%,1180px)]">
-        <div className="mb-12 max-w-3xl">
-          <p className={labelClass}>{homeTexts.services_label || "Nossos Serviços"}</p>
-          <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-6xl">
-            {homeTexts.services_title || "Frentes de atuação para projetos que exigem nível alto de execução."}
-          </h2>
+    <section id="servicos" className="bg-[#f3eee4] px-5 py-24 md:px-10 md:py-36">
+      <div className="mx-auto w-[min(100%,1320px)]">
+        <div className="mb-14 grid gap-8 lg:grid-cols-[0.92fr_0.5fr] lg:items-end">
+          <div className="max-w-4xl">
+            <p className={labelClass}>{homeTexts.services_label || "Atuação"}</p>
+            <h2 className="mt-5 font-heading text-[clamp(3rem,6.8vw,7rem)] font-medium leading-[0.9] text-[#111913]">
+              {homeTexts.services_title || "Projetos criados para viver melhor."}
+            </h2>
+          </div>
+          <p className="max-w-md text-base font-light leading-8 text-[#4b5248] lg:justify-self-end">
+            Do primeiro diagnóstico ao jardim implantado, cada frente nasce para transformar
+            intenção estética em decisão técnica clara.
+          </p>
         </div>
-        <div className="grid gap-3">
+        <div className="grid border-t border-[#d8cdbb]">
           {services.map((item, index) => (
             <motion.article
               key={item.title}
               {...getInViewProps(reducedMotion, {
                 offset: 24,
                 margin: "-80px",
-                delay: reducedMotion ? 0 : index * 0.06,
+                delay: reducedMotion ? 0 : index * 0.05,
                 duration: 0.6,
               })}
-              className="grid gap-3 rounded-[8px] border border-[#dfd9cc] bg-[#f8f4eb] p-6 md:grid-cols-[0.75fr_1.25fr] md:items-center"
+              className="group grid gap-5 border-b border-[#d8cdbb] py-7 transition-colors duration-500 hover:bg-[#ebe2d3]/60 md:grid-cols-[0.16fr_0.62fr_0.82fr] md:items-start md:px-5"
             >
-              <h3 className="font-heading text-3xl font-medium tracking-normal md:text-4xl">
+              <span className="font-heading text-3xl text-[#8a6e42]">
+                {String(index + 1).padStart(2, "0")}
+              </span>
+              <h3 className="font-heading text-4xl font-medium leading-none text-[#111913] md:text-5xl">
                 {item.title}
               </h3>
-              <p className="leading-7 text-[#4b5248]">{item.detail}</p>
+              <p className="max-w-2xl text-base leading-8 text-[#4b5248]">{item.detail}</p>
             </motion.article>
           ))}
         </div>

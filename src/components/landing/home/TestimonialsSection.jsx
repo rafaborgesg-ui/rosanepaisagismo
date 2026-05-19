@@ -5,23 +5,23 @@ import { useLandingContent } from "@/hooks/useLandingContent";
 const defaultTestimonials = [
   {
     quote:
-      "O escritório da Rosane transformou completamente a percepção do nosso imóvel. A residência valorizou mais de 30% após a execução do projeto.",
+      "O projeto transformou completamente a percepção do imóvel. A área externa deixou de ser um anexo e passou a ser o coração da casa.",
     name: "Ana Paula Ferreira",
-    role: "Proprietária — Alphaville, SP",
+    role: "Residência de alto padrão",
     initials: "AP",
   },
   {
     quote:
-      "A consultoria foi cirúrgica. O jardim biofílico da nossa clínica criou uma experiência de conforto e luxo única para os nossos pacientes.",
+      "A consultoria foi precisa. O jardim biofílico da clínica criou uma experiência de acolhimento e sofisticação para os pacientes.",
     name: "Dr. Ricardo Mota",
-    role: "Clínica premium — BH, MG",
+    role: "Clínica premium",
     initials: "RM",
   },
   {
     quote:
-      "Uma parceria de altíssimo nível. A entrega impecável e o design sofisticado superaram todas as expectativas dos nossos compradores.",
+      "Uma parceria de altíssimo nível. A entrega técnica ajudou a preservar a intenção estética até a implantação final.",
     name: "Construtora Ávila",
-    role: "Condomínio de luxo — SP",
+    role: "Empreendimento residencial",
     initials: "CA",
   },
 ];
@@ -51,38 +51,47 @@ export default function TestimonialsSection({ reducedMotion = false }) {
   });
 
   return (
-    <section className="bg-white px-4 py-16 md:py-24">
-      <div className="mx-auto grid w-[min(100%,1280px)] gap-6 lg:grid-cols-3">
-        {testimonials.map((testimonial, index) => (
-          <motion.article
-            key={testimonial.name}
-            {...getInViewProps(reducedMotion, {
-              offset: 22,
-              margin: "-80px",
-              delay: reducedMotion ? 0 : index * 0.08,
-              duration: 0.62,
-            })}
-            className="flex min-h-[274px] flex-col justify-between rounded-[22px] border border-[#e5e1dc] bg-[#fbfbfb] p-10 shadow-[0_18px_60px_rgba(23,25,20,0.04)] md:p-11"
-          >
-            <p className="text-[1.02rem] leading-7 text-[#29302c]">
-              <span className="text-[#a9834a]">"</span>
-              {testimonial.quote}
-              <span className="text-[#a9834a]">"</span>
-            </p>
+    <section className="bg-[#0b0f0b] px-5 py-24 text-white md:px-10 md:py-32">
+      <div className="mx-auto w-[min(100%,1320px)]">
+        <div className="mb-12 grid gap-6 lg:grid-cols-[0.75fr_0.5fr] lg:items-end">
+          <h2 className="font-heading text-[clamp(3rem,6vw,6.2rem)] font-medium leading-[0.9]">
+            Confiança discreta, construída no detalhe.
+          </h2>
+          <p className="max-w-md text-base font-light leading-8 text-white/62 lg:justify-self-end">
+            A prova social entra como assinatura, não como ruído: clientes que buscavam
+            técnica, presença estética e segurança de implantação.
+          </p>
+        </div>
+        <div className="grid border-t border-white/14 lg:grid-cols-3">
+          {testimonials.map((testimonial, index) => (
+            <motion.article
+              key={testimonial.name}
+              {...getInViewProps(reducedMotion, {
+                offset: 22,
+                margin: "-80px",
+                delay: reducedMotion ? 0 : index * 0.08,
+                duration: 0.62,
+              })}
+              className="flex min-h-[320px] flex-col justify-between border-b border-white/14 py-9 lg:border-r lg:px-8 lg:last:border-r-0"
+            >
+              <p className="font-heading text-3xl font-medium leading-tight text-white md:text-4xl">
+                “{testimonial.quote}”
+              </p>
 
-            <div className="mt-10 flex items-center gap-4">
-              <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_25%,#bdbdb9,#4c504b)] text-sm font-semibold text-white grayscale">
-                {testimonial.initials}
+              <div className="mt-10 flex items-center gap-4">
+                <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full border border-[#d3b473]/42 text-sm font-semibold text-[#d3b473]">
+                  {testimonial.initials}
+                </div>
+                <div>
+                  <h3 className="text-sm font-bold text-white">{testimonial.name}</h3>
+                  <p className="mt-1 text-[0.66rem] font-medium uppercase tracking-[0.12em] text-white/44">
+                    {testimonial.role}
+                  </p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-sm font-bold text-[#050807]">{testimonial.name}</h3>
-                <p className="mt-1 text-[0.66rem] font-medium uppercase tracking-[0.06em] text-[#7b817b]">
-                  {testimonial.role}
-                </p>
-              </div>
-            </div>
-          </motion.article>
-        ))}
+            </motion.article>
+          ))}
+        </div>
       </div>
     </section>
   );

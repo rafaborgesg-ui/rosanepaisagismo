@@ -1,6 +1,9 @@
 import { MessageCircle } from "lucide-react";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
+const fieldClass =
+  "min-h-12 border border-white/16 bg-white/[0.07] px-4 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]";
+
 export default function ConciergeSection({
   lead,
   setLead,
@@ -12,26 +15,26 @@ export default function ConciergeSection({
   const homeTexts = content?.home_texts || {};
 
   return (
-    <section id="contato-concierge" className="bg-white px-4 py-20 pb-32 md:py-28 md:pb-28">
-      <div className="mx-auto grid w-[min(100%,1180px)] overflow-hidden rounded-[8px] border border-[#dfd9cc] bg-[#111913] text-white shadow-[0_30px_90px_rgba(36,35,28,0.16)] lg:grid-cols-[0.9fr_1.1fr]">
-        <div className="relative min-h-[360px]">
+    <section id="contato-concierge" className="bg-[#f3eee4] px-5 py-24 pb-32 md:px-10 md:py-36 md:pb-36">
+      <div className="mx-auto grid w-[min(100%,1320px)] overflow-hidden bg-[#081009] text-white shadow-[0_34px_100px_rgba(36,35,28,0.22)] lg:grid-cols-[0.88fr_1.12fr]">
+        <div className="relative min-h-[420px]">
           <img
             src={homeTexts.concierge_image_url || "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"}
             alt="Composição de jardim em área social"
             loading="lazy"
             decoding="async"
-            className="absolute inset-0 h-full w-full object-cover"
+            className="absolute inset-0 h-full w-full object-cover grayscale-[8%]"
           />
-          <div className="absolute inset-0 bg-[#111913]/20" />
+          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,16,9,0.04),rgba(8,16,9,0.62))]" />
         </div>
-        <div className="p-7 md:p-10 lg:p-12">
-          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#d3b473]">
-            {homeTexts.concierge_label || "Atendimento"}
+        <div className="p-7 md:p-10 lg:p-14">
+          <p className="text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
+            {homeTexts.concierge_label || "Atendimento consultivo"}
           </p>
-          <h2 className="mt-4 font-heading text-4xl font-medium leading-tight tracking-normal md:text-5xl">
-            {homeTexts.concierge_title || "Vamos avaliar o potencial do seu projeto?"}
+          <h2 className="mt-5 font-heading text-[clamp(3rem,5.8vw,6rem)] font-medium leading-[0.9]">
+            {homeTexts.concierge_title || "Vamos desenhar o próximo capítulo da sua área externa?"}
           </h2>
-          <p className="mt-5 leading-7 text-white/68">
+          <p className="mt-6 max-w-2xl text-base font-light leading-8 text-white/68 md:text-lg">
             {homeTexts.concierge_text ||
               "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto."}
           </p>
@@ -39,7 +42,7 @@ export default function ConciergeSection({
             <input
               value={lead.name}
               onChange={(event) => setLead((prev) => ({ ...prev, name: event.target.value }))}
-              className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]"
+              className={fieldClass}
               placeholder="Seu nome"
               aria-label="Seu nome"
               required
@@ -49,7 +52,7 @@ export default function ConciergeSection({
               onChange={(event) =>
                 setLead((prev) => ({ ...prev, whatsapp: event.target.value }))
               }
-              className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]"
+              className={fieldClass}
               placeholder="WhatsApp"
               aria-label="WhatsApp"
               required
@@ -58,7 +61,7 @@ export default function ConciergeSection({
               <input
                 value={lead.city}
                 onChange={(event) => setLead((prev) => ({ ...prev, city: event.target.value }))}
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]"
+                className={fieldClass}
                 placeholder="Cidade"
                 aria-label="Cidade"
                 required
@@ -68,7 +71,7 @@ export default function ConciergeSection({
                 onChange={(event) =>
                   setLead((prev) => ({ ...prev, propertyType: event.target.value }))
                 }
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
+                className={fieldClass}
                 aria-label="Tipo de imóvel"
                 required
               >
@@ -82,7 +85,7 @@ export default function ConciergeSection({
               <select
                 value={lead.phase}
                 onChange={(event) => setLead((prev) => ({ ...prev, phase: event.target.value }))}
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
+                className={fieldClass}
                 aria-label="Fase do projeto"
                 required
               >
@@ -94,7 +97,7 @@ export default function ConciergeSection({
               <select
                 value={lead.scope}
                 onChange={(event) => setLead((prev) => ({ ...prev, scope: event.target.value }))}
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
+                className={fieldClass}
                 aria-label="Escopo desejado"
                 required
               >
@@ -110,7 +113,7 @@ export default function ConciergeSection({
                 onChange={(event) =>
                   setLead((prev) => ({ ...prev, timeline: event.target.value }))
                 }
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
+                className={fieldClass}
                 aria-label="Prazo desejado"
                 required
               >
@@ -124,7 +127,7 @@ export default function ConciergeSection({
                 onChange={(event) =>
                   setLead((prev) => ({ ...prev, investment: event.target.value }))
                 }
-                className="min-h-12 rounded-[8px] border border-white/16 bg-white/10 px-4 text-sm text-white outline-none transition focus:border-[#d3b473]"
+                className={fieldClass}
                 aria-label="Faixa de investimento"
                 required
               >
@@ -138,16 +141,16 @@ export default function ConciergeSection({
             <textarea
               value={lead.details}
               onChange={(event) => setLead((prev) => ({ ...prev, details: event.target.value }))}
-              className="min-h-28 rounded-[8px] border border-white/16 bg-white/10 px-4 py-3 text-sm text-white outline-none transition placeholder:text-white/42 focus:border-[#d3b473]"
+              className={`${fieldClass} min-h-28 py-3`}
               placeholder="Conte o contexto do imóvel e o resultado que você busca."
               aria-label="Detalhes do projeto"
             />
             <button
               type="submit"
               disabled={isSubmitting}
-              className="mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
+              className="mt-2 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473] disabled:cursor-not-allowed disabled:opacity-60"
             >
-              {isSubmitting ? "Enviando..." : homeTexts.concierge_button || "Enviar briefing inicial"}
+              {isSubmitting ? "Enviando..." : homeTexts.concierge_button || "Solicitar uma proposta autoral"}
               <MessageCircle className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>

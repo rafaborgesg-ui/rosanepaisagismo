@@ -108,11 +108,11 @@ export default function Landing() {
   };
 
   return (
-    <div className="isolate min-h-screen overflow-x-hidden bg-[#10120e] text-[#151913]">
+    <div className="isolate min-h-screen overflow-x-hidden bg-[#0b0f0b] text-[#151913]">
       <SitePreloader />
       <SEO
         title="Paisagismo Autoral de Alto Padrão"
-        description="Escritório boutique de paisagismo para residências, clínicas e empreendimentos de alto padrão com base botânica, projeto técnico e implantação orientada."
+        description="Rosane Borges Paisagismo cria jardins autorais de alto padrão para residências, clínicas e empreendimentos, integrando natureza, arquitetura e estilo de vida."
         keywords="paisagismo autoral, paisagismo alto padrão, paisagismo residencial, projeto executivo paisagismo, jardim vertical, paisagismo para clínicas"
         schema={{
           "@context": "https://schema.org",
@@ -120,7 +120,7 @@ export default function Landing() {
           name: "Rosane Borges Paisagismo",
           description:
             "Escritório boutique de paisagismo para residências, clínicas e empreendimentos com projeto técnico e implantação orientada.",
-          url: "https://rosanepaisagismo-site.vercel.app",
+          url: "https://rosanepaisagismo.vercel.app",
           telephone: "+55 38 99931-3930",
           areaServed: ["Minas Gerais", "São Paulo", "Brasil"],
           sameAs: ["https://www.instagram.com/rosanepaisagismo/"],
@@ -128,7 +128,7 @@ export default function Landing() {
       />
       <SiteNav activeLink="inicio" />
 
-      <main className="relative z-10 bg-[#f4f0e8] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
+      <main className="relative z-10 bg-[#f3eee4] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
         <HeroSection reducedMotion={Boolean(reduceMotion)} />
         <FounderSection reducedMotion={Boolean(reduceMotion)} />
         <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />

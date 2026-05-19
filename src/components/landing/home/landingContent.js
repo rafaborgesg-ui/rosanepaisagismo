@@ -8,7 +8,7 @@ import {
 } from "lucide-react";
 
 export const labelClass =
-  "text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#8a6e42]";
+  "text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#8a6e42]";
 
 export const selectedProjects = [
   {
