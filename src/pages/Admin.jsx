@@ -57,6 +57,7 @@ const emptyProject = {
   solution: "",
   plants: [],
   beforeAfter: {
+    enabled: false,
     before: "",
     after: "",
     labelBefore: "Antes",
@@ -117,6 +118,7 @@ function normalizeProject(project, existingProjects) {
   }
 
   const beforeAfter = {
+    enabled: project.beforeAfter?.enabled === true,
     before: project.beforeAfter?.before || "",
     after: project.beforeAfter?.after || "",
     labelBefore: "Antes",
@@ -137,7 +139,7 @@ function normalizeProject(project, existingProjects) {
     challenge: project.challenge.trim(),
     solution: project.solution.trim(),
     plants: textToList(project.plantsText),
-    beforeAfter: beforeAfter.before && beforeAfter.after ? beforeAfter : null,
+    beforeAfter: beforeAfter.enabled || beforeAfter.before || beforeAfter.after ? beforeAfter : null,
     sortOrder: Number(project.sortOrder) || 0,
     isPublished: project.isPublished !== false,
     isFeaturedHome: project.isFeaturedHome === true,
@@ -360,6 +362,7 @@ export default function Admin() {
     setProjectForm({
       ...project,
       beforeAfter: {
+        enabled: project.beforeAfter ? project.beforeAfter.enabled !== false : false,
         before: project.beforeAfter?.before || "",
         after: project.beforeAfter?.after || "",
         labelBefore: "Antes",
@@ -392,6 +395,7 @@ export default function Admin() {
         updateProjectField("beforeAfter", {
           ...(projectForm.beforeAfter || {}),
           [field]: url,
+          enabled: projectForm.beforeAfter?.enabled === true,
           labelBefore: "Antes",
           labelAfter: "Depois",
         });
@@ -1087,7 +1091,24 @@ function ProjectsPanel(props) {
             </div>
 
             <div>
-              <span className={labelClass}>Antes e depois</span>
+              <div className="mb-3 flex flex-wrap items-center gap-3">
+                <span className={labelClass}>Antes e depois</span>
+                <label className="mb-2 flex items-center gap-2 text-sm text-stone-700">
+                  <input
+                    type="checkbox"
+                    checked={projectForm.beforeAfter?.enabled === true}
+                    onChange={(event) =>
+                      updateProjectField("beforeAfter", {
+                        ...(projectForm.beforeAfter || {}),
+                        enabled: event.target.checked,
+                        labelBefore: "Antes",
+                        labelAfter: "Depois",
+                      })
+                    }
+                  />
+                  Ativar seção antes e depois
+                </label>
+              </div>
               <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-white p-4 md:grid-cols-2">
                 <div className="grid gap-3">
                   <ImagePreview src={projectForm.beforeAfter?.before} alt="Foto antes do projeto" className="h-40" />
@@ -1107,7 +1128,7 @@ function ProjectsPanel(props) {
                 </div>
               </div>
               <p className="mt-2 text-xs leading-5 text-stone-500">
-                A comparação aparece na página individual somente quando as duas fotos estiverem preenchidas.
+                A comparação aparece na página individual somente quando a seção estiver ativa e as duas fotos estiverem preenchidas.
               </p>
             </div>
 

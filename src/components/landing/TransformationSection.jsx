@@ -9,7 +9,13 @@ const defaultBeforeAfter = {
 
 export default function TransformationSection({ project = null }) {
   const beforeAfter =
-    project?.beforeAfter?.before && project?.beforeAfter?.after ? project.beforeAfter : defaultBeforeAfter;
+    project === null
+      ? defaultBeforeAfter
+      : project?.beforeAfter?.enabled !== false && project?.beforeAfter?.before && project?.beforeAfter?.after
+        ? project.beforeAfter
+        : null;
+
+  if (!beforeAfter) return null;
 
   return (
     <section className="bg-[#101812] px-4 py-16 md:py-24">
