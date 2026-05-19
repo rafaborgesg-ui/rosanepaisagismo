@@ -190,7 +190,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
               }`}
               style={{ height: `${logoSize * 0.36}px`, maxWidth: "220px" }}
             />
-          ) : (
+          ) : isHome ? (
             <img
               src={brandLogoSrc}
               alt="Rosane Borges Paisagismo"
@@ -198,6 +198,8 @@ export default function SiteNav({ activeLink = "" } = {}) {
                 headerIsLight ? "brightness-0 opacity-80 drop-shadow-none" : ""
               }`}
             />
+          ) : (
+            <span className="block h-12 w-[220px]" aria-hidden="true" />
           )}
         </Link>
 

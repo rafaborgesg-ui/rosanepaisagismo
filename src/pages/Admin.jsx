@@ -10,7 +10,6 @@ import {
   Layers3,
   LogIn,
   Plus,
-  RotateCcw,
   Save,
   Settings2,
   Trash2,
@@ -30,7 +29,6 @@ import {
 import {
   createPortfolioProject,
   deletePortfolioProject,
-  resetPortfolioProjects,
   slugifyProjectTitle,
   updatePortfolioProject,
   usePortfolioProjects,
@@ -474,22 +472,6 @@ export default function Admin() {
     }
   };
 
-  const handleResetProjects = async () => {
-    if (!requireLogin("restaurar projetos")) return;
-    if (!window.confirm("Restaurar a lista original de projetos?")) return;
-
-    setIsSaving(true);
-    try {
-      const restoredProjects = await resetPortfolioProjects();
-      persistProjects(restoredProjects, "Projetos originais restaurados no Supabase.");
-      setEditingSlug(null);
-    } catch (currentError) {
-      setMessage(currentError.message || "Não foi possível restaurar os projetos.");
-    } finally {
-      setIsSaving(false);
-    }
-  };
-
   const saveLandingContent = async (event) => {
     event.preventDefault();
     if (!requireLogin("salvar conteúdo")) return;
@@ -623,7 +605,6 @@ export default function Admin() {
               removeProjectGalleryImage={removeProjectGalleryImage}
               submitProject={submitProject}
               deleteProject={handleDeleteProject}
-              resetProjects={handleResetProjects}
               isSaving={isSaving}
               isAuthenticated={isAuthenticated}
             />
@@ -993,7 +974,6 @@ function ProjectsPanel(props) {
     removeProjectGalleryImage,
     submitProject,
     deleteProject,
-    resetProjects,
     isSaving,
     isAuthenticated,
   } = props;
@@ -1044,11 +1024,6 @@ function ProjectsPanel(props) {
             </article>
           ))}
         </div>
-
-        <button type="button" onClick={resetProjects} disabled={!isAuthenticated || isSaving} className="mt-5 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.14em] text-stone-500 transition hover:text-[#1a3d2b] disabled:opacity-45">
-          <RotateCcw className="h-4 w-4" aria-hidden="true" />
-          Restaurar projetos originais
-        </button>
       </div>
 
       <form onSubmit={submitProject} className="border border-[#ded7c8] bg-[#f4f0e8] p-5 md:p-7">
