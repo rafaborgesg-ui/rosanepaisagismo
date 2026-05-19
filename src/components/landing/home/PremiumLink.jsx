@@ -9,7 +9,7 @@ export default function PremiumLink({
   className = "",
 }) {
   const base =
-    "group/btn inline-flex min-h-12 items-center justify-center gap-3 rounded-full px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] transition-all duration-500 hover:-translate-y-0.5";
+    "group/btn inline-flex min-h-12 items-center justify-center gap-3 rounded-full px-8 py-3 text-[0.68rem] font-semibold uppercase tracking-[0.14em] transition-all duration-500 hover:-translate-y-0.5 relative overflow-hidden";
   const variants = {
     dark: "bg-[#111913] text-white hover:bg-[#1e2d22] hover:shadow-[0_8px_32px_rgba(17,25,19,0.28)]",
     light: "bg-white text-[#111913] hover:bg-[#f5e6c8] hover:shadow-[0_8px_32px_rgba(211,180,115,0.18)]",
@@ -19,8 +19,12 @@ export default function PremiumLink({
 
   const content = (
     <span className={`${base} ${variants[variant] || variants.dark} ${className}`}>
-      {children}
-      <ArrowRight className="h-3.5 w-3.5 transition-transform duration-500 group-hover/btn:translate-x-1" aria-hidden="true" />
+      <span className="relative z-10 flex items-center gap-3">
+        {children}
+        <ArrowRight className="h-3.5 w-3.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-1.5 group-hover/btn:scale-110" aria-hidden="true" />
+      </span>
+      {/* Decorative hover sweep */}
+      <span className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-full" />
     </span>
   );
 

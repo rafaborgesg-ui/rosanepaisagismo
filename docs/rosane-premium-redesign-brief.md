@@ -147,10 +147,11 @@ Estrutura:
 - Header minimalista com logo, "Projetos", "Processo", "Sobre", "Contato".
 - CTA: "Iniciar avaliacao" ou "Solicitar briefing privado".
 - Hero full-bleed com foto real de jardim vertical/fachada/area externa da Rosane, ou video curto em loop sem som.
-- H1 literal e posicionador: "Paisagismo autoral de alto padrao".
+- H1 literal e posicionador: **Paisagismo autoral de alto padrão.**
 - Subcopy: "Projetos botanicos e implantacao orientada para residencias, clinicas e empreendimentos que exigem presenca, precisao e permanencia."
 - Prova curta: "Engenheira Agronoma | Doutora em Producao Vegetal | Atuacao desde 2016".
 - Evitar estatisticas nao verificadas no hero. Se usar, confirmar numero real.
+- CTA principal: **"Iniciar avaliação do projeto"**.
 
 ### 2. Manifesto curto
 
@@ -368,7 +369,7 @@ Arquitetura da homepage:
 
 2. Hero premium
    - Full-bleed com imagem ou video real de jardim/fachada/projeto da marca.
-   - H1: "Paisagismo autoral de alto padrao".
+   - H1: **"Paisagismo autoral de alto padrão."**
    - Subcopy: "Projetos botanicos e implantacao orientada para residencias, clinicas e empreendimentos que exigem presenca, precisao e permanencia."
    - Prova curta: "Eng. Agronoma | Dra. em Producao Vegetal | Atuacao desde 2016".
    - CTA principal: "Iniciar avaliacao do projeto".
