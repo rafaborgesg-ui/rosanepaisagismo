@@ -30,22 +30,22 @@ export default function Portfolio() {
   }, [filter, premiumProjects]);
 
   return (
-    <div className="min-h-screen overflow-x-hidden bg-[#f8f6f2] text-[#171914]">
+    <div className="min-h-screen overflow-x-hidden bg-[#f3eee4] text-[#171914]">
       <SEO
         title="Projetos Selecionados de Paisagismo Autoral"
-        description="Explore estudos, implantações orientadas e projetos autorais de paisagismo para residências de alto padrão assinados pela Rosane Paisagismo."
+        description="Explore estudos, implantações orientadas e projetos autorais de paisagismo para residências de alto padrão assinados pela Rosane Borges Paisagismo."
         keywords="projetos selecionados paisagismo, paisagismo autoral, estudo 3d paisagismo, implantação orientada, paisagismo residencial"
-        url="https://rosanepaisagismo-site.vercel.app/portfolio"
+        url="https://rosanepaisagismo.vercel.app/portfolio"
         image={premiumProjects[0].cover}
         schema={{
           "@context": "https://schema.org",
           "@type": "CollectionPage",
-          name: "Portfólio Rosane Paisagismo",
+          name: "Portfólio Rosane Borges Paisagismo",
           description: "Seleção editorial de projetos de paisagismo de alto padrão.",
           hasPart: premiumProjects.map((project) => ({
             "@type": "CreativeWork",
             name: project.title,
-            url: `https://rosanepaisagismo-site.vercel.app/portfolio/${project.slug}`,
+            url: `https://rosanepaisagismo.vercel.app/portfolio/${project.slug}`,
           })),
         }}
       />
