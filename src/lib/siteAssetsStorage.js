@@ -22,6 +22,7 @@ export async function uploadSiteImage(file, { folder = "admin" } = {}) {
   const { error } = await supabase.storage.from(BUCKET).upload(path, file, {
     cacheControl: "31536000",
     upsert: true,
+    contentType: file.type || "application/octet-stream",
   });
 
   if (error) throw error;
