@@ -276,7 +276,7 @@ export default function Admin() {
   const addHeroSlide = () => {
     setLandingForm((current) => ({
       ...current,
-      slides: [...(Array.isArray(current.slides) ? current.slides : []), { titulo: "Novo slide", imagem_url: "" }],
+      slides: [...(Array.isArray(current.slides) ? current.slides : []), { titulo: "Novo slide", imagem_url: "", tipo: "imagem" }],
     }));
   };
 
@@ -301,14 +301,20 @@ export default function Admin() {
   };
 
   const uploadHeroSlide = async (index, file) => {
-    if (!requireLogin("enviar fotos do Hero")) return;
+    if (!requireLogin("enviar mídia do Hero")) return;
     setIsSaving(true);
     try {
       const url = await uploadSiteImage(file, { folder: "hero" });
-      updateHeroSlide(index, "imagem_url", url);
-      setMessage("Foto enviada. Clique em Salvar Hero para publicar a alteração.");
+      const tipo = file.type.startsWith("video/") ? "video" : "imagem";
+      setLandingForm((current) => ({
+        ...current,
+        slides: (Array.isArray(current.slides) ? current.slides : []).map((slide, slideIndex) =>
+          slideIndex === index ? { ...slide, imagem_url: url, tipo } : slide
+        ),
+      }));
+      setMessage("Mídia enviada. Clique em Salvar Hero para publicar a alteração.");
     } catch (currentError) {
-      setMessage(currentError.message || "Não foi possível enviar a foto.");
+      setMessage(currentError.message || "Não foi possível enviar a mídia.");
     } finally {
       setIsSaving(false);
     }
@@ -707,7 +713,7 @@ function HeroPanel({
 
   return (
     <form onSubmit={saveLandingContent} className="grid gap-6">
-      <PanelHeader title="Fotos do Hero" description="Organize as imagens do carrossel inicial com upload, prévia e ordem visual." />
+      <PanelHeader title="Fotos do Hero" description="Organize as imagens e vídeos do carrossel inicial com upload, prévia e ordem visual. Aceita fotos (JPG, PNG, WebP) e vídeos (MP4, WebM)." />
       <div className="border border-[#ded7c8] bg-white p-6">
         {isMigratingHero && (
           <div className="mb-5 border border-[#d8cfbd] bg-[#fbfaf7] px-4 py-3 text-sm text-stone-600">
@@ -752,11 +758,11 @@ function HeroPanel({
               >
                 <GripVertical className="h-5 w-5" aria-hidden="true" />
               </button>
-              <ImagePreview src={slide.imagem_url} alt={slide.titulo || `Slide ${index + 1}`} className="h-36" />
+              <MediaPreview src={slide.imagem_url} tipo={slide.tipo} alt={slide.titulo || `Slide ${index + 1}`} className="h-36" />
               <div className="grid gap-3">
                 <TextInput label={`Título do slide ${index + 1}`} value={slide.titulo} onChange={(value) => updateHeroSlide(index, "titulo", value)} />
-                <ImageUploadButton
-                  label={slide.imagem_url ? "Trocar foto" : "Enviar foto"}
+                <MediaUploadButton
+                  label={slide.imagem_url ? "Trocar foto / vídeo" : "Enviar foto / vídeo"}
                   disabled={!isAuthenticated || isSaving}
                   onUpload={(file) => uploadHeroSlide(index, file)}
                 />
@@ -779,7 +785,7 @@ function HeroPanel({
           className="mt-5 inline-flex items-center gap-2 rounded-full border border-[#1a3d2b] px-5 py-3 text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#1a3d2b]"
         >
           <Plus className="h-4 w-4" aria-hidden="true" />
-          Adicionar foto
+          Adicionar slide
         </button>
         <SaveButton isSaving={isSaving} isAuthenticated={isAuthenticated} label="Salvar Hero" />
       </div>
@@ -1210,6 +1216,12 @@ function TextArea({ label, value, onChange }) {
   );
 }
 
+function isVideoUrl(src) {
+  if (!src) return false;
+  const lower = src.toLowerCase().split("?")[0];
+  return lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg") || lower.endsWith(".mov");
+}
+
 function ImagePreview({ src, alt, className = "h-32" }) {
   return (
     <div className={`overflow-hidden rounded-sm bg-stone-200 ${className}`}>
@@ -1218,6 +1230,33 @@ function ImagePreview({ src, alt, className = "h-32" }) {
       ) : (
         <div className="flex h-full items-center justify-center text-xs uppercase tracking-[0.14em] text-stone-400">
           Sem foto
+        </div>
+      )}
+    </div>
+  );
+}
+
+function MediaPreview({ src, tipo, alt, className = "h-32" }) {
+  const isVideo = tipo === "video" || isVideoUrl(src);
+  return (
+    <div className={`overflow-hidden rounded-sm bg-stone-200 ${className}`}>
+      {src ? (
+        isVideo ? (
+          <video
+            src={src}
+            className="h-full w-full object-cover"
+            muted
+            loop
+            autoPlay
+            playsInline
+            aria-label={alt}
+          />
+        ) : (
+          <img src={src} alt={alt} className="h-full w-full object-cover" />
+        )
+      ) : (
+        <div className="flex h-full items-center justify-center text-xs uppercase tracking-[0.14em] text-stone-400">
+          Sem mídia
         </div>
       )}
     </div>
@@ -1251,6 +1290,34 @@ function ImageUploadButton({ label, onUpload, disabled, compact = false }) {
         id={inputId}
         type="file"
         accept="image/*"
+        className="hidden"
+        disabled={disabled}
+        onChange={(event) => {
+          const file = event.target.files?.[0];
+          if (file) onUpload(file);
+          event.target.value = "";
+        }}
+      />
+    </label>
+  );
+}
+
+function MediaUploadButton({ label, onUpload, disabled, compact = false }) {
+  const inputId = useMemo(() => `media-upload-${Math.random().toString(36).slice(2)}`, []);
+
+  return (
+    <label
+      htmlFor={inputId}
+      className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-[#1a3d2b] text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#1a3d2b] transition hover:bg-[#1a3d2b] hover:text-white ${
+        compact ? "px-3 py-2" : "px-5 py-3"
+      } ${disabled ? "pointer-events-none opacity-45" : ""}`}
+    >
+      <Upload className="h-4 w-4" aria-hidden="true" />
+      {label}
+      <input
+        id={inputId}
+        type="file"
+        accept="image/*,video/mp4,video/webm,video/ogg,video/quicktime"
         className="hidden"
         disabled={disabled}
         onChange={(event) => {
