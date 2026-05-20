@@ -28,12 +28,23 @@ export default function HeroSection({ reducedMotion = false }) {
     []
   );
   const slides = useMemo(() => {
+    const isVideoSrc = (src) => {
+      if (!src) return false;
+      const lower = src.toLowerCase().split("?")[0];
+      return lower.endsWith(".mp4") || lower.endsWith(".webm") || lower.endsWith(".ogg") || lower.endsWith(".mov");
+    };
+
     const adminSlides = Array.isArray(content?.slides)
       ? content.slides
-          .map((slide) => ({
-            src: slide.imagem_url || slide.src || slide.image || "",
-            alt: slide.titulo || slide.alt || "Projeto de paisagismo Rosane Borges",
-          }))
+          .map((slide) => {
+            const src = slide.imagem_url || slide.src || slide.image || "";
+            const isVideo = slide.tipo === "video" || isVideoSrc(src);
+            return {
+              src,
+              alt: slide.titulo || slide.alt || "Projeto de paisagismo Rosane Borges",
+              isVideo,
+            };
+          })
           .filter((slide) => slide.src)
       : [];
 
@@ -106,6 +117,36 @@ export default function HeroSection({ reducedMotion = false }) {
       {/* Background slides with Ken Burns */}
       {slides.map((slide, index) => {
         const isActive = activeSlide === index;
+        const commonStyle = { zIndex: isActive ? 2 : 1, y: reducedMotion ? 0 : mediaY };
+        const commonAnimate = reducedMotion
+          ? { opacity: isActive ? 1 : 0 }
+          : { opacity: isActive ? 1 : 0, scale: isActive ? 1.08 : 1.02 };
+        const commonTransition = reducedMotion
+          ? { duration: 0 }
+          : {
+              opacity: { duration: 1.6, ease: "easeInOut" },
+              scale: { duration: 8, ease: [0.16, 1, 0.3, 1] },
+            };
+
+        if (slide.isVideo) {
+          return (
+            <motion.video
+              key={slide.src}
+              src={slide.src}
+              aria-label={slide.alt}
+              aria-hidden={!isActive}
+              className="absolute inset-0 h-[115%] w-full object-cover"
+              initial={false}
+              animate={commonAnimate}
+              transition={commonTransition}
+              style={commonStyle}
+              autoPlay
+              muted
+              loop
+              playsInline
+            />
+          );
+        }
 
         return (
           <motion.img
@@ -115,24 +156,10 @@ export default function HeroSection({ reducedMotion = false }) {
             aria-hidden={!isActive}
             className="absolute inset-0 h-[115%] w-full object-cover"
             initial={false}
-            animate={
-              reducedMotion
-                ? { opacity: isActive ? 1 : 0 }
-                : {
-                    opacity: isActive ? 1 : 0,
-                    scale: isActive ? 1.08 : 1.02,
-                  }
-            }
-            transition={
-              reducedMotion
-                ? { duration: 0 }
-                : {
-                    opacity: { duration: 1.6, ease: "easeInOut" },
-                    scale: { duration: 8, ease: [0.16, 1, 0.3, 1] },
-                  }
-            }
+            animate={commonAnimate}
+            transition={commonTransition}
             loading={index === 0 ? "eager" : "lazy"}
-            style={{ zIndex: isActive ? 2 : 1, y: reducedMotion ? 0 : mediaY }}
+            style={commonStyle}
           />
         );
       })}
