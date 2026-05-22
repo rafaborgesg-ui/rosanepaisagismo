@@ -10,6 +10,8 @@ const layouts = [
   "lg:grid-cols-[0.9fr_0.78fr]",
 ];
 
+const MotionLink = motion.create(Link);
+
 export default function PortfolioGallery({
   filteredProjects = [],
   reducedMotion = false,
@@ -34,6 +36,7 @@ export default function PortfolioGallery({
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => {
               const isReversed = index % 2 === 1;
+              const imageOffset = isReversed ? 76 : -76;
               return (
                 <motion.article
                   layout
@@ -48,7 +51,7 @@ export default function PortfolioGallery({
                   }
                   className={`grid gap-8 border-t border-[#d8cdbb] pt-8 ${layouts[index % layouts.length]} lg:items-center`}
                 >
-                  <Link
+                  <MotionLink
                     to={`/portfolio/${project.slug}`}
                     onClick={() =>
                       trackEvent("case_cta_clicked", {
@@ -56,6 +59,14 @@ export default function PortfolioGallery({
                         project_slug: project.slug,
                         project_category: project.category,
                       })
+                    }
+                    initial={reducedMotion ? false : { opacity: 0, x: imageOffset }}
+                    whileInView={reducedMotion ? undefined : { opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.34, margin: "-8% 0px -8% 0px" }}
+                    transition={
+                      reducedMotion
+                        ? { duration: 0 }
+                        : { duration: 0.9, ease: [0.19, 1, 0.22, 1] }
                     }
                     className={`rb-premium-focus group relative block overflow-hidden bg-[#111913] ${
                       isReversed ? "lg:order-2" : ""
@@ -65,11 +76,10 @@ export default function PortfolioGallery({
                       <img
                         src={project.cover}
                         alt={project.title}
-                        className="h-full w-full object-cover opacity-92 grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:opacity-100 group-hover:grayscale-0"
+                        className="h-full w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
                       />
                     </div>
-                    <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,5,0.02)_45%,rgba(5,8,5,0.72))] opacity-90 transition duration-700 group-hover:opacity-55" />
-                  </Link>
+                  </MotionLink>
 
                   <div className={isReversed ? "lg:order-1" : ""}>
                     <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8a6e42]">

@@ -66,9 +66,9 @@ export const defaultHeroSlides = [
 ];
 
 export const defaultLandingContent = {
-  logo_topo_url: "",
+  logo_topo_url: "/brand/rosane-logo-white.png",
   logo_topo_size: 100,
-  logo_rodape_url: "",
+  logo_rodape_url: "/brand/rosane-logo-white.png",
   logo_rodape_size: 100,
   slides: defaultHeroSlides,
   sobre_titulo: "Base acadêmica, critério de obra e leitura sensível da natureza.",

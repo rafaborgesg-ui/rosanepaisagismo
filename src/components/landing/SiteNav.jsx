@@ -21,9 +21,8 @@ function NavTarget({ item, children, className = "", onClick, style }) {
 
 export default function SiteNav({ activeLink = "" } = {}) {
   const content = useLandingContent();
-  const logoTopo = content?.logo_topo_url;
+  const logoTopo = content?.logo_topo_url || "/brand/rosane-logo-white.png";
   const logoSize = content?.logo_topo_size || 100;
-  const brandLogoSrc = "/brand/rosane-logo-white.png";
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(activeLink !== "inicio");
 
@@ -69,11 +68,12 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
       <div className="relative z-10 mx-auto flex h-[72px] max-w-[1680px] items-center justify-between px-5 md:h-[84px] md:px-10">
         <Link to="/" className={`rb-premium-focus flex h-9 max-w-[200px] items-center transition duration-500 md:h-11 md:max-w-[260px] ${hasSurface ? "opacity-100" : "opacity-95"}`} aria-label="Rosane Borges Paisagismo" onClick={closeMenu}>
-          {logoTopo ? (
-            <img src={logoTopo} alt="Rosane Borges Paisagismo" className="w-auto object-contain brightness-0 invert drop-shadow-[0_2px_12px_rgba(0,0,0,0.36)]" style={{ height: `${logoSize * 0.34}px`, maxWidth: "210px" }} />
-          ) : (
-            <img src={brandLogoSrc} alt="Rosane Borges Paisagismo" className="h-full w-auto max-w-full object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.36)]" />
-          )}
+          <img
+            src={logoTopo}
+            alt="Rosane Borges Paisagismo"
+            className="w-auto max-w-full object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.36)]"
+            style={{ height: `${logoSize * 0.34}px`, maxWidth: "210px" }}
+          />
         </Link>
 
         <div className={`ml-auto mr-10 hidden items-center gap-8 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-white/64 transition-all duration-500 xl:flex ${hasSurface && !menuOpen ? "translate-y-0 opacity-100" : "pointer-events-none -translate-y-2 opacity-0"}`}>
