@@ -10,13 +10,11 @@ import SEO from "@/components/seo/SEO";
 import { buildWhatsAppUrl } from "@/data/premiumProjects";
 import { getAttributionData, trackEvent } from "@/lib/tracking";
 import HeroSection from "@/components/landing/home/HeroSection";
-import ManifestoSection from "@/components/landing/home/ManifestoSection";
 import FounderSection from "@/components/landing/home/FounderSection";
 import SelectedProjectsSection from "@/components/landing/home/SelectedProjectsSection";
 import ExpertiseSection from "@/components/landing/home/ExpertiseSection";
 import MethodSection from "@/components/landing/home/MethodSection";
 import DeliverablesSection from "@/components/landing/home/DeliverablesSection";
-import PresenceSection from "@/components/landing/home/PresenceSection";
 import TestimonialsSection from "@/components/landing/home/TestimonialsSection";
 import ConciergeSection from "@/components/landing/home/ConciergeSection";
 
@@ -135,12 +133,10 @@ export default function Landing() {
 
       <main className="relative z-10 bg-[#f3eee4] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
         <HeroSection reducedMotion={Boolean(reduceMotion)} />
-        <ManifestoSection reducedMotion={Boolean(reduceMotion)} />
         <FounderSection reducedMotion={Boolean(reduceMotion)} />
         <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
         <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
         <MethodSection reducedMotion={Boolean(reduceMotion)} />
-        <PresenceSection reducedMotion={Boolean(reduceMotion)} />
         <DeliverablesSection reducedMotion={Boolean(reduceMotion)} />
         <TestimonialsSection reducedMotion={Boolean(reduceMotion)} />
         <ConciergeSection

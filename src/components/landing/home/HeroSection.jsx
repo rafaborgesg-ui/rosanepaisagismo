@@ -1,7 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
-import PremiumLink from "@/components/landing/home/PremiumLink";
 
 export default function HeroSection({ reducedMotion = false }) {
   const content = useLandingContent();
@@ -57,9 +56,8 @@ export default function HeroSection({ reducedMotion = false }) {
     target: sectionRef,
     offset: ["start start", "end start"],
   });
-  const contentY = useTransform(scrollYProgress, [0, 1], ["0%", "30%"]);
   const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0.6]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.78, 0.42]);
 
   const goToSlide = (direction) => {
     setActiveSlide((current) => {
@@ -85,13 +83,6 @@ export default function HeroSection({ reducedMotion = false }) {
     return () => window.clearTimeout(timer);
   }, []);
 
-  const activeProjectText = [
-    "Fachadas, jardins e áreas de permanência desenhados como extensão da arquitetura.",
-    "Curadoria botânica com técnica, ritmo visual e maturação pensada para o tempo.",
-    "Ambientes externos que elevam o cotidiano sem perder a naturalidade.",
-    "Projetos sob medida para residências, clínicas e empreendimentos selecionados.",
-  ];
-
   return (
     <section
       ref={sectionRef}
@@ -114,7 +105,6 @@ export default function HeroSection({ reducedMotion = false }) {
         goToSlide(deltaX < 0 ? "next" : "previous");
       }}
     >
-      {/* Background slides with Ken Burns */}
       {slides.map((slide, index) => {
         const isActive = activeSlide === index;
         const commonStyle = { zIndex: isActive ? 2 : 1, y: reducedMotion ? 0 : mediaY };
@@ -164,124 +154,36 @@ export default function HeroSection({ reducedMotion = false }) {
         );
       })}
 
-      {/* Cinematic overlays — warm vignette + gradient */}
-      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(8,16,9,0.4)_100%)]" />
+      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(8,16,9,0.18)_100%)]" />
       <motion.div
-        style={{ opacity: reducedMotion ? 1 : overlayOpacity }}
-        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.08),transparent_38%),linear-gradient(90deg,rgba(6,10,7,0.82),rgba(8,13,9,0.18)_48%,rgba(8,13,9,0.52)),linear-gradient(180deg,rgba(8,13,9,0.38),rgba(8,13,9,0.02)_30%,rgba(8,13,9,0.82)_100%)]"
+        style={{ opacity: reducedMotion ? 0.78 : overlayOpacity }}
+        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.08),transparent_40%),linear-gradient(90deg,rgba(6,10,7,0.28),rgba(8,13,9,0.08)_48%,rgba(8,13,9,0.2)),linear-gradient(180deg,rgba(8,13,9,0.16),rgba(8,13,9,0)_36%,rgba(8,13,9,0.34)_100%)]"
       />
-
-      {/* Bottom fade into next section */}
-      <div className="absolute inset-x-0 bottom-0 z-10 h-[35vh] bg-gradient-to-t from-[#0b0f0b] via-[#0b0f0b]/60 to-transparent" />
-
-      {/* Grain texture overlay */}
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[24vh] bg-gradient-to-t from-[#0b0f0b]/72 via-[#0b0f0b]/28 to-transparent" />
       <div className="rb-grain absolute inset-0 z-[4]" />
 
-      {/* Hero content */}
       <motion.div
-        style={{ y: reducedMotion ? 0 : contentY }}
-        className="relative z-20 mx-auto flex min-h-[100svh] w-[min(100%,1680px)] items-end px-5 pb-24 pt-32 md:px-10 md:pb-20 lg:pb-24"
+        initial={reducedMotion ? false : { opacity: 0, y: 16 }}
+        animate={reducedMotion || !isLoaded ? {} : { opacity: 1, y: 0 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+        className="absolute bottom-8 left-1/2 z-30 flex -translate-x-1/2 items-center gap-3 md:bottom-12"
       >
-        <div className="grid w-full gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(300px,0.38fr)] lg:items-end">
-          {/* Main hero text */}
-          <motion.div
-            initial={reducedMotion ? false : { opacity: 0, y: 40, filter: "blur(16px)" }}
-            animate={reducedMotion || !isLoaded ? {} : { opacity: 1, y: 0, filter: "blur(0px)" }}
-            transition={{ duration: 1.3, ease: [0.16, 1, 0.3, 1], delay: 0.3 }}
-            className="max-w-5xl"
-          >
-            <div className="mb-8 h-px w-32 rb-luxury-hairline-left" aria-hidden="true" />
-            <h1 className="max-w-5xl font-heading text-[clamp(3.2rem,7.8vw,8.4rem)] font-medium leading-[0.86] text-white [text-wrap:balance]">
-              Paisagismo autoral para espaços que inspiram
-            </h1>
-            <motion.p
-              initial={reducedMotion ? false : { opacity: 0, y: 20, filter: "blur(10px)" }}
-              animate={reducedMotion || !isLoaded ? {} : { opacity: 1, y: 0, filter: "blur(0px)" }}
-              transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.55 }}
-              className="mt-7 max-w-2xl text-base font-light leading-8 text-white/72 md:text-lg md:leading-9"
-            >
-              Natureza, arquitetura e sensibilidade em equilíbrio para jardins sob medida,
-              concebidos com técnica, atmosfera e desejo de permanência.
-            </motion.p>
-            <motion.div
-              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
-              animate={reducedMotion || !isLoaded ? {} : { opacity: 1, y: 0 }}
-              transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
-              className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center"
-            >
-              <PremiumLink to="/contato" variant="light">
-                Conversar sobre meu projeto
-              </PremiumLink>
-              <PremiumLink to="/portfolio" variant="outline">
-                Explorar projetos
-              </PremiumLink>
-            </motion.div>
-          </motion.div>
-
-          {/* Sidebar with project info */}
-          <motion.aside
-            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
-            animate={reducedMotion || !isLoaded ? {} : { opacity: 1, y: 0 }}
-            transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1], delay: 0.7 }}
-            className="hidden border-l border-white/14 pl-8 text-white/72 lg:block"
-          >
-            <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[#d3b473]">
-              Rosane Borges Paisagismo
-            </p>
-            <p className="mt-5 text-lg font-light leading-8" key={activeSlide}>
-              {activeProjectText[activeSlide] || activeProjectText[0]}
-            </p>
-            <div className="mt-8 grid grid-cols-3 gap-6 border-t border-white/12 pt-7">
-              {[
-                ["1:1", "sob medida"],
-                ["3D", "conceito"],
-                ["obra", "orientada"],
-              ].map(([value, label]) => (
-                <div key={label}>
-                  <p className="font-heading text-3xl text-white">{value}</p>
-                  <p className="mt-1 text-[0.56rem] font-semibold uppercase tracking-[0.16em] text-white/40">
-                    {label}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </motion.aside>
-        </div>
-      </motion.div>
-
-      {/* Scroll indicator — premium minimal */}
-      <div className="pointer-events-none absolute bottom-10 left-6 z-30 hidden items-center gap-4 text-white/42 md:left-10 md:flex">
-        <span className="h-14 w-px overflow-hidden bg-white/14">
-          <span className="block h-5 w-px animate-[rb-scroll-cue_2.2s_cubic-bezier(.16,1,.3,1)_infinite] bg-[#d3b473]/72" />
-        </span>
-        <span className="text-[0.58rem] font-semibold uppercase tracking-[0.22em]">
-          Scroll
-        </span>
-      </div>
-
-      {/* Slide counter — editorial style 01 / 04 */}
-      <div className="absolute bottom-10 right-6 z-30 flex items-center gap-4 md:bottom-14 md:right-10">
-        <div className="flex items-baseline gap-2 font-heading text-white/60">
-          <span className="rb-counter text-2xl text-white">{String(activeSlide + 1).padStart(2, "0")}</span>
-          <span className="text-xs text-white/30">/</span>
-          <span className="rb-counter text-sm text-white/36">{String(slides.length).padStart(2, "0")}</span>
-        </div>
-        <div className="ml-2 flex items-center gap-1.5">
+        <div className="flex items-center gap-3">
           {slides.map((slide, index) => (
             <button
               key={slide.src}
               type="button"
               aria-label={`Ver imagem ${index + 1}`}
               onClick={() => setActiveSlide(index)}
-              className={`h-[3px] rounded-full transition-all duration-700 ${
+              className={`rounded-full border transition-all duration-500 ${
                 activeSlide === index
-                  ? "w-8 bg-[#d3b473]"
-                  : "w-[3px] bg-white/24 hover:bg-white/60"
+                  ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473] shadow-[0_0_0_5px_rgba(8,16,9,0.34),0_0_18px_rgba(211,180,115,0.34)]"
+                  : "h-2 w-2 border-white/70 bg-white/26 shadow-[0_0_0_4px_rgba(8,16,9,0.2)] hover:bg-white/80"
               }`}
             />
           ))}
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }
