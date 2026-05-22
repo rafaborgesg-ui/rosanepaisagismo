@@ -1,8 +1,6 @@
 import { motion } from "framer-motion";
 
 export default function ProjectGallerySection({ project, reducedMotion = false }) {
-  const captions = project.galleryCaptions || [];
-
   return (
     <section className="bg-[#081009] px-5 py-24 text-white md:px-10 md:py-36">
       <div className="mx-auto w-[min(100%,1320px)]">
@@ -45,22 +43,12 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
                 <img
                   src={image}
                   alt={`${project.title} - imagem ${index + 1}`}
-                  loading={index === 0 ? "eager" : "lazy"}
-                  decoding="async"
                   className={`w-full object-cover grayscale-[6%] transition duration-1000 group-hover:scale-[1.025] group-hover:grayscale-0 ${
                     index === 0
                       ? "h-[66vh] min-h-[420px]"
                       : "h-[42vh] min-h-[320px] lg:h-[38vh]"
                   }`}
                 />
-                <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-[#081009]/88 to-transparent p-5">
-                  <p className="text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
-                    {String(index + 1).padStart(2, "0")} / {project.category}
-                  </p>
-                  <figcaption className="mt-2 max-w-xl text-sm font-light leading-6 text-white/72">
-                    {captions[index] || project.title}
-                  </figcaption>
-                </div>
               </div>
             </motion.figure>
           ))}

@@ -63,13 +63,6 @@ export default function BeforeAfterSlider({
           alt={labelBefore}
           className="absolute inset-0 w-full h-full object-cover"
         />
-        <div className="absolute left-4 top-4 rounded-full border border-white/15 bg-black/35 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md md:left-6 md:top-6">
-          {labelBefore}
-        </div>
-      </div>
-
-      <div className="absolute right-4 top-4 rounded-full border border-white/15 bg-[#163528]/70 px-4 py-2 text-[10px] font-bold uppercase tracking-[0.18em] text-white backdrop-blur-md md:right-6 md:top-6">
-        {labelAfter}
       </div>
 
       {/* Slider Line */}

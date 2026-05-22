@@ -10,7 +10,6 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
         src={project.cover}
         alt={project.title}
         className="absolute inset-0 h-full w-full object-cover"
-        decoding="async"
         initial={reducedMotion ? false : { scale: 1.06 }}
         animate={reducedMotion ? undefined : { scale: 1 }}
         transition={reducedMotion ? { duration: 0 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}

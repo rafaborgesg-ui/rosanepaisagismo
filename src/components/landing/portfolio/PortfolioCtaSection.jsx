@@ -7,7 +7,6 @@ export default function PortfolioCtaSection() {
       <img
         src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"
         alt=""
-        loading="lazy"
         className="absolute inset-0 h-full w-full object-cover opacity-34 grayscale-[10%]"
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.92),rgba(8,16,9,0.66)_52%,rgba(8,16,9,0.92))]" />

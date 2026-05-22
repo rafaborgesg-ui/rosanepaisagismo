@@ -72,8 +72,6 @@ export default function ConciergeSection({
           <img
             src={homeTexts.concierge_image_url || "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg"}
             alt="Composição de jardim em área social"
-            loading="lazy"
-            decoding="async"
             className="absolute inset-0 h-full w-full object-cover grayscale-[6%]"
           />
           <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,16,9,0.04),rgba(8,16,9,0.58))]" />

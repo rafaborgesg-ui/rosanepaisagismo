@@ -65,15 +65,10 @@ export default function PortfolioGallery({
                       <img
                         src={project.cover}
                         alt={project.title}
-                        loading="lazy"
-                        decoding="async"
                         className="h-full w-full object-cover opacity-92 grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:opacity-100 group-hover:grayscale-0"
                       />
                     </div>
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(5,8,5,0.02)_45%,rgba(5,8,5,0.72))] opacity-90 transition duration-700 group-hover:opacity-55" />
-                    <span className="absolute bottom-5 left-5 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white/64">
-                      Ver estudo completo
-                    </span>
                   </Link>
 
                   <div className={isReversed ? "lg:order-1" : ""}>

@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
-import PremiumLink from "@/components/landing/home/PremiumLink";
 import { labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
@@ -32,17 +31,22 @@ function ParallaxImage({ src, alt, reducedMotion, className }) {
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "10%"]);
 
   return (
-    <div ref={ref} className={`relative overflow-hidden bg-[#181c19] ${className}`}>
+    <motion.div
+      ref={ref}
+      initial={reducedMotion ? false : { opacity: 0, y: 34 }}
+      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-90px" }}
+      transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+      className={`relative overflow-hidden bg-[#181c19] ${className}`}
+    >
       <motion.img
         src={src}
         alt={alt}
-        loading="lazy"
-        decoding="async"
         style={{ y: reducedMotion ? "0%" : y }}
         className="absolute inset-0 h-[120%] w-full object-cover opacity-88 grayscale-[10%] origin-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-30" />
-    </div>
+    </motion.div>
   );
 }
 
@@ -75,13 +79,10 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
             </h2>
           </div>
           <div className="max-w-md lg:justify-self-end">
-            <p className="mb-8 text-base font-light leading-8 text-white/56">
+            <p className="text-base font-light leading-8 text-white/56">
               Uma seleção editorial de projetos que traduzem a assinatura da marca:
               proporção, curadoria botânica e leitura sensível do imóvel.
             </p>
-            <PremiumLink to="/portfolio" variant="outline">
-              {homeTexts.selected_cta || "Ver acervo completo"}
-            </PremiumLink>
           </div>
         </motion.div>
 
@@ -89,10 +90,10 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           {selectedProjects.map((project, index) => (
             <motion.article
               key={project.slug}
-              initial={reducedMotion ? false : { opacity: 0, y: 40, clipPath: "inset(100% 0 0 0)" }}
-              whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)" }}
+              initial={reducedMotion ? false : { opacity: 0, y: 20 }}
+              whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: index * 0.1 }}
+              transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
               className={cardLayout[index] || ""}
             >
               <Link
@@ -107,9 +108,6 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
                     reducedMotion={reducedMotion} 
                     className={imageLayout[index] || imageLayout[3]} 
                   />
-                  <span className="absolute bottom-5 left-6 font-heading text-xl text-white/52 transition-transform duration-700 group-hover:translate-y-[-4px] group-hover:text-white">
-                    {String(index + 1).padStart(2, "0")}
-                  </span>
                 </div>
                 <div className="mt-6 grid gap-3 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-start relative">
                   <div className="absolute bottom-0 left-0 h-[1px] w-0 bg-gradient-to-r from-[#d3b473] to-transparent transition-all duration-700 ease-out group-hover:w-full" />
@@ -132,14 +130,11 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
 
         <motion.div
           {...getInViewProps(reducedMotion, { offset: 22 })}
-          className="mt-24 grid gap-6 border-t border-white/12 pt-10 md:grid-cols-[1fr_auto] md:items-center"
+          className="mt-24 border-t border-white/12 pt-10"
         >
           <p className="max-w-2xl font-heading text-[1.7rem] font-medium leading-tight text-white md:text-[2.1rem]">
             Cada projeto nasce de uma leitura privada do imóvel, do estilo de vida e da arquitetura.
           </p>
-          <PremiumLink to="/contato" variant="light">
-            Agendar uma consultoria
-          </PremiumLink>
         </motion.div>
       </div>
     </section>

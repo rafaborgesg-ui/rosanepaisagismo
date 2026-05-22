@@ -52,6 +52,7 @@ export default function HeroSection({ reducedMotion = false }) {
   const [activeSlide, setActiveSlide] = useState(0);
   const [isLoaded, setIsLoaded] = useState(false);
   const touchStartRef = useRef(null);
+  const [slideTimerSeed, setSlideTimerSeed] = useState(0);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -68,15 +69,29 @@ export default function HeroSection({ reducedMotion = false }) {
     });
   };
 
+  const restartSlideTimer = () => {
+    setSlideTimerSeed((current) => current + 1);
+  };
+
+  const handleManualSlide = (nextSlide) => {
+    setActiveSlide(nextSlide);
+    restartSlideTimer();
+  };
+
+  const handleManualDirection = (direction) => {
+    goToSlide(direction);
+    restartSlideTimer();
+  };
+
   useEffect(() => {
     if (reducedMotion) return undefined;
 
-    const timer = window.setInterval(() => {
+    const timer = window.setTimeout(() => {
       goToSlide("next");
     }, 5800);
 
-    return () => window.clearInterval(timer);
-  }, [reducedMotion, slides.length]);
+    return () => window.clearTimeout(timer);
+  }, [activeSlide, reducedMotion, slideTimerSeed, slides.length]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsLoaded(true), 300);
@@ -102,7 +117,7 @@ export default function HeroSection({ reducedMotion = false }) {
         const deltaY = touch.clientY - start.y;
         if (Math.abs(deltaX) < 46 || Math.abs(deltaX) < Math.abs(deltaY) * 1.25) return;
 
-        goToSlide(deltaX < 0 ? "next" : "previous");
+        handleManualDirection(deltaX < 0 ? "next" : "previous");
       }}
     >
       {slides.map((slide, index) => {
@@ -148,7 +163,6 @@ export default function HeroSection({ reducedMotion = false }) {
             initial={false}
             animate={commonAnimate}
             transition={commonTransition}
-            loading={index === 0 ? "eager" : "lazy"}
             style={commonStyle}
           />
         );
@@ -174,7 +188,7 @@ export default function HeroSection({ reducedMotion = false }) {
               key={slide.src}
               type="button"
               aria-label={`Ver imagem ${index + 1}`}
-              onClick={() => setActiveSlide(index)}
+              onClick={() => handleManualSlide(index)}
               className={`rounded-full border transition-all duration-500 ${
                 activeSlide === index
                   ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473] shadow-[0_0_0_5px_rgba(8,16,9,0.34),0_0_18px_rgba(211,180,115,0.34)]"

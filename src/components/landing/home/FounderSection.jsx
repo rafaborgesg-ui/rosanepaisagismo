@@ -3,7 +3,6 @@ import { Check } from "lucide-react";
 import { labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
-import PremiumLink from "@/components/landing/home/PremiumLink";
 
 export default function FounderSection({ reducedMotion = false }) {
   const content = useLandingContent();
@@ -18,13 +17,8 @@ export default function FounderSection({ reducedMotion = false }) {
           <img
             src={content?.sobre_imagem_url || "/brand/rosane-borges.jpg"}
             alt="Rosane Borges — paisagista, engenheira agrônoma e diretora criativa"
-            loading="lazy"
-            decoding="async"
             className="h-[560px] w-full object-cover grayscale-[8%] md:h-[740px]"
           />
-          <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0b0f0b]/76 to-transparent px-7 pb-7 pt-24 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-white/64">
-            Direção criativa e técnica
-          </figcaption>
         </motion.figure>
 
         <motion.div {...getInViewProps(reducedMotion, { offset: 26, blur: true })} className="lg:pl-6">
@@ -67,9 +61,6 @@ export default function FounderSection({ reducedMotion = false }) {
             ))}
           </div>
 
-          <div className="mt-10">
-            <PremiumLink to="/#metodo">Conhecer o processo criativo</PremiumLink>
-          </div>
         </motion.div>
       </div>
     </section>

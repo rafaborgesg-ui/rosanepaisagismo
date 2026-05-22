@@ -33,13 +33,8 @@ export default function ProjectRelatedSection({ relatedProjects = [] }) {
                 <img
                   src={item.cover}
                   alt={item.title}
-                  loading="lazy"
-                  decoding="async"
                   className="h-full w-full object-cover opacity-90 grayscale-[8%] transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100 group-hover:grayscale-0"
                 />
-                <span className="absolute bottom-4 left-4 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white/68">
-                  {String(index + 1).padStart(2, "0")}
-                </span>
               </div>
               <div className="pt-5">
                 <p className={labelClass}>{item.category}</p>

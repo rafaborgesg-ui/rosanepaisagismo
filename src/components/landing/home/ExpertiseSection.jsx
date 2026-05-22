@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { expertise, labelClass } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
-import PremiumLink from "@/components/landing/home/PremiumLink";
 
 export default function ExpertiseSection({ reducedMotion = false }) {
   const content = useLandingContent();
@@ -51,12 +50,11 @@ export default function ExpertiseSection({ reducedMotion = false }) {
             </motion.article>
           ))}
         </div>
-        <div className="mt-14 flex flex-col gap-4 border-t border-[#d8cdbb] pt-9 sm:flex-row sm:items-center sm:justify-between">
+        <div className="mt-14 border-t border-[#d8cdbb] pt-9">
           <p className="max-w-xl text-sm leading-7 text-[#5f665c]">
             Para residências premium, clínicas, áreas gourmet, piscinas, fachadas vivas e
             projetos em fase de obra que precisam de decisão técnica clara.
           </p>
-          <PremiumLink to="/contato">Criar meu jardim</PremiumLink>
         </div>
       </div>
     </section>

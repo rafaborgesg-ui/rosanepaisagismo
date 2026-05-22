@@ -42,13 +42,8 @@ export default function ManifestoSection({ reducedMotion = false }) {
           <img
             src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p8_i1.jpg"
             alt="Jardim vertical em projeto residencial autoral"
-            loading="lazy"
-            decoding="async"
             className="h-[520px] w-full object-cover opacity-90 grayscale-[6%] md:h-[700px]"
           />
-          <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#081009]/80 to-transparent px-7 pb-7 pt-28 text-[0.6rem] font-semibold uppercase tracking-[0.2em] text-white/58">
-            Arquitetura viva, textura e permanência
-          </figcaption>
         </motion.figure>
       </div>
     </section>

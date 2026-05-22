@@ -41,12 +41,7 @@ export default function PresenceSection({ reducedMotion = false }) {
                 className={`w-full object-cover opacity-88 grayscale-[10%] ${
                   index === 1 ? "h-[560px]" : "h-[440px]"
                 }`}
-                loading="lazy"
-                decoding="async"
               />
-              <figcaption className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#081009]/80 to-transparent px-6 pb-6 pt-28 text-[0.6rem] font-semibold uppercase tracking-[0.18em] text-white/54 transition-all duration-700 group-hover:text-white/72">
-                {captions[index]}
-              </figcaption>
             </motion.figure>
           ))}
         </div>

@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { process } from "@/components/landing/home/landingContent";
 import { getInViewProps } from "@/components/landing/home/motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
-import PremiumLink from "@/components/landing/home/PremiumLink";
 
 export default function MethodSection({ reducedMotion = false }) {
   const content = useLandingContent();
@@ -25,11 +24,6 @@ export default function MethodSection({ reducedMotion = false }) {
             {homeTexts.method_text ||
               "O processo protege o resultado final do jardim: reduz ruídos, organiza decisões e transforma atmosfera em direção executiva."}
           </p>
-          <div className="mt-12">
-            <PremiumLink to="/contato" variant="outline">
-              Conversar sobre meu projeto
-            </PremiumLink>
-          </div>
         </div>
         <div className="grid border-t border-white/12">
           {process.map((step, index) => (

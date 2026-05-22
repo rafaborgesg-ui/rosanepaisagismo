@@ -31,11 +31,6 @@ export default function SobreSection({ content }) {
             }
             <div className="absolute inset-0 bg-[#173727]/10 group-hover:bg-transparent transition-colors duration-700 pointer-events-none" />
           </div>
-          <div className="absolute -bottom-8 -right-4 bg-[#173727] px-8 py-6 text-white shadow-2xl z-20 rounded-2xl">
-            <p className="text-[9px] uppercase tracking-[0.3em] mb-2 text-[#d7ae45] font-extrabold">Chancela Acadêmica</p>
-            <p className="font-display italic text-2xl leading-tight">Doutorado em</p>
-            <p className="font-display text-2xl font-bold">Botânica</p>
-          </div>
         </motion.div>
 
         {/* Texto */}
