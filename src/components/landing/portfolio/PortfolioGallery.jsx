@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { AnimatePresence, motion } from "framer-motion";
+import { useRef } from "react";
+import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { getProjectFacts, labelClass } from "@/components/landing/portfolio/portfolioShared";
 import { trackEvent } from "@/lib/tracking";
@@ -11,6 +12,43 @@ const layouts = [
 ];
 
 const MotionLink = motion.create(Link);
+
+function PortfolioRevealImage({ src, alt, reducedMotion }) {
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start end", "end start"],
+  });
+  const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+
+  return (
+    <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]">
+      <motion.div
+        className="absolute inset-0 flex items-center justify-center overflow-hidden"
+        initial={reducedMotion ? false : { opacity: 1 }}
+        whileInView={reducedMotion ? undefined : { opacity: 1 }}
+        viewport={{ once: true, amount: 0.32, margin: "0px 0px -10% 0px" }}
+      >
+        <motion.img
+          src={src}
+          alt={alt}
+          style={{ y: reducedMotion ? "0%" : y }}
+          className="h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
+        />
+      </motion.div>
+      {!reducedMotion && (
+        <motion.div
+          aria-hidden="true"
+          className="absolute inset-[-1px] z-10 bg-[#f3eee4]"
+          initial={{ x: "0%" }}
+          whileInView={{ x: "101%" }}
+          viewport={{ once: true, amount: 0.01, margin: "0px 0px -4% 0px" }}
+          transition={{ duration: 1.05, ease: [0.76, 0, 0.24, 1] }}
+        />
+      )}
+    </div>
+  );
+}
 
 export default function PortfolioGallery({
   filteredProjects = [],
@@ -36,19 +74,10 @@ export default function PortfolioGallery({
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => {
               const isReversed = index % 2 === 1;
-              const imageOffset = isReversed ? 76 : -76;
               return (
                 <motion.article
                   layout
                   key={project.slug}
-                  initial={reducedMotion ? false : { opacity: 0, y: 28 }}
-                  animate={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-                  exit={reducedMotion ? undefined : { opacity: 0, y: 16 }}
-                  transition={
-                    reducedMotion
-                      ? { duration: 0 }
-                      : { delay: index * 0.04, duration: 0.62, ease: [0.16, 1, 0.3, 1] }
-                  }
                   className={`grid gap-8 border-t border-[#d8cdbb] pt-8 ${layouts[index % layouts.length]} lg:items-center`}
                 >
                   <MotionLink
@@ -60,25 +89,15 @@ export default function PortfolioGallery({
                         project_category: project.category,
                       })
                     }
-                    initial={reducedMotion ? false : { opacity: 0, x: imageOffset }}
-                    whileInView={reducedMotion ? undefined : { opacity: 1, x: 0 }}
-                    viewport={{ once: true, amount: 0.34, margin: "-8% 0px -8% 0px" }}
-                    transition={
-                      reducedMotion
-                        ? { duration: 0 }
-                        : { duration: 0.9, ease: [0.19, 1, 0.22, 1] }
-                    }
                     className={`rb-premium-focus group relative block overflow-hidden bg-[#111913] ${
                       isReversed ? "lg:order-2" : ""
                     }`}
                   >
-                    <div className="aspect-[4/5] md:aspect-[16/11] lg:aspect-[4/3]">
-                      <img
-                        src={project.cover}
-                        alt={project.title}
-                        className="h-full w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
-                      />
-                    </div>
+                    <PortfolioRevealImage
+                      src={project.cover}
+                      alt={project.title}
+                      reducedMotion={reducedMotion}
+                    />
                   </MotionLink>
 
                   <div className={isReversed ? "lg:order-1" : ""}>

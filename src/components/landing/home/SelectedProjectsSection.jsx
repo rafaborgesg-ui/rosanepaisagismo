@@ -33,17 +33,17 @@ function ParallaxImage({ src, alt, reducedMotion, className }) {
   return (
     <motion.div
       ref={ref}
-      initial={reducedMotion ? false : { opacity: 0, y: 34 }}
-      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-90px" }}
-      transition={{ duration: 0.48, ease: [0.16, 1, 0.3, 1] }}
+      initial={reducedMotion ? false : { opacity: 0, y: 72, scale: 0.985 }}
+      whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, scale: 1 }}
+      viewport={{ once: true, amount: 0.16, margin: "0px" }}
+      transition={{ duration: 1.18, ease: [0.19, 1, 0.22, 1] }}
       className={`relative overflow-hidden bg-[#181c19] ${className}`}
     >
       <motion.img
         src={src}
         alt={alt}
         style={{ y: reducedMotion ? "0%" : y }}
-        className="absolute inset-0 h-[120%] w-full object-cover opacity-88 grayscale-[10%] origin-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:grayscale-0 group-hover:opacity-100"
+        className="absolute inset-0 h-[120%] w-full object-cover grayscale-[10%] origin-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:grayscale-0"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-30" />
     </motion.div>
