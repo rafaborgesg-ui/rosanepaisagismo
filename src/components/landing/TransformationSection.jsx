@@ -7,6 +7,8 @@ const defaultBeforeAfter = {
   labelAfter: "Depois",
 };
 
+const labelClass = "text-[0.68rem] font-semibold uppercase tracking-[0.18em] text-[#8f7b55]";
+
 export default function TransformationSection({ project = null }) {
   const beforeAfter =
     project === null
@@ -20,6 +22,15 @@ export default function TransformationSection({ project = null }) {
   return (
     <section className="bg-[#101812] px-4 py-16 md:py-24">
       <div className="mx-auto w-[min(100%,1180px)]">
+        {/* Header */}
+        <div className="mb-10 flex flex-col items-start gap-3 md:mb-12">
+          <p className={labelClass}>Antes e depois</p>
+          <h2 className="font-heading text-2xl font-medium leading-tight text-white md:text-3xl">
+            Transformação com naturalidade.
+          </h2>
+        </div>
+
+        {/* Slider */}
         <div className="rounded-[16px] bg-[#101812] shadow-[0_34px_100px_rgba(0,0,0,0.18)] md:rounded-[20px]">
           <BeforeAfterSlider
             before={beforeAfter.before}
