@@ -35,7 +35,7 @@ export default function ProjectRelatedSection({ relatedProjects = [] }) {
                   alt={item.title}
                   loading="lazy"
                   decoding="async"
-                  className="h-full w-full object-cover opacity-90 grayscale-[8%] transition duration-700 group-hover:scale-[1.04] group-hover:opacity-100 group-hover:grayscale-0"
+                  className="h-full w-full object-cover opacity-90 grayscale-[8%] transition duration-700 group-hover:opacity-100 group-hover:grayscale-0"
                 />
               </div>
               <div className="pt-5">

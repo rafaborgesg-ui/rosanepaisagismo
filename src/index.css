@@ -83,13 +83,11 @@
 }
 
 .rb-founder-image img {
-  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.8s ease;
 }
 
 .rb-founder-image:hover img {
-  transform: scale(1.04);
   filter: grayscale(0%) brightness(1.02);
   opacity: 1;
 }

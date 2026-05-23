@@ -73,7 +73,7 @@ export const defaultLandingContent = {
   slides: defaultHeroSlides,
   sobre_titulo: "Autoria botânica com base científica e olhar de arquitetura.",
   sobre_cargo: "Rosane Borges",
-  sobre_frase: "Rosane une PhD em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins com presença, longevidade e leitura arquitetônica.",
+  sobre_frase: "Rosane une Doutorado em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins com presença, longevidade e leitura arquitetônica.",
   sobre_texto: "A assinatura nasce da curadoria de espécies, da proporção dos volumes e da forma como o espaço será vivido ao longo dos anos.",
   sobre_imagem_url: "/brand/rosane-borges.jpg",
   servico1_titulo: "Projeto de paisagismo completo",

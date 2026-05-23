@@ -24,7 +24,7 @@ const DEFAULT = {
   sobre_titulo: "Dra. Rosane Borges",
   sobre_cargo: "Fundadora & Diretora Criativa",
   sobre_frase: "Onde a ciência da ecologia urbana encontra a sofisticação do design exclusivo.",
-  sobre_texto: "Com PhD em Arquitetura Paisagística e uma trajetória de mais de 500 projetos autorais, Dra. Rosane redefine o conceito de luxo sustentável.",
+  sobre_texto: "Com Doutorado em Arquitetura Paisagística e uma trajetória de mais de 500 projetos autorais, Dra. Rosane redefine o conceito de luxo sustentável.",
   sobre_imagem_url: "https://lh3.googleusercontent.com/aida/ADBb0ug_AP5fC36sjt5bRKzseIc7AbvVa2OITKvy2HiEjBT4wFsd-LXpYMmo6R-SxlhiBZqJMlDFaov4x6SCky3OvL9wY0uIkgK5ESbhRbuly3_r5OSWVcP8fMS893SFzzw9W4cMVztFRaw_Xzba-cuygUforxrEFaq4ltncWwamsa1HamO6RQghAlajzxFTeTLsRGz5-oJafgYhVBKdTW56-vD9uWw_Bs4hxGdoqQO0NcpwfGVI7vbmJydaUYOZrOuThQuh1sou3RvT",
   servico1_titulo: "Projeto de Paisagismo", servico1_desc: "Conceito completo em 3D, do estudo preliminar ao executivo.",
   servico2_titulo: "Consultoria Técnica", servico2_desc: "Escolha de espécies e melhorias pontuais no seu ambiente.",

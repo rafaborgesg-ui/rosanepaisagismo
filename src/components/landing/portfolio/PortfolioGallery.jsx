@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useScroll, useTransform } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { getProjectFacts, labelClass } from "@/components/landing/portfolio/portfolioShared";
@@ -15,27 +15,57 @@ const MotionLink = motion.create(Link);
 
 function PortfolioRevealImage({ src, alt, reducedMotion, revealDirection = "left-to-right" }) {
   const ref = useRef(null);
+  const [hasEntered, setHasEntered] = useState(Boolean(reducedMotion));
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
-  const initialX = revealDirection === "right-to-left" ? 56 : -56;
+  const isRightToLeft = revealDirection === "right-to-left";
+  const initialX = isRightToLeft ? 42 : -42;
+  const initialClipPath = isRightToLeft ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
+  const hiddenState = { x: initialX, scale: 1.025, clipPath: initialClipPath };
+  const visibleState = { x: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)" };
+
+  useEffect(() => {
+    if (reducedMotion) {
+      setHasEntered(true);
+      return undefined;
+    }
+
+    const node = ref.current;
+    if (!node) return undefined;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        setHasEntered(true);
+        observer.disconnect();
+      },
+      { rootMargin: "0px 0px -8% 0px", threshold: 0.12 }
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, [reducedMotion]);
 
   return (
     <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]" data-reveal-direction={revealDirection}>
-      <motion.img
-        src={src}
-        alt={alt}
-        style={{ y: reducedMotion ? "0%" : y }}
-        loading="lazy"
-        decoding="async"
-        className="absolute inset-0 h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
-        initial={reducedMotion ? false : { opacity: 0, x: initialX, scale: 1.008 }}
-        whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
-        viewport={{ once: true, amount: 0.32, margin: "0px 0px -10% 0px" }}
-        transition={{ duration: 1.12, ease: [0.19, 1, 0.22, 1] }}
-      />
+      <motion.div
+        className="relative h-full w-full overflow-hidden"
+        initial={reducedMotion ? false : hiddenState}
+        animate={reducedMotion || hasEntered ? visibleState : hiddenState}
+        transition={{ duration: 1.85, ease: [0.22, 1, 0.36, 1] }}
+      >
+        <motion.img
+          src={src}
+          alt={alt}
+          style={{ y: reducedMotion ? "0%" : y }}
+          loading="lazy"
+          decoding="async"
+          className="absolute inset-0 h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:grayscale-0"
+        />
+      </motion.div>
     </div>
   );
 }

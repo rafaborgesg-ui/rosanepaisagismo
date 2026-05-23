@@ -28,7 +28,7 @@ export default function FounderSection({ reducedMotion = false }) {
           </h2>
           <p className="mt-9 max-w-3xl text-lg font-light leading-9 text-[#3f473e] md:text-xl">
             {content?.sobre_frase ||
-              "Rosane une PhD em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins com presença, longevidade e leitura arquitetônica."}{" "}
+              "Rosane une Doutorado em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins com presença, longevidade e leitura arquitetônica."}{" "}
             {content?.sobre_texto ||
               "A assinatura nasce da curadoria de espécies, da proporção dos volumes e da forma como o espaço será vivido ao longo dos anos."}
           </p>
@@ -39,7 +39,7 @@ export default function FounderSection({ reducedMotion = false }) {
           {/* Stats */}
           <div className="mt-10 flex flex-wrap gap-10 border-b border-[#d8cdbb] pb-8">
             {[
-              ["PhD", "Produção Vegetal"],
+              ["Doutorado", "Produção Vegetal"],
               ["500+", "projetos e estudos"],
               ["15+", "anos de experiência"],
             ].map(([value, label]) => (
@@ -52,7 +52,7 @@ export default function FounderSection({ reducedMotion = false }) {
 
           <div className="mt-8 grid gap-0 border-b border-[#d8cdbb]">
             {[
-              "Engenheira Agrônoma, PhD em Produção Vegetal e diretora criativa do escritório.",
+              "Engenheira Agrônoma, Doutorado em Produção Vegetal e diretora criativa do escritório.",
               "Projetos residenciais, clínicas premium, fachadas vivas e áreas de permanência.",
               "Curadoria botânica com leitura de solo, luz, escala, manutenção e obra real.",
               "Acompanhamento consultivo do conceito à maturação do jardim implantado.",

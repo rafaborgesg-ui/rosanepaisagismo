@@ -26,7 +26,7 @@ export default function SobreSection({ content }) {
             {content?.sobre_imagem_url &&
             <img
               alt="Dra. Rosane"
-              className="w-full aspect-[3/4] lg:aspect-[4/5] object-cover transition-transform duration-1000 group-hover:scale-105 filter grayscale-[30%] group-hover:grayscale-0 mix-blend-multiply"
+              className="w-full aspect-[3/4] lg:aspect-[4/5] object-cover transition duration-1000 filter grayscale-[30%] group-hover:grayscale-0 mix-blend-multiply"
               src={content.sobre_imagem_url} />
             }
             <div className="absolute inset-0 bg-[#173727]/10 group-hover:bg-transparent transition-colors duration-700 pointer-events-none" />

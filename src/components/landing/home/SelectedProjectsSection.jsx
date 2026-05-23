@@ -45,7 +45,7 @@ function ParallaxImage({ src, alt, reducedMotion, className }) {
         style={{ y: reducedMotion ? "0%" : y }}
         loading="lazy"
         decoding="async"
-        className="rb-premium-ease rb-duration-1200 absolute inset-0 h-[120%] w-full object-cover grayscale-[8%] origin-center transition-transform group-hover:scale-105 group-hover:grayscale-0"
+        className="rb-premium-ease rb-duration-1200 absolute inset-0 h-[120%] w-full object-cover grayscale-[8%] origin-center transition-transform group-hover:grayscale-0"
       />
       <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(5,8,5,0.5))] opacity-70 transition-opacity duration-1000 group-hover:opacity-18" />
     </motion.div>
