@@ -78,11 +78,21 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
               {homeTexts.selected_title || "Cases de natureza, arquitetura e permanência."}
             </h2>
           </div>
-          <div className="max-w-md lg:justify-self-end">
+          <div className="max-w-md lg:justify-self-end flex flex-col gap-8 items-start">
             <p className="text-base font-light leading-8 text-white/56">
               Uma seleção editorial de projetos que traduzem a assinatura da marca:
               proporção, curadoria botânica e leitura sensível do imóvel.
             </p>
+            <Link
+              to="/portfolio"
+              className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/30 px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10"
+            >
+              {homeTexts.selected_cta || "Ver acervo completo"}
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
+                <path d="M5 12h14" />
+                <path d="m12 5 7 7-7 7" />
+              </svg>
+            </Link>
           </div>
         </motion.div>
 
