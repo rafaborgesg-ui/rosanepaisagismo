@@ -6,6 +6,9 @@ import {
   getLandingContentRecord,
 } from "@/lib/landingContentStorage";
 
+const LANDING_CONTENT_CACHE_KEY = "landing_content_cache_v1";
+let memoryLandingContentCache = null;
+
 function normalizeLandingContent(record) {
   const source = record || {};
 
@@ -24,18 +27,57 @@ function normalizeLandingContent(record) {
   };
 }
 
+function readBrowserLandingCache() {
+  if (typeof window === "undefined") return null;
+  try {
+    const raw = window.localStorage.getItem(LANDING_CONTENT_CACHE_KEY);
+    if (!raw) return null;
+    return JSON.parse(raw);
+  } catch {
+    return null;
+  }
+}
+
+function writeBrowserLandingCache(content) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(LANDING_CONTENT_CACHE_KEY, JSON.stringify(content));
+  } catch {
+    // Ignore storage errors and keep in-memory cache.
+  }
+}
+
+function getInitialLandingContent() {
+  if (memoryLandingContentCache) return memoryLandingContentCache;
+
+  const cached = readBrowserLandingCache();
+  if (cached) {
+    memoryLandingContentCache = normalizeLandingContent(cached);
+    return memoryLandingContentCache;
+  }
+
+  memoryLandingContentCache = normalizeLandingContent(null);
+  return memoryLandingContentCache;
+}
+
 export function useLandingContent() {
-  const [content, setContent] = useState(() => normalizeLandingContent(null));
+  const [content, setContent] = useState(() => getInitialLandingContent());
 
   useEffect(() => {
     let active = true;
 
     getLandingContentRecord()
       .then((record) => {
-        if (active) setContent(normalizeLandingContent(record));
+        if (!active) return;
+        const normalized = normalizeLandingContent(record);
+        memoryLandingContentCache = normalized;
+        writeBrowserLandingCache(normalized);
+        setContent(normalized);
       })
       .catch(() => {
-        if (active) setContent(normalizeLandingContent(null));
+        if (!active) return;
+        const fallback = getInitialLandingContent();
+        setContent(fallback);
       });
 
     return () => {

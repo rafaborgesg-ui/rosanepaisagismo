@@ -1,10 +1,9 @@
 import { useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
-import { Calendar, MapPin, CheckCircle, Clock } from "lucide-react";
-import { Badge } from "@/components/ui/badge";
+import { Calendar, CheckCircle } from "lucide-react";
 import PageHeader from "../components/shared/PageHeader";
 import EmptyState from "../components/shared/EmptyState";
 import { format, startOfMonth, endOfMonth, eachDayOfInterval, getMonth, getYear, isToday, isSameDay, parseISO } from "date-fns";

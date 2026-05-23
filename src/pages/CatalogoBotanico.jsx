@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
-import { Search, Info, Leaf, Droplets, Sun, Wind, ChevronRight } from 'lucide-react';
+import { Search, Leaf, Droplets, Sun, Wind, ChevronRight } from 'lucide-react';
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";

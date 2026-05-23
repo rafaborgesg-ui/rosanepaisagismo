@@ -5,7 +5,6 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, Trash2, FileUp, X } from "lucide-react";
 import { Textarea } from "@/components/ui/textarea";
-import { MESES } from "../../lib/formatters";
 import { api } from "@/api/apiService";
 import { useQuery } from "@tanstack/react-query";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";

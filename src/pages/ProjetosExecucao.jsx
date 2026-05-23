@@ -4,7 +4,7 @@ import { api } from "@/api/apiService";
 import { useAuth } from "@/lib/AuthContext";
 import { useCanEdit } from "@/hooks/useCanEdit";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
-import { Plus, Pencil, Trash2, Search, Calendar, Crown } from "lucide-react";
+import { Plus, Pencil, Trash2, Search, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
@@ -13,7 +13,6 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@
 import PageHeader from "../components/shared/PageHeader";
 import EmptyState from "../components/shared/EmptyState";
 import ProjetoForm from "../components/projetos/ProjetoForm";
-import { formatCurrency } from "../lib/formatters";
 import { format } from "date-fns";
 
 const STATUS_CONFIG = {

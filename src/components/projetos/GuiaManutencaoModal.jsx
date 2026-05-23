@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { FileText, Download, Printer, Mail } from "lucide-react";
+import { FileText, Printer } from "lucide-react";
 
 const MAINTENANCE_ITEMS = [
   { id: "rega", label: "Sistema de Rega", defaultText: "Regar as plantas 3 vezes por semana, preferencialmente no início da manhã ou final da tarde." },

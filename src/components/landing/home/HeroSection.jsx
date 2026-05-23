@@ -192,7 +192,7 @@ export default function HeroSection({ reducedMotion = false }) {
               className={`rounded-full border transition-all duration-500 ${
                 activeSlide === index
                   ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473]"
-                  : "h-2 w-2 border-white/70 bg-white/26 shadow-[0_0_0_4px_rgba(8,16,9,0.2)] hover:bg-white/80"
+                  : "h-2 w-2 border-white/70 bg-white/26 hover:bg-white/80"
               }`}
             />
           ))}

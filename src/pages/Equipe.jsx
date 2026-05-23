@@ -8,7 +8,6 @@ import { UserPlus, History, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import TeamStats from "@/components/equipe/TeamStats";
 import InviteForm from "@/components/equipe/InviteForm";
-import OwnerCard from "@/components/equipe/OwnerCard";
 import TeamMemberCard from "@/components/equipe/TeamMemberCard";
 import AccessLevels from "@/components/equipe/AccessLevels";
 

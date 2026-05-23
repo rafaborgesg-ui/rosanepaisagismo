@@ -4,8 +4,7 @@ import { useAuth } from '@/lib/AuthContext';
 import { useSubscription } from '@/hooks/useSubscription';
 import { CheckCircle2, AlertCircle } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { api } from "@/api/apiService"; import { auth } from "@/api/authService";
-
+import { api } from "@/api/apiService"; 
 export default function PaymentSuccess() {
   const navigate = useNavigate();
   const { isAuthenticated, isLoadingAuth, user } = useAuth();

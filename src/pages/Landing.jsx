@@ -109,7 +109,7 @@ export default function Landing() {
   };
 
   return (
-    <div className="isolate min-h-screen overflow-x-hidden bg-[#0b0f0b] text-[#151913]">
+    <div className="isolate min-h-screen overflow-x-clip bg-[#0b0f0b] text-[#151913]">
       <SitePreloader />
       <SmoothScroll disabled={Boolean(reduceMotion)} />
       <SEO
@@ -131,24 +131,29 @@ export default function Landing() {
       />
       <SiteNav activeLink="inicio" />
 
-      <main className="relative z-10 bg-[#f3eee4] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
-        <HeroSection reducedMotion={Boolean(reduceMotion)} />
-        <FounderSection reducedMotion={Boolean(reduceMotion)} />
-        <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
-        <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
-        <MethodSection reducedMotion={Boolean(reduceMotion)} />
-        <DeliverablesSection reducedMotion={Boolean(reduceMotion)} />
-        <TestimonialsSection reducedMotion={Boolean(reduceMotion)} />
-        <ConciergeSection
-          lead={lead}
-          setLead={setLead}
-          submitLead={submitLead}
-          onBriefingStarted={handleBriefingStarted}
-          isSubmitting={isSubmittingLead}
-        />
-      </main>
+      <div className="relative z-10 bg-[#0b0f0b]">
+        <div data-hero-stage className="sticky top-0 z-0 h-[100svh] overflow-hidden">
+          <HeroSection reducedMotion={Boolean(reduceMotion)} />
+        </div>
 
-      <div className="relative z-0 hidden bg-transparent md:block md:h-[68svh]" aria-hidden="true" />
+        <main className="relative z-20 bg-[#f3eee4] shadow-[0_28px_80px_rgba(0,0,0,0.18)]">
+          <FounderSection reducedMotion={Boolean(reduceMotion)} />
+          <SelectedProjectsSection reducedMotion={Boolean(reduceMotion)} />
+          <ExpertiseSection reducedMotion={Boolean(reduceMotion)} />
+          <MethodSection reducedMotion={Boolean(reduceMotion)} />
+          <DeliverablesSection reducedMotion={Boolean(reduceMotion)} />
+          <TestimonialsSection reducedMotion={Boolean(reduceMotion)} />
+          <ConciergeSection
+            lead={lead}
+            setLead={setLead}
+            submitLead={submitLead}
+            onBriefingStarted={handleBriefingStarted}
+            isSubmitting={isSubmittingLead}
+          />
+        </main>
+      </div>
+
+      <div className="pointer-events-none relative z-10 hidden bg-transparent md:block md:h-[68svh]" aria-hidden="true" />
       <SiteFooter reveal />
       <WhatsAppFloat hideOnMobile revealAfterHero />
     </div>

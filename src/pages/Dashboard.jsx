@@ -4,10 +4,10 @@ import { useAuth } from "@/lib/AuthContext";
 import { useOfficeOwner } from "@/hooks/useOfficeOwner";
 import { DollarSign, TrendingDown, TrendingUp, Users, Target, ArrowUpRight, ArrowDownRight } from "lucide-react";
 import {
-  ComposedChart, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
+  ComposedChart, Area, XAxis, YAxis, CartesianGrid, Tooltip,
   ResponsiveContainer, PieChart, Pie, Cell, BarChart, Bar
 } from "recharts";
-import { formatCurrency, formatPercent, MESES, getAnoAtual } from "../lib/formatters";
+import { formatCurrency, MESES, getAnoAtual } from "../lib/formatters";
 
 const CHART_COLORS = {
   primary: "#2d6a4f",

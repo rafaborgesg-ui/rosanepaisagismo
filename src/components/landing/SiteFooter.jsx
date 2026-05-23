@@ -5,7 +5,9 @@ import { buildWhatsAppUrl } from "@/data/premiumProjects";
 
 export default function SiteFooter({ reveal = false } = {}) {
   const content = useLandingContent();
-  const logoRodape = content?.logo_rodape_url;
+  const logoRodape = content?.logo_rodape_url || "/brand/rosane-logo-white.png";
+  const logoRodapeSize = Number(content?.logo_rodape_size) || 100;
+  const logoRodapeHeight = Math.min(72, Math.max(36, logoRodapeSize * 0.48));
   const footerClass = reveal
     ? "relative bg-[#0c0e0a] px-5 pb-[calc(12rem+env(safe-area-inset-bottom))] pt-20 text-white md:fixed md:inset-x-0 md:bottom-0 md:z-0 md:flex md:min-h-[68svh] md:items-end md:py-24"
     : "relative bg-[#0c0e0a] px-5 pb-[calc(12rem+env(safe-area-inset-bottom))] pt-20 text-white md:py-24";
@@ -21,18 +23,12 @@ export default function SiteFooter({ reveal = false } = {}) {
 
         <div className="grid gap-14 border-b border-white/8 pb-14 lg:grid-cols-[1.3fr_0.7fr_0.7fr]">
           <div>
-            {logoRodape ? (
-              <img
-                src={logoRodape}
-                alt="Rosane Borges Paisagismo"
-                className="mb-6 w-auto object-contain"
-                style={{ height: `${(content?.logo_rodape_size || 100) * 0.48}px` }}
-              />
-            ) : (
-              <p className="mb-6 font-heading text-[2rem] font-medium tracking-normal">
-                Rosane Borges
-              </p>
-            )}
+            <img
+              src={logoRodape}
+              alt="Rosane Borges Paisagismo"
+              className="mb-6 w-auto max-w-full object-contain"
+              style={{ height: `${logoRodapeHeight}px` }}
+            />
             <p className="max-w-md text-sm leading-7 text-white/50">
               Paisagismo autoral de alto padrão para residências, clínicas e projetos
               selecionados que exigem leitura técnica e implantação orientada.
