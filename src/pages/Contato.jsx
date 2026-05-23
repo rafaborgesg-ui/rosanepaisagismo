@@ -149,7 +149,7 @@ export default function Contato() {
         />
 
         <section id="briefing" className="px-5 py-24 md:px-10 md:py-36">
-          <div className="mx-auto grid w-[min(100%,1320px)] gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
+          <div className="mx-auto grid w-full max-w-[1320px] min-w-0 gap-14 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
             <ContactSidebar
               reducedMotion={Boolean(reducedMotion)}
               whatsappMessage={whatsappMessage}

@@ -19,7 +19,7 @@ export default function SmoothScroll({ disabled = false } = {}) {
       if (!hash) return;
       const target = document.getElementById(decodeURIComponent(hash));
       if (!target) return;
-      const destination = Math.max(0, target.offsetTop - 92);
+      const destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - 92);
       window.scrollTo({ top: destination, left: 0, behavior: "auto" });
       lenis.scrollTo(destination, { immediate, duration: immediate ? 0 : 1.05 });
     };

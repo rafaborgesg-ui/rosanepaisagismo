@@ -13,13 +13,13 @@ export default function ContactSidebar({
       whileInView={reducedMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-90px" }}
       variants={reducedMotion ? undefined : fadeUp}
-      className="lg:sticky lg:top-32"
+      className="w-full max-w-[calc(100vw-2.5rem)] min-w-0 lg:sticky lg:top-32 lg:max-w-none"
     >
       <p className={labelClass}>Briefing privado</p>
-      <h2 className="mt-5 font-heading text-[clamp(3rem,6.4vw,6.6rem)] font-medium leading-[0.9] text-[#111913]">
+      <h2 className="mt-5 max-w-full break-words font-heading text-[clamp(2.7rem,13vw,6.6rem)] font-medium leading-[0.9] text-[#111913] md:text-[clamp(3rem,6.4vw,6.6rem)]">
         Poucas informações certas já revelam o potencial do projeto.
       </h2>
-      <p className="mt-8 max-w-lg text-lg font-light leading-9 text-[#4b5248]">
+      <p className="mt-8 max-w-lg break-words text-lg font-light leading-9 text-[#4b5248]">
         Fotos, planta, metragem, cidade e intenção de uso ajudam a transformar referências soltas
         em uma primeira leitura mais precisa.
       </p>
@@ -46,13 +46,13 @@ export default function ContactSidebar({
         ].map((item) => {
           const Icon = item.icon;
           const content = (
-            <div className="grid grid-cols-[2.4rem_1fr] gap-4 border-b border-[#d8cdbb] py-5 transition hover:bg-[#ebe2d3]/50">
+            <div className="grid min-w-0 grid-cols-[2.4rem_minmax(0,1fr)] gap-4 border-b border-[#d8cdbb] py-5 transition hover:bg-[#ebe2d3]/50">
               <Icon className="mt-1 h-4 w-4 text-[#8a6e42]" aria-hidden="true" />
               <div>
                 <p className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
                   {item.label}
                 </p>
-                <p className="mt-1 text-sm font-semibold leading-6 text-[#171914]">{item.value}</p>
+                <p className="mt-1 break-words text-sm font-semibold leading-6 text-[#171914]">{item.value}</p>
               </div>
             </div>
           );

@@ -39,7 +39,7 @@ export default function SitePreloader() {
       const target = document.getElementById(decodeURIComponent(hash));
       if (target) {
         const navOffset = 92;
-        const destination = Math.max(0, target.offsetTop - navOffset);
+        const destination = Math.max(0, target.getBoundingClientRect().top + window.scrollY - navOffset);
         window.scrollTo({ top: destination, left: 0, behavior: "auto" });
         if (window.__rbLenis?.scrollTo) {
           window.__rbLenis.scrollTo(destination, { immediate: true });

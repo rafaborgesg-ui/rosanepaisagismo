@@ -61,6 +61,39 @@
   }
 }
 
+.rb-founder-image::before,
+.rb-founder-image::after {
+  content: "";
+  position: absolute;
+  left: -1.25rem;
+  top: -1.25rem;
+  z-index: 2;
+  pointer-events: none;
+  background: rgba(143, 167, 149, 0.42);
+}
+
+.rb-founder-image::before {
+  width: min(10rem, 34vw);
+  height: 1px;
+}
+
+.rb-founder-image::after {
+  width: 1px;
+  height: min(9rem, 24vw);
+}
+
+.rb-founder-image img {
+  transition: transform 1.4s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.8s ease;
+}
+
+.rb-founder-image:hover img {
+  transform: scale(1.04);
+  filter: grayscale(0%) brightness(1.02);
+  opacity: 1;
+}
+
 @layer base {
   * { @apply border-border outline-ring/50; }
   html { scroll-behavior: smooth; scroll-padding-top: 96px; }

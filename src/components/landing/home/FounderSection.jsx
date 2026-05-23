@@ -12,7 +12,7 @@ export default function FounderSection({ reducedMotion = false }) {
       <div className="mx-auto grid w-[min(100%,1320px)] gap-16 lg:grid-cols-[0.78fr_1.22fr] lg:items-center">
         <motion.figure
           {...getInViewProps(reducedMotion, { offset: 26 })}
-          className="rb-cinematic-image relative overflow-hidden bg-[#111913]"
+          className="rb-founder-image relative overflow-visible bg-[#111913]"
         >
           <img
             src={content?.sobre_imagem_url || "/brand/rosane-borges.jpg"}

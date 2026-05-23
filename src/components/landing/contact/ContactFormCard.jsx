@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle2, Paperclip, X } from "lucide-react";
 import { fadeUp, interests, labelClass } from "@/components/landing/contact/contactShared";
 
 const inputClass =
-  "min-h-12 border border-[#d8cdbb] bg-transparent px-4 text-sm text-[#171914] outline-none transition placeholder:text-[#858b80] focus:border-[#8f7b55] focus:bg-white/40";
+  "min-h-12 w-full min-w-0 border border-[#d8cdbb] bg-transparent px-4 text-sm text-[#171914] outline-none transition placeholder:text-[#858b80] focus:border-[#8f7b55] focus:bg-white/40";
 
 export default function ContactFormCard({
   reducedMotion = false,
@@ -26,7 +26,7 @@ export default function ContactFormCard({
       whileInView={reducedMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-90px" }}
       variants={reducedMotion ? undefined : fadeUp}
-      className="border border-[#d8cdbb] bg-[#f8f3ea] p-6 shadow-[0_28px_90px_rgba(36,35,28,0.08)] md:p-9"
+      className="w-full max-w-[calc(100vw-2.5rem)] min-w-0 border border-[#d8cdbb] bg-[#f8f3ea] p-6 shadow-[0_28px_90px_rgba(36,35,28,0.08)] md:p-9 lg:max-w-none"
     >
       {sent ? (
         <div className="flex min-h-[520px] flex-col items-start justify-center">
@@ -55,7 +55,7 @@ export default function ContactFormCard({
             </h2>
           </div>
 
-          <form className="space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
+          <form className="min-w-0 space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
             <div className="grid gap-5 md:grid-cols-2">
               <label className="grid gap-2">
                 <span className="text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#8f7b55]">
@@ -139,7 +139,7 @@ export default function ContactFormCard({
                 Anexo opcional
               </span>
               <div
-                className="flex cursor-pointer items-center gap-3 border border-dashed border-[#d3c9b7] bg-transparent px-5 py-4 transition hover:border-[#8f7b55]"
+                className="flex w-full min-w-0 cursor-pointer items-center gap-3 overflow-hidden border border-dashed border-[#d3c9b7] bg-transparent px-5 py-4 transition hover:border-[#8f7b55]"
                 onClick={() => fileInputRef.current?.click()}
                 onKeyDown={(event) => {
                   if (event.key === "Enter" || event.key === " ") fileInputRef.current?.click();
