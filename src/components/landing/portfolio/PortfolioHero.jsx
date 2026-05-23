@@ -35,11 +35,11 @@ export default function PortfolioHero({ reducedMotion = false }) {
         <div className="max-w-5xl">
           <div className="mb-7 h-px w-28 rb-luxury-hairline" aria-hidden="true" />
           <h1 className="font-heading text-[clamp(3.7rem,8.2vw,9rem)] font-medium leading-[0.88] text-white [text-wrap:balance]">
-            Projetos que revelam a arquitetura pela natureza
+            Jardins autorais que transformam arquitetura em experiência
           </h1>
           <p className="mt-7 max-w-2xl text-base font-light leading-8 text-white/76 md:text-lg">
-            Uma seleção editorial de estudos, implantações e jardins autorais em que técnica,
-            curadoria botânica e atmosfera trabalham a favor do imóvel.
+            Uma seleção editorial de estudos, implantações e jardins de alto padrão, onde
+            técnica, curadoria botânica e atmosfera constroem valor para o imóvel.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a
@@ -50,14 +50,14 @@ export default function PortfolioHero({ reducedMotion = false }) {
               rel="noreferrer"
               className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
             >
-              Solicitar leitura inicial
+              Solicitar curadoria privada
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
             <a
               href="#galeria"
               className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/34 px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10"
             >
-              Explorar acervo
+              Ver cases selecionados
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </a>
           </div>
@@ -65,11 +65,11 @@ export default function PortfolioHero({ reducedMotion = false }) {
 
         <aside className="hidden border-l border-white/18 pl-7 text-white/68 lg:block">
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
-            Leitura de case
+            Assinatura editorial
           </p>
           <p className="mt-5 text-lg font-light leading-8">
-            Cada projeto é apresentado como leitura de contexto: o que a vegetação resolve,
-            valoriza e transforma na experiência cotidiana do imóvel.
+            Cada projeto revela como a vegetação organiza percurso, valoriza a arquitetura
+            e cria permanência com elegância cotidiana.
           </p>
           <div className="mt-8 grid gap-4 border-t border-white/14 pt-6">
             {["fachadas", "percurso", "permanência"].map((item) => (

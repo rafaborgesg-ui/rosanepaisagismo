@@ -143,7 +143,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 text-white">
-      <div className={`absolute inset-x-0 top-0 h-[72px] transition-all duration-700 md:h-[84px] ${hasSurface ? "border-b border-white/8 bg-[rgba(8,16,9,0.68)] shadow-[0_1px_32px_rgba(0,0,0,0.16)] backdrop-blur-2xl backdrop-saturate-[1.35]" : "border-b border-transparent bg-transparent"}`} />
+      <div className={`absolute inset-x-0 top-0 h-[72px] transition-all duration-700 md:h-[84px] ${hasSurface ? "border-b border-white/10 bg-[rgba(8,16,9,0.52)] shadow-[0_1px_26px_rgba(0,0,0,0.12)] backdrop-blur-xl backdrop-saturate-[1.25] md:bg-[rgba(8,16,9,0.66)] md:shadow-[0_1px_32px_rgba(0,0,0,0.14)] md:backdrop-blur-2xl" : "border-b border-transparent bg-transparent"}`} />
       <div className={`absolute inset-x-0 top-[71px] z-10 h-px transition-opacity duration-700 md:top-[83px] ${hasSurface && !menuOpen ? "opacity-80" : "opacity-0"}`} style={{ background: "linear-gradient(90deg, transparent 5%, rgba(211,180,115,0.14) 30%, rgba(211,180,115,0.2) 50%, rgba(211,180,115,0.14) 70%, transparent 95%)" }} />
 
       <div className="relative z-10 mx-auto flex h-[72px] max-w-[1680px] items-center justify-between px-5 md:h-[84px] md:px-10">
@@ -168,7 +168,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
           ))}
         </div>
 
-        <button className="rb-premium-focus rb-nav-menu-button group ml-auto inline-flex h-12 items-center gap-4 text-[0.62rem] font-semibold uppercase leading-none tracking-[0.24em] text-white/82 transition-colors hover:text-[#d3b473]" onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen} type="button">
+        <button className="rb-premium-focus rb-nav-menu-button group ml-auto inline-flex h-12 items-center gap-4 text-[0.62rem] font-semibold uppercase leading-none tracking-[0.24em] text-white/86 transition-colors hover:text-[#d3b473]" onClick={() => setMenuOpen((v) => !v)} aria-label={menuOpen ? "Fechar menu" : "Abrir menu"} aria-expanded={menuOpen} type="button">
           <span className="relative block h-[1.45em] min-w-[5.25em] overflow-hidden leading-[1.45]">
             <span className={`block transition-all duration-500 ${menuOpen ? "-translate-y-full opacity-0" : "translate-y-0 opacity-100"}`}>Menu</span>
             <span className={`absolute inset-x-0 top-0 block transition-all duration-500 ${menuOpen ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}>Fechar</span>

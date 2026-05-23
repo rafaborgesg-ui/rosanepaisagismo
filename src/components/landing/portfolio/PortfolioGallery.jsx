@@ -22,7 +22,7 @@ function PortfolioRevealImage({ src, alt, reducedMotion, revealDirection = "left
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
   const isRightToLeft = revealDirection === "right-to-left";
-  const initialX = isRightToLeft ? 42 : -42;
+  const initialX = isRightToLeft ? 56 : -56;
   const initialClipPath = isRightToLeft ? "inset(0% 0% 0% 100%)" : "inset(0% 100% 0% 0%)";
   const hiddenState = { x: initialX, scale: 1.025, clipPath: initialClipPath };
   const visibleState = { x: 0, scale: 1, clipPath: "inset(0% 0% 0% 0%)" };
@@ -55,7 +55,7 @@ function PortfolioRevealImage({ src, alt, reducedMotion, revealDirection = "left
         className="relative h-full w-full overflow-hidden"
         initial={reducedMotion ? false : hiddenState}
         animate={reducedMotion || hasEntered ? visibleState : hiddenState}
-        transition={{ duration: 1.85, ease: [0.22, 1, 0.36, 1] }}
+        transition={{ duration: 2.15, ease: [0.2, 0.82, 0.18, 1] }}
       >
         <motion.img
           src={src}
@@ -75,22 +75,22 @@ export default function PortfolioGallery({
   reducedMotion = false,
 }) {
   return (
-    <section id="galeria" className="bg-[#f3eee4] px-5 py-24 md:px-10 md:py-36">
+    <section id="galeria" className="bg-[#f3eee4] px-5 py-28 md:px-10 md:py-40">
       <div className="mx-auto w-[min(100%,1320px)]">
-        <div className="mb-16 grid gap-8 lg:grid-cols-[0.9fr_0.46fr] lg:items-end">
+        <div className="mb-20 grid gap-8 lg:grid-cols-[0.9fr_0.46fr] lg:items-end">
           <div>
             <p className={labelClass}>Galeria selecionada</p>
             <h2 className="mt-5 max-w-5xl font-heading text-[clamp(3rem,6.8vw,7rem)] font-medium leading-[0.9] text-[#111913]">
-              Cases com leitura técnica, atmosfera e assinatura botânica.
+              Cases com atmosfera, técnica e assinatura botânica.
             </h2>
           </div>
           <p className="max-w-md text-base font-light leading-8 text-[#4b5248] lg:justify-self-end">
-            A galeria funciona como uma leitura editorial: contexto, intenção, solução
-            botânica e escopo aparecem com o respiro de uma pauta de arquitetura.
+            Cada case aparece como uma pauta editorial: contexto, intenção, gesto botânico
+            e escopo com o respiro de uma revista de arquitetura.
           </p>
         </div>
 
-        <motion.div layout className="grid gap-20">
+        <motion.div layout className="grid gap-24 md:gap-28">
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => {
               const isReversed = index % 2 === 1;
@@ -99,7 +99,7 @@ export default function PortfolioGallery({
                 <motion.article
                   layout
                   key={project.slug}
-                  className={`grid gap-8 border-t border-[#d8cdbb] pt-8 ${layouts[index % layouts.length]} lg:items-center`}
+                  className={`grid gap-10 border-t border-[#d8cdbb] pt-10 ${layouts[index % layouts.length]} lg:items-center lg:gap-16 lg:pt-12`}
                 >
                   <MotionLink
                     to={`/portfolio/${project.slug}`}
@@ -154,7 +154,7 @@ export default function PortfolioGallery({
                       to={`/portfolio/${project.slug}`}
                       className="rb-premium-focus mt-8 inline-flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#111913] transition hover:text-[#8a6e42]"
                     >
-                      Ler case completo
+                      Abrir case completo
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
                   </motion.div>

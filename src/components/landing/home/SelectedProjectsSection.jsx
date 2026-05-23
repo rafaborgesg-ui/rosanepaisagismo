@@ -20,6 +20,11 @@ const imageLayout = [
   "aspect-[4/3] md:aspect-[1.08]",
 ];
 
+const boutiqueDefault = (value, previousDefault, nextDefault) => {
+  if (!value || value === previousDefault) return nextDefault;
+  return value;
+};
+
 function ParallaxImage({ src, alt, reducedMotion, className }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
@@ -56,6 +61,16 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
   const { projects } = usePortfolioProjects();
   const content = useLandingContent();
   const homeTexts = content?.home_texts || {};
+  const selectedTitle = boutiqueDefault(
+    homeTexts.selected_title,
+    "Cases de natureza, arquitetura e permanência.",
+    "Cases editoriais onde a natureza valoriza a arquitetura."
+  );
+  const selectedCta = boutiqueDefault(
+    homeTexts.selected_cta,
+    "Explorar cases selecionados",
+    "Ver cases selecionados"
+  );
   const featuredProjects = projects.filter((p) => p.isFeaturedHome);
   const selectedProjects = (featuredProjects.length ? featuredProjects : projects).slice(0, 4).map((p) => ({
     ...p,
@@ -77,19 +92,19 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           <div className="max-w-3xl">
             <p className={labelClass}>{homeTexts.selected_label || "Projetos selecionados"}</p>
             <h2 className="mt-6 font-heading text-[clamp(3rem,6.6vw,7.2rem)] font-medium leading-[0.88] text-white">
-              {homeTexts.selected_title || "Cases de natureza, arquitetura e permanência."}
+              {selectedTitle}
             </h2>
           </div>
           <div className="max-w-md lg:justify-self-end flex flex-col gap-8 items-start">
             <p className="text-base font-light leading-8 text-white/56">
-              Uma seleção editorial de jardins onde a vegetação não decora: ela organiza
-              chegada, permanência, sombra, privacidade e valor percebido.
+              Uma seleção de jardins onde a vegetação organiza chegada, sombra, privacidade
+              e valor percebido com a precisão de uma assinatura autoral.
             </p>
             <Link
               to="/portfolio"
               className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/30 px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10"
             >
-              {homeTexts.selected_cta || "Explorar cases selecionados"}
+              {selectedCta}
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -145,7 +160,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           className="mt-24 border-t border-white/12 pt-10"
         >
           <p className="max-w-2xl font-heading text-[1.7rem] font-medium leading-tight text-white md:text-[2.1rem]">
-            Cada case nasce de uma leitura privada: o imóvel, a luz, a rotina e o tipo de permanência que o jardim precisa sustentar.
+            Cada case nasce de uma investigação privada: o imóvel, a luz, a rotina e o tipo de permanência que o jardim precisa sustentar.
           </p>
         </motion.div>
       </div>

@@ -10,12 +10,12 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
               Atmosfera do projeto
             </p>
             <h2 className="mt-5 font-heading text-[clamp(3rem,6.8vw,7rem)] font-medium leading-[0.9]">
-              Escala, textura e presença vegetal.
+              Escala, textura e permanência vegetal.
             </h2>
           </div>
           <p className="max-w-md text-base font-light leading-8 text-white/62 lg:justify-self-end">
-            Imagens pensadas como leitura de materialidade: volumes, percurso,
-            enquadramentos e pontos de permanência.
+            A sequência evidencia volumes, enquadramentos e momentos de uso, mostrando
+            como a paisagem conduz a experiência sem perder precisão técnica.
           </p>
         </div>
 
@@ -39,7 +39,7 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
                     : "lg:col-span-4 lg:self-end"
               }
             >
-              <div className="group relative overflow-hidden bg-[#151b14]">
+              <div className="group relative overflow-hidden bg-transparent">
                 <img
                   src={image}
                   alt={`${project.title} - imagem ${index + 1}`}

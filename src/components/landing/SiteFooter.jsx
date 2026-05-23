@@ -31,7 +31,7 @@ export default function SiteFooter({ reveal = false } = {}) {
             />
             <p className="max-w-md text-sm leading-7 text-white/50">
               Atelier de paisagismo autoral para residências, clínicas e projetos selecionados
-              que exigem leitura técnica, curadoria botânica e implantação orientada.
+              que exigem precisão técnica, curadoria botânica e implantação orientada.
             </p>
             <p className="mt-6 font-heading text-lg italic text-white/28">
               "Jardins criados para amadurecer com a arquitetura."

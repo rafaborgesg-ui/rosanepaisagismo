@@ -55,6 +55,11 @@ const FloatingTextarea = ({ value, onChange, label }) => (
   </div>
 );
 
+const boutiqueDefault = (value, previousDefault, nextDefault) => {
+  if (!value || value === previousDefault) return nextDefault;
+  return value;
+};
+
 export default function ConciergeSection({
   lead,
   setLead,
@@ -64,6 +69,26 @@ export default function ConciergeSection({
 }) {
   const content = useLandingContent();
   const homeTexts = content?.home_texts || {};
+  const conciergeLabel = boutiqueDefault(
+    homeTexts.concierge_label,
+    "Atendimento consultivo",
+    "Briefing privado"
+  );
+  const conciergeTitle = boutiqueDefault(
+    homeTexts.concierge_title,
+    "Uma primeira leitura para um jardim feito sob medida.",
+    "Uma curadoria inicial para um jardim feito sob medida."
+  );
+  const conciergeText = boutiqueDefault(
+    homeTexts.concierge_text,
+    "Conte sobre o imóvel, fase da obra e intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral.",
+    "Conte sobre o imóvel, a fase da obra e a intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral e tecnicamente orientada."
+  );
+  const conciergeButton = boutiqueDefault(
+    homeTexts.concierge_button,
+    "Solicitar curadoria paisagística",
+    "Enviar briefing privado"
+  );
 
   return (
     <section id="contato-concierge" className="bg-[#f3eee4] px-5 py-section-md md:px-10">
@@ -81,14 +106,13 @@ export default function ConciergeSection({
         </div>
         <div className="self-center py-2 lg:py-12">
           <p className="text-[0.64rem] font-semibold uppercase tracking-[0.2em] text-[#d3b473]">
-            {homeTexts.concierge_label || "Atendimento consultivo"}
+            {conciergeLabel}
           </p>
           <h2 className="mt-6 font-heading text-[clamp(2.6rem,5.4vw,5.6rem)] font-medium leading-[0.9] text-[#0f160f]">
-            {homeTexts.concierge_title || "Uma primeira leitura para um jardim feito sob medida."}
+            {conciergeTitle}
           </h2>
           <p className="mt-7 max-w-2xl text-base font-light leading-8 text-[#172016]/62 md:text-lg">
-            {homeTexts.concierge_text ||
-              "Conte sobre o imóvel, fase da obra e intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral."}
+            {conciergeText}
           </p>
           <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-10 grid gap-6">
             <FloatingInput
@@ -163,7 +187,7 @@ export default function ConciergeSection({
               className="group/submit mt-4 inline-flex min-h-[56px] w-full items-center justify-center gap-4 rounded-full bg-[#0b120c] px-10 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-white transition-all duration-500 hover:-translate-y-1 hover:bg-[#182415] hover:shadow-[0_14px_44px_rgba(23,32,22,0.18)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
             >
               <span className="relative z-10 flex items-center gap-3">
-                 {isSubmitting ? "Enviando briefing..." : homeTexts.concierge_button || "Solicitar curadoria paisagística"}
+                 {isSubmitting ? "Enviando briefing..." : conciergeButton}
                  <MessageCircle className="h-4 w-4 transition-transform duration-500 group-hover/submit:translate-x-1 group-hover/submit:scale-110" aria-hidden="true" />
               </span>
             </button>

@@ -18,13 +18,13 @@ export default function PortfolioCtaSection() {
             Próximo projeto
           </p>
           <h2 className="mt-5 max-w-4xl font-heading text-[clamp(3.1rem,7vw,7.2rem)] font-medium leading-[0.88]">
-            Seu jardim pode nascer como extensão natural do imóvel.
+            Seu jardim pode nascer como assinatura viva do imóvel.
           </h2>
         </div>
         <div>
           <p className="text-base font-light leading-8 text-white/68">
-            Envie fotos, planta ou referências. A primeira leitura identifica potencial,
-            escopo e o caminho mais adequado para uma proposta exclusiva.
+            Envie fotos, planta ou referências. A curadoria inicial identifica potencial,
+            escopo e o caminho mais elegante para uma proposta exclusiva.
           </p>
           <a
             href={buildWhatsAppUrl(
@@ -34,7 +34,7 @@ export default function PortfolioCtaSection() {
             rel="noreferrer"
             className="mt-8 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#171914] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
           >
-            Solicitar leitura inicial
+            Iniciar projeto autoral
             <ArrowRight className="h-4 w-4" aria-hidden="true" />
           </a>
         </div>

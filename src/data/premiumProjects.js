@@ -1,7 +1,7 @@
 export const WHATSAPP_NUMBER = "5538999313930";
 
 export const WHATSAPP_MESSAGE =
-  "Olá, quero iniciar uma avaliação de projeto com a Rosane Paisagismo.";
+  "Olá, quero iniciar uma curadoria privada com a Rosane Paisagismo.";
 
 export const portfolioCategories = [
   "Todos",
@@ -28,22 +28,22 @@ export const premiumProjects = [
       localAsset("PAISAGISMO-PRISCILLA-ROSANE_p8_i1.jpg"),
     ],
     summary:
-      "Composição de entrada com leitura arquitetônica, privacidade e percurso de chegada.",
+      "Composição de entrada com precisão arquitetônica, privacidade e percurso de chegada.",
     challenge:
       "Criar impacto de chegada sem excesso visual, mantendo proporção entre arquitetura, vegetação e acessos.",
     solution:
-      "A proposta organiza massas vegetais, textura de piso e pontos focais para reforçar escala, permanência e leitura do imóvel.",
+      "A proposta organiza massas vegetais, textura de piso e pontos focais para reforçar escala, permanência e valor do imóvel.",
     plants: ["Topiarias estruturantes", "Maciços de forração", "Espécies de destaque"],
     intentions: [
       "Valorizar a chegada sem competir com a arquitetura",
-      "Criar massas verdes de leitura limpa e sofisticada",
+      "Criar massas verdes com presença limpa e sofisticada",
       "Organizar percurso, proporção e pontos focais",
     ],
     materials: ["Volumes podados", "Texturas minerais", "Iluminação de acolhimento"],
     galleryCaptions: [
       "Fachada com massas vegetais em diálogo com o volume arquitetônico.",
       "Enquadramento do acesso principal e reforço de privacidade.",
-      "Camadas de textura para leitura elegante desde a rua.",
+      "Camadas de textura para presença elegante desde a rua.",
     ],
   },
   {
@@ -128,7 +128,7 @@ export const premiumProjects = [
     challenge:
       "Conduzir o olhar para os pontos certos da fachada sem sobrecarregar o conjunto.",
     solution:
-      "A leitura espacial combina volumes vegetais e negativos estratégicos para destacar arquitetura e percurso.",
+      "A composição espacial combina volumes vegetais e negativos estratégicos para destacar arquitetura e percurso.",
     plants: ["Espécies de enquadramento", "Arbustos de ritmo", "Forrações de acabamento"],
     intentions: [
       "Reforçar hierarquia de entrada desde o primeiro olhar",
@@ -137,7 +137,7 @@ export const premiumProjects = [
     ],
     materials: ["Maciços de ritmo", "Áreas negativas", "Espécies de enquadramento"],
     galleryCaptions: [
-      "Percurso de chegada com leitura gradual da fachada.",
+      "Percurso de chegada com revelação gradual da fachada.",
       "Volumes e vazios equilibram presença vegetal e arquitetura.",
       "Acabamentos verdes desenhados para elevar o conjunto.",
     ],
@@ -171,7 +171,7 @@ export const premiumProjects = [
     galleryCaptions: [
       "Áreas externas conectadas por uma mesma intenção visual.",
       "Permanência com privacidade, sombra e presença botânica.",
-      "Leitura executiva para alinhar conceito e implantação.",
+      "Direção executiva para alinhar conceito e implantação.",
     ],
   },
 ];

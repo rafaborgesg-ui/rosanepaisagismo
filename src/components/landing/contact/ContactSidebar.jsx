@@ -21,7 +21,7 @@ export default function ContactSidebar({
       </h2>
       <p className="mt-8 max-w-lg break-words text-lg font-light leading-9 text-[#4b5248]">
         Fotos, planta, metragem, cidade e intenção de uso ajudam a transformar referências soltas
-        em uma leitura inicial mais precisa, seletiva e viável.
+        em um diagnóstico mais preciso, seletivo e viável.
       </p>
 
       <div className="mt-10 grid border-t border-[#d8cdbb]">

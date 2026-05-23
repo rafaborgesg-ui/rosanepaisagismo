@@ -96,7 +96,7 @@ export default function TestimonialsSection({ reducedMotion = false }) {
           className="mt-16 flex justify-center border-t border-white/10 pt-10"
         >
           <PremiumLink to="/contato" variant="outline">
-            Transformar meu espaço
+            Agendar conversa estratégica
           </PremiumLink>
         </motion.div>
       </div>

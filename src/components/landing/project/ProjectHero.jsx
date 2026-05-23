@@ -9,7 +9,7 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
       <motion.img
         src={project.cover}
         alt={project.title}
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover brightness-[1.03] contrast-[1.05] saturate-[1.1]"
         loading="eager"
         decoding="async"
         fetchPriority="high"
@@ -17,7 +17,7 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
         animate={reducedMotion ? undefined : { scale: 1 }}
         transition={reducedMotion ? { duration: 0 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_38%,rgba(211,180,115,0.12),transparent_30%),linear-gradient(90deg,rgba(8,16,9,0.84),rgba(8,16,9,0.22)_54%,rgba(8,16,9,0.68)),linear-gradient(180deg,rgba(8,16,9,0.2),rgba(8,16,9,0.04)_42%,rgba(8,16,9,0.9))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_38%,rgba(211,180,115,0.08),transparent_34%),linear-gradient(90deg,rgba(8,16,9,0.76),rgba(8,16,9,0.12)_54%,rgba(8,16,9,0.58)),linear-gradient(180deg,rgba(8,16,9,0.14),rgba(8,16,9,0.02)_42%,rgba(8,16,9,0.82))]" />
       <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#081009] to-transparent" />
       <div className="absolute bottom-0 left-5 top-28 hidden w-px bg-gradient-to-b from-white/0 via-white/20 to-white/0 md:block lg:left-10" />
 
@@ -49,11 +49,11 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
               href="#briefing-projeto"
               className="rb-premium-focus inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
             >
-              Solicitar leitura inicial
+              Solicitar curadoria privada
               <ArrowDown className="h-4 w-4" aria-hidden="true" />
             </a>
             <span className="max-w-[17rem] text-xs font-light leading-6 text-white/52">
-              Uma leitura inicial para transformar referência em direção técnica e autoral.
+              Uma conversa estratégica para transformar referência em direção técnica e autoral.
             </span>
           </div>
         </motion.div>

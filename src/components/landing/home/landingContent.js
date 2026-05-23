@@ -17,7 +17,7 @@ export const selectedProjects = [
     category: "Estudo 3D e executivo",
     image: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p2_i2.jpg",
     summary:
-      "Composição de entrada com leitura arquitetônica, privacidade e percurso de chegada.",
+      "Composição de entrada com precisão arquitetônica, privacidade e percurso de chegada.",
   },
   {
     slug: "residencial-curadoria-botanica",
@@ -48,7 +48,7 @@ export const selectedProjects = [
 export const process = [
   {
     icon: ScanSearch,
-    title: "Escuta privada e leitura do imóvel",
+    title: "Escuta privada e diagnóstico do imóvel",
     text: "Contexto, rotina de uso, fase da obra, arquitetura existente e desejo de atmosfera.",
   },
   {

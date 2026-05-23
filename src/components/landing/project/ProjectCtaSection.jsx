@@ -81,7 +81,7 @@ export default function ProjectCtaSection({ project }) {
   };
 
   const buildMessage = () => [
-    "Olá, quero solicitar uma análise privada da Rosane Borges Paisagismo.",
+    "Olá, quero solicitar uma curadoria privada da Rosane Borges Paisagismo.",
     "",
     "Projeto de referência:",
     `Nome: ${project?.title || "-"}`,
@@ -129,7 +129,7 @@ export default function ProjectCtaSection({ project }) {
             Transforme referência em direção autoral.
           </h2>
           <p className="mt-8 max-w-lg text-base font-light leading-8 text-white/68 md:text-lg">
-            Responda três pontos de contexto e envie uma mensagem estruturada para uma primeira leitura privada do seu imóvel.
+            Responda três pontos de contexto e envie uma mensagem estruturada para uma curadoria privada do seu imóvel.
           </p>
         </div>
 
@@ -187,7 +187,7 @@ export default function ProjectCtaSection({ project }) {
                 }}
               >
                 <h3 className="mb-7 font-heading text-[clamp(2.3rem,4vw,3.4rem)] font-medium leading-[0.96] text-white">
-                  Para onde enviamos o diagnóstico inicial?
+                  Como seguimos com a curadoria?
                 </h3>
                 <div className="grid gap-3">
                   <input
@@ -211,7 +211,7 @@ export default function ProjectCtaSection({ project }) {
                     disabled={!canSend}
                     className="mt-4 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473] disabled:cursor-not-allowed disabled:opacity-45"
                   >
-                    Solicitar leitura privada
+                    Solicitar curadoria privada
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>

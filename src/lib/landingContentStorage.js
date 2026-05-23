@@ -4,8 +4,8 @@ const TABLE = "landing_content";
 
 export const defaultHomeTexts = {
   selected_label: "Projetos selecionados",
-  selected_title: "Cases editoriais de natureza, arquitetura e permanência.",
-  selected_cta: "Explorar cases selecionados",
+  selected_title: "Cases editoriais onde a natureza valoriza a arquitetura.",
+  selected_cta: "Ver cases selecionados",
   services_label: "Atelier de projetos",
   services_title: "Paisagismo para imóveis que exigem autoria, precisão e execução.",
   method_label: "Método",
@@ -38,12 +38,12 @@ export const defaultHomeTexts = {
     "Uma parceria de altíssimo nível. A entrega impecável e o design sofisticado superaram todas as expectativas dos nossos compradores.",
   testimonial_3_name: "Construtora Ávila",
   testimonial_3_role: "Condomínio de luxo — SP",
-  concierge_label: "Atendimento privado",
-  concierge_title: "Uma primeira leitura para um jardim feito sob medida.",
+  concierge_label: "Briefing privado",
+  concierge_title: "Uma curadoria inicial para um jardim feito sob medida.",
   concierge_text:
-    "Conte sobre o imóvel, fase da obra e intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral.",
+    "Conte sobre o imóvel, fase da obra e intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral e tecnicamente orientada.",
   concierge_image_url: "/brand/PAISAGISMO-PRISCILLA-ROSANE_p5_i2.jpg",
-  concierge_button: "Solicitar curadoria paisagística",
+  concierge_button: "Enviar briefing privado",
 };
 
 export const defaultHeroSlides = [
@@ -71,10 +71,10 @@ export const defaultLandingContent = {
   logo_rodape_url: "/brand/rosane-logo-white.png",
   logo_rodape_size: 100,
   slides: defaultHeroSlides,
-  sobre_titulo: "Autoria botânica com base científica e olhar de arquitetura.",
+  sobre_titulo: "Autoria botânica com ciência, obra e olhar de arquitetura.",
   sobre_cargo: "Rosane Borges",
-  sobre_frase: "Rosane une Doutorado em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins com presença, longevidade e leitura arquitetônica.",
-  sobre_texto: "A assinatura nasce da curadoria de espécies, da proporção dos volumes e da forma como o espaço será vivido ao longo dos anos.",
+  sobre_frase: "Rosane une Doutorado em Produção Vegetal, formação em agronomia e experiência de campo para criar jardins de presença silenciosa, longevidade e precisão arquitetônica.",
+  sobre_texto: "A assinatura nasce da escolha das espécies, da proporção dos volumes e da forma como o espaço amadurece com a rotina.",
   sobre_imagem_url: "/brand/rosane-borges.jpg",
   servico1_titulo: "Projeto de paisagismo completo",
   servico1_desc: "Para residências e empreendimentos que precisam de conceito autoral, estudo 3D, executivo e definições técnicas.",

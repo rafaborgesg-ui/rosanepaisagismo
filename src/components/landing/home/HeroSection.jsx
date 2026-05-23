@@ -58,7 +58,7 @@ export default function HeroSection({ reducedMotion = false }) {
     offset: ["start start", "end start"],
   });
   const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.62, 0.34]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.36, 0.18]);
 
   const goToSlide = (direction) => {
     setActiveSlide((current) => {
@@ -120,6 +120,7 @@ export default function HeroSection({ reducedMotion = false }) {
         handleManualDirection(deltaX < 0 ? "next" : "previous");
       }}
     >
+      <h1 className="sr-only">Rosane Borges Paisagismo autoral de alto padrão</h1>
       {slides.map((slide, index) => {
         const isActive = activeSlide === index;
         const commonStyle = { zIndex: isActive ? 2 : 1, y: reducedMotion ? 0 : mediaY };
@@ -140,7 +141,7 @@ export default function HeroSection({ reducedMotion = false }) {
               src={slide.src}
               aria-label={slide.alt}
               aria-hidden={!isActive}
-              className="absolute inset-0 h-[115%] w-full object-cover"
+              className="absolute inset-0 h-[115%] w-full object-cover brightness-[1.03] contrast-[1.06] saturate-[1.12]"
               initial={false}
               animate={commonAnimate}
               transition={commonTransition}
@@ -160,7 +161,7 @@ export default function HeroSection({ reducedMotion = false }) {
             src={slide.src}
             alt={slide.alt}
             aria-hidden={!isActive}
-            className="absolute inset-0 h-[115%] w-full object-cover"
+            className="absolute inset-0 h-[115%] w-full object-cover brightness-[1.04] contrast-[1.06] saturate-[1.12]"
             loading={index === 0 ? "eager" : "lazy"}
             decoding="async"
             fetchPriority={index === 0 ? "high" : "auto"}
@@ -172,10 +173,10 @@ export default function HeroSection({ reducedMotion = false }) {
         );
       })}
 
-      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_58%,rgba(8,16,9,0.14)_100%)]" />
+      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_54%,rgba(8,16,9,0.18)_100%)]" />
       <motion.div
-        style={{ opacity: reducedMotion ? 0.62 : overlayOpacity }}
-        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.08),transparent_40%),linear-gradient(90deg,rgba(6,10,7,0.18),rgba(8,13,9,0.04)_48%,rgba(8,13,9,0.18)),linear-gradient(180deg,rgba(8,13,9,0.1),rgba(8,13,9,0)_38%,rgba(8,13,9,0.3)_100%)]"
+        style={{ opacity: reducedMotion ? 0.32 : overlayOpacity }}
+        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.06),transparent_42%),linear-gradient(90deg,rgba(6,10,7,0.5),rgba(8,13,9,0.04)_48%,rgba(8,13,9,0.42)),linear-gradient(180deg,rgba(8,13,9,0.08),rgba(8,13,9,0)_42%,rgba(8,13,9,0.48)_100%)]"
       />
       <div className="absolute inset-x-0 bottom-0 z-10 h-[30vh] bg-gradient-to-t from-[#0b0f0b]/76 via-[#0b0f0b]/24 to-transparent" />
       <div className="rb-grain absolute inset-0 z-[4]" />
@@ -193,12 +194,18 @@ export default function HeroSection({ reducedMotion = false }) {
               type="button"
               aria-label={`Ver imagem ${index + 1}`}
               onClick={() => handleManualSlide(index)}
-              className={`rounded-full border transition-all duration-500 ${
-                activeSlide === index
-                  ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473]"
-                  : "h-2 w-2 border-white/70 bg-white/26 hover:bg-white/80"
+              className={`group grid h-5 w-5 place-items-center rounded-full transition-all duration-500 ${
+                activeSlide === index ? "opacity-100" : "opacity-70 hover:opacity-100"
               }`}
-            />
+            >
+              <span
+                className={`block rounded-full border transition-all duration-500 ${
+                  activeSlide === index
+                    ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473]"
+                    : "h-2 w-2 border-white/70 bg-white/20 group-hover:border-[#d3b473] group-hover:bg-[#d3b473]/45"
+                }`}
+              />
+            </button>
           ))}
         </div>
       </motion.div>

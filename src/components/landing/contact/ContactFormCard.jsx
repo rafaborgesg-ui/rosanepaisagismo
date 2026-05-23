@@ -4,7 +4,7 @@ import { ArrowRight, CheckCircle2, Paperclip, X } from "lucide-react";
 import { fadeUp, interests, labelClass } from "@/components/landing/contact/contactShared";
 
 const inputClass =
-  "min-h-12 w-full min-w-0 border border-[#d8cdbb] bg-transparent px-4 text-sm text-[#171914] outline-none transition placeholder:text-[#858b80] focus:border-[#8f7b55] focus:bg-white/40";
+  "min-h-12 w-full min-w-0 border border-[#d8cdbb]/90 bg-white/18 px-4 text-sm text-[#171914] outline-none transition placeholder:text-[#858b80] focus:border-[#8f7b55] focus:bg-white/48";
 
 export default function ContactFormCard({
   reducedMotion = false,
@@ -26,7 +26,7 @@ export default function ContactFormCard({
       whileInView={reducedMotion ? undefined : "visible"}
       viewport={{ once: true, margin: "-90px" }}
       variants={reducedMotion ? undefined : fadeUp}
-      className="w-full max-w-[calc(100vw-2.5rem)] min-w-0 border border-[#d8cdbb] bg-[#f8f3ea] p-6 shadow-[0_28px_90px_rgba(36,35,28,0.08)] md:p-9 lg:max-w-none"
+      className="w-full max-w-[calc(100vw-2.5rem)] min-w-0 border border-[#d8cdbb]/80 bg-[#f6efe4]/78 p-6 shadow-[0_24px_80px_rgba(36,35,28,0.07)] backdrop-blur-sm md:p-9 lg:max-w-none"
     >
       {sent ? (
         <div className="flex min-h-[520px] flex-col items-start justify-center">
@@ -51,11 +51,17 @@ export default function ContactFormCard({
           <div className="mb-8">
             <p className={labelClass}>Briefing privado</p>
             <h2 className="mt-3 font-heading text-[clamp(2.8rem,5vw,4.8rem)] font-medium leading-[0.92] text-[#111913]">
-              Conte sobre o imóvel com calma.
+              Conte sobre o imóvel com intenção.
             </h2>
             <p className="mt-4 max-w-lg text-sm leading-7 text-[#5f665c]">
-              Quanto mais contexto você trouxer, mais precisa será a primeira leitura de potencial, escopo e caminho de projeto.
+              Quanto mais contexto você trouxer, mais preciso será o diagnóstico de potencial, escopo e caminho de projeto.
             </p>
+          </div>
+
+          <div className="mb-7 grid grid-cols-3 border-y border-[#d8cdbb]/80 py-3 text-[0.56rem] font-semibold uppercase tracking-[0.14em] text-[#8f7b55]">
+            <span>01 Dados</span>
+            <span>02 Intenção</span>
+            <span>03 Referências</span>
           </div>
 
           <form className="min-w-0 space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
@@ -182,7 +188,7 @@ export default function ContactFormCard({
               disabled={loading}
               className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[#111913] px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#8a6e42] disabled:cursor-not-allowed disabled:opacity-55"
             >
-              {loading ? "Enviando..." : "Solicitar curadoria paisagística"}
+              {loading ? "Enviando..." : "Enviar briefing para curadoria"}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>

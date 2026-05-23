@@ -4,6 +4,30 @@ import { supabase } from "@/lib/supabaseClient";
 
 const TABLE = "portfolio_projects";
 
+const projectCopyRefinements = {
+  "Composição de entrada com leitura arquitetônica, privacidade e percurso de chegada.":
+    "Composição de entrada com precisão arquitetônica, privacidade e percurso de chegada.",
+  "A proposta organiza massas vegetais, textura de piso e pontos focais para reforçar escala, permanência e leitura do imóvel.":
+    "A proposta organiza massas vegetais, textura de piso e pontos focais para reforçar escala, permanência e valor do imóvel.",
+  "Criar massas verdes de leitura limpa e sofisticada":
+    "Criar massas verdes com presença limpa e sofisticada",
+  "A leitura espacial combina volumes vegetais e negativos estratégicos para destacar arquitetura e percurso.":
+    "A composição espacial combina volumes vegetais e negativos estratégicos para destacar arquitetura e percurso.",
+  "Percurso de chegada com leitura gradual da fachada.":
+    "Percurso de chegada com revelação gradual da fachada.",
+  "Leitura executiva para alinhar conceito e implantação.":
+    "Direção executiva para alinhar conceito e implantação.",
+};
+
+function refineProjectCopy(value) {
+  if (typeof value !== "string") return value;
+  return projectCopyRefinements[value] || value;
+}
+
+function refineProjectArray(values) {
+  return Array.isArray(values) ? values.map(refineProjectCopy) : [];
+}
+
 export function slugifyProjectTitle(value = "") {
   return value
     .normalize("NFD")
@@ -25,10 +49,10 @@ function fromRow(row) {
     scope: row.scope || "",
     cover: row.cover,
     gallery: Array.isArray(row.gallery) ? row.gallery : [],
-    summary: row.summary || "",
-    challenge: row.challenge || "",
-    solution: row.solution || "",
-    plants: Array.isArray(row.plants) ? row.plants : [],
+    summary: refineProjectCopy(row.summary || ""),
+    challenge: refineProjectCopy(row.challenge || ""),
+    solution: refineProjectCopy(row.solution || ""),
+    plants: refineProjectArray(row.plants),
     beforeAfter: row.before_after || undefined,
     sortOrder: row.sort_order || 0,
     isPublished: row.is_published !== false,

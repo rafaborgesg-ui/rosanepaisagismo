@@ -12,12 +12,12 @@ export default function ContactHero({
       <img
         src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p6_i2.jpg"
         alt="Estudo de paisagismo residencial"
-        className="absolute inset-0 h-full w-full object-cover"
+        className="absolute inset-0 h-full w-full object-cover brightness-[1.03] contrast-[1.05] saturate-[1.1]"
         loading="eager"
         decoding="async"
         fetchPriority="high"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.82),rgba(8,16,9,0.2)_52%,rgba(8,16,9,0.64)),linear-gradient(180deg,rgba(8,16,9,0.34),rgba(8,16,9,0.04)_42%,rgba(8,16,9,0.88))]" />
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.76),rgba(8,16,9,0.12)_52%,rgba(8,16,9,0.56)),linear-gradient(180deg,rgba(8,16,9,0.24),rgba(8,16,9,0.03)_42%,rgba(8,16,9,0.82))]" />
       <div className="absolute inset-x-0 bottom-0 h-[28vh] bg-gradient-to-t from-[#081009] to-transparent" />
 
       <motion.div
@@ -29,10 +29,10 @@ export default function ContactHero({
         <div className="max-w-5xl">
           <div className="mb-7 h-px w-28 rb-luxury-hairline" aria-hidden="true" />
           <h1 className="font-heading text-[clamp(3.7rem,8.2vw,9rem)] font-medium leading-[0.88] text-white [text-wrap:balance]">
-            Vamos desenhar um jardim à altura do seu imóvel
+            Inicie uma curadoria paisagística à altura do seu imóvel
           </h1>
           <p className="mt-7 max-w-2xl text-base font-light leading-8 text-white/76 md:text-lg">
-            Conte sobre sua casa, clínica, piscina ou área gourmet. A primeira conversa
+            Conte sobre sua casa, clínica, piscina ou área gourmet. A conversa estratégica
             identifica potencial, prioridades e o caminho mais preciso para iniciar.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -57,12 +57,12 @@ export default function ContactHero({
 
         <aside className="hidden border-l border-white/18 pl-7 text-white/72 lg:block">
           <p className="text-[0.66rem] font-semibold uppercase tracking-[0.18em] text-[#d3b473]">
-            Primeira leitura
+            Rito de entrada
           </p>
           <div className="mt-6 grid gap-5 border-t border-white/14 pt-6">
             {[
               ["01", "Envie fotos, planta ou referências."],
-              ["02", "Receba uma leitura inicial de potencial e escopo."],
+              ["02", "Receba um diagnóstico de potencial e escopo."],
               ["03", "Alinhe a consultoria estratégica com a equipe."],
             ].map(([num, text]) => (
               <div key={num} className="grid grid-cols-[3rem_1fr] gap-4">
