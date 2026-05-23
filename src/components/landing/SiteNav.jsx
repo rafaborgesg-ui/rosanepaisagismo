@@ -174,8 +174,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
 
       <div className={`fixed inset-0 -z-10 transition-all duration-700 ${menuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}>
         <div className="absolute inset-0 bg-[#071009]" />
-        <img src="/brand/PAISAGISMO-PRISCILLA-ROSANE_p8_i1.jpg" alt="" aria-hidden="true" className={`rb-duration-1200 absolute inset-y-0 right-0 hidden h-full w-[42vw] object-cover opacity-18 grayscale-[42%] transition md:block ${menuOpen ? "scale-100" : "scale-110"}`} />
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_24%,rgba(211,180,115,0.045),transparent_28%),linear-gradient(90deg,#071009_0%,rgba(7,16,9,0.97)_48%,rgba(7,16,9,0.66)_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_16%,rgba(211,180,115,0.055),transparent_24%),linear-gradient(120deg,#071009_0%,#08130a_48%,#040805_100%)]" />
         <div className="rb-grain absolute inset-0" />
 
         <div className="relative mx-auto flex min-h-svh max-w-[1680px] flex-col justify-end px-6 pb-12 pt-28 md:px-10 md:pb-16">
