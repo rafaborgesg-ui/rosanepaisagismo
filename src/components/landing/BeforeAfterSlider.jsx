@@ -52,10 +52,13 @@ export default function BeforeAfterSlider({
         alt={labelAfter}
         className="absolute inset-0 w-full h-full object-cover"
       />
+      <div className="pointer-events-none absolute right-4 top-4 z-[6] rounded-full border border-white/35 bg-[#101812]/62 px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-sm md:right-6 md:top-6">
+        {labelAfter}
+      </div>
 
       {/* Before Image (Overlay with clip) */}
       <div 
-        className="absolute inset-0 w-full h-full overflow-hidden"
+        className="absolute inset-0 w-full h-full overflow-hidden z-[7]"
         style={{ clipPath: `inset(0 ${100 - sliderPos}% 0 0)` }}
       >
         <img 
@@ -63,6 +66,9 @@ export default function BeforeAfterSlider({
           alt={labelBefore}
           className="absolute inset-0 w-full h-full object-cover"
         />
+        <div className="pointer-events-none absolute left-4 top-4 rounded-full border border-white/35 bg-[#101812]/62 px-4 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.18em] text-white shadow-[0_12px_34px_rgba(0,0,0,0.18)] backdrop-blur-sm md:left-6 md:top-6">
+          {labelBefore}
+        </div>
       </div>
 
       {/* Slider Line */}

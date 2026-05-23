@@ -191,7 +191,7 @@ export default function HeroSection({ reducedMotion = false }) {
               onClick={() => handleManualSlide(index)}
               className={`rounded-full border transition-all duration-500 ${
                 activeSlide === index
-                  ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473] shadow-[0_0_0_5px_rgba(8,16,9,0.34),0_0_18px_rgba(211,180,115,0.34)]"
+                  ? "h-2.5 w-2.5 border-[#d3b473] bg-[#d3b473]"
                   : "h-2 w-2 border-white/70 bg-white/26 shadow-[0_0_0_4px_rgba(8,16,9,0.2)] hover:bg-white/80"
               }`}
             />
