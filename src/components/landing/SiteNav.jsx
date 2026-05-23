@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
@@ -24,6 +24,8 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const logoTopo = content?.logo_topo_url || "/brand/rosane-logo-white.png";
   const logoSize = Number(content?.logo_topo_size) || 100;
   const logoHeight = Math.min(56, Math.max(30, logoSize * 0.34));
+  const heroLogoHeight = Math.min(118, Math.max(64, logoSize * 0.74));
+  const logoRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(activeLink !== "inicio");
 
@@ -59,8 +61,78 @@ export default function SiteNav({ activeLink = "" } = {}) {
     };
   }, [menuOpen]);
 
+  useEffect(() => {
+    const logo = logoRef.current;
+    if (!logo) return undefined;
+
+    let frameId = 0;
+    const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+    const mix = (from, to, progress) => from + (to - from) * progress;
+
+    const updateLogoPosition = () => {
+      frameId = 0;
+      const isHome = activeLink === "inicio";
+      const viewportWidth = window.innerWidth;
+      const viewportHeight = window.innerHeight;
+      const isDesktop = viewportWidth >= 768;
+      const navHeight = isDesktop ? 84 : 72;
+      const navLeft = isDesktop ? 40 : 20;
+      const heroBottom = isDesktop ? 48 : 30;
+      const navTop = (navHeight - logoHeight) / 2;
+      const heroHeight = Math.min(isDesktop ? 118 : 86, Math.max(isDesktop ? 64 : 54, logoSize * (isDesktop ? 0.74 : 0.56)));
+      const heroTop = viewportHeight - heroBottom - heroHeight;
+      const navWidth = Math.min(isDesktop ? 260 : 210, logoHeight * 4.8);
+      const heroWidth = Math.min(viewportWidth - navLeft * 2 - (isDesktop ? 160 : 84), heroHeight * 4.7);
+      const scrollRange = Math.max(viewportHeight * 0.92, isDesktop ? 760 : 560);
+      const rawProgress = isHome && !menuOpen ? clamp(window.scrollY / scrollRange, 0, 1) : 1;
+      const progress = rawProgress;
+      const currentTop = isHome ? mix(heroTop, navTop, progress) : navTop;
+      const currentHeight = isHome ? mix(heroHeight, logoHeight, progress) : logoHeight;
+      const currentWidth = isHome ? mix(heroWidth, navWidth, progress) : navWidth;
+
+      logo.style.transform = `translate3d(${navLeft}px, ${currentTop}px, 0)`;
+      logo.style.height = `${currentHeight}px`;
+      logo.style.width = `${currentWidth}px`;
+    };
+
+    const requestUpdate = () => {
+      if (!frameId) frameId = window.requestAnimationFrame(updateLogoPosition);
+    };
+
+    updateLogoPosition();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+
+    return () => {
+      if (frameId) window.cancelAnimationFrame(frameId);
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+    };
+  }, [activeLink, logoHeight, logoSize, menuOpen]);
+
   const closeMenu = () => setMenuOpen(false);
   const hasSurface = menuOpen || isScrolled || activeLink !== "inicio";
+  const initialLogoStyle = useMemo(
+    () =>
+      activeLink === "inicio"
+        ? {
+            top: 0,
+            left: 0,
+            transform: `translate3d(clamp(1.25rem,2.4vw,2.5rem), calc(100svh - clamp(1.875rem,5svh,3rem) - ${heroLogoHeight}px), 0)`,
+            height: `${heroLogoHeight}px`,
+            width: `${Math.min(340, heroLogoHeight * 4.7)}px`,
+            transition: "none",
+          }
+        : {
+            top: 0,
+            left: 0,
+            transform: `translate3d(clamp(1.25rem,2.4vw,2.5rem), ${(84 - logoHeight) / 2}px, 0)`,
+            height: `${logoHeight}px`,
+            width: `${Math.min(260, logoHeight * 4.8)}px`,
+            transition: "none",
+          },
+    [activeLink, heroLogoHeight, logoHeight]
+  );
 
   return (
     <nav className="fixed inset-x-0 top-0 z-50 text-white">
@@ -68,12 +140,18 @@ export default function SiteNav({ activeLink = "" } = {}) {
       <div className={`absolute inset-x-0 top-[71px] z-10 h-px transition-opacity duration-700 md:top-[83px] ${hasSurface && !menuOpen ? "opacity-100" : "opacity-0"}`} style={{ background: "linear-gradient(90deg, transparent 5%, rgba(211,180,115,0.18) 30%, rgba(211,180,115,0.24) 50%, rgba(211,180,115,0.18) 70%, transparent 95%)" }} />
 
       <div className="relative z-10 mx-auto flex h-[72px] max-w-[1680px] items-center justify-between px-5 md:h-[84px] md:px-10">
-        <Link to="/" className={`rb-premium-focus flex h-9 max-w-[210px] items-center transition duration-500 md:h-11 md:max-w-[260px] ${hasSurface ? "opacity-100" : "opacity-95"}`} aria-label="Rosane Borges Paisagismo" onClick={closeMenu}>
+        <Link
+          ref={logoRef}
+          to="/"
+          className="rb-premium-focus fixed left-0 top-0 z-20 flex origin-top-left items-center will-change-transform"
+          style={initialLogoStyle}
+          aria-label="Rosane Borges Paisagismo"
+          onClick={closeMenu}
+        >
           <img
             src={logoTopo}
             alt="Rosane Borges Paisagismo"
-            className="w-auto max-w-full object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.36)]"
-            style={{ height: `${logoHeight}px`, maxWidth: "210px" }}
+            className="h-full w-auto max-w-full object-contain drop-shadow-[0_2px_14px_rgba(0,0,0,0.36)]"
           />
         </Link>
 
