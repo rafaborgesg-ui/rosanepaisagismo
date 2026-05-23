@@ -23,32 +23,18 @@ function PortfolioRevealImage({ src, alt, reducedMotion, direction = "left" }) {
 
   return (
     <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]">
-      <motion.div
-        className="absolute inset-0 flex items-center justify-center overflow-hidden"
+      <motion.img
+        src={src}
+        alt={alt}
+        style={{ y: reducedMotion ? "0%" : y }}
+        loading="lazy"
+        decoding="async"
+        className="absolute inset-0 h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
         initial={reducedMotion ? false : { opacity: 0, x: direction === "right" ? 34 : -34, scale: 1.008 }}
         whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.32, margin: "0px 0px -10% 0px" }}
         transition={{ duration: 1.12, ease: [0.19, 1, 0.22, 1] }}
-      >
-        <motion.img
-          src={src}
-          alt={alt}
-          style={{ y: reducedMotion ? "0%" : y }}
-          loading="lazy"
-          decoding="async"
-          className="h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
-        />
-      </motion.div>
-      {!reducedMotion && (
-        <motion.div
-          aria-hidden="true"
-          className="absolute inset-[-1px] z-10 bg-[#f3eee4]"
-          initial={{ x: "0%" }}
-          whileInView={{ x: "101%" }}
-          viewport={{ once: true, amount: 0.01, margin: "0px 0px -4% 0px" }}
-          transition={{ duration: 1.05, ease: [0.76, 0, 0.24, 1] }}
-        />
-      )}
+      />
     </div>
   );
 }
@@ -92,7 +78,7 @@ export default function PortfolioGallery({
                         project_category: project.category,
                       })
                     }
-                    className={`rb-premium-focus group relative block overflow-hidden bg-[#111913] ${
+                    className={`rb-premium-focus group relative block overflow-hidden ${
                       isReversed ? "lg:order-2" : ""
                     }`}
                   >
