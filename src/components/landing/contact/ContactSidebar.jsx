@@ -17,11 +17,11 @@ export default function ContactSidebar({
     >
       <p className={labelClass}>Briefing privado</p>
       <h2 className="mt-5 max-w-full break-words font-heading text-[clamp(2.7rem,13vw,6.6rem)] font-medium leading-[0.9] text-[#111913] md:text-[clamp(3rem,6.4vw,6.6rem)]">
-        Poucas informações certas já revelam o potencial do projeto.
+        O primeiro contato já deve parecer uma curadoria.
       </h2>
       <p className="mt-8 max-w-lg break-words text-lg font-light leading-9 text-[#4b5248]">
         Fotos, planta, metragem, cidade e intenção de uso ajudam a transformar referências soltas
-        em uma primeira leitura mais precisa.
+        em uma leitura inicial mais precisa, seletiva e viável.
       </p>
 
       <div className="mt-10 grid border-t border-[#d8cdbb]">
@@ -36,7 +36,7 @@ export default function ContactSidebar({
             href: buildWhatsAppUrl(whatsappMessage),
             icon: Phone,
             label: "WhatsApp",
-            value: "Atendimento rápido e consultivo",
+            value: "Atendimento privado e consultivo",
           },
           {
             icon: MapPin,

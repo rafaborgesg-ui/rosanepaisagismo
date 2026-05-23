@@ -58,7 +58,7 @@ export default function HeroSection({ reducedMotion = false }) {
     offset: ["start start", "end start"],
   });
   const mediaY = useTransform(scrollYProgress, [0, 1], ["0%", "12%"]);
-  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.78, 0.42]);
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.5], [0.62, 0.34]);
 
   const goToSlide = (direction) => {
     setActiveSlide((current) => {
@@ -149,6 +149,7 @@ export default function HeroSection({ reducedMotion = false }) {
               muted
               loop
               playsInline
+              preload={isActive ? "auto" : "metadata"}
             />
           );
         }
@@ -160,6 +161,9 @@ export default function HeroSection({ reducedMotion = false }) {
             alt={slide.alt}
             aria-hidden={!isActive}
             className="absolute inset-0 h-[115%] w-full object-cover"
+            loading={index === 0 ? "eager" : "lazy"}
+            decoding="async"
+            fetchPriority={index === 0 ? "high" : "auto"}
             initial={false}
             animate={commonAnimate}
             transition={commonTransition}
@@ -168,12 +172,12 @@ export default function HeroSection({ reducedMotion = false }) {
         );
       })}
 
-      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_52%,rgba(8,16,9,0.18)_100%)]" />
+      <div className="absolute inset-0 z-[3] bg-[radial-gradient(ellipse_at_center,transparent_58%,rgba(8,16,9,0.14)_100%)]" />
       <motion.div
-        style={{ opacity: reducedMotion ? 0.78 : overlayOpacity }}
-        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.08),transparent_40%),linear-gradient(90deg,rgba(6,10,7,0.28),rgba(8,13,9,0.08)_48%,rgba(8,13,9,0.2)),linear-gradient(180deg,rgba(8,13,9,0.16),rgba(8,13,9,0)_36%,rgba(8,13,9,0.34)_100%)]"
+        style={{ opacity: reducedMotion ? 0.62 : overlayOpacity }}
+        className="absolute inset-0 z-10 bg-[radial-gradient(circle_at_68%_38%,rgba(211,180,115,0.08),transparent_40%),linear-gradient(90deg,rgba(6,10,7,0.18),rgba(8,13,9,0.04)_48%,rgba(8,13,9,0.18)),linear-gradient(180deg,rgba(8,13,9,0.1),rgba(8,13,9,0)_38%,rgba(8,13,9,0.3)_100%)]"
       />
-      <div className="absolute inset-x-0 bottom-0 z-10 h-[24vh] bg-gradient-to-t from-[#0b0f0b]/72 via-[#0b0f0b]/28 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 z-10 h-[30vh] bg-gradient-to-t from-[#0b0f0b]/76 via-[#0b0f0b]/24 to-transparent" />
       <div className="rb-grain absolute inset-0 z-[4]" />
 
       <motion.div

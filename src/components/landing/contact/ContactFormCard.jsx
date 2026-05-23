@@ -49,10 +49,13 @@ export default function ContactFormCard({
       ) : (
         <>
           <div className="mb-8">
-            <p className={labelClass}>Iniciar avaliação autoral</p>
+            <p className={labelClass}>Briefing privado</p>
             <h2 className="mt-3 font-heading text-[clamp(2.8rem,5vw,4.8rem)] font-medium leading-[0.92] text-[#111913]">
-              Conte sobre o espaço.
+              Conte sobre o imóvel com calma.
             </h2>
+            <p className="mt-4 max-w-lg text-sm leading-7 text-[#5f665c]">
+              Quanto mais contexto você trouxer, mais precisa será a primeira leitura de potencial, escopo e caminho de projeto.
+            </p>
           </div>
 
           <form className="min-w-0 space-y-5" onSubmit={handleSubmit} onFocusCapture={onBriefingStarted}>
@@ -179,7 +182,7 @@ export default function ContactFormCard({
               disabled={loading}
               className="inline-flex min-h-14 w-full items-center justify-center gap-3 rounded-full bg-[#111913] px-8 py-4 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition hover:-translate-y-0.5 hover:bg-[#8a6e42] disabled:cursor-not-allowed disabled:opacity-55"
             >
-              {loading ? "Enviando..." : "Solicitar proposta autoral"}
+              {loading ? "Enviando..." : "Solicitar curadoria paisagística"}
               <ArrowRight className="h-4 w-4" aria-hidden="true" />
             </button>
           </form>

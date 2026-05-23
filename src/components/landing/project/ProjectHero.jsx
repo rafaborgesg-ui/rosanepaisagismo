@@ -10,11 +10,14 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
         src={project.cover}
         alt={project.title}
         className="absolute inset-0 h-full w-full object-cover"
+        loading="eager"
+        decoding="async"
+        fetchPriority="high"
         initial={reducedMotion ? false : { scale: 1.06 }}
         animate={reducedMotion ? undefined : { scale: 1 }}
         transition={reducedMotion ? { duration: 0 } : { duration: 2.6, ease: [0.16, 1, 0.3, 1] }}
       />
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_38%,rgba(211,180,115,0.14),transparent_30%),linear-gradient(90deg,rgba(8,16,9,0.92),rgba(8,16,9,0.28)_54%,rgba(8,16,9,0.74)),linear-gradient(180deg,rgba(8,16,9,0.24),rgba(8,16,9,0.05)_42%,rgba(8,16,9,0.92))]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_38%,rgba(211,180,115,0.12),transparent_30%),linear-gradient(90deg,rgba(8,16,9,0.84),rgba(8,16,9,0.22)_54%,rgba(8,16,9,0.68)),linear-gradient(180deg,rgba(8,16,9,0.2),rgba(8,16,9,0.04)_42%,rgba(8,16,9,0.9))]" />
       <div className="absolute inset-x-0 bottom-0 h-[30vh] bg-gradient-to-t from-[#081009] to-transparent" />
       <div className="absolute bottom-0 left-5 top-28 hidden w-px bg-gradient-to-b from-white/0 via-white/20 to-white/0 md:block lg:left-10" />
 
@@ -46,11 +49,11 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
               href="#briefing-projeto"
               className="rb-premium-focus inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473]"
             >
-              Solicitar proposta autoral
+              Solicitar leitura inicial
               <ArrowDown className="h-4 w-4" aria-hidden="true" />
             </a>
             <span className="max-w-[17rem] text-xs font-light leading-6 text-white/52">
-              Uma leitura inicial para transformar referência em direção técnica de projeto.
+              Uma leitura inicial para transformar referência em direção técnica e autoral.
             </span>
           </div>
         </motion.div>
@@ -82,7 +85,7 @@ export default function ProjectHero({ project, heroStats, reducedMotion = false 
               Direção
             </p>
             <p className="mt-2 text-sm leading-6 text-white/84">
-              Natureza, arquitetura e rotina em uma composição sob medida.
+              Curadoria botânica, arquitetura e rotina em uma composição sob medida.
             </p>
           </div>
         </motion.aside>

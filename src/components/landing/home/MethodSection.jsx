@@ -18,11 +18,11 @@ export default function MethodSection({ reducedMotion = false }) {
             {homeTexts.method_label || "Processo criativo"}
           </p>
           <h2 className="mt-6 font-heading text-[clamp(2.8rem,6vw,6.2rem)] font-medium leading-[0.9]">
-            {homeTexts.method_title || "Um fluxo claro entre conceito, técnica e implantação."}
+            {homeTexts.method_title || "Do desejo de atmosfera à obra tecnicamente orientada."}
           </h2>
           <p className="mt-9 max-w-lg text-lg font-light leading-9 text-white/60">
             {homeTexts.method_text ||
-              "O processo protege o resultado final do jardim: reduz ruídos, organiza decisões e transforma atmosfera em direção executiva."}
+              "O processo organiza escolhas sensíveis e decisões técnicas para que o jardim nasça coerente, viável e fiel à arquitetura."}
           </p>
         </div>
         <div className="grid border-t border-white/12">

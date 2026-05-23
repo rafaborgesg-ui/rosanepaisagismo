@@ -22,8 +22,8 @@ export default function ExpertiseSection({ reducedMotion = false }) {
             </h2>
           </div>
           <p className="max-w-md text-base font-light leading-8 text-[#4b5248] lg:justify-self-end">
-            Do primeiro diagnóstico ao jardim implantado, cada frente nasce para transformar
-            intenção estética em decisão técnica clara.
+            Do primeiro diagnóstico ao jardim implantado, cada frente traduz desejo estético
+            em decisão técnica clara, sem perder a atmosfera do imóvel.
           </p>
         </div>
         <div className="grid border-t border-[#d8cdbb]">
@@ -53,7 +53,7 @@ export default function ExpertiseSection({ reducedMotion = false }) {
         <div className="mt-14 border-t border-[#d8cdbb] pt-9">
           <p className="max-w-xl text-sm leading-7 text-[#5f665c]">
             Para residências premium, clínicas, áreas gourmet, piscinas, fachadas vivas e
-            projetos em fase de obra que precisam de decisão técnica clara.
+            projetos em fase de obra que pedem autoria, previsibilidade e presença.
           </p>
         </div>
       </div>

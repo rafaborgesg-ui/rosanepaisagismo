@@ -39,7 +39,7 @@ export default function ProjectNarrativeSection({ project, reducedMotion = false
             rel="noreferrer"
             className="mt-9 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-[#111913] px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-[#8a6e42]"
           >
-            Falar sobre meu projeto
+            Agendar conversa estratégica
             <MessageCircle className="h-4 w-4" aria-hidden="true" />
           </a>
         </motion.aside>

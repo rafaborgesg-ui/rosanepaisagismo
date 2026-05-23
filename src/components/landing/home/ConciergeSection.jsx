@@ -81,11 +81,11 @@ export default function ConciergeSection({
             {homeTexts.concierge_label || "Atendimento consultivo"}
           </p>
           <h2 className="mt-6 font-heading text-[clamp(2.6rem,5.4vw,5.6rem)] font-medium leading-[0.9]">
-            {homeTexts.concierge_title || "Vamos desenhar o próximo capítulo da sua área externa?"}
+            {homeTexts.concierge_title || "Uma primeira leitura para um jardim feito sob medida."}
           </h2>
           <p className="mt-7 max-w-2xl text-base font-light leading-8 text-white/62 md:text-lg">
             {homeTexts.concierge_text ||
-              "Conte sobre o imóvel, fase da obra e escopo desejado. A equipe retorna com o próximo passo mais adequado para seu contexto."}
+              "Conte sobre o imóvel, fase da obra e intenção de uso. A equipe retorna com o caminho mais adequado para iniciar uma proposta autoral."}
           </p>
           <form onSubmit={submitLead} onFocusCapture={onBriefingStarted} className="mt-10 grid gap-6">
             <FloatingInput
@@ -160,7 +160,7 @@ export default function ConciergeSection({
               className="group/submit mt-4 inline-flex min-h-[56px] w-full sm:w-auto items-center justify-center gap-4 rounded-full bg-white px-10 py-4 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#171914] transition-all duration-500 hover:-translate-y-1 hover:bg-[#f5e6c8] hover:shadow-[0_12px_40px_rgba(211,180,115,0.22)] disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0"
             >
               <span className="relative z-10 flex items-center gap-3">
-                 {isSubmitting ? "Enviando Requisição..." : homeTexts.concierge_button || "Solicitar uma proposta autoral"}
+                 {isSubmitting ? "Enviando briefing..." : homeTexts.concierge_button || "Solicitar curadoria paisagística"}
                  <MessageCircle className="h-4 w-4 transition-transform duration-500 group-hover/submit:translate-x-1 group-hover/submit:scale-110" aria-hidden="true" />
               </span>
             </button>

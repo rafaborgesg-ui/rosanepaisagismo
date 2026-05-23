@@ -116,6 +116,8 @@ export default function ProjectCtaSection({ project }) {
         alt=""
         aria-hidden="true"
         className="absolute inset-0 h-full w-full object-cover opacity-22 grayscale"
+        loading="lazy"
+        decoding="async"
       />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(8,16,9,0.94),rgba(8,16,9,0.76)_50%,rgba(8,16,9,0.94))]" />
       <div className="relative mx-auto grid w-[min(100%,1320px)] gap-12 lg:grid-cols-[0.82fr_1.18fr] lg:items-start">
@@ -124,10 +126,10 @@ export default function ProjectCtaSection({ project }) {
             Assessoria privada
           </p>
           <h2 className="mt-5 font-heading text-[clamp(3.1rem,6.8vw,7rem)] font-medium leading-[0.9]">
-            Transforme referência em direção de projeto.
+            Transforme referência em direção autoral.
           </h2>
           <p className="mt-8 max-w-lg text-base font-light leading-8 text-white/68 md:text-lg">
-            Responda três pontos de contexto e envie uma mensagem já estruturada para uma primeira leitura do seu imóvel.
+            Responda três pontos de contexto e envie uma mensagem estruturada para uma primeira leitura privada do seu imóvel.
           </p>
         </div>
 
@@ -209,7 +211,7 @@ export default function ProjectCtaSection({ project }) {
                     disabled={!canSend}
                     className="mt-4 inline-flex min-h-12 items-center justify-center gap-3 rounded-full bg-white px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.14em] text-[#081009] transition duration-300 hover:-translate-y-0.5 hover:bg-[#d3b473] disabled:cursor-not-allowed disabled:opacity-45"
                   >
-                    Solicitar análise privada
+                    Solicitar leitura privada
                     <ArrowRight className="h-4 w-4" aria-hidden="true" />
                   </button>
                 </div>

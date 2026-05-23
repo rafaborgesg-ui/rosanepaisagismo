@@ -21,10 +21,10 @@ export default function PremiumLink({
     <span className={`${base} ${variants[variant] || variants.dark} ${className}`}>
       <span className="relative z-10 flex items-center gap-3">
         {children}
-        <ArrowRight className="h-3.5 w-3.5 transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-1.5 group-hover/btn:scale-110" aria-hidden="true" />
+        <ArrowRight className="rb-premium-ease h-3.5 w-3.5 transition-all duration-500 group-hover/btn:translate-x-1.5 group-hover/btn:scale-110" aria-hidden="true" />
       </span>
       {/* Decorative hover sweep */}
-      <span className="absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full transition-transform duration-[800ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/btn:translate-x-full" />
+      <span className="rb-premium-ease rb-duration-800 absolute inset-0 z-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -translate-x-full transition-transform group-hover/btn:translate-x-full" />
     </span>
   );
 

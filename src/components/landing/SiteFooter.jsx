@@ -30,11 +30,11 @@ export default function SiteFooter({ reveal = false } = {}) {
               style={{ height: `${logoRodapeHeight}px` }}
             />
             <p className="max-w-md text-sm leading-7 text-white/50">
-              Paisagismo autoral de alto padrão para residências, clínicas e projetos
-              selecionados que exigem leitura técnica e implantação orientada.
+              Atelier de paisagismo autoral para residências, clínicas e projetos selecionados
+              que exigem leitura técnica, curadoria botânica e implantação orientada.
             </p>
             <p className="mt-6 font-heading text-lg italic text-white/28">
-              "Jardins criados para viver melhor."
+              "Jardins criados para amadurecer com a arquitetura."
             </p>
           </div>
 

@@ -43,6 +43,8 @@ export default function ProjectGallerySection({ project, reducedMotion = false }
                 <img
                   src={image}
                   alt={`${project.title} - imagem ${index + 1}`}
+                  loading="lazy"
+                  decoding="async"
                   className={`w-full object-cover grayscale-[6%] transition duration-1000 group-hover:scale-[1.025] group-hover:grayscale-0 ${
                     index === 0
                       ? "h-[66vh] min-h-[420px]"

@@ -132,6 +132,24 @@
   box-shadow: 0 0 0 2px rgba(211, 180, 115, 0.86), 0 0 0 6px rgba(17, 25, 19, 0.42);
 }
 
+.rb-nav-menu-button:focus-visible {
+  box-shadow: none;
+  outline: 1px solid rgba(211, 180, 115, 0.56);
+  outline-offset: 7px;
+}
+
+.rb-premium-ease {
+  transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rb-duration-800 {
+  transition-duration: 800ms;
+}
+
+.rb-duration-1200 {
+  transition-duration: 1200ms;
+}
+
 /* ── Glassmorphism Utilities ── */
 
 .rb-glass-dark {

@@ -16,7 +16,7 @@ export default function DeliverablesSection({ reducedMotion = false }) {
         <div className="max-w-3xl">
           <p className={labelClass}>{homeTexts.deliverables_label || "Direção técnica"}</p>
           <h2 className="mt-6 font-heading text-[clamp(2.8rem,6vw,6.2rem)] font-medium leading-[0.9] text-[#111913]">
-            {homeTexts.deliverables_title || "Cada detalhe nasce para orientar a obra."}
+            {homeTexts.deliverables_title || "O luxo está na precisão que a obra consegue executar."}
           </h2>
           <p className="mt-9 text-lg font-light leading-9 text-[#4b5248]">
             {homeTexts.deliverables_text ||

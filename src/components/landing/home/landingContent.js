@@ -48,18 +48,18 @@ export const selectedProjects = [
 export const process = [
   {
     icon: ScanSearch,
-    title: "Diagnóstico e briefing privado",
-    text: "Leitura do imóvel, rotina de uso, fase da obra, prioridades e investimento desejado.",
+    title: "Escuta privada e leitura do imóvel",
+    text: "Contexto, rotina de uso, fase da obra, arquitetura existente e desejo de atmosfera.",
   },
   {
     icon: Ruler,
-    title: "Leitura técnica do espaço",
-    text: "Insolação, solo, circulação, privacidade, vistas e pontos de permanência.",
+    title: "Diagnóstico técnico de obra",
+    text: "Insolação, solo, circulação, privacidade, vistas, infraestrutura e pontos de permanência.",
   },
   {
     icon: PenTool,
-    title: "Conceito botânico e atmosfera",
-    text: "Curadoria de espécies, materiais e narrativa visual alinhada à arquitetura.",
+    title: "Assinatura botânica e atmosfera",
+    text: "Curadoria de espécies, massas, texturas e narrativa visual alinhada à arquitetura.",
   },
   {
     icon: ClipboardList,
@@ -73,8 +73,8 @@ export const process = [
   },
   {
     icon: BadgeCheck,
-    title: "Maturação e acompanhamento",
-    text: "Ajustes finais, orientações técnicas e evolução do jardim após implantação.",
+    title: "Maturação e permanência",
+    text: "Ajustes finais, orientações técnicas e evolução do jardim após a implantação.",
   },
 ];
 
@@ -82,17 +82,17 @@ export const expertise = [
   {
     title: "Projeto de paisagismo completo",
     detail:
-      "Para residências e empreendimentos que precisam de conceito, 3D, executivo e definições técnicas.",
+      "Para residências e empreendimentos que precisam de conceito autoral, 3D, executivo e definições técnicas.",
   },
   {
-    title: "Consultoria técnica seletiva",
+    title: "Curadoria técnica seletiva",
     detail:
-      "Para ajustes específicos de espécies, implantação, materialidade, iluminação e manutenção.",
+      "Para decisões específicas de espécies, implantação, materialidade, iluminação e manutenção com olhar especialista.",
   },
   {
-    title: "Implantação com projeto incluso",
+    title: "Implantação orientada",
     detail:
-      "Para clientes que priorizam execução orientada, padrão visual e menor risco na obra.",
+      "Para clientes que priorizam execução acompanhada, padrão visual elevado e menor risco de improviso na obra.",
   },
   {
     title: "Jardins verticais e fachadas vivas",

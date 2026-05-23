@@ -6,7 +6,7 @@ import {
   getLandingContentRecord,
 } from "@/lib/landingContentStorage";
 
-const LANDING_CONTENT_CACHE_KEY = "landing_content_cache_v1";
+const LANDING_CONTENT_CACHE_KEY = "landing_content_cache_v2";
 let memoryLandingContentCache = null;
 
 function normalizeLandingContent(record) {

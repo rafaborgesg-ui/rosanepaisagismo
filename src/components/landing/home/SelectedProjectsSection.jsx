@@ -43,9 +43,11 @@ function ParallaxImage({ src, alt, reducedMotion, className }) {
         src={src}
         alt={alt}
         style={{ y: reducedMotion ? "0%" : y }}
-        className="absolute inset-0 h-[120%] w-full object-cover grayscale-[10%] origin-center transition-transform duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] group-hover:scale-105 group-hover:grayscale-0"
+        loading="lazy"
+        decoding="async"
+        className="rb-premium-ease rb-duration-1200 absolute inset-0 h-[120%] w-full object-cover grayscale-[8%] origin-center transition-transform group-hover:scale-105 group-hover:grayscale-0"
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_48%,rgba(5,8,5,0.76))] opacity-75 transition-opacity duration-1000 group-hover:opacity-30" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,transparent_58%,rgba(5,8,5,0.5))] opacity-70 transition-opacity duration-1000 group-hover:opacity-18" />
     </motion.div>
   );
 }
@@ -80,14 +82,14 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           </div>
           <div className="max-w-md lg:justify-self-end flex flex-col gap-8 items-start">
             <p className="text-base font-light leading-8 text-white/56">
-              Uma seleção editorial de projetos que traduzem a assinatura da marca:
-              proporção, curadoria botânica e leitura sensível do imóvel.
+              Uma seleção editorial de jardins onde a vegetação não decora: ela organiza
+              chegada, permanência, sombra, privacidade e valor percebido.
             </p>
             <Link
               to="/portfolio"
               className="inline-flex min-h-12 items-center justify-center gap-3 rounded-full border border-white/30 px-7 py-3 text-[0.7rem] font-semibold uppercase tracking-[0.12em] text-white transition duration-300 hover:-translate-y-0.5 hover:bg-white/10"
             >
-              {homeTexts.selected_cta || "Ver acervo completo"}
+              {homeTexts.selected_cta || "Explorar cases selecionados"}
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="h-4 w-4" aria-hidden="true">
                 <path d="M5 12h14" />
                 <path d="m12 5 7 7-7 7" />
@@ -125,7 +127,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
                     <h3 className="font-heading text-[1.7rem] font-medium leading-none text-white transition-colors duration-500 group-hover:text-[#d3b473] md:text-[2rem]">
                       {project.title}
                     </h3>
-                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/50 transition-colors duration-500 group-hover:text-white/70">
+                    <p className="mt-3 max-w-md text-sm font-light leading-7 text-white/52 transition-colors duration-500 group-hover:text-white/74">
                       {project.summary}
                     </p>
                   </div>
@@ -143,7 +145,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
           className="mt-24 border-t border-white/12 pt-10"
         >
           <p className="max-w-2xl font-heading text-[1.7rem] font-medium leading-tight text-white md:text-[2.1rem]">
-            Cada projeto nasce de uma leitura privada do imóvel, do estilo de vida e da arquitetura.
+            Cada case nasce de uma leitura privada: o imóvel, a luz, a rotina e o tipo de permanência que o jardim precisa sustentar.
           </p>
         </motion.div>
       </div>

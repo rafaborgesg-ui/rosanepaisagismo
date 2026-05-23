@@ -13,7 +13,7 @@ const layouts = [
 
 const MotionLink = motion.create(Link);
 
-function PortfolioRevealImage({ src, alt, reducedMotion }) {
+function PortfolioRevealImage({ src, alt, reducedMotion, direction = "left" }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -25,14 +25,17 @@ function PortfolioRevealImage({ src, alt, reducedMotion }) {
     <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]">
       <motion.div
         className="absolute inset-0 flex items-center justify-center overflow-hidden"
-        initial={reducedMotion ? false : { opacity: 1 }}
-        whileInView={reducedMotion ? undefined : { opacity: 1 }}
+        initial={reducedMotion ? false : { opacity: 0, x: direction === "right" ? 34 : -34, scale: 1.008 }}
+        whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.32, margin: "0px 0px -10% 0px" }}
+        transition={{ duration: 1.12, ease: [0.19, 1, 0.22, 1] }}
       >
         <motion.img
           src={src}
           alt={alt}
           style={{ y: reducedMotion ? "0%" : y }}
+          loading="lazy"
+          decoding="async"
           className="h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
         />
       </motion.div>
@@ -61,12 +64,12 @@ export default function PortfolioGallery({
           <div>
             <p className={labelClass}>Galeria selecionada</p>
             <h2 className="mt-5 max-w-5xl font-heading text-[clamp(3rem,6.8vw,7rem)] font-medium leading-[0.9] text-[#111913]">
-              Estudos reais, narrativa visual e precisão botânica.
+              Cases com leitura técnica, atmosfera e assinatura botânica.
             </h2>
           </div>
           <p className="max-w-md text-base font-light leading-8 text-[#4b5248] lg:justify-self-end">
-            Cada case apresenta contexto, solução aplicada e escopo técnico para orientar
-            decisões de projeto, implantação e manutenção.
+            A galeria funciona como uma leitura editorial: contexto, intenção, solução
+            botânica e escopo aparecem com o respiro de uma pauta de arquitetura.
           </p>
         </div>
 
@@ -97,10 +100,17 @@ export default function PortfolioGallery({
                       src={project.cover}
                       alt={project.title}
                       reducedMotion={reducedMotion}
+                      direction={isReversed ? "right" : "left"}
                     />
                   </MotionLink>
 
-                  <div className={isReversed ? "lg:order-1" : ""}>
+                  <motion.div
+                    initial={reducedMotion ? false : { opacity: 0, y: 24, filter: "blur(8px)" }}
+                    whileInView={reducedMotion ? undefined : { opacity: 1, y: 0, filter: "blur(0px)" }}
+                    viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                    transition={{ duration: 0.85, ease: [0.16, 1, 0.3, 1], delay: 0.12 }}
+                    className={isReversed ? "lg:order-1" : ""}
+                  >
                     <p className="text-[0.64rem] font-semibold uppercase tracking-[0.18em] text-[#8a6e42]">
                       {String(index + 1).padStart(2, "0")} / {project.category}
                     </p>
@@ -126,10 +136,10 @@ export default function PortfolioGallery({
                       to={`/portfolio/${project.slug}`}
                       className="rb-premium-focus mt-8 inline-flex items-center gap-3 text-[0.68rem] font-semibold uppercase tracking-[0.16em] text-[#111913] transition hover:text-[#8a6e42]"
                     >
-                      Abrir case
+                      Ler case completo
                       <ArrowRight className="h-4 w-4" aria-hidden="true" />
                     </Link>
-                  </div>
+                  </motion.div>
                 </motion.article>
               );
             })}
