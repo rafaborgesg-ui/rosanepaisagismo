@@ -5,7 +5,6 @@ import SiteNav from "@/components/landing/SiteNav";
 import SiteFooter from "@/components/landing/SiteFooter";
 import WhatsAppFloat from "@/components/landing/WhatsAppFloat";
 import ProjectHero from "@/components/landing/project/ProjectHero";
-import ProjectNarrativeSection from "@/components/landing/project/ProjectNarrativeSection";
 import ProjectGallerySection from "@/components/landing/project/ProjectGallerySection";
 import TransformationSection from "@/components/landing/TransformationSection";
 import ProjectRelatedSection from "@/components/landing/project/ProjectRelatedSection";
@@ -64,7 +63,7 @@ export default function ProjetoPortfolio() {
     <div className="min-h-screen bg-[#f3eee4] text-[#171914]">
       <SEO
         title={`${project.title} | Projeto de Paisagismo`}
-        description={`${project.summary} Conheça desafios, solução aplicada e espécies utilizadas neste projeto autoral da Rosane Borges Paisagismo.`}
+        description={`${project.summary} Conheça imagens, contexto e detalhes deste projeto autoral da Rosane Borges Paisagismo.`}
         keywords={`${project.category}, paisagismo residencial, projetos de paisagismo, jardim moderno, paisagismo de luxo`}
         url={`https://rosanepaisagismo.vercel.app/portfolio/${project.slug}`}
         image={project.cover}
@@ -76,10 +75,6 @@ export default function ProjetoPortfolio() {
         <ProjectHero
           project={project}
           heroStats={heroStats}
-          reducedMotion={Boolean(reducedMotion)}
-        />
-        <ProjectNarrativeSection
-          project={project}
           reducedMotion={Boolean(reducedMotion)}
         />
         <TransformationSection project={project} />

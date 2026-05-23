@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
@@ -27,7 +27,12 @@ export default function SiteNav({ activeLink = "" } = {}) {
   const heroLogoHeight = Math.min(118, Math.max(64, logoSize * 0.74));
   const logoRef = useRef(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(activeLink !== "inicio");
+  const [isScrolled, setIsScrolled] = useState(
+    () => activeLink !== "inicio" || (typeof window !== "undefined" && window.innerWidth < 768)
+  );
+  const [isMobileViewport, setIsMobileViewport] = useState(
+    () => typeof window !== "undefined" && window.innerWidth < 768
+  );
 
   useEffect(() => {
     if (activeLink !== "inicio") {
@@ -38,7 +43,9 @@ export default function SiteNav({ activeLink = "" } = {}) {
     let frameId = 0;
     const update = () => {
       frameId = 0;
-      setIsScrolled(window.scrollY > Math.max(window.innerHeight * 0.78, 560));
+      const isMobile = window.innerWidth < 768;
+      setIsMobileViewport(isMobile);
+      setIsScrolled(isMobile || window.scrollY > Math.max(window.innerHeight * 0.78, 560));
     };
     const req = () => {
       if (!frameId) frameId = window.requestAnimationFrame(update);
@@ -61,7 +68,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
     };
   }, [menuOpen]);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const logo = logoRef.current;
     if (!logo) return undefined;
 
@@ -84,7 +91,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
       const navWidth = Math.min(isDesktop ? 260 : 210, logoHeight * 4.8);
       const heroWidth = Math.min(viewportWidth - navLeft * 2 - (isDesktop ? 160 : 84), heroHeight * 4.7);
       const scrollRange = Math.max(viewportHeight * 0.92, isDesktop ? 760 : 560);
-      const rawProgress = isHome && !menuOpen ? clamp(window.scrollY / scrollRange, 0, 1) : 1;
+      const rawProgress = isHome && isDesktop && !menuOpen ? clamp(window.scrollY / scrollRange, 0, 1) : 1;
       const progress = rawProgress;
       const currentTop = isHome ? mix(heroTop, navTop, progress) : navTop;
       const currentHeight = isHome ? mix(heroHeight, logoHeight, progress) : logoHeight;
@@ -111,16 +118,16 @@ export default function SiteNav({ activeLink = "" } = {}) {
   }, [activeLink, logoHeight, logoSize, menuOpen]);
 
   const closeMenu = () => setMenuOpen(false);
-  const hasSurface = menuOpen || isScrolled || activeLink !== "inicio";
+  const hasSurface = menuOpen || isScrolled || isMobileViewport || activeLink !== "inicio";
   const initialLogoStyle = useMemo(
     () =>
       activeLink === "inicio"
         ? {
             top: 0,
             left: 0,
-            transform: `translate3d(clamp(1.25rem,2.4vw,2.5rem), calc(100svh - clamp(1.875rem,5svh,3rem) - ${heroLogoHeight}px), 0)`,
-            height: `${heroLogoHeight}px`,
-            width: `${Math.min(340, heroLogoHeight * 4.7)}px`,
+            transform: `translate3d(clamp(1.25rem,2.4vw,2.5rem), clamp(${(72 - logoHeight) / 2}px, calc((100vw - 767px) * 999), calc(100svh - clamp(1.875rem,5svh,3rem) - ${heroLogoHeight}px)), 0)`,
+            height: `clamp(${logoHeight}px, calc((100vw - 767px) * 999), ${heroLogoHeight}px)`,
+            width: `clamp(${Math.min(210, logoHeight * 4.8)}px, calc((100vw - 767px) * 999), ${Math.min(340, heroLogoHeight * 4.7)}px)`,
             transition: "none",
           }
         : {

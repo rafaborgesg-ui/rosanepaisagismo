@@ -1177,9 +1177,6 @@ function ProjectsPanel(props) {
             </div>
 
             <TextArea label="Resumo" value={projectForm.summary} onChange={(value) => updateProjectField("summary", value)} />
-            <TextArea label="Desafio" value={projectForm.challenge} onChange={(value) => updateProjectField("challenge", value)} />
-            <TextArea label="Solução" value={projectForm.solution} onChange={(value) => updateProjectField("solution", value)} />
-            <TextArea label="Plantas utilizadas, uma por linha" value={projectForm.plantsText} onChange={(value) => updateProjectField("plantsText", value)} />
             <SaveButton isSaving={isSaving} isAuthenticated={isAuthenticated} label="Salvar projeto" />
           </div>
         )}
