@@ -38,7 +38,7 @@ export default function SiteNav({ activeLink = "" } = {}) {
     let frameId = 0;
     const update = () => {
       frameId = 0;
-      setIsScrolled(window.scrollY > 28);
+      setIsScrolled(window.scrollY > Math.max(window.innerHeight * 0.78, 560));
     };
     const req = () => {
       if (!frameId) frameId = window.requestAnimationFrame(update);

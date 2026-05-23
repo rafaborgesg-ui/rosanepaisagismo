@@ -13,16 +13,17 @@ const layouts = [
 
 const MotionLink = motion.create(Link);
 
-function PortfolioRevealImage({ src, alt, reducedMotion, direction = "left" }) {
+function PortfolioRevealImage({ src, alt, reducedMotion, revealDirection = "left-to-right" }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
   });
   const y = useTransform(scrollYProgress, [0, 1], ["-6%", "6%"]);
+  const initialX = revealDirection === "right-to-left" ? 56 : -56;
 
   return (
-    <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]">
+    <div ref={ref} className="relative aspect-[4/5] overflow-hidden md:aspect-[16/11] lg:aspect-[4/3]" data-reveal-direction={revealDirection}>
       <motion.img
         src={src}
         alt={alt}
@@ -30,7 +31,7 @@ function PortfolioRevealImage({ src, alt, reducedMotion, direction = "left" }) {
         loading="lazy"
         decoding="async"
         className="absolute inset-0 h-[112%] w-full object-cover grayscale-[8%] transition duration-1000 group-hover:scale-[1.04] group-hover:grayscale-0"
-        initial={reducedMotion ? false : { opacity: 0, x: direction === "right" ? 34 : -34, scale: 1.008 }}
+        initial={reducedMotion ? false : { opacity: 0, x: initialX, scale: 1.008 }}
         whileInView={reducedMotion ? undefined : { opacity: 1, x: 0, scale: 1 }}
         viewport={{ once: true, amount: 0.32, margin: "0px 0px -10% 0px" }}
         transition={{ duration: 1.12, ease: [0.19, 1, 0.22, 1] }}
@@ -63,6 +64,7 @@ export default function PortfolioGallery({
           <AnimatePresence mode="popLayout">
             {filteredProjects.map((project, index) => {
               const isReversed = index % 2 === 1;
+              const revealDirection = (index + 1) % 2 === 0 ? "right-to-left" : "left-to-right";
               return (
                 <motion.article
                   layout
@@ -86,7 +88,7 @@ export default function PortfolioGallery({
                       src={project.cover}
                       alt={project.title}
                       reducedMotion={reducedMotion}
-                      direction={isReversed ? "right" : "left"}
+                      revealDirection={revealDirection}
                     />
                   </MotionLink>
 
