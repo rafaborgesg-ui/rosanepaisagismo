@@ -12,6 +12,7 @@ import {
   Plus,
   Save,
   Settings2,
+  Star,
   Trash2,
   Upload,
   X,
@@ -988,6 +989,28 @@ function ProjectsPanel(props) {
     isAuthenticated,
   } = props;
   const gallery = textToList(projectForm.galleryText);
+  const [draggedGalleryIndex, setDraggedGalleryIndex] = useState(null);
+  const [dragOverGalleryIndex, setDragOverGalleryIndex] = useState(null);
+
+  useEffect(() => {
+    setDraggedGalleryIndex(null);
+    setDragOverGalleryIndex(null);
+  }, [editingSlug]);
+
+  const finishGalleryDrag = () => {
+    setDraggedGalleryIndex(null);
+    setDragOverGalleryIndex(null);
+  };
+
+  const reorderProjectGalleryImage = (sourceIndex, targetIndex) => {
+    if (!Number.isInteger(sourceIndex) || !Number.isInteger(targetIndex) || sourceIndex === targetIndex) return;
+    if (sourceIndex < 0 || targetIndex < 0 || sourceIndex >= gallery.length || targetIndex >= gallery.length) return;
+
+    const nextGallery = [...gallery];
+    const [movedImage] = nextGallery.splice(sourceIndex, 1);
+    nextGallery.splice(targetIndex, 0, movedImage);
+    updateProjectField("galleryText", listToText(nextGallery));
+  };
 
   return (
     <section className="grid gap-6 xl:grid-cols-[0.9fr_1.1fr]">
@@ -1010,13 +1033,25 @@ function ProjectsPanel(props) {
 
         <div className="space-y-3">
           {projects.map((project) => (
-            <article key={project.slug} className="grid grid-cols-[86px_1fr] gap-4 border border-[#eee7da] bg-[#fbfaf7] p-3">
+            <article
+              key={project.slug}
+              className={`relative grid grid-cols-[86px_1fr] gap-4 border p-3 transition ${
+                project.isFeaturedHome
+                  ? "border-[#d3b473]/80 bg-[#fffaf0] shadow-[0_12px_34px_rgba(139,111,55,0.12)]"
+                  : "border-[#eee7da] bg-[#fbfaf7]"
+              }`}
+            >
               <img src={project.cover} alt={project.title} className="h-24 w-[86px] rounded-sm object-cover" />
               <div className="min-w-0">
-                <div className="flex items-center gap-2">
+                <div className="flex flex-wrap items-center gap-2">
                   <p className="text-[0.62rem] font-semibold uppercase tracking-[0.14em] text-[#9b7b2f]">{project.category}</p>
                   {project.isPublished === false && <span className="text-[0.6rem] uppercase tracking-[0.12em] text-stone-400">Rascunho</span>}
-                  {project.isFeaturedHome && <span className="text-[0.6rem] uppercase tracking-[0.12em] text-[#1a3d2b]">Destaque home</span>}
+                  {project.isFeaturedHome && (
+                    <span className="inline-flex items-center gap-1 rounded-full bg-[#d3b473] px-2.5 py-1 text-[0.56rem] font-bold uppercase tracking-[0.12em] text-[#10120e] shadow-[0_8px_20px_rgba(139,111,55,0.18)]">
+                      <Star className="h-3 w-3 fill-current" aria-hidden="true" />
+                      Destaque página inicial
+                    </span>
+                  )}
                 </div>
                 <h3 className="mt-1 truncate font-serif-custom text-xl text-[#1a3d2b]">{project.title}</h3>
                 <p className="mt-1 line-clamp-2 text-sm leading-6 text-stone-600">{project.summary}</p>
@@ -1147,26 +1182,67 @@ function ProjectsPanel(props) {
                   onUpload={(file) => uploadProjectImage("gallery", file)}
                 />
               </div>
-              <div className="grid gap-3 md:grid-cols-3">
+              <p className="mb-3 text-xs leading-5 text-stone-500">
+                Arraste os cards para reorganizar a sequência das fotos antes de salvar.
+              </p>
+              <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
                 {gallery.length === 0 && (
                   <div className="border border-dashed border-[#cfc4af] bg-white/50 p-6 text-sm text-stone-500 md:col-span-3">
                     Nenhuma foto na galeria. Use o botão Adicionar foto.
                   </div>
                 )}
                 {gallery.map((src, index) => (
-                  <article key={`${src}-${index}`} className="border border-[#d8cfbd] bg-white p-3">
+                  <article
+                    key={`${src}-${index}`}
+                    draggable={gallery.length > 1 && !isSaving}
+                    onDragStart={(event) => {
+                      setDraggedGalleryIndex(index);
+                      event.dataTransfer.effectAllowed = "move";
+                      event.dataTransfer.setData("text/plain", String(index));
+                    }}
+                    onDragOver={(event) => {
+                      event.preventDefault();
+                      event.dataTransfer.dropEffect = "move";
+                      setDragOverGalleryIndex(index);
+                    }}
+                    onDragLeave={() => setDragOverGalleryIndex((current) => (current === index ? null : current))}
+                    onDrop={(event) => {
+                      event.preventDefault();
+                      const rawSourceIndex = draggedGalleryIndex ?? event.dataTransfer.getData("text/plain");
+                      if (rawSourceIndex === "" || rawSourceIndex === null || rawSourceIndex === undefined) {
+                        finishGalleryDrag();
+                        return;
+                      }
+                      const sourceIndex = Number(rawSourceIndex);
+                      reorderProjectGalleryImage(sourceIndex, index);
+                      finishGalleryDrag();
+                    }}
+                    onDragEnd={finishGalleryDrag}
+                    className={`group border bg-white p-3 transition ${
+                      dragOverGalleryIndex === index
+                        ? "border-[#1a3d2b] shadow-[0_14px_38px_rgba(26,61,43,0.16)]"
+                        : "border-[#d8cfbd]"
+                    } ${draggedGalleryIndex === index ? "opacity-55" : ""} ${gallery.length > 1 && !isSaving ? "cursor-grab active:cursor-grabbing" : ""}`}
+                    aria-label={`Foto ${index + 1} da galeria. Arraste para reordenar.`}
+                    title="Arraste para reordenar"
+                  >
+                    <div className="mb-2 flex items-center justify-between gap-2 text-[0.58rem] font-semibold uppercase tracking-[0.14em] text-[#8d753f]">
+                      <span>Foto {String(index + 1).padStart(2, "0")}</span>
+                      <GripVertical className="h-4 w-4 text-[#1a3d2b]/55 transition group-hover:text-[#1a3d2b]" aria-hidden="true" />
+                    </div>
                     <ImagePreview src={src} alt={`Foto ${index + 1} da galeria`} className="h-32" />
-                    <div className="mt-3 flex gap-2">
+                    <div className="mt-3 grid grid-cols-2 gap-2">
                       <ImageUploadButton
                         label="Trocar"
                         compact
+                        className="w-full px-2"
                         disabled={!isAuthenticated || isSaving}
                         onUpload={(file) => uploadProjectImage("gallery", file, index)}
                       />
                       <button
                         type="button"
                         onClick={() => removeProjectGalleryImage(index)}
-                        className="rounded-full border border-red-200 px-3 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.13em] text-red-600 hover:bg-red-50"
+                        className="inline-flex w-full items-center justify-center rounded-full border border-red-200 px-2 py-2 text-[0.62rem] font-semibold uppercase tracking-[0.1em] text-red-600 hover:bg-red-50"
                       >
                         Remover
                       </button>
@@ -1271,15 +1347,15 @@ function AssetPath({ value }) {
   );
 }
 
-function ImageUploadButton({ label, onUpload, disabled, compact = false }) {
+function ImageUploadButton({ label, onUpload, disabled, compact = false, className = "" }) {
   const inputId = useMemo(() => `upload-${Math.random().toString(36).slice(2)}`, []);
 
   return (
     <label
       htmlFor={inputId}
-      className={`inline-flex cursor-pointer items-center justify-center gap-2 rounded-full border border-[#1a3d2b] text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#1a3d2b] transition hover:bg-[#1a3d2b] hover:text-white ${
+      className={`inline-flex min-w-0 cursor-pointer items-center justify-center gap-2 rounded-full border border-[#1a3d2b] text-[0.66rem] font-semibold uppercase tracking-[0.16em] text-[#1a3d2b] transition hover:bg-[#1a3d2b] hover:text-white ${
         compact ? "px-3 py-2" : "px-5 py-3"
-      } ${disabled ? "pointer-events-none opacity-45" : ""}`}
+      } ${disabled ? "pointer-events-none opacity-45" : ""} ${className}`}
     >
       <Upload className="h-4 w-4" aria-hidden="true" />
       {label}

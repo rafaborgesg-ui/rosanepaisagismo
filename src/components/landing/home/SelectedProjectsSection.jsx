@@ -7,10 +7,10 @@ import { useLandingContent } from "@/hooks/useLandingContent";
 import { usePortfolioProjects } from "@/lib/portfolioStorage";
 
 const cardLayout = [
-  "md:col-start-1 md:row-start-1",
-  "md:col-start-2 md:row-start-1 md:mt-32",
-  "md:col-start-1 md:row-start-2",
-  "md:col-start-2 md:row-start-2 md:mt-16",
+  "",
+  "md:mt-32",
+  "",
+  "md:mt-16",
 ];
 
 const imageLayout = [
@@ -72,7 +72,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
     "Ver cases selecionados"
   );
   const featuredProjects = projects.filter((p) => p.isFeaturedHome);
-  const selectedProjects = (featuredProjects.length ? featuredProjects : projects).slice(0, 4).map((p) => ({
+  const selectedProjects = (featuredProjects.length ? featuredProjects : projects).map((p) => ({
     ...p,
     image: p.cover,
   }));
@@ -121,7 +121,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
               whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}
               transition={{ duration: 0.42, ease: [0.16, 1, 0.3, 1], delay: index * 0.06 }}
-              className={cardLayout[index] || ""}
+              className={cardLayout[index % cardLayout.length] || ""}
             >
               <Link
                 to={`/portfolio/${project.slug}`}
@@ -133,7 +133,7 @@ export default function SelectedProjectsSection({ reducedMotion = false }) {
                     src={project.image} 
                     alt={project.title} 
                     reducedMotion={reducedMotion} 
-                    className={imageLayout[index] || imageLayout[3]} 
+                    className={imageLayout[index % imageLayout.length] || imageLayout[3]}
                   />
                 </div>
                 <div className="mt-6 grid gap-3 border-b border-white/10 pb-8 md:grid-cols-[1fr_auto] md:items-start relative">
