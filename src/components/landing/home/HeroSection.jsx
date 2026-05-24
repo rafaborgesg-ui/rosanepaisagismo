@@ -46,6 +46,7 @@ export default function HeroSection({ reducedMotion = false }) {
               src,
               alt: slide.titulo || slide.alt || "Projeto de paisagismo Rosane Borges",
               isVideo,
+              soundEnabled: slide.som_ativo !== false,
             };
           })
           .filter((slide) => slide.src)
@@ -112,14 +113,16 @@ export default function HeroSection({ reducedMotion = false }) {
     const activeVideo = videoRefs.current.get(activeSlide);
     if (reducedMotion || !currentSlide?.isVideo || !activeVideo) return undefined;
 
+    const soundEnabled = currentSlide.soundEnabled !== false;
     activeVideo.loop = false;
-    activeVideo.muted = false;
+    activeVideo.muted = !soundEnabled;
     activeVideo.currentTime = 0;
 
     const playVideo = () => {
       const playback = activeVideo.play();
       if (playback?.catch) {
         playback.catch(() => {
+          if (!soundEnabled) return;
           activeVideo.muted = true;
           activeVideo.play().catch(() => {});
         });
@@ -191,6 +194,7 @@ export default function HeroSection({ reducedMotion = false }) {
               transition={commonTransition}
               style={commonStyle}
               autoPlay={isActive}
+              muted={!slide.soundEnabled}
               playsInline
               preload={isActive ? "auto" : "metadata"}
               onLoadedMetadata={(event) => {

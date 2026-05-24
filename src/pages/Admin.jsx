@@ -85,13 +85,35 @@ function textToList(value = "") {
     .filter(Boolean);
 }
 
+function isHeroVideoSlide(slide = {}) {
+  return slide.tipo === "video" || isVideoUrl(slide.imagem_url || slide.src || slide.image);
+}
+
 function toLandingPayload(landingForm) {
   return {
     logo_topo_url: landingForm.logo_topo_url || null,
     logo_topo_size: Number(landingForm.logo_topo_size) || 100,
     logo_rodape_url: landingForm.logo_rodape_url || null,
     logo_rodape_size: Number(landingForm.logo_rodape_size) || 100,
-    slides: Array.isArray(landingForm.slides) ? landingForm.slides.filter((slide) => slide.imagem_url) : [],
+    slides: Array.isArray(landingForm.slides)
+      ? landingForm.slides
+          .filter((slide) => slide.imagem_url)
+          .map((slide) => {
+            const isVideo = isHeroVideoSlide(slide);
+            const normalizedSlide = {
+              ...slide,
+              tipo: isVideo ? "video" : "imagem",
+            };
+
+            if (isVideo) {
+              normalizedSlide.som_ativo = slide.som_ativo !== false;
+            } else {
+              delete normalizedSlide.som_ativo;
+            }
+
+            return normalizedSlide;
+          })
+      : [],
     sobre_titulo: landingForm.sobre_titulo || null,
     sobre_cargo: landingForm.sobre_cargo || null,
     sobre_frase: landingForm.sobre_frase || null,
@@ -278,7 +300,7 @@ export default function Admin() {
   const addHeroSlide = () => {
     setLandingForm((current) => ({
       ...current,
-      slides: [...(Array.isArray(current.slides) ? current.slides : []), { titulo: "Novo slide", imagem_url: "", tipo: "imagem" }],
+      slides: [...(Array.isArray(current.slides) ? current.slides : []), { titulo: "Novo slide", imagem_url: "", tipo: "imagem", som_ativo: true }],
     }));
   };
 
@@ -311,7 +333,14 @@ export default function Admin() {
       setLandingForm((current) => ({
         ...current,
         slides: (Array.isArray(current.slides) ? current.slides : []).map((slide, slideIndex) =>
-          slideIndex === index ? { ...slide, imagem_url: url, tipo } : slide
+          slideIndex === index
+            ? {
+                ...slide,
+                imagem_url: url,
+                tipo,
+                som_ativo: tipo === "video" ? slide.som_ativo !== false : undefined,
+              }
+            : slide
         ),
       }));
       setMessage("Mídia enviada. Clique em Salvar Hero para publicar a alteração.");
@@ -763,7 +792,10 @@ function HeroPanel({
           </div>
         )}
         <div className="grid gap-4">
-          {slides.map((slide, index) => (
+          {slides.map((slide, index) => {
+            const isVideo = isHeroVideoSlide(slide);
+
+            return (
             <article
               key={`${slide.imagem_url}-${index}`}
               draggable={slides.length > 1 && !isSaving}
@@ -811,6 +843,17 @@ function HeroPanel({
               <MediaPreview src={slide.imagem_url} tipo={slide.tipo} alt={slide.titulo || `Slide ${index + 1}`} className="h-36" />
               <div className="grid gap-3">
                 <TextInput label={`Título do slide ${index + 1}`} value={slide.titulo} onChange={(value) => updateHeroSlide(index, "titulo", value)} />
+                {isVideo && (
+                  <label className="inline-flex w-fit cursor-pointer items-center gap-3 rounded-full border border-[#d8cfbd] bg-white px-4 py-2 text-[0.68rem] font-semibold uppercase tracking-[0.14em] text-[#1a3d2b] transition hover:border-[#1a3d2b]/50">
+                    <input
+                      type="checkbox"
+                      checked={slide.som_ativo !== false}
+                      onChange={(event) => updateHeroSlide(index, "som_ativo", event.target.checked)}
+                      className="h-4 w-4 accent-[#1a3d2b]"
+                    />
+                    Som ativo
+                  </label>
+                )}
                 <MediaUploadButton
                   label={slide.imagem_url ? "Trocar foto / vídeo" : "Enviar foto / vídeo"}
                   disabled={!isAuthenticated || isSaving}
@@ -827,7 +870,8 @@ function HeroPanel({
                 <Trash2 className="h-4 w-4" aria-hidden="true" />
               </button>
             </article>
-          ))}
+            );
+          })}
         </div>
         <button
           type="button"
