@@ -2,9 +2,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
+const IMAGE_SLIDE_INTERVAL = 5800;
+
 export default function HeroSection({ reducedMotion = false }) {
   const content = useLandingContent();
   const sectionRef = useRef(null);
+  const videoRefs = useRef(new Map());
+  const videoDurationsRef = useRef(new Map());
   const defaultSlides = useMemo(
     () => [
       {
@@ -85,13 +89,49 @@ export default function HeroSection({ reducedMotion = false }) {
 
   useEffect(() => {
     if (reducedMotion) return undefined;
+    if (slides.length <= 1) return undefined;
+
+    const currentSlide = slides[activeSlide];
+    if (currentSlide?.isVideo) return undefined;
 
     const timer = window.setTimeout(() => {
       goToSlide("next");
-    }, 5800);
+    }, IMAGE_SLIDE_INTERVAL);
 
     return () => window.clearTimeout(timer);
-  }, [activeSlide, reducedMotion, slideTimerSeed, slides.length]);
+  }, [activeSlide, reducedMotion, slideTimerSeed, slides]);
+
+  useEffect(() => {
+    videoRefs.current.forEach((video, index) => {
+      if (index === activeSlide) return;
+      video.pause();
+      video.currentTime = 0;
+    });
+
+    const currentSlide = slides[activeSlide];
+    const activeVideo = videoRefs.current.get(activeSlide);
+    if (reducedMotion || !currentSlide?.isVideo || !activeVideo) return undefined;
+
+    activeVideo.loop = false;
+    activeVideo.muted = false;
+    activeVideo.currentTime = 0;
+
+    const playVideo = () => {
+      const playback = activeVideo.play();
+      if (playback?.catch) {
+        playback.catch(() => {
+          activeVideo.muted = true;
+          activeVideo.play().catch(() => {});
+        });
+      }
+    };
+
+    playVideo();
+
+    return () => {
+      activeVideo.pause();
+    };
+  }, [activeSlide, reducedMotion, slideTimerSeed, slides]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsLoaded(true), 300);
@@ -138,6 +178,10 @@ export default function HeroSection({ reducedMotion = false }) {
           return (
             <motion.video
               key={slide.src}
+              ref={(element) => {
+                if (element) videoRefs.current.set(index, element);
+                else videoRefs.current.delete(index);
+              }}
               src={slide.src}
               aria-label={slide.alt}
               aria-hidden={!isActive}
@@ -146,11 +190,18 @@ export default function HeroSection({ reducedMotion = false }) {
               animate={commonAnimate}
               transition={commonTransition}
               style={commonStyle}
-              autoPlay
-              muted
-              loop
+              autoPlay={isActive}
               playsInline
               preload={isActive ? "auto" : "metadata"}
+              onLoadedMetadata={(event) => {
+                const duration = event.currentTarget.duration;
+                if (!Number.isFinite(duration) || duration <= 0) return;
+                videoDurationsRef.current.set(index, duration);
+              }}
+              onEnded={() => {
+                if (activeSlide !== index || slides.length <= 1) return;
+                goToSlide("next");
+              }}
             />
           );
         }
@@ -164,7 +215,7 @@ export default function HeroSection({ reducedMotion = false }) {
             className="absolute inset-0 h-[115%] w-full object-cover brightness-[1.04] contrast-[1.06] saturate-[1.12]"
             loading={index === 0 ? "eager" : "lazy"}
             decoding="async"
-            fetchPriority={index === 0 ? "high" : "auto"}
+            fetchpriority={index === 0 ? "high" : "auto"}
             initial={false}
             animate={commonAnimate}
             transition={commonTransition}
