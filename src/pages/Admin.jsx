@@ -31,6 +31,7 @@ import {
   createPortfolioProject,
   deletePortfolioProject,
   slugifyProjectTitle,
+  updatePortfolioProjectOrder,
   updatePortfolioProject,
   usePortfolioProjects,
 } from "@/lib/portfolioStorage";
@@ -483,6 +484,45 @@ export default function Admin() {
     }
   };
 
+  const reorderProjects = async (sourceIndex, targetIndex) => {
+    if (isSaving) return;
+    if (!Number.isInteger(sourceIndex) || !Number.isInteger(targetIndex) || sourceIndex === targetIndex) return;
+    if (sourceIndex < 0 || targetIndex < 0 || sourceIndex >= projects.length || targetIndex >= projects.length) return;
+    if (!requireLogin("reordenar projetos")) return;
+
+    const previousProjects = projects;
+    const nextProjects = [...projects];
+    const [movedProject] = nextProjects.splice(sourceIndex, 1);
+    nextProjects.splice(targetIndex, 0, movedProject);
+
+    const orderedProjects = nextProjects.map((project, index) => ({
+      ...project,
+      sortOrder: (index + 1) * 10,
+    }));
+
+    setLocalProjects(orderedProjects);
+    setProjects(orderedProjects);
+    setIsSaving(true);
+
+    try {
+      const savedProjects = await updatePortfolioProjectOrder(orderedProjects);
+      setLocalProjects(savedProjects);
+      setProjects(savedProjects);
+      setProjectForm((current) => {
+        if (!current.id) return current;
+        const updatedProject = savedProjects.find((project) => project.id === current.id);
+        return updatedProject ? { ...current, sortOrder: updatedProject.sortOrder } : current;
+      });
+      setMessage("Ordem dos projetos atualizada no Supabase.");
+    } catch (currentError) {
+      setLocalProjects(previousProjects);
+      setProjects(previousProjects);
+      setMessage(currentError.message || "Não foi possível reordenar os projetos no Supabase.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
   const saveLandingContent = async (event) => {
     event.preventDefault();
     if (!requireLogin("salvar conteúdo")) return;
@@ -616,6 +656,7 @@ export default function Admin() {
               removeProjectGalleryImage={removeProjectGalleryImage}
               submitProject={submitProject}
               deleteProject={handleDeleteProject}
+              reorderProjects={reorderProjects}
               isSaving={isSaving}
               isAuthenticated={isAuthenticated}
             />
@@ -725,6 +766,12 @@ function HeroPanel({
           {slides.map((slide, index) => (
             <article
               key={`${slide.imagem_url}-${index}`}
+              draggable={slides.length > 1 && !isSaving}
+              onDragStart={(event) => {
+                setDraggedSlideIndex(index);
+                event.dataTransfer.effectAllowed = "move";
+                event.dataTransfer.setData("text/plain", String(index));
+              }}
               onDragOver={(event) => {
                 event.preventDefault();
                 event.dataTransfer.dropEffect = "move";
@@ -733,32 +780,34 @@ function HeroPanel({
               onDragLeave={() => setDragOverIndex((current) => (current === index ? null : current))}
               onDrop={(event) => {
                 event.preventDefault();
-                const sourceIndex = draggedSlideIndex ?? Number(event.dataTransfer.getData("text/plain"));
+                const rawSourceIndex = event.dataTransfer.getData("text/plain") || (draggedSlideIndex === null ? "" : String(draggedSlideIndex));
+
+                if (rawSourceIndex === "") {
+                  finishDragging();
+                  return;
+                }
+
+                const sourceIndex = Number(rawSourceIndex);
                 if (Number.isInteger(sourceIndex)) reorderHeroSlide(sourceIndex, index);
                 finishDragging();
               }}
-              className={`grid gap-4 border bg-[#fbfaf7] p-4 transition md:grid-cols-[auto_220px_1fr_auto] ${
+              onDragEnd={finishDragging}
+              className={`group grid gap-4 border bg-[#fbfaf7] p-4 transition md:grid-cols-[auto_220px_1fr_auto] ${
                 dragOverIndex === index
                   ? "border-[#1a3d2b] shadow-[0_14px_40px_rgba(26,61,43,0.14)]"
                   : "border-[#eee7da]"
-              } ${draggedSlideIndex === index ? "opacity-55" : ""}`}
+              } ${draggedSlideIndex === index ? "opacity-55" : ""} ${
+                slides.length > 1 && !isSaving ? "cursor-grab active:cursor-grabbing" : ""
+              }`}
+              aria-label={`Slide ${index + 1}. Arraste o card para mudar a ordem.`}
+              title="Arraste o card para mudar a ordem"
             >
-              <button
-                type="button"
-                draggable={slides.length > 1 && !isSaving}
-                onDragStart={(event) => {
-                  setDraggedSlideIndex(index);
-                  event.dataTransfer.effectAllowed = "move";
-                  event.dataTransfer.setData("text/plain", String(index));
-                }}
-                onDragEnd={finishDragging}
-                disabled={slides.length <= 1 || isSaving}
-                className="flex h-full min-h-12 cursor-grab items-center justify-center rounded-sm border border-[#d8cfbd] bg-white px-3 text-[#1a3d2b] transition hover:bg-[#1a3d2b] hover:text-white active:cursor-grabbing disabled:cursor-not-allowed disabled:opacity-35 md:min-h-36"
-                aria-label={`Arrastar slide ${index + 1} para reordenar`}
-                title="Arraste para mudar a ordem"
+              <div
+                className="flex h-full min-h-12 items-center justify-center rounded-sm border border-[#d8cfbd] bg-white px-3 text-[#1a3d2b] transition group-hover:border-[#1a3d2b]/40 md:min-h-36"
+                aria-hidden="true"
               >
-                <GripVertical className="h-5 w-5" aria-hidden="true" />
-              </button>
+                <GripVertical className="h-5 w-5" />
+              </div>
               <MediaPreview src={slide.imagem_url} tipo={slide.tipo} alt={slide.titulo || `Slide ${index + 1}`} className="h-36" />
               <div className="grid gap-3">
                 <TextInput label={`Título do slide ${index + 1}`} value={slide.titulo} onChange={(value) => updateHeroSlide(index, "titulo", value)} />
@@ -810,120 +859,139 @@ function TextsPanel({
   return (
     <form onSubmit={saveLandingContent} className="grid gap-6">
       <PanelHeader title="Textos da página" description="Edite todas as seções principais da home salvas no Supabase." />
-      <div className="grid gap-5 border border-[#ded7c8] bg-white p-6">
-        <AdminSectionTitle title="Sobre" description="Texto institucional, assinatura e foto da Rosane." />
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextInput label="Título sobre" value={landingForm.sobre_titulo} onChange={(value) => updateLandingField("sobre_titulo", value)} />
-          <TextInput label="Cargo / assinatura" value={landingForm.sobre_cargo} onChange={(value) => updateLandingField("sobre_cargo", value)} />
-        </div>
-        <TextArea label="Frase sobre" value={landingForm.sobre_frase} onChange={(value) => updateLandingField("sobre_frase", value)} />
-        <TextArea label="Texto sobre" value={landingForm.sobre_texto} onChange={(value) => updateLandingField("sobre_texto", value)} />
-        <div>
-          <span className={labelClass}>Foto da seção Sobre</span>
-          <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr]">
-            <ImagePreview src={landingForm.sobre_imagem_url} alt="Foto da seção Sobre" className="h-36" />
-            <ImageUploadButton
-              label={landingForm.sobre_imagem_url ? "Trocar foto" : "Enviar foto"}
-              disabled={!isAuthenticated || isSaving}
-              onUpload={(file) => uploadLandingImage("sobre_imagem_url", file, "about")}
-            />
+      <div className="grid gap-5">
+        <AdminTextSection title="Sobre" description="Texto institucional, assinatura e foto da Rosane.">
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextInput label="Título sobre" value={landingForm.sobre_titulo} onChange={(value) => updateLandingField("sobre_titulo", value)} />
+            <TextInput label="Cargo / assinatura" value={landingForm.sobre_cargo} onChange={(value) => updateLandingField("sobre_cargo", value)} />
           </div>
-        </div>
-
-        <AdminSectionTitle title="Projetos selecionados" description="Chamada da seção de destaques da página inicial." />
-        <div className="grid gap-5 md:grid-cols-3">
-          <TextInput label="Etiqueta" value={homeTexts.selected_label} onChange={(value) => updateHomeTextField("selected_label", value)} />
-          <TextInput label="Botão" value={homeTexts.selected_cta} onChange={(value) => updateHomeTextField("selected_cta", value)} />
-          <div className="md:col-span-3">
-            <TextArea label="Título da seção" value={homeTexts.selected_title} onChange={(value) => updateHomeTextField("selected_title", value)} />
-          </div>
-        </div>
-
-        <AdminSectionTitle title="Nossos Serviços" description="Título geral e três serviços principais." />
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextInput label="Etiqueta serviços" value={homeTexts.services_label} onChange={(value) => updateHomeTextField("services_label", value)} />
-          <TextArea label="Título serviços" value={homeTexts.services_title} onChange={(value) => updateHomeTextField("services_title", value)} />
-        </div>
-        <div className="grid gap-5 md:grid-cols-3">
-          <TextInput label="Serviço 1" value={landingForm.servico1_titulo} onChange={(value) => updateLandingField("servico1_titulo", value)} />
-          <TextInput label="Serviço 2" value={landingForm.servico2_titulo} onChange={(value) => updateLandingField("servico2_titulo", value)} />
-          <TextInput label="Serviço 3" value={landingForm.servico3_titulo} onChange={(value) => updateLandingField("servico3_titulo", value)} />
-        </div>
-        <div className="grid gap-5 md:grid-cols-3">
-          <TextArea label="Descrição serviço 1" value={landingForm.servico1_desc} onChange={(value) => updateLandingField("servico1_desc", value)} />
-          <TextArea label="Descrição serviço 2" value={landingForm.servico2_desc} onChange={(value) => updateLandingField("servico2_desc", value)} />
-          <TextArea label="Descrição serviço 3" value={landingForm.servico3_desc} onChange={(value) => updateLandingField("servico3_desc", value)} />
-        </div>
-
-        <AdminSectionTitle title="Método" description="Chamada e texto da seção de processo." />
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextInput label="Etiqueta método" value={homeTexts.method_label} onChange={(value) => updateHomeTextField("method_label", value)} />
-          <TextArea label="Título método" value={homeTexts.method_title} onChange={(value) => updateHomeTextField("method_title", value)} />
-        </div>
-        <TextArea label="Texto método" value={homeTexts.method_text} onChange={(value) => updateHomeTextField("method_text", value)} />
-
-        <AdminSectionTitle title="Entregáveis" description="Conteúdo da seção de valor entregue na obra." />
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextInput label="Etiqueta entregáveis" value={homeTexts.deliverables_label} onChange={(value) => updateHomeTextField("deliverables_label", value)} />
-          <TextArea label="Título entregáveis" value={homeTexts.deliverables_title} onChange={(value) => updateHomeTextField("deliverables_title", value)} />
-        </div>
-        <TextArea label="Texto entregáveis" value={homeTexts.deliverables_text} onChange={(value) => updateHomeTextField("deliverables_text", value)} />
-        <TextArea
-          label="Lista de entregáveis, um por linha"
-          value={listToText(homeTexts.deliverables_items)}
-          onChange={(value) => updateHomeTextField("deliverables_items", textToList(value))}
-        />
-
-        <AdminSectionTitle title="Depoimentos" description="Provas sociais exibidas na página inicial." />
-        {[1, 2, 3].map((index) => (
-          <div key={index} className="grid gap-5 border border-[#eee7da] bg-[#fbfaf7] p-4 md:grid-cols-2">
-            <div className="md:col-span-2">
-              <TextArea
-                label={`Depoimento ${index}`}
-                value={homeTexts[`testimonial_${index}_quote`]}
-                onChange={(value) => updateHomeTextField(`testimonial_${index}_quote`, value)}
+          <TextArea label="Frase sobre" value={landingForm.sobre_frase} onChange={(value) => updateLandingField("sobre_frase", value)} />
+          <TextArea label="Texto sobre" value={landingForm.sobre_texto} onChange={(value) => updateLandingField("sobre_texto", value)} />
+          <div>
+            <span className={labelClass}>Foto da seção Sobre</span>
+            <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr]">
+              <ImagePreview src={landingForm.sobre_imagem_url} alt="Foto da seção Sobre" className="h-36" />
+              <ImageUploadButton
+                label={landingForm.sobre_imagem_url ? "Trocar foto" : "Enviar foto"}
+                disabled={!isAuthenticated || isSaving}
+                onUpload={(file) => uploadLandingImage("sobre_imagem_url", file, "about")}
               />
             </div>
-            <TextInput
-              label={`Nome depoimento ${index}`}
-              value={homeTexts[`testimonial_${index}_name`]}
-              onChange={(value) => updateHomeTextField(`testimonial_${index}_name`, value)}
-            />
-            <TextInput
-              label={`Descrição depoimento ${index}`}
-              value={homeTexts[`testimonial_${index}_role`]}
-              onChange={(value) => updateHomeTextField(`testimonial_${index}_role`, value)}
-            />
           </div>
-        ))}
+        </AdminTextSection>
 
-        <AdminSectionTitle title="CTA final" description="Bloco de atendimento antes do rodapé." />
-        <div className="grid gap-5 md:grid-cols-2">
-          <TextInput label="Etiqueta CTA" value={homeTexts.concierge_label} onChange={(value) => updateHomeTextField("concierge_label", value)} />
-          <TextInput label="Botão CTA" value={homeTexts.concierge_button} onChange={(value) => updateHomeTextField("concierge_button", value)} />
-        </div>
-        <TextArea label="Título CTA" value={homeTexts.concierge_title} onChange={(value) => updateHomeTextField("concierge_title", value)} />
-        <TextArea label="Texto CTA" value={homeTexts.concierge_text} onChange={(value) => updateHomeTextField("concierge_text", value)} />
-        <div>
-          <span className={labelClass}>Imagem do CTA final</span>
-          <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr]">
-            <ImagePreview src={homeTexts.concierge_image_url} alt="Imagem do CTA final" className="h-36" />
-            <ImageUploadButton
-              label={homeTexts.concierge_image_url ? "Trocar foto" : "Enviar foto"}
-              disabled={!isAuthenticated || isSaving}
-              onUpload={(file) => uploadHomeTextImage("concierge_image_url", file, "home")}
-            />
+        <AdminTextSection title="Projetos selecionados" description="Chamada da seção de destaques da página inicial.">
+          <div className="grid gap-5 md:grid-cols-3">
+            <TextInput label="Etiqueta" value={homeTexts.selected_label} onChange={(value) => updateHomeTextField("selected_label", value)} />
+            <TextInput label="Botão" value={homeTexts.selected_cta} onChange={(value) => updateHomeTextField("selected_cta", value)} />
+            <div className="md:col-span-3">
+              <TextArea label="Título da seção" value={homeTexts.selected_title} onChange={(value) => updateHomeTextField("selected_title", value)} />
+            </div>
           </div>
-        </div>
+        </AdminTextSection>
+
+        <AdminTextSection title="Nossos Serviços" description="Título geral e três serviços principais.">
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextInput label="Etiqueta serviços" value={homeTexts.services_label} onChange={(value) => updateHomeTextField("services_label", value)} />
+            <TextArea label="Título serviços" value={homeTexts.services_title} onChange={(value) => updateHomeTextField("services_title", value)} />
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            <TextInput label="Serviço 1" value={landingForm.servico1_titulo} onChange={(value) => updateLandingField("servico1_titulo", value)} />
+            <TextInput label="Serviço 2" value={landingForm.servico2_titulo} onChange={(value) => updateLandingField("servico2_titulo", value)} />
+            <TextInput label="Serviço 3" value={landingForm.servico3_titulo} onChange={(value) => updateLandingField("servico3_titulo", value)} />
+          </div>
+          <div className="grid gap-5 md:grid-cols-3">
+            <TextArea label="Descrição serviço 1" value={landingForm.servico1_desc} onChange={(value) => updateLandingField("servico1_desc", value)} />
+            <TextArea label="Descrição serviço 2" value={landingForm.servico2_desc} onChange={(value) => updateLandingField("servico2_desc", value)} />
+            <TextArea label="Descrição serviço 3" value={landingForm.servico3_desc} onChange={(value) => updateLandingField("servico3_desc", value)} />
+          </div>
+        </AdminTextSection>
+
+        <AdminTextSection title="Método" description="Chamada e texto da seção de processo.">
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextInput label="Etiqueta método" value={homeTexts.method_label} onChange={(value) => updateHomeTextField("method_label", value)} />
+            <TextArea label="Título método" value={homeTexts.method_title} onChange={(value) => updateHomeTextField("method_title", value)} />
+          </div>
+          <TextArea label="Texto método" value={homeTexts.method_text} onChange={(value) => updateHomeTextField("method_text", value)} />
+        </AdminTextSection>
+
+        <AdminTextSection title="Entregáveis" description="Conteúdo da seção de valor entregue na obra.">
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextInput label="Etiqueta entregáveis" value={homeTexts.deliverables_label} onChange={(value) => updateHomeTextField("deliverables_label", value)} />
+            <TextArea label="Título entregáveis" value={homeTexts.deliverables_title} onChange={(value) => updateHomeTextField("deliverables_title", value)} />
+          </div>
+          <TextArea label="Texto entregáveis" value={homeTexts.deliverables_text} onChange={(value) => updateHomeTextField("deliverables_text", value)} />
+          <TextArea
+            label="Lista de entregáveis, um por linha"
+            value={listToText(homeTexts.deliverables_items)}
+            onChange={(value) => updateHomeTextField("deliverables_items", textToList(value))}
+          />
+        </AdminTextSection>
+
+        <AdminTextSection title="Depoimentos" description="Provas sociais exibidas na página inicial.">
+          {[1, 2, 3].map((index) => (
+            <div key={index} className="grid gap-5 border border-[#eee7da] bg-[#fbfaf7] p-4 md:grid-cols-2">
+              <div className="md:col-span-2">
+                <TextArea
+                  label={`Depoimento ${index}`}
+                  value={homeTexts[`testimonial_${index}_quote`]}
+                  onChange={(value) => updateHomeTextField(`testimonial_${index}_quote`, value)}
+                />
+              </div>
+              <TextInput
+                label={`Nome depoimento ${index}`}
+                value={homeTexts[`testimonial_${index}_name`]}
+                onChange={(value) => updateHomeTextField(`testimonial_${index}_name`, value)}
+              />
+              <TextInput
+                label={`Descrição depoimento ${index}`}
+                value={homeTexts[`testimonial_${index}_role`]}
+                onChange={(value) => updateHomeTextField(`testimonial_${index}_role`, value)}
+              />
+            </div>
+          ))}
+        </AdminTextSection>
+
+        <AdminTextSection title="CTA final" description="Bloco de atendimento antes do rodapé.">
+          <div className="grid gap-5 md:grid-cols-2">
+            <TextInput label="Etiqueta CTA" value={homeTexts.concierge_label} onChange={(value) => updateHomeTextField("concierge_label", value)} />
+            <TextInput label="Botão CTA" value={homeTexts.concierge_button} onChange={(value) => updateHomeTextField("concierge_button", value)} />
+          </div>
+          <TextArea label="Título CTA" value={homeTexts.concierge_title} onChange={(value) => updateHomeTextField("concierge_title", value)} />
+          <TextArea label="Texto CTA" value={homeTexts.concierge_text} onChange={(value) => updateHomeTextField("concierge_text", value)} />
+          <div>
+            <span className={labelClass}>Imagem do CTA final</span>
+            <div className="grid gap-4 rounded-sm border border-[#d8cfbd] bg-[#fbfaf7] p-4 md:grid-cols-[220px_1fr]">
+              <ImagePreview src={homeTexts.concierge_image_url} alt="Imagem do CTA final" className="h-36" />
+              <ImageUploadButton
+                label={homeTexts.concierge_image_url ? "Trocar foto" : "Enviar foto"}
+                disabled={!isAuthenticated || isSaving}
+                onUpload={(file) => uploadHomeTextImage("concierge_image_url", file, "home")}
+              />
+            </div>
+          </div>
+        </AdminTextSection>
+
+        <div className="border border-[#ded7c8] bg-white p-5 md:p-6">
         <SaveButton isSaving={isSaving} isAuthenticated={isAuthenticated} label="Salvar textos" />
+        </div>
       </div>
     </form>
   );
 }
 
+function AdminTextSection({ title, description, children }) {
+  return (
+    <section className="border border-[#ded7c8] bg-white p-5 shadow-[0_18px_50px_rgba(42,35,24,0.05)] md:p-6">
+      <AdminSectionTitle title={title} description={description} />
+      <div className="mt-5 grid gap-5">{children}</div>
+    </section>
+  );
+}
+
 function AdminSectionTitle({ title, description }) {
   return (
-    <div className="border-t border-[#eee7da] pt-6 first:border-t-0 first:pt-0">
+    <div>
       <p className={labelClass}>{title}</p>
       <p className="mt-2 text-sm leading-6 text-stone-600">{description}</p>
     </div>
@@ -985,17 +1053,27 @@ function ProjectsPanel(props) {
     removeProjectGalleryImage,
     submitProject,
     deleteProject,
+    reorderProjects,
     isSaving,
     isAuthenticated,
   } = props;
   const gallery = textToList(projectForm.galleryText);
+  const [draggedProjectIndex, setDraggedProjectIndex] = useState(null);
+  const [dragOverProjectIndex, setDragOverProjectIndex] = useState(null);
   const [draggedGalleryIndex, setDraggedGalleryIndex] = useState(null);
   const [dragOverGalleryIndex, setDragOverGalleryIndex] = useState(null);
 
   useEffect(() => {
+    setDraggedProjectIndex(null);
+    setDragOverProjectIndex(null);
     setDraggedGalleryIndex(null);
     setDragOverGalleryIndex(null);
   }, [editingSlug]);
+
+  const finishProjectDrag = () => {
+    setDraggedProjectIndex(null);
+    setDragOverProjectIndex(null);
+  };
 
   const finishGalleryDrag = () => {
     setDraggedGalleryIndex(null);
@@ -1031,16 +1109,55 @@ function ProjectsPanel(props) {
           </button>
         </div>
 
+        <p className="mb-3 text-xs leading-5 text-stone-500">
+          Arraste um card para mudar a ordem exibida no site.
+        </p>
         <div className="space-y-3">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <article
               key={project.slug}
-              className={`relative grid grid-cols-[86px_1fr] gap-4 border p-3 transition ${
-                project.isFeaturedHome
+              draggable={projects.length > 1 && !isSaving}
+              onDragStart={(event) => {
+                setDraggedProjectIndex(index);
+                event.dataTransfer.effectAllowed = "move";
+                event.dataTransfer.setData("application/x-project-index", String(index));
+              }}
+              onDragOver={(event) => {
+                event.preventDefault();
+                event.dataTransfer.dropEffect = "move";
+                setDragOverProjectIndex(index);
+              }}
+              onDragLeave={() => setDragOverProjectIndex((current) => (current === index ? null : current))}
+              onDrop={(event) => {
+                event.preventDefault();
+                const rawSourceIndex =
+                  event.dataTransfer.getData("application/x-project-index") ||
+                  (draggedProjectIndex === null ? "" : String(draggedProjectIndex));
+
+                if (rawSourceIndex === "") {
+                  finishProjectDrag();
+                  return;
+                }
+
+                reorderProjects(Number(rawSourceIndex), index);
+                finishProjectDrag();
+              }}
+              onDragEnd={finishProjectDrag}
+              className={`group relative grid grid-cols-[86px_1fr] gap-4 border p-3 transition ${
+                dragOverProjectIndex === index
+                  ? "border-[#1a3d2b] bg-[#fffaf0] shadow-[0_14px_38px_rgba(26,61,43,0.16)]"
+                  : project.isFeaturedHome
                   ? "border-[#d3b473]/80 bg-[#fffaf0] shadow-[0_12px_34px_rgba(139,111,55,0.12)]"
                   : "border-[#eee7da] bg-[#fbfaf7]"
+              } ${draggedProjectIndex === index ? "opacity-55" : ""} ${
+                projects.length > 1 && !isSaving ? "cursor-grab active:cursor-grabbing" : ""
               }`}
+              aria-label={`${project.title}. Arraste para reordenar.`}
+              title="Arraste para reordenar"
             >
+              <div className="absolute right-2 top-2 flex h-8 w-8 items-center justify-center rounded-full border border-[#d8cfbd] bg-white/88 text-[#1a3d2b]/55 opacity-75 transition group-hover:border-[#1a3d2b]/35 group-hover:text-[#1a3d2b] group-hover:opacity-100">
+                <GripVertical className="h-4 w-4" aria-hidden="true" />
+              </div>
               <img src={project.cover} alt={project.title} className="h-24 w-[86px] rounded-sm object-cover" />
               <div className="min-w-0">
                 <div className="flex flex-wrap items-center gap-2">

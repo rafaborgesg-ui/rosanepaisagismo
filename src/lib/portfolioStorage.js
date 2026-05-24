@@ -108,6 +108,38 @@ export async function updatePortfolioProject(id, project, index = 0) {
   return fromRow(data);
 }
 
+export async function updatePortfolioProjectOrder(projects = []) {
+  if (!supabase) throw new Error("Supabase não configurado.");
+
+  const orderedProjects = projects.map((project, index) => ({
+    ...project,
+    sortOrder: (index + 1) * 10,
+  }));
+  const projectWithoutId = orderedProjects.find((project) => !project.id);
+
+  if (projectWithoutId) {
+    throw new Error("Não foi possível reordenar um projeto sem ID no Supabase.");
+  }
+
+  const results = await Promise.all(
+    orderedProjects.map((project) =>
+      supabase
+        .from(TABLE)
+        .update({ sort_order: project.sortOrder })
+        .eq("id", project.id)
+        .select("*")
+        .single()
+    )
+  );
+  const failedResult = results.find((result) => result.error);
+
+  if (failedResult?.error) throw failedResult.error;
+
+  return results
+    .map((result) => fromRow(result.data))
+    .sort((a, b) => (a.sortOrder || 0) - (b.sortOrder || 0));
+}
+
 export async function deletePortfolioProject(id) {
   if (!supabase) throw new Error("Supabase não configurado.");
   const { error } = await supabase.from(TABLE).delete().eq("id", id);
