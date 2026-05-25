@@ -3,12 +3,15 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useLandingContent } from "@/hooks/useLandingContent";
 
 const IMAGE_SLIDE_INTERVAL = 5800;
+const VIDEO_ADVANCE_OFFSET_SECONDS = 1;
+const VIDEO_FADE_CLEANUP_DELAY = 1700;
 
 export default function HeroSection({ reducedMotion = false }) {
   const content = useLandingContent();
   const sectionRef = useRef(null);
   const videoRefs = useRef(new Map());
   const videoDurationsRef = useRef(new Map());
+  const videoPauseTimersRef = useRef(new Map());
   const defaultSlides = useMemo(
     () => [
       {
@@ -58,6 +61,7 @@ export default function HeroSection({ reducedMotion = false }) {
   const [isLoaded, setIsLoaded] = useState(false);
   const touchStartRef = useRef(null);
   const [slideTimerSeed, setSlideTimerSeed] = useState(0);
+  const [videoMetadataSeed, setVideoMetadataSeed] = useState(0);
   const { scrollYProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end start"],
@@ -104,9 +108,20 @@ export default function HeroSection({ reducedMotion = false }) {
 
   useEffect(() => {
     videoRefs.current.forEach((video, index) => {
+      const pauseTimer = videoPauseTimersRef.current.get(index);
+      if (pauseTimer) {
+        window.clearTimeout(pauseTimer);
+        videoPauseTimersRef.current.delete(index);
+      }
+
       if (index === activeSlide) return;
-      video.pause();
-      video.currentTime = 0;
+
+      const nextPauseTimer = window.setTimeout(() => {
+        video.pause();
+        video.currentTime = 0;
+        videoPauseTimersRef.current.delete(index);
+      }, VIDEO_FADE_CLEANUP_DELAY);
+      videoPauseTimersRef.current.set(index, nextPauseTimer);
     });
 
     const currentSlide = slides[activeSlide];
@@ -131,10 +146,25 @@ export default function HeroSection({ reducedMotion = false }) {
 
     playVideo();
 
+    const duration = videoDurationsRef.current.get(activeSlide) || activeVideo.duration;
+    const advanceDelay = Number.isFinite(duration) && duration > 0
+      ? Math.max(0, duration - VIDEO_ADVANCE_OFFSET_SECONDS - activeVideo.currentTime) * 1000
+      : null;
+    const advanceTimer = slides.length > 1 && advanceDelay !== null
+      ? window.setTimeout(() => goToSlide("next"), advanceDelay)
+      : null;
+
     return () => {
-      activeVideo.pause();
+      if (advanceTimer) window.clearTimeout(advanceTimer);
     };
-  }, [activeSlide, reducedMotion, slideTimerSeed, slides]);
+  }, [activeSlide, reducedMotion, slideTimerSeed, slides, videoMetadataSeed]);
+
+  useEffect(() => {
+    return () => {
+      videoPauseTimersRef.current.forEach((timer) => window.clearTimeout(timer));
+      videoPauseTimersRef.current.clear();
+    };
+  }, []);
 
   useEffect(() => {
     const timer = window.setTimeout(() => setIsLoaded(true), 300);
@@ -200,7 +230,11 @@ export default function HeroSection({ reducedMotion = false }) {
               onLoadedMetadata={(event) => {
                 const duration = event.currentTarget.duration;
                 if (!Number.isFinite(duration) || duration <= 0) return;
+                if (videoDurationsRef.current.get(index) === duration) return;
                 videoDurationsRef.current.set(index, duration);
+                if (activeSlide === index) {
+                  setVideoMetadataSeed((current) => current + 1);
+                }
               }}
               onEnded={() => {
                 if (activeSlide !== index || slides.length <= 1) return;
